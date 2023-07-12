@@ -1,0 +1,24 @@
+@import "../../../assets/global.scss";
+
+header{
+    width: 100%;
+    margin-top: 0%;
+    background-color: $verde-principal;
+    height: 112px;
+    display: flex;
+    align-items: center;
+}
+.agroIa{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+h1{
+    color: $verde-musgo;
+    margin-left: 1%;
+    width: 10%;
+    margin: 0%; 
+}
+
