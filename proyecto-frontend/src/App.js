@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import { Route, Routes} from "react-router-dom";
+import AgregarCampo from './componentes/agregarCampo/agregarCampo';
+import EditarCampo from './componentes/editarCampo/editarCampo';
+import Home from './componentes/home/home';
+import IniciarSesion from './componentes/iniciarSesion/iniciarSesion';
+import Registrarse from './componentes/registrarse/registrarse';
+import Dashboards from './componentes/dashboards/dashboards';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+      <Routes>
+        <Route path="/user/agregarCampo" element={<AgregarCampo/>}/> 
+        <Route path="/user/editarCampo" element={<EditarCampo/>} /> 
+        <Route path="/user/home" element={<Home/>} /> 
+        <Route path="/iniciarSesion" element={<IniciarSesion/>} /> 
+        <Route path="/registrarse" element={<Registrarse/>} /> 
+        <Route path="/user/campo/dashboards" element={<Dashboards/>} /> 
+      </Routes>
+    
+      
     </div>
   );
 }
