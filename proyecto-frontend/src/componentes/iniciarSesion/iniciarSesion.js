@@ -60,7 +60,7 @@ export default function IniciarSesion() {
                 <div className='gradient-background'> 
                     <CosoVerde></CosoVerde>
                     <div className="white-rectangle">
-                        <span className="container-text">Inicia Sesion</span>
+                        <span className="container-text">Iniciá Sesion</span>
                         
                         <input
                         className="sub-rectangle"
@@ -79,9 +79,15 @@ export default function IniciarSesion() {
                         style={{ color: isInputPasswordFilled ? 'black' : '#888' }}
                         />
 
+                        <div className='espacio'></div>
+
                         <div className='green-text' onClick={() => navigate("../olvidoContra")}>¿Olvido su contraseña?</div>
 
+                        <div className='espacio'></div>
+
                         <button className="green-button" onClick={handleSubmit}>Iniciar Sesion</button>
+
+                        <div className='espacio'></div>
 
                         <div>
                             <text className='texto-normal'>¿No tienes una cuenta? </text> 
