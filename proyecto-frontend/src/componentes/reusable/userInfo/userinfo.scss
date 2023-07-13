@@ -1,0 +1,13 @@
+@import "../../../assets/global.scss";
+
+.userInfo{
+    @include alignHorizontally;
+    margin-right: 5%;
+}
+
+
+
+.userInfo h5{
+    width: 100%;
+    padding-inline-start: 1%;
+}

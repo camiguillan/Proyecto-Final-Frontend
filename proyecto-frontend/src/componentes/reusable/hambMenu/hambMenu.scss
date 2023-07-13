@@ -1,0 +1,112 @@
+@import "../../../assets/global.scss";
+
+.bm-menu {
+    background-color: $verde-oscuro;
+    padding: 2em 3em 0;
+    font-size: 1.15em;
+    height: 100%;
+    width: auto; 
+    overflow: hidden !important;   
+  }
+
+  .bm-menu-wrap{
+    position: fixed;
+    height: 100%;
+    overflow-y: hidden;
+}
+
+  .bm-item {
+    display: inline-block;
+    color: #fff;
+    padding: 0.5em;
+    text-decoration: none;
+  }
+  
+  .bm-burger-bars {
+    background: #fff;
+  }
+
+  .bm-burger-button {
+    position: fixed;
+    width: 36px;
+    height: 30px;
+    top: 36px;
+    right: 36px;
+  }
+
+
+
+
+  .bm-cross {
+    height: 3% !important;
+    width: 10% !important; 
+    color: white;
+    font-size: 200%;
+    border-radius: 10px !important;
+    align-content: center !important;
+    margin: 2% !important;
+  }
+  .bm-cross:hover {    
+    color: rgb(2, 78, 2);
+  }
+
+  .close-menu-icon {
+    color: white;
+    font-size: 150%;
+  }
+
+  .close-menu-icon:hover {
+    color: red; /* Replace 'red' with your desired hover color */
+  }
+
+  
+
+  .bm-overlay {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .menuNavItem{
+   padding-bottom: 1%;
+   border-radius: 10px;
+   transition: color 0.2s;
+   
+  }
+
+  .menuNavItem:hover{
+    cursor: pointer;
+    color: rgb(184, 216, 109);
+  
+}
+
+  .menuNav{
+    width: 100%;
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  
+  .cerrar-sesion-container{
+    background-color: transparent;    
+    width: 100%;
+    height: 5%;
+    position: relative;
+    margin-top: 250% !important;
+  }
+
+  .cerrar-sesion{
+    background-color: $verde-clarito !important;
+    color: $verde-musgo !important;
+    width: 90% !important;
+    border-radius: 10px !important;
+    border-color: $verde-musgo;
+    height: 100%;
+   
+    
+  }
+
+  .cerrar-sesion:hover{
+    background-color: $verde-principal  !important;
+    color: white !important;
+  }
+  
