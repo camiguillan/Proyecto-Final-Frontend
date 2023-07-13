@@ -11,8 +11,8 @@ export default function Header() {
        <AgroIcon></AgroIcon>
         <h1>AGROIA</h1>
       </div>
-      <div className='user'>
-      <HambMenu pageWrapId={"page-wrap"} outerContainerId={"header"}></HambMenu>
+      <div className='user' id= "user">
+      <HambMenu pageWrapId={"page-wrap"} outerContainerId={"user"}></HambMenu>
       <div id="page-wrap" className='bm-menu-wrap' ></div>
       </div>
     </header>

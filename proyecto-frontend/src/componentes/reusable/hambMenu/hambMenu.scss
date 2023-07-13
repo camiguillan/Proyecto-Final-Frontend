@@ -27,39 +27,51 @@
     right: 36px;
   }
 
+  .bm-cross {
+    background:  #073e1b;
+    
+  }
   
   .bm-cross-button {
-    height: 24px;
-    width: 24px;
+    height: 3% !important;
+    width: 10% !important;
+    //background-color: #073e1b;
+    border-radius: 10px !important;
+    align-content: center !important;
+    margin: 2% !important;
   }
 
   .bm-cross-button :hover{
-    border-color: #073e1b;
-    background-color: #073e1b;
+    //border-color: #73c491 !important;
+    //background-color: #7eb692 !important;
+    border-radius: 10px !important;
+  }
+  .bm-cross :hover {
+    background:  #073e1b !important;
   }
   
-  .bm-cross {
-    background: #ffffff;
-  }
 
   .bm-overlay {
     background: rgba(0, 0, 0, 0.3);
   }
 
   .menuNavItem{
-    @include alignHorizontally;
-    justify-content: space-around !important;
+   padding-bottom: 1%;
+   border-radius: 10px;
+   transition: color 0.2s;
    
   }
 
   .bm-menu-wrap{
     position: fixed;
     height: 100%;
+    overflow: auto;
 }
 
   .menuNavItem :hover{
     cursor: pointer;
-    color: rgb(255, 255, 134);
+    color: rgb(184, 216, 109);
+  
 }
 
   .menuNav{
@@ -67,5 +79,19 @@
     display: flex !important;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .cerrar-sesion{
+    background-color: $verde-clarito !important;
+    color: $verde-musgo !important;
+    width: 90% !important;
+    border-radius: 10px !important;
+    border-color: $verde-musgo;
+    
+  }
+
+  .cerrar-sesion :hover{
+    background-color: $verde-principal  !important;
+    color: "white" !important;
   }
   

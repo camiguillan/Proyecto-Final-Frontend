@@ -7,15 +7,17 @@ import PerfilIcon from '../../../assets/icons/perfilIcon';
 import AddIcon from '../../../assets/icons/addIcon';
 import EditIcon from '../../../assets/icons/editIcon';
 import UserInfo from '../userInfo/userInfo';
+import CloseIcon from '../../../assets/icons/closeIcon';
 
 
 export default function HambMenu(props) {
   const nav = useNavigate();
 
   return (
-      <Menu customBurgerIcon={<HambIcon />}
+      <Menu 
             burgerBarClassName='bm-burger-button'
             menuClassName="bm-menu"
+            customCrossIcon = {<CloseIcon></CloseIcon>}
             right 
             burgerButtonClassName = "bm-burger-button"   
             pageWrapId={ props.pageWrapId }   
@@ -35,8 +37,11 @@ export default function HambMenu(props) {
           <div className='menuNavItem'  onClick={()=>  nav( "/user/editarCampo")}>
             <h5>    <EditIcon></EditIcon> Editar Campo</h5>
           </div>
-      </div>
 
+          <div  >
+          <button  className='cerrar-sesion'>CERRAR SESION</button>
+          </div>
+      </div>
       </Menu>
   )
 }
