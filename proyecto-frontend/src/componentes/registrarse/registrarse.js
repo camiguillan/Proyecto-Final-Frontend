@@ -5,6 +5,10 @@ import ErrorModal from '../../errorFolder/errores';
 import Card from '../../errorFolder/card';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom'
+import CosoVerde from '../reusables_CF/coso_verde/coso_verde';
+import '../reusables_CF/white_container/white_container.scss'; //LA CAJA BLANCA Y EL TEXTO
+import '../reusables_CF/input_box/input_box.scss' // LAS CAJITAS DE TEXTO
+import '../reusables_CF/boton/boton.scss'
 
 export default function Registrarse() {
   const [ingresarNombre, setIngresarNombre] = useState('');
@@ -58,13 +62,11 @@ export default function Registrarse() {
     <Card className='input' >
     <form  onSubmit={handleSubmit}>
     <div className="gradient-background">
-      <div className="green-rectangle">
-        <span className="text">AGROIA</span>
-      </div>
+      <CosoVerde></CosoVerde>
       <div className="white-rectangle">
-        <span className="crea-usuario">Creá tu usuario</span>
+        <span className="container-text">Creá tu usuario</span>
         <input
-          className="sub-rectangle-first"
+          className="sub-rectangle"
           type="text"
           placeholder="Ingrese su nombre"
           value={ingresarNombre}
