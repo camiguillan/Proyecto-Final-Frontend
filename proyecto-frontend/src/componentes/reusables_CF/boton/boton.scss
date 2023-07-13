@@ -1,0 +1,13 @@
+@import '../../../assets/global.scss';
+
+.green-button {
+    background-color: $verde-oscuro;
+    color: white;
+    margin-top: 10px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: "Inter", sans-serif;
+  }
