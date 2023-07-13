@@ -53,7 +53,7 @@ export default function IniciarSesion() {
 
             <div>
                 <text className='texto-normal'>¿No tienes una cuenta? </text> 
-                <text className='registrate'>Regístrate!</text>
+                <text className='registrate' onClick={() => navigate("../registrarse")}>Regístrate!</text>
             </div>
             
         </div>
