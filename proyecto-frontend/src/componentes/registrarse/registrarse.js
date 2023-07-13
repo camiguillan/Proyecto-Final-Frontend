@@ -3,18 +3,24 @@ import '../../assets/global.scss';
 import '../background/background.scss';
 import ErrorModal from '../../errorFolder/errores';
 import Card from '../../errorFolder/card';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom'
 
 export default function Registrarse() {
   const [ingresarNombre, setIngresarNombre] = useState('');
   const [ingresarCorreo, setIngresarCorreo] = useState('');
   const [ingresarUsuario, setIngresarIngresarUsuario] = useState('');
   const [invalid, setInvalid] = useState(false);
+  const [invalid2, setInvalid2] = useState(false);
   const [ingresarContrasenia, setIngresarIngresarContrasenia] = useState('');
 
   const [error, setError] = useState({
     title: '',
     message: ''
   })
+
+  const navigate = useNavigate();
+
 
   const handleInputChange = (e, setIngresarNombre) => {
     setIngresarNombre(e.target.value);
@@ -32,15 +38,17 @@ export default function Registrarse() {
   function handleSubmit(e){
     e.preventDefault();
 
-    if(ingresarCorreo.trim().length === 0 || ingresarNombre.trim().length === 0 || ingresarUsuario.trim().length === 0){
+    if(ingresarCorreo.trim().length === 0 || ingresarNombre.trim().length === 0 || ingresarUsuario.trim().length === 0 || ingresarContrasenia.trim().length === 0){
       setError({
         title: 'Campo vacío',
         message: 'Faltó rellenar algún valor, revise el formulario y envíelo devuelta.'
       })
       setInvalid(true);
       return;
-    }
+    }else{navigate("../iniciarSesion")} return;
   }
+ 
+  
 
   return (
 
@@ -87,7 +95,8 @@ export default function Registrarse() {
           onChange={(e) => handleInputChange(e, setIngresarIngresarContrasenia)}
           style={{ color: isInputFilled4 ? 'black' : '#888' }}
         />
-        <button className="green-button">Registrarse</button>
+        <button className="green-button" onClick={handleSubmit}>Registrarse</button>
+
         
       </div>
       
