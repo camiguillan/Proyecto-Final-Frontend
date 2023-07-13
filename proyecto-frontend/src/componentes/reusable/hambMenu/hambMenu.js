@@ -1,5 +1,4 @@
 import React from 'react';
-import HambIcon from '../../../assets/icons/hambIcon';
 import { stack as Menu } from 'react-burger-menu';
 import "./hambMenu.scss";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +6,6 @@ import PerfilIcon from '../../../assets/icons/perfilIcon';
 import AddIcon from '../../../assets/icons/addIcon';
 import EditIcon from '../../../assets/icons/editIcon';
 import UserInfo from '../userInfo/userInfo';
-import CloseIcon from '../../../assets/icons/closeIcon';
 
 
 export default function HambMenu(props) {
@@ -17,8 +15,7 @@ export default function HambMenu(props) {
       <Menu 
             burgerBarClassName='bm-burger-button'
             crossButtonClassName='bi bi-x-circle bm-cross'
-            menuClassName="bm-menu"
-            // customCrossIcon = {<CloseIcon></CloseIcon>}
+            menuClassName="bm-menu"            
             right 
             burgerButtonClassName = "bm-burger-button"   
             pageWrapId={ props.pageWrapId }   

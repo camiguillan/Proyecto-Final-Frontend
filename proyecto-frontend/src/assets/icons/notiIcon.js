@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function NotiIcon() {
   return (
-    <i class="bi bi-bell-fill"></i>
+    <i className="bi bi-bell-fill"></i>
   )
 }
