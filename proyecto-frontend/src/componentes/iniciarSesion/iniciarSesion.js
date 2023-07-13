@@ -30,10 +30,11 @@ export default function IniciarSesion() {
         <CosoVerde></CosoVerde>
         <div className="white-rectangle">
             <span className="container-text">Inicia Sesion</span>
+            
             <input
             className="sub-rectangle"
             type="text"
-            placeholder="Ingrese su nombre de usuario"
+            placeholder="  Ingrese su nombre de usuario"
             value={inputUsername}
             onChange={(e) => handleInputChange(e, setInputUsername)}
             style={{ color: isInputUsernameFilled ? 'black' : '#888' }}
@@ -41,7 +42,7 @@ export default function IniciarSesion() {
             <input
             className="sub-rectangle"
             type="text"
-            placeholder="Ingrese su contraseña"
+            placeholder="  Ingrese su contraseña"
             value={inputPassword}
             onChange={(e) => handleInputChange(e, setInputPassword)}
             style={{ color: isInputPasswordFilled ? 'black' : '#888' }}
