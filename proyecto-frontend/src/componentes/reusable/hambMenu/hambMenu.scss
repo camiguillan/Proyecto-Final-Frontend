@@ -27,28 +27,43 @@
     right: 36px;
   }
 
-  .bm-cross {
-    background:  #073e1b;
-    
-  }
+
   
-  .bm-cross-button {
+  // .bm-cross-button {
+  //   
+  //   //background-color: #073e1b;
+
+  // }
+
+  // .bm-cross-button :hover{
+  //   border-color: #73c491 !important;
+  //   border:2px;
+  //   background-color: #7eb692 !important;
+  //   border-radius: 10px !important;
+  // }
+
+  .bm-cross {
     height: 3% !important;
-    width: 10% !important;
-    //background-color: #073e1b;
+    width: 10% !important; 
+    color: white;
+    font-size: 150%;
     border-radius: 10px !important;
     align-content: center !important;
     margin: 2% !important;
   }
+  .bm-cross:hover {    
+    color: rgb(2, 78, 2);
+  }
 
-  .bm-cross-button :hover{
-    //border-color: #73c491 !important;
-    //background-color: #7eb692 !important;
-    border-radius: 10px !important;
+  .close-menu-icon {
+    color: white;
+    font-size: 150%;
   }
-  .bm-cross :hover {
-    background:  #073e1b !important;
+
+  .close-menu-icon:hover {
+    color: red; /* Replace 'red' with your desired hover color */
   }
+
   
 
   .bm-overlay {
@@ -68,7 +83,7 @@
     overflow: auto;
 }
 
-  .menuNavItem :hover{
+  .menuNavItem:hover{
     cursor: pointer;
     color: rgb(184, 216, 109);
   
@@ -81,6 +96,11 @@
     align-items: flex-start;
   }
 
+  
+  .cerrar-sesion-container{
+    background-color: transparent;    
+  }
+
   .cerrar-sesion{
     background-color: $verde-clarito !important;
     color: $verde-musgo !important;
@@ -90,8 +110,8 @@
     
   }
 
-  .cerrar-sesion :hover{
+  .cerrar-sesion:hover{
     background-color: $verde-principal  !important;
-    color: "white" !important;
+    color: white !important;
   }
   

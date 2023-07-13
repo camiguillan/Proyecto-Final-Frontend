@@ -16,8 +16,9 @@ export default function HambMenu(props) {
   return (
       <Menu 
             burgerBarClassName='bm-burger-button'
+            crossButtonClassName='bi bi-x-circle bm-cross'
             menuClassName="bm-menu"
-            customCrossIcon = {<CloseIcon></CloseIcon>}
+            // customCrossIcon = {<CloseIcon></CloseIcon>}
             right 
             burgerButtonClassName = "bm-burger-button"   
             pageWrapId={ props.pageWrapId }   
@@ -38,7 +39,7 @@ export default function HambMenu(props) {
             <h5>    <EditIcon></EditIcon> Editar Campo</h5>
           </div>
 
-          <div  >
+          <div  className='cerrar-sesion-container'>
           <button  className='cerrar-sesion'>CERRAR SESION</button>
           </div>
       </div>
