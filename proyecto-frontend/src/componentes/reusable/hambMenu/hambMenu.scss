@@ -4,8 +4,10 @@
     background-color: $verde-oscuro;
     padding: 2em 3em 0;
     font-size: 1.15em;
+    height: 100%;
+    width: auto;
   }
-  
+
   .bm-item {
     display: inline-block;
     color: #fff;
@@ -13,19 +15,36 @@
     text-decoration: none;
   }
   
-
-  
   .bm-burger-bars {
+   
     background: #fff;
   }
+
+  .bm-burger-button {
+    position: fixed;
+    width: 36px;
+    height: 30px;
+    top: 36px;
+    right: 36px;
+  }
+
   
   .bm-cross-button {
     height: 24px;
     width: 24px;
   }
+
+  .bm-cross-button :hover{
+    border-color: #073e1b;
+    background-color: #073e1b;
+  }
   
   .bm-cross {
     background: #ffffff;
+  }
+
+  .bm-overlay {
+    background: rgba(0, 0, 0, 0.3);
   }
 
   .menuNavItem{
@@ -34,13 +53,18 @@
    
   }
 
+  .menu-wrap{
+    position: fixed;
+    height: 100%;
+    transition: "stack" !important ;
+}
+
   .menuNavItem :hover{
     cursor: pointer;
     color: rgb(255, 255, 134);
 }
 
   .menuNav{
-    padding-left: 1%;
     width: 100%;
   }
   

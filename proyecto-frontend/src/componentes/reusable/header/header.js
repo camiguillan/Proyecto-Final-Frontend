@@ -12,9 +12,8 @@ export default function Header() {
         <h1>AGROIA</h1>
       </div>
       <div className='user'>
-       
-        <HambMenu pageWrapId={"page-wrap"} outerContainerId={"header"}></HambMenu>
-        <div id="page-wrap"></div>
+      <HambMenu pageWrapId={"page-wrap"} outerContainerId={"header"}></HambMenu>
+      <div id="page-wrap"  ></div>
       </div>
     </header>
   )
