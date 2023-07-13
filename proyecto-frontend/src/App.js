@@ -6,7 +6,6 @@ import Home from './componentes/home/home';
 import IniciarSesion from './componentes/iniciarSesion/iniciarSesion';
 import Registrarse from './componentes/registrarse/registrarse';
 import Dashboards from './componentes/dashboards/dashboards';
-import OlvidoContra from './componentes/olvidoContra/olvidoContra';
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
         <Route path="/iniciarSesion" element={<IniciarSesion/>} /> 
         <Route path="/registrarse" element={<Registrarse/>} /> 
         <Route path="/user/campo/dashboards" element={<Dashboards/>} /> 
-        <Route path="/olvidoContra" element={<OlvidoContra/>} /> 
       </Routes>
     
       
