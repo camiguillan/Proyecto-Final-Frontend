@@ -87,6 +87,10 @@
   
   .cerrar-sesion-container{
     background-color: transparent;    
+    width: 100%;
+    height: 5%;
+    position: relative;
+    margin-top: 250% !important;
   }
 
   .cerrar-sesion{
@@ -95,6 +99,8 @@
     width: 90% !important;
     border-radius: 10px !important;
     border-color: $verde-musgo;
+    height: 100%;
+   
     
   }
 

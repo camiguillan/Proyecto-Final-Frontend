@@ -11,6 +11,10 @@ import UserInfo from '../userInfo/userInfo';
 export default function HambMenu(props) {
   const nav = useNavigate();
 
+  function handleCerrarSesion(){
+    console.log("hola");
+  }
+
   return (
       <Menu 
             burgerBarClassName='bm-burger-button'
@@ -36,10 +40,10 @@ export default function HambMenu(props) {
             <h5>    <EditIcon></EditIcon> Editar Campo</h5>
           </div>
 
-          <div  className='cerrar-sesion-container'>
-          <button  className='cerrar-sesion'>CERRAR SESION</button>
-          </div>
       </div>
+          <div  className='cerrar-sesion-container'>
+          <button onClick={handleCerrarSesion} className='cerrar-sesion'>CERRAR SESION</button>
+          </div>
       </Menu>
   )
 }
