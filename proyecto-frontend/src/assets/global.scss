@@ -10,3 +10,11 @@ $verde-musgo: #464E47;
 $verde-claro-iniciar-sesion: #CCFCCB;
 $verde-intermedio-iniciar-sesion: #96E6B3;
 $verde-oscuro-iniciar-sesion: $verde-oscuro;
+
+
+@mixin alignHorizontally{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+}

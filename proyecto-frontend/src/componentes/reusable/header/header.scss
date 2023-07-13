@@ -7,12 +7,11 @@ header{
     height: 112px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 .agroIa{
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-evenly;
+    @include alignHorizontally;
+   
 }
 
 h1{
@@ -20,5 +19,10 @@ h1{
     margin-left: 1%;
     width: 10%;
     margin: 0%; 
+}
+
+.user{
+    margin-right: 1%;
+    @include alignHorizontally;
 }
 

@@ -1,0 +1,46 @@
+@import "../../../assets/global.scss";
+
+.bm-menu {
+    background-color: $verde-oscuro;
+    padding: 2em 3em 0;
+    font-size: 1.15em;
+  }
+  
+  .bm-item {
+    display: inline-block;
+    color: #fff;
+    padding: 0.5em;
+    text-decoration: none;
+  }
+  
+
+  
+  .bm-burger-bars {
+    background: #fff;
+  }
+  
+  .bm-cross-button {
+    height: 24px;
+    width: 24px;
+  }
+  
+  .bm-cross {
+    background: #ffffff;
+  }
+
+  .menuNavItem{
+    @include alignHorizontally;
+    justify-content: space-around !important;
+   
+  }
+
+  .menuNavItem :hover{
+    cursor: pointer;
+    color: rgb(255, 255, 134);
+}
+
+  .menuNav{
+    padding-left: 1%;
+    width: 100%;
+  }
+  
