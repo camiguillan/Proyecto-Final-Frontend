@@ -13,7 +13,7 @@ export default function Header() {
       </div>
       <div className='user'>
       <HambMenu pageWrapId={"page-wrap"} outerContainerId={"header"}></HambMenu>
-      <div id="page-wrap"  ></div>
+      <div id="page-wrap" className='bm-menu-wrap' ></div>
       </div>
     </header>
   )

@@ -16,7 +16,6 @@
   }
   
   .bm-burger-bars {
-   
     background: #fff;
   }
 
@@ -53,10 +52,9 @@
    
   }
 
-  .menu-wrap{
+  .bm-menu-wrap{
     position: fixed;
     height: 100%;
-    transition: "stack" !important ;
 }
 
   .menuNavItem :hover{
@@ -66,5 +64,8 @@
 
   .menuNav{
     width: 100%;
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start;
   }
   
