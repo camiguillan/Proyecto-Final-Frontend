@@ -1,0 +1,79 @@
+@import '../../assets/global.scss';
+
+.gradient-background {
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(to bottom,
+      #{$verde-claro-iniciar-sesion},
+      #{$verde-intermedio-iniciar-sesion},
+      #{$verde-oscuro-iniciar-sesion});
+  }
+
+  .green-rectangle {
+    background-color: $verde-principal;
+    height: 10vh; /* Ajusta el tamaño vertical */
+    width: 35vh; /* Ajusta el tamaño horizontal */
+    margin: 0 auto; /* Centra horizontalmente */
+    position: absolute;
+    top: 5vh; /* Ajusta la distancia con el rectángulo blanco */
+    left: 0;
+    right: 0;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .white-rectangle {
+    background-color: white;
+    height: 70vh;
+    width: 60vh;
+    margin: auto;
+    position: absolute;
+    top: 20vh;
+    left: 0;
+    right: 0;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; 
+    box-shadow: 20px 0px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .text {
+    font-size: 40px;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+    color: #333;
+    transform: translateX(35px);
+  }
+
+  .crea-usuario {
+    font-size: 40px; /* Tamaño de letra de 40 */
+    font-family: "Inter", sans-serif; /* Tipo de letra Inter */
+    text-align: center; /* Centrado horizontal */
+    position: absolute;
+    top: 3vh; /* Ajusta la distancia desde la parte superior */
+    left: 0;
+    right: 0;
+  }
+
+  .sub-rectangle {
+    height: 45px;
+    width: 45vh;
+    background-color: $verde-claro-iniciar-sesion;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .sub-rectangle-first {
+    height: 45px;
+    width: 45vh;
+    background-color:$verde-claro-iniciar-sesion;
+    margin-bottom: 30px;
+    margin-top: 100px; /* Separación del primer sub-rectangle */
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
