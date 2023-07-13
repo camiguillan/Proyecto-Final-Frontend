@@ -5,8 +5,15 @@
     padding: 2em 3em 0;
     font-size: 1.15em;
     height: 100%;
-    width: auto;
+    width: auto; 
+    overflow: hidden !important;   
   }
+
+  .bm-menu-wrap{
+    position: fixed;
+    height: 100%;
+    overflow-y: hidden;
+}
 
   .bm-item {
     display: inline-block;
@@ -64,12 +71,6 @@
    transition: color 0.2s;
    
   }
-
-  .bm-menu-wrap{
-    position: fixed;
-    height: 100%;
-    overflow: auto;
-}
 
   .menuNavItem:hover{
     cursor: pointer;

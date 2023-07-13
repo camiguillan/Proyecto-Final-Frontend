@@ -23,9 +23,9 @@ export default function HambMenu(props) {
             right 
             burgerButtonClassName = "bm-burger-button"   
             pageWrapId={ props.pageWrapId }   
-            overlayClassName={props.outerContainerId}  
+            overlayClassName={props.outerContainerId}            
             >
-        <div   className=" menuNav" >
+        <div   className="menuNav" >
         <UserInfo></UserInfo>
           <div className='menuNavItem'  onClick={()=>  nav( "/")}>
           <h5> <PerfilIcon></PerfilIcon>  Editar Perfil</h5>
