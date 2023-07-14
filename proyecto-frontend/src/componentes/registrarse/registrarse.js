@@ -6,7 +6,7 @@ import Card from '../../errorFolder/card';
 import {useNavigate} from 'react-router-dom'
 import CosoVerde from '../reusables_CF/coso_verde/coso_verde';
 import '../reusables_CF/white_container/white_container.scss'; //LA CAJA BLANCA Y EL TEXTO
-import '../reusables_CF/input_box/input_box.scss' // LAS CAJITAS DE TEXTO
+import '../reusable/input_box/input_box.scss' // LAS CAJITAS DE TEXTO
 import '../reusables_CF/boton/boton.scss'
 
 export default function Registrarse() {
