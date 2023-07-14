@@ -3,7 +3,7 @@
 
 .agregar-campo-titulo {
   color: $verde-musgo;
-  width: 100%;
+  width: 80%;
   margin: 2% 5%;
   text-align: left;
 }
@@ -20,15 +20,22 @@
 
 .tarjetas {
   display: flex;
+  gap:10px;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 2vh;
+  
 }
 
 .botones {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: flex-end;
-  grid-template-columns: repeat(2, auto);
+  gap:10px;
   column-gap: 2vh;
-  margin-right: 2vh;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 5vh;
 }
 
 

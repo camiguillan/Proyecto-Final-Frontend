@@ -4,7 +4,7 @@ import "./boton.scss";
 export default function Boton(props) {
   return (
     <div>
-        <button className="green-button" onClick={() => props.handleSubmit()}>{props.text}</button>        
+        <button type={props.type || 'button'} className={`green-button ${props.className}`} onClick={() => props.onClick()}>{props.text}</button>        
     </div>
   )
 }

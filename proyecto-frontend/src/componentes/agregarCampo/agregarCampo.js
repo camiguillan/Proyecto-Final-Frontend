@@ -6,7 +6,8 @@ import "./agregarCampo.scss";
 import Card from '../reusable/card/card';
 import Input from '../reusable/input_box/input';
 import { useState } from 'react';
-import Boton from '../reusable/boton/boton';  
+import Boton from '../reusable/boton/boton'; 
+import { useNavigate } from 'react-router-dom'; 
 
 
 export default function AgregarCampo() {
@@ -14,6 +15,7 @@ export default function AgregarCampo() {
   const [ancho, setAncho] =  useState("");
   const [largo, setLargo] = useState("");
   const [imagen, setImagen] = useState("");
+  const nav = useNavigate();
 
 
   return (
@@ -49,7 +51,7 @@ export default function AgregarCampo() {
       </Card>
       </div>
       <div className='botones'>
-      <Boton onClick={() => console.log("")  } text={"Cancelar"}   ></Boton>
+      <Boton onClick={() => nav("/user/home") } text={"Cancelar"} className={"cancelar"}  ></Boton>
       <Boton onClick={() => console.log("")  } text={"Siguiente"}   ></Boton>
       </div>
     </div>

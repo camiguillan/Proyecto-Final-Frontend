@@ -6,13 +6,25 @@
     margin: 0.5%;
     margin-top: 10px;
     padding: 10px 30px;
-    border: none;
     border-radius: 10px;
     cursor: pointer;
     font-size: 20px;
+    border: solid;
+    border-style: 1px $verde-oscuro; 
     font-family: "Inter", sans-serif;
   }
 
   .green-button:hover{
     background-color: $verde-principal;
+  }
+
+  .cancelar{
+    background-color: white !important;
+    color: $verde-oscuro !important;
+  }
+
+  .cancelar:hover{
+    background-color: $verde-principal !important;
+    color: white  !important;
+    border-style: $verde-principal !important;
   }

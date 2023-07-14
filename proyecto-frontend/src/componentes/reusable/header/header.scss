@@ -9,9 +9,13 @@ header{
     align-items: center;
     justify-content: space-between;
 }
+
 .agroIa{
     @include alignHorizontally;
-   
+}
+
+.agroIa:hover{
+    cursor: pointer;
 }
 
 h1{
