@@ -3,7 +3,6 @@ import '../../assets/global.scss';
 import '../background/background.scss';
 import ErrorModal from '../../errorFolder/errores';
 import Card from '../../errorFolder/card';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom'
 import CosoVerde from '../reusables_CF/coso_verde/coso_verde';
 import '../reusables_CF/white_container/white_container.scss'; //LA CAJA BLANCA Y EL TEXTO
@@ -56,12 +55,12 @@ export default function Registrarse() {
 
   return (
 
-    <div>
+    <div className="gradient-background">
 
     {invalid && <ErrorModal title={error.title} message={error.message} onClick ={okay} ></ErrorModal>}
-    <Card className='input' >
+    <Card >
     <form  onSubmit={handleSubmit}>
-    <div className="gradient-background">
+    <div >
       <CosoVerde></CosoVerde>
       <div className="white-rectangle">
         <span className="container-text">Creá tu usuario</span>
@@ -97,9 +96,7 @@ export default function Registrarse() {
           onChange={(e) => handleInputChange(e, setIngresarIngresarContrasenia)}
           style={{ color: isInputFilled4 ? 'black' : '#888' }}
         />
-        <button className="green-button" onClick={handleSubmit}>Registrarse</button>
-
-        
+        <button className="green-button" onClick={handleSubmit}>Registrarse</button>        
       </div>
       
     </div>

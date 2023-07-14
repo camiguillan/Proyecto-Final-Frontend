@@ -17,18 +17,20 @@
     overflow: hidden;
   }
   
-  .header {
-    background: #439775;
-    padding: 1rem;
+  .header-error {
+    background: #439775; 
   }
   
-  .header h2 {
-    margin: 0;
+  .header-error h2 {
     color: white;
+    text-align: center;
+    margin: auto;
+
   }
   
   .content {
     padding: 1rem;
+    font-size: 2vh;
   }
   
   .actions {

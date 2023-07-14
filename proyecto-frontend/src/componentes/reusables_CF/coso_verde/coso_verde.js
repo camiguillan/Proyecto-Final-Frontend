@@ -1,14 +1,14 @@
 import React from 'react';
 import "./coso_verde.scss";
-//import AgroIcon from '../../../assets/icons/agroIcon'; ->DESCOMENTAR CUANDO ESTE EL ICON
+import AgroIcon from '../../../assets/icons/agroIcon'; 
 
 
-//<AgroIcon></AgroIcon> -> DESCOMENTAR CUANDO ESTE EL ICON Y AGREGAR
+
 export default function CosoVerde() {
     return (
         <div className="green-rectangle">
-            
-            <span className="text">AGROIA</span>
+            <AgroIcon></AgroIcon>
+            <span className="text"> AGROIA</span>
         </div>
     )
   }

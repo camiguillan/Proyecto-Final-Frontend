@@ -11,7 +11,7 @@ export default function ErrorModal(props) {
     <div>
       <div  className='backdrop' onClick={props.onClick}></div>
     <Card className='modal'   >
-    <header className='header'>
+    <header className='header-error'>
       <h2> {props.title} </h2>
     </header>
     <div className='content' >

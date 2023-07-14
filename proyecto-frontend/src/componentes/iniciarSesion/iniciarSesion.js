@@ -53,11 +53,11 @@ export default function IniciarSesion() {
      
 
     return (
-    <div>
+    <div className='gradient-background'>
     {invalid && <ErrorModal title={error.title} message={error.message} onClick ={okay} ></ErrorModal>}
-        <Card className='input' >
+        <Card >
             <form  onSubmit={handleSubmit}>
-                <div className='gradient-background'> 
+                <div > 
                     <CosoVerde></CosoVerde>
                     <div className="white-rectangle">
                         <span className="container-text">Iniciá Sesion</span>
