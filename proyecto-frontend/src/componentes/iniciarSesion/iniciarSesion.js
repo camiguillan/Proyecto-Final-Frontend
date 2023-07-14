@@ -3,7 +3,7 @@ import '../../assets/global.scss';
 import '../background/background.scss';
 import '../iniciarSesion/iniciarSesion.scss'
 import '../reusable/input_box/input_box.scss'
-import '../reusables_CF/boton/boton.scss'
+import '../reusable/boton/boton.scss'
 import CosoVerde from '../reusables_CF/coso_verde/coso_verde';
 import '../reusables_CF/white_container/white_container.scss';
 import {useNavigate} from 'react-router-dom'

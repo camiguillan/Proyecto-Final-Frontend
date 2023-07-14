@@ -6,7 +6,7 @@ import "./agregarCampo.scss";
 import Card from '../reusable/card/card';
 import Input from '../reusable/input_box/input';
 import { useState } from 'react';
-import SearchIcon from '../../assets/icons/searchIcon';
+import Boton from '../reusable/boton/boton';  
 
 
 export default function AgregarCampo() {
@@ -16,9 +16,8 @@ export default function AgregarCampo() {
   const [imagen, setImagen] = useState("");
 
 
-
   return (
-    <div>
+    <div className='layout'>
       <Header></Header>
       <h1 className='agregar-campo-titulo'> <AddIcon></AddIcon> AGREGAR CAMPO</h1>
       <div className='tarjetas'>
@@ -49,8 +48,9 @@ export default function AgregarCampo() {
         </div>
       </Card>
       </div>
-      <div>
-      
+      <div className='botones'>
+      <Boton onClick={() => console.log("")  } text={"Cancelar"}   ></Boton>
+      <Boton onClick={() => console.log("")  } text={"Siguiente"}   ></Boton>
       </div>
     </div>
   )

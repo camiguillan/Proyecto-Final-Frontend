@@ -3,6 +3,7 @@
 .green-button {
     background-color: $verde-oscuro;
     color: white;
+    margin: 0.5%;
     margin-top: 10px;
     padding: 10px 30px;
     border: none;
@@ -10,4 +11,8 @@
     cursor: pointer;
     font-size: 20px;
     font-family: "Inter", sans-serif;
+  }
+
+  .green-button:hover{
+    background-color: $verde-principal;
   }
