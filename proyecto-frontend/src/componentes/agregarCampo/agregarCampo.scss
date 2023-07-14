@@ -1,10 +1,42 @@
 @import "../../assets/global.scss";
 
 
-
-
-.agregar-campo-titulo{
-    color: $verde-musgo;
+.agregar-campo-titulo {
+  color: $verde-musgo;
+  width: 80%;
+  margin: 2% 5%;
+  text-align: left;
 }
+
+.foto {
+  background-color: $verde-clarito;
+  text-align: center;
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 10px;
+  height: 15vh;
+  width: 45vh;
+  margin-left: 4%;
+}
+
+.tarjetas {
+  display: flex;
+  gap:10px;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 2vh;
+  
+}
+
+.botones {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap:10px;
+  column-gap: 2vh;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 5vh;
+}
+
 
 

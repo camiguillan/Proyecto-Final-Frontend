@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../../assets/global.scss';
-import '../white_container/white_container.scss';
+import './white_container.scss';
 
 
 

@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import '../../assets/global.scss';
 import '../background/background.scss';
-import ErrorModal from '../../errorFolder/errores';
-import Card from '../../errorFolder/card';
+import ErrorModal from '../reusable/errorFolder/errores';
+import Card from '../reusable/errorFolder/card';
 import {useNavigate} from 'react-router-dom'
-import CosoVerde from '../reusables_CF/coso_verde/coso_verde';
-import '../reusables_CF/white_container/white_container.scss'; //LA CAJA BLANCA Y EL TEXTO
-import '../reusables_CF/input_box/input_box.scss' // LAS CAJITAS DE TEXTO
-import '../reusables_CF/boton/boton.scss'
+import CosoVerde from '../reusable/coso_verde/coso_verde';
+import '../reusable/white_container/white_container.scss'; //LA CAJA BLANCA Y EL TEXTO
+import '../reusable/input_box/input_box.scss' // LAS CAJITAS DE TEXTO
+import '../reusable/boton/boton.scss'
 
 export default function Registrarse() {
   const [ingresarNombre, setIngresarNombre] = useState('');
   const [ingresarCorreo, setIngresarCorreo] = useState('');
   const [ingresarUsuario, setIngresarIngresarUsuario] = useState('');
   const [invalid, setInvalid] = useState(false);
-  const [invalid2, setInvalid2] = useState(false);
+  //const [invalid2, setInvalid2] = useState(false);
   const [ingresarContrasenia, setIngresarIngresarContrasenia] = useState('');
 
   const [error, setError] = useState({
@@ -48,7 +48,10 @@ export default function Registrarse() {
       })
       setInvalid(true);
       return;
-    }else{navigate("../iniciarSesion")} return;
+    }else{
+      navigate("../iniciarSesion")
+    } 
+    return;
   }
  
   
@@ -96,7 +99,7 @@ export default function Registrarse() {
           onChange={(e) => handleInputChange(e, setIngresarIngresarContrasenia)}
           style={{ color: isInputFilled4 ? 'black' : '#888' }}
         />
-        <button className="green-button" onClick={handleSubmit}>Registrarse</button>        
+        <button type='submit' className="green-button" onClick={handleSubmit}>Registrarse</button>        
       </div>
       
     </div>

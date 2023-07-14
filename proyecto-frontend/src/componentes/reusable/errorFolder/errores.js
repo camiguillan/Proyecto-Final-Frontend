@@ -1,7 +1,7 @@
 import React from 'react';
 import './error.scss';
 import Card from './card';
-import { useState } from 'react';
+//import { useState } from 'react';
 import Button from './button';
 
 export default function ErrorModal(props) {

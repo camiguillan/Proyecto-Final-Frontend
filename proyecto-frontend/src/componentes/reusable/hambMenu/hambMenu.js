@@ -12,7 +12,7 @@ export default function HambMenu(props) {
   const nav = useNavigate();
 
   function handleCerrarSesion(){
-    console.log("hola");
+    nav( "/iniciarSesion"); 
   }
 
   return (
