@@ -6,7 +6,6 @@ import '../reusables_CF/input_box/input_box.scss'
 import '../reusables_CF/boton/boton.scss'
 import CosoVerde from '../reusables_CF/coso_verde/coso_verde';
 import '../reusables_CF/white_container/white_container.scss';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom'
 import ErrorModal from '../../errorFolder/errores';
 import Card from '../../errorFolder/card';
@@ -17,7 +16,7 @@ export default function IniciarSesion() {
     const [inputUsername, setInputUsername] = useState('');
     const [inputPassword, setInputPassword] = useState('');
     const [invalid, setInvalid] = useState(false);
-    const [invalid2, setInvalid2] = useState(false);
+    //const [invalid2, setInvalid2] = useState(false);
   
     const [error, setError] = useState({
       title: '',

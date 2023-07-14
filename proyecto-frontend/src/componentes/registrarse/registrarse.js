@@ -14,7 +14,7 @@ export default function Registrarse() {
   const [ingresarCorreo, setIngresarCorreo] = useState('');
   const [ingresarUsuario, setIngresarIngresarUsuario] = useState('');
   const [invalid, setInvalid] = useState(false);
-  const [invalid2, setInvalid2] = useState(false);
+  //const [invalid2, setInvalid2] = useState(false);
   const [ingresarContrasenia, setIngresarIngresarContrasenia] = useState('');
 
   const [error, setError] = useState({
