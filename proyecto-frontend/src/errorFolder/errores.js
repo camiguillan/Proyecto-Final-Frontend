@@ -1,5 +1,5 @@
 import React from 'react';
-import './error.css';
+import './error.scss';
 import Card from './card';
 import { useState } from 'react';
 import Button from './button';
