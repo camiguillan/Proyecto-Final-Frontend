@@ -5,10 +5,10 @@ import '../iniciarSesion/iniciarSesion.scss'
 import '../reusable/input_box/input_box.scss'
 import '../reusable/boton/boton.scss'
 import CosoVerde from '../reusables_CF/coso_verde/coso_verde';
-import '../reusables_CF/white_container/white_container.scss';
+import '../reusable/white_container/white_container.scss';
 import {useNavigate} from 'react-router-dom'
-import ErrorModal from '../../errorFolder/errores';
-import Card from '../../errorFolder/card';
+import ErrorModal from '../reusable/errorFolder/errores';
+import Card from '../reusable/errorFolder/card';
 
 
 export default function IniciarSesion() {
