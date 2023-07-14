@@ -4,7 +4,7 @@ import '../background/background.scss';
 import '../iniciarSesion/iniciarSesion.scss'
 import '../reusable/input_box/input_box.scss'
 import '../reusable/boton/boton.scss'
-import CosoVerde from '../reusables_CF/coso_verde/coso_verde';
+import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss';
 import {useNavigate} from 'react-router-dom'
 import ErrorModal from '../reusable/errorFolder/errores';
