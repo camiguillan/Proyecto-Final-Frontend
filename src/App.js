@@ -1,5 +1,6 @@
 import './App.css';
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes } from 'react-router-dom';
+import React from 'react';
 import AgregarCampo from './componentes/agregarCampo/agregarCampo';
 import EditarCampo from './componentes/editarCampo/editarCampo';
 import Home from './componentes/home/home';
@@ -11,18 +12,16 @@ import OlvidoContra from './componentes/olvidoContra/olvidoContra';
 function App() {
   return (
     <div className="App">
-      
       <Routes>
-        <Route path="/user/agregarCampo" element={<AgregarCampo/>}/> 
-        <Route path="/user/editarCampo" element={<EditarCampo/>} /> 
-        <Route path="/user/home" element={<Home/>} /> 
-        <Route path="/iniciarSesion" element={<IniciarSesion/>} /> 
-        <Route path="/registrarse" element={<Registrarse/>} /> 
-        <Route path="/user/campo/dashboards" element={<Dashboards/>} /> 
-        <Route path="/olvidoContra" element={<OlvidoContra/>} /> 
+        <Route path="/" element={<IniciarSesion />} />
+        <Route path="/user/agregarCampo" element={<AgregarCampo />} />
+        <Route path="/user/editarCampo" element={<EditarCampo />} />
+        <Route path="/user/home" element={<Home />} />
+        <Route path="/iniciarSesion" element={<IniciarSesion />} />
+        <Route path="/registrarse" element={<Registrarse />} />
+        <Route path="/user/campo/dashboards" element={<Dashboards />} />
+        <Route path="/olvidoContra" element={<OlvidoContra />} />
       </Routes>
-    
-      
     </div>
   );
 }
