@@ -10,6 +10,7 @@
     "bootstrap": "^5.3.0",
     "bootstrap-icons": "^1.10.5",
     "dotenv": "^16.3.1",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-burger-menu": "^3.0.9",
     "react-dom": "^18.2.0",
@@ -22,7 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint-fix": "eslint . --fix"
   },
   "eslintConfig": {
     "extends": [

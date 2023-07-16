@@ -1,8 +1,8 @@
 import React from 'react';
 import './header.scss';
 import { useNavigate } from 'react-router-dom';
-import AgroIcon from '../../../assets/icons/agroIcon';
 import HambMenu from '../hambMenu/hambMenu';
+import Icon from '../../../assets/icons/icon';
 
 export default function Header() {
   const nav = useNavigate();
@@ -12,7 +12,7 @@ export default function Header() {
       <HambMenu pageWrapId="page-wrap" outerContainerId="user" />
       <header id="header">
         <div className="agroIa" onClick={() => nav('/user/home')}>
-          <AgroIcon />
+          <Icon className="bi bi-flower1" color="white" fontSize="6vh" />
           <h1>AGROIA</h1>
         </div>
         <div className="user" id="user">

@@ -4,11 +4,10 @@ import '../../assets/global.scss';
 import '../background/background.scss';
 import { useNavigate } from 'react-router-dom';
 import ErrorModal from '../reusable/errorFolder/errores';
-import Card from '../reusable/errorFolder/card';
 import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
-import '../reusable/boton/boton.scss';
+import Button from '../reusable/boton/button';
 
 export default function OlvidoContra() {
   const [ingresarCorreo, setIngresarCorreo] = useState('');
@@ -48,29 +47,28 @@ export default function OlvidoContra() {
     <div className="gradient-background">
 
       {invalid && <ErrorModal title={error.title} message={error.message} onClick={okay} />}
-      <Card>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <CosoVerde />
-            <div className="small-white-rectangle">
-              <span className="container-text">Recuperar contraseña</span>
-              <input
-                className="sub-rectangle"
-                type="text"
-                placeholder="Ingrese su correo electrónico"
-                value={ingresarCorreo}
-                onChange={(e) => handleInputChange(e, setIngresarCorreo)}
-                style={{ color: isInputFilled2 ? 'black' : '#888' }}
-              />
-              <button type="submit" className="green-button">
-                <span className="button-text">Enviar link de</span>
-                <span className="button-text">recuperación</span>
-              </button>
-            </div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <CosoVerde />
+          <div className="small-white-rectangle">
+            <span className="container-text">Recuperar contraseña</span>
+            <input
+              className="sub-rectangle"
+              type="text"
+              placeholder="Ingrese su correo electrónico"
+              value={ingresarCorreo}
+              onChange={(e) => handleInputChange(e, setIngresarCorreo)}
+              style={{ color: isInputFilled2 ? 'black' : '#888' }}
+            />
+            <Button type="submit" className="green-button">
+              <span className="button-text">Enviar link de</span>
+              <span className="button-text">recuperación</span>
 
+            </Button>
           </div>
-        </form>
-      </Card>
+
+        </div>
+      </form>
     </div>
 
   );
