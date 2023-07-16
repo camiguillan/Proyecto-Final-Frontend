@@ -1,3 +1,7 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable padded-blocks */
+/* eslint-disable no-unused-vars */
+/* eslint-disable linebreak-style */
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import React from 'react';
@@ -8,6 +12,7 @@ import IniciarSesion from './componentes/iniciarSesion/iniciarSesion';
 import Registrarse from './componentes/registrarse/registrarse';
 import Dashboards from './componentes/dashboards/dashboards';
 import OlvidoContra from './componentes/olvidoContra/olvidoContra';
+import EditarPerfil from './componentes/editarPerfil/editarPerfil';
 
 function App() {
   return (
@@ -21,6 +26,7 @@ function App() {
         <Route path="/registrarse" element={<Registrarse />} />
         <Route path="/user/campo/dashboards" element={<Dashboards />} />
         <Route path="/olvidoContra" element={<OlvidoContra />} />
+        <Route path="/user/editarPerfil" element={<EditarPerfil />} />
       </Routes>
     </div>
   );

@@ -30,3 +30,35 @@
     margin-bottom: 30px;
     margin-top: 20px;
   }
+
+  .invisible-white-rectangle {
+    background-color: white;
+    height: 70vh;
+    width: 60vh;
+    margin: auto;
+    position: absolute;
+    top: 20vh;
+    left: 0;
+    right: 0;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; 
+  }
+
+  .small-white-rectangle {
+    background-color: white;
+    height: 35vh;
+    width: 60vh;
+    margin: auto;
+    position: absolute;
+    top: 20vh;
+    left: 0;
+    right: 0;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; 
+  }  
