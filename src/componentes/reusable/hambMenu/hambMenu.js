@@ -1,13 +1,12 @@
 import React from 'react';
 import { stack as Menu } from 'react-burger-menu';
+import PropTypes from 'prop-types';
 import './hambMenu.scss';
 import { useNavigate } from 'react-router-dom';
-import PerfilIcon from '../../../assets/icons/perfilIcon';
-import AddIcon from '../../../assets/icons/addIcon';
-import EditIcon from '../../../assets/icons/editIcon';
 import UserInfo from '../userInfo/userInfo';
+import Icon from '../../../assets/icons/icon';
 
-export default function HambMenu(props) {
+export default function HambMenu({ pageWrapId, outerContainerId }) {
   const nav = useNavigate();
 
   function handleCerrarSesion() {
@@ -21,15 +20,15 @@ export default function HambMenu(props) {
       menuClassName="bm-menu"
       right
       burgerButtonClassName="bm-burger-button"
-      pageWrapId={props.pageWrapId}
-      overlayClassName={props.outerContainerId}
+      pageWrapId={pageWrapId}
+      overlayClassName={outerContainerId}
     >
       <div className="menuNav">
         <UserInfo />
         <div className="menuNavItem" onClick={() => nav('/')}>
           <h5>
             {' '}
-            <PerfilIcon />
+            <Icon iconType="bi bi-person-fill" color="white" />
             {' '}
             Editar Perfil
           </h5>
@@ -39,7 +38,7 @@ export default function HambMenu(props) {
 
           <h5>
             {' '}
-            <AddIcon />
+            <Icon iconType="bi bi-plus-square" color="white" />
             {' '}
             Agregar Campo
           </h5>
@@ -48,7 +47,7 @@ export default function HambMenu(props) {
         <div className="menuNavItem" onClick={() => nav('/user/editarCampo')}>
           <h5>
             {' '}
-            <EditIcon />
+            <Icon iconType="bi bi-pencil-square" color="white" />
             {' '}
             Editar Campo
           </h5>
@@ -61,3 +60,8 @@ export default function HambMenu(props) {
     </Menu>
   );
 }
+
+HambMenu.propTypes = {
+  pageWrapId: PropTypes.string.isRequired,
+  outerContainerId: PropTypes.string.isRequired,
+};

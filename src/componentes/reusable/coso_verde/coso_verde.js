@@ -1,11 +1,11 @@
 import React from 'react';
 import './coso_verde.scss';
-import AgroIcon from '../../../assets/icons/agroIcon';
+import Icon from '../../../assets/icons/icon';
 
 export default function CosoVerde() {
   return (
     <div className="green-rectangle">
-      <AgroIcon />
+      <Icon className="bi bi-flower1" color="white" />
       <span className="text"> AGROIA</span>
     </div>
   );

@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../reusable/header/header';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import AddIcon from '../../assets/icons/addIcon';
 import './agregarCampo.scss';
 import Card from '../reusable/card/card';
 import Input from '../reusable/input_box/input';
 import Boton from '../reusable/boton/boton';
+import Icon from '../../assets/icons/icon';
 
 export default function AgregarCampo() {
   const [nombreCampo, setNombreCampo] = useState('');
@@ -21,7 +21,7 @@ export default function AgregarCampo() {
       <Header />
       <h1 className="agregar-campo-titulo">
         {' '}
-        <AddIcon />
+        <Icon iconType="bi bi-plus-square" color="#464E47" />
         {' '}
         AGREGAR CAMPO
       </h1>

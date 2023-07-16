@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../../../assets/global.scss';
 import './white_container.scss';
 
