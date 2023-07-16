@@ -9,9 +9,6 @@
     width: 50vh;
 }
 
-
-
-
 .input {
     margin: 2rem auto;
     padding: 1rem;
@@ -23,21 +20,13 @@
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
-  
-/*
-  .input input {
-    font: inherit;
-    width: 100%;
-    display: inline-block;
-    border: 1px solid #ccc;
-    margin-bottom: 0.5rem;
-    border-radius: 5px;
-    margin-right: 0.5rem;
-  }
-  
-  .input input:focus {
-    outline: none;
-    border-color: #24472b;
-  }
 
-*/  
+
+  .card{
+    background-color: #F1FFFA;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.26) ;
+    border-radius: 10px;
+    align-content: center;
+    align-self: center;
+}
+  

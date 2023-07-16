@@ -1,15 +1,15 @@
 import React from 'react';
 import './error.scss';
 import PropTypes from 'prop-types';
-import Card from './card';
+import Card from '../card/card';
 // import { useState } from 'react';
-import Button from './button';
+import Button from '../boton/button';
 
 export default function ErrorModal({ onClick, title, message }) {
   return (
     <div>
       <div className="backdrop" onClick={onClick} />
-      <Card className="modal">
+      <Card className=" card modal">
         <header className="header-error">
           <h2>
             {' '}
@@ -24,7 +24,7 @@ export default function ErrorModal({ onClick, title, message }) {
           </p>
         </div>
         <footer className="actions">
-          <Button onClick={onClick}>Okay</Button>
+          <Button onClick={onClick} className="button">Okay</Button>
         </footer>
       </Card>
     </div>

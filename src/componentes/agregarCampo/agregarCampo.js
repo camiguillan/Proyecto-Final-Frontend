@@ -6,8 +6,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './agregarCampo.scss';
 import Card from '../reusable/card/card';
 import Input from '../reusable/input_box/input';
-import Boton from '../reusable/boton/boton';
 import Icon from '../../assets/icons/icon';
+import Button from '../reusable/boton/button';
 
 export default function AgregarCampo() {
   const [nombreCampo, setNombreCampo] = useState('');
@@ -62,8 +62,8 @@ export default function AgregarCampo() {
         </Card>
       </div>
       <div className="botones">
-        <Boton onClick={() => nav('/user/home')} text="Cancelar" className="cancelar" />
-        <Boton onClick={() => console.log('')} text="Siguiente" />
+        <Button onClick={() => nav('/user/home')} className="green-button cancelar">Cancelar</Button>
+        <Button onClick={() => console.log('')} className="green-button">Siguiente</Button>
       </div>
     </div>
   );
