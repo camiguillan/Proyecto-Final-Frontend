@@ -1,3 +1,6 @@
+/* eslint-disable max-len */
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import '../../assets/global.scss';
 import '../background/background.scss';
@@ -7,11 +10,12 @@ import ErrorModal from '../reusable/errorFolder/errores';
 import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
+import enviarNombreAlBackend from '../conexionBack/conexionBack';
 
 export default function Registrarse() {
   const [ingresarNombre, setIngresarNombre] = useState('');
   const [ingresarCorreo, setIngresarCorreo] = useState('');
-  const [ingresarUsuario, setIngresarIngresarUsuario] = useState('');
+  const [ingresarFechaNacimiento, setIngresarFechaNacimiento] = useState('');
   const [invalid, setInvalid] = useState(false);
   // const [invalid2, setInvalid2] = useState(false);
   const [ingresarContrasenia, setIngresarIngresarContrasenia] = useState('');
@@ -29,7 +33,7 @@ export default function Registrarse() {
 
   const isInputFilled = ingresarNombre.trim() !== '';
   const isInputFilled2 = ingresarCorreo.trim() !== '';
-  const isInputFilled3 = ingresarUsuario.trim() !== '';
+  const isInputFilled3 = ingresarFechaNacimiento.trim() !== '';
   const isInputFilled4 = ingresarContrasenia.trim() !== '';
 
   const okay = () => setInvalid(false);
@@ -38,13 +42,20 @@ export default function Registrarse() {
     e.preventDefault();
 
     if (ingresarCorreo.trim().length === 0 || ingresarNombre.trim().length === 0
-    || ingresarUsuario.trim().length === 0 || ingresarContrasenia.trim().length === 0) {
+    || ingresarFechaNacimiento.trim().length === 0 || ingresarContrasenia.trim().length === 0) {
       setError({
         title: 'Campo vacío',
         message: 'Faltó rellenar algún valor, revise el formulario y envíelo devuelta.',
       });
       setInvalid(true);
     } else {
+      enviarNombreAlBackend(ingresarNombre, ingresarCorreo, ingresarFechaNacimiento, ingresarContrasenia)
+        .then((response) => {
+          // Manejar la respuesta si es necesario
+        })
+        .catch((error) => {
+          // Manejar el error si ocurre alguno
+        });
       navigate('../iniciarSesion');
     }
   };
@@ -78,10 +89,10 @@ export default function Registrarse() {
             />
             <input
               className="sub-rectangle"
-              type="text"
-              placeholder="Ingrese su nombre de usuario"
-              value={ingresarUsuario}
-              onChange={(e) => handleInputChange(e, setIngresarIngresarUsuario)}
+              type="date"
+              placeholder="Ingrese su fecha de nacimiento"
+              value={ingresarFechaNacimiento}
+              onChange={(e) => handleInputChange(e, setIngresarFechaNacimiento)}
               style={{ color: isInputFilled3 ? 'black' : '#888' }}
             />
             <input

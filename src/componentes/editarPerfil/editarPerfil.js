@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-shadow */
 /* eslint-disable linebreak-style */
 /* eslint-disable padded-blocks */
 /* eslint-disable no-unused-vars */
@@ -11,6 +13,7 @@ import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y E
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
 import Header from '../reusable/header/header';
 import Button from '../reusable/boton/button';
+import enviarNombreAlBackend from '../conexionBack/conexionBack';
 
 export default function EditarPerfil() {
 
@@ -55,6 +58,13 @@ export default function EditarPerfil() {
       });
       setInvalid(true);
     } else {
+      enviarNombreAlBackend(ingresarNombre, ingresarCorreo, ingresarFechaNacimiento, ingresarContrasenia)
+        .then((response) => {
+          // Manejar la respuesta si es necesario
+        })
+        .catch((error) => {
+          // Manejar el error si ocurre alguno
+        });
       navigate('../user/home');
     }
   };
