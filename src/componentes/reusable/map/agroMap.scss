@@ -1,0 +1,27 @@
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-icon {
+  background-color: #ffffff;
+  border-radius: 4px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #000000;
+  cursor: pointer;
+  height: 32px;
+  width: 32px;
+}
+
+.mapbox-gl-draw_ctrl-draw-btn{
+    width: 25%;
+    height: 100%;
+}
+
+.mapboxgl-ctrl-group button.mapboxgl-ctrl-icon:hover {
+  background-color: #f5f5f5;
+}
+
+// .mapboxgl-ctrl-group button.mapboxgl-ctrl-icon.mapboxgl-ctrl-zoom-in {
+//   background-image: url('path/to/zoom-in-icon.png');
+// }
+
+// .mapboxgl-ctrl-group button.mapboxgl-ctrl-icon.mapboxgl-ctrl-zoom-out {
+//   background-image: url('path/to/zoom-out-icon.png');
+// }

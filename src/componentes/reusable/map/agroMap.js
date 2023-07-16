@@ -1,48 +1,63 @@
-import React, { useEffect, useRef } from 'react';
-import mapboxgl from 'mapbox-gl';
-import MapboxDraw from '@mapbox/mapbox-gl-draw';
+import * as React from 'react';
+import { useState, useCallback } from 'react';
+import { createRoot } from 'react-dom/client';
+import Map from 'react-map-gl';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
+import DrawControl from './draw-control';
+import ControlPanel from './control-panel';
 
-function Mapbox() {
-  const mapContainer = useRef(null);
+const TOKEN = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw'; // Set your mapbox token here
 
-  useEffect(() => {
-    const map = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/satellite-v9',
-      center: [-58.702963, -34.671792], // Default center coordinates Orden: [longitud, latitud]
-      zoom: 17, // Default zoom level
+export default function App() {
+  const [features, setFeatures] = useState({});
+
+  const onUpdate = useCallback((e) => {
+    setFeatures((currFeatures) => {
+      const newFeatures = { ...currFeatures };
+      for (const f of e.features) {
+        newFeatures[f.id] = f;
+      }
+      return newFeatures;
     });
-
-    const draw = new MapboxDraw();
-    map.addControl(draw);
-
-    function handleDraw() {
-      const features = draw.getAll();
-      console.log(features);
-
-      // Call your API with the processed data
-      // Example: fetch('YOUR_API_URL', { method: 'POST', body: JSON.stringify(features) })
-    }
-
-    function handleDrawDelete() {
-      // Handle when a user deletes a drawn feature
-    }
-
-    map.on('draw.create', handleDraw);
-    map.on('draw.update', handleDraw);
-    map.on('draw.delete', handleDrawDelete);
-
-    return () => {
-      map.off('draw.create', handleDraw);
-      map.off('draw.update', handleDraw);
-      map.off('draw.delete', handleDrawDelete);
-      map.remove();
-    };
   }, []);
 
-  return <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />;
+  const onDelete = useCallback((e) => {
+    setFeatures((currFeatures) => {
+      const newFeatures = { ...currFeatures };
+      for (const f of e.features) {
+        delete newFeatures[f.id];
+      }
+      return newFeatures;
+    });
+  }, []);
+
+  return (
+    <>
+      <Map
+        initialViewState={{
+          longitude: -91.874,
+          latitude: 42.76,
+          zoom: 12,
+        }}
+        mapStyle="mapbox://styles/mapbox/satellite-v9"
+        mapboxAccessToken={TOKEN}
+      >
+        <DrawControl
+          position="top-left"
+          displayControlsDefault={false}
+          polygon
+          trash
+          defaultMode="draw_polygon"
+          onCreate={onUpdate}
+          onUpdate={onUpdate}
+          onDelete={onDelete}
+        />
+      </Map>
+      <ControlPanel polygons={Object.values(features)} />
+    </>
+  );
 }
 
-export default Mapbox;
+export function renderToDom(container) {
+  createRoot(container).render(<App />);
+}
