@@ -52,14 +52,14 @@ export default function Registrarse() {
   return (
 
     <div className="gradient-background">
+      <CosoVerde />
 
       {invalid && <ErrorModal title={error.title} message={error.message} onClick={okay} />}
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <CosoVerde />
-          <div className="white-rectangle">
-            <span className="container-text">Creá tu usuario</span>
+      <div>
+        <div className="white-rectangle">
+          <span className="container-text">Creá tu usuario</span>
+          <form onSubmit={handleSubmit}>
             <input
               className="sub-rectangle"
               type="text"
@@ -94,10 +94,10 @@ export default function Registrarse() {
             />
 
             <Button type="submit" className="green-button" onClick={handleSubmit}>Registrarse </Button>
-          </div>
-
+          </form>
         </div>
-      </form>
+
+      </div>
     </div>
 
   );

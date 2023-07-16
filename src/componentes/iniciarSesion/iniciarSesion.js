@@ -48,10 +48,10 @@ export default function IniciarSesion() {
 
   return (
     <div className="gradient-background">
+      <CosoVerde />
       {invalid && <ErrorModal title={error.title} message={error.message} onClick={okay} />}
       <form onSubmit={handleSubmit}>
         <div>
-          <CosoVerde />
           <div className="white-rectangle">
             <span className="container-text">Iniciá Sesion</span>
 
