@@ -1,7 +1,12 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function EditIcon(props) {
+export default function EditIcon({ color }) {
   return (
-    <i className="bi bi-pencil-square" style={{color: props.color}}  ></i>
-  )
+    <i className="bi bi-pencil-square" style={{ color }} />
+  );
 }
+
+EditIcon.propTypes = {
+  color: PropTypes.string.isRequired,
+};

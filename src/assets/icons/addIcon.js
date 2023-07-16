@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-export default function AddIcon(props) {
+export default function AddIcon() {
   return (
-    <i className="bi bi-plus-square" style={{style:"#464E47"}}  ></i>
-  )
+    <i className="bi bi-plus-square" style={{ style: '#464E47' }} />
+  );
 }

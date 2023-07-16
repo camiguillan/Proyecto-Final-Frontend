@@ -1,12 +1,25 @@
 import React from 'react';
-import "./input_box.scss";
+import PropTypes from 'prop-types';
+import './input_box.scss';
 
-export default function Input(props) {
+export default function Input({
+  value, placeholder, onChange, type,
+}) {
   return (
-    <input  className='sub-rectangle' 
-            value={props.value}
-            placeholder={props.placeholder}
-            onChange={(e) => props.onChange(e.target.value)}
-            type={props.type}    />
-  )
+    <input
+      className="sub-rectangle"
+      value={value}
+      placeholder={placeholder}
+      onChange={(e) => onChange(e.target.value)}
+      type={type}
+    />
+  );
 }
+
+Input.propTypes = PropTypes.any;
+
+// Button.propTypes = ({
+//   type: PropTypes.string.isRequired,
+//   children: PropTypes.string.isRequired,
+//   onClick: PropTypes.func.isRequired,
+// });

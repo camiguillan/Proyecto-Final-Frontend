@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 export default function SearchIcon() {
   return (
-    <i class="bi bi-search"></i>
-  )
+    <i className="bi bi-search" />
+  );
 }
