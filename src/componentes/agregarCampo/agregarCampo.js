@@ -8,6 +8,7 @@ import Card from '../reusable/card/card';
 import Input from '../reusable/input_box/input';
 import Icon from '../../assets/icons/icon';
 import Button from '../reusable/boton/button';
+import AgroMap from '../reusable/map/agroMap';
 
 export default function AgregarCampo() {
   const [nombreCampo, setNombreCampo] = useState('');
@@ -56,8 +57,8 @@ export default function AgregarCampo() {
         </Card>
         <Card className="agregar-campo-container input">
           <Input placeholder=" Buscar direccion del campo" />
-          <div className="foto">
-            FOTO
+          <div className="foto" id="mapa">
+            <AgroMap />
           </div>
         </Card>
       </div>
