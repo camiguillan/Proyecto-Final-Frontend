@@ -21,7 +21,7 @@ export default function AgregarCampo() {
       <Header />
       <h1 className="agregar-campo-titulo">
         {' '}
-        <Icon iconType="bi bi-plus-square" color="#464E47" />
+        <Icon className="bi bi-plus-square" color="#464E47" />
         {' '}
         AGREGAR CAMPO
       </h1>

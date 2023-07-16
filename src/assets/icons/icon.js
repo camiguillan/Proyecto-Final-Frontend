@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Icon({ iconType, color }) {
+export default function Icon({ className, color, fontSize }) {
   return (
-    <i className={iconType} style={{ color }} />
+    <i className={className} style={{ color, fontSize }} />
   );
 }
 
 Icon.propTypes = {
   color: PropTypes.string.isRequired,
-  iconType: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
+  fontSize: PropTypes.string.isRequired,
 };

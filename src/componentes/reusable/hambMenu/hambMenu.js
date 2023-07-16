@@ -28,7 +28,7 @@ export default function HambMenu({ pageWrapId, outerContainerId }) {
         <div className="menuNavItem" onClick={() => nav('/')}>
           <h5>
             {' '}
-            <Icon iconType="bi bi-person-fill" color="white" />
+            <Icon className="bi bi-person-fill" color="white" />
             {' '}
             Editar Perfil
           </h5>
@@ -38,7 +38,7 @@ export default function HambMenu({ pageWrapId, outerContainerId }) {
 
           <h5>
             {' '}
-            <Icon iconType="bi bi-plus-square" color="white" />
+            <Icon className="bi bi-plus-square" color="white" />
             {' '}
             Agregar Campo
           </h5>
@@ -47,7 +47,7 @@ export default function HambMenu({ pageWrapId, outerContainerId }) {
         <div className="menuNavItem" onClick={() => nav('/user/editarCampo')}>
           <h5>
             {' '}
-            <Icon iconType="bi bi-pencil-square" color="white" />
+            <Icon className="bi bi-pencil-square" color="white" />
             {' '}
             Editar Campo
           </h5>

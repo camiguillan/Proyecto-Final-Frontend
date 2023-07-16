@@ -12,7 +12,7 @@ export default function Header() {
       <HambMenu pageWrapId="page-wrap" outerContainerId="user" />
       <header id="header">
         <div className="agroIa" onClick={() => nav('/user/home')}>
-          <Icon className="bi bi-flower1" color="white" />
+          <Icon className="bi bi-flower1" color="white" fontSize="6vh" />
           <h1>AGROIA</h1>
         </div>
         <div className="user" id="user">
