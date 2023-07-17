@@ -10,7 +10,7 @@
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
     border: 1px #8B8B8B;
     color: $gris-titulo;
-    font-size: 20px;
+    font-size: 2vh;
     font-family: "Inter", sans-serif;
     border-color: #c1c1c1;
     border-style: solid ;
@@ -18,7 +18,9 @@
   }
 
   .agregar-campo-input{
-    width: fit-content;
+    max-width: 45vw ;
+    min-width: 1vw;
+    width: min-content;
   }
 
   /*

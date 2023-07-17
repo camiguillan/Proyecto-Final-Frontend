@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
@@ -20,6 +21,13 @@ export default function AgregarCampo() {
   const nav = useNavigate();
   const [coordinates, setCoordinates] = useState([]);
   const fileTypes = ['JPG', 'PNG'];
+  const stack1 = (
+    <div className="upload-image-container">
+      <Icon className="bi bi-cloud-arrow-up" color="gray" fontSize="6vh" />
+      <span> Suba o arrastre una imagen de su campo aqui </span>
+      {' '}
+    </div>
+  );
 
   return (
     <div className="layout">
@@ -61,17 +69,17 @@ export default function AgregarCampo() {
               name="foto-campo"
               types={fileTypes}
               required
-              hoverTitle="Drop here"
+              label="Suba o arrastre una imagen de su campo aqui"
+              classes="drop_area"
+              hoverTitle=" "
 
             >
               <div className="upload-image-container">
                 <Icon className="bi bi-cloud-arrow-up" color="gray" fontSize="6vh" />
-                <span> Suba o arrastre una imagen de su campo aqui  </span>
+                <span> Suba o arrastre una imagen de su campo aqui </span>
                 {' '}
-
               </div>
               {' '}
-
             </FileUploader>
           </form>
         </Card>

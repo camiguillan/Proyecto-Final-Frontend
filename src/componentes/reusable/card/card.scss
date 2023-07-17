@@ -15,7 +15,9 @@
 }
 
 .min-content{
-  width: min-content;
+  max-width: 20vw ;
+  min-width: 10vw;
+  //width: min-content;
 }
 
 .max-content{
