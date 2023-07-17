@@ -1,7 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable padded-blocks */
-/* eslint-disable no-unused-vars */
-/* eslint-disable linebreak-style */
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import React from 'react';
@@ -15,6 +11,7 @@ import OlvidoContra from './componentes/olvidoContra/olvidoContra';
 import EditarPerfil from './componentes/editarPerfil/editarPerfil';
 
 function App() {
+  document.title = 'AGROIA';
   return (
     <div className="App">
       <Routes>

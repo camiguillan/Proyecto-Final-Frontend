@@ -3,6 +3,7 @@
 /* eslint-disable no-shadow */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FileUploader } from 'react-drag-drop-files';
 import Header from '../reusable/header/header';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './agregarCampo.scss';
@@ -18,6 +19,7 @@ export default function AgregarCampo() {
   const [imagen, setImagen] = useState('');
   const nav = useNavigate();
   const [coordinates, setCoordinates] = useState([]);
+  const fileTypes = ['JPG', 'PNG'];
 
   return (
     <div className="layout">
@@ -46,14 +48,31 @@ export default function AgregarCampo() {
               className="agregar-campo-input"
               accept=""
             />
-            <Input
+            {/* <Input
               value={imagen}
               placeholder="Inserte una imagen"
               onChange={(imagen) => setImagen(imagen)}
               type="file"
               className="agregar-campo-input"
               accept="image/*"
-            />
+            /> */}
+            <FileUploader
+              handleChange={(imagen) => setImagen(imagen)}
+              name="foto-campo"
+              types={fileTypes}
+              required
+              hoverTitle="Drop here"
+
+            >
+              <div className="upload-image-container">
+                <Icon className="bi bi-cloud-arrow-up" color="gray" fontSize="6vh" />
+                <span> Suba o arrastre una imagen de su campo aqui  </span>
+                {' '}
+
+              </div>
+              {' '}
+
+            </FileUploader>
           </form>
         </Card>
       </div>
