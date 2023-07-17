@@ -1,9 +1,11 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Header from '../reusable/header/header';
 import './home.scss';
 
@@ -17,6 +19,7 @@ const loadImage = (imageName) => {
 };
 
 export default function Home() {
+  const { userID } = useParams();
   let imageIndex = 1;
   const images = [];
   const imageNames = [];
@@ -40,7 +43,7 @@ export default function Home() {
       <Header />
       <div className="image-container">
         {images.map((image, index) => (
-          <Link to={`/user/VerCultivos/${imageNames[index]}`} key={index}>
+          <Link to={`/${userID}/VerCultivos/${imageNames[index]}`} key={index}>
             <div className="image-wrapper">
               <img
                 src={image}

@@ -19,6 +19,7 @@ export default function Registrarse() {
   const [invalid, setInvalid] = useState(false);
   // const [invalid2, setInvalid2] = useState(false);
   const [ingresarContrasenia, setIngresarIngresarContrasenia] = useState('');
+  const [isInputFilled5, setIsInputFilled5] = useState(false);
 
   const [error, setError] = useState({
     title: '',
@@ -26,6 +27,17 @@ export default function Registrarse() {
   });
 
   const navigate = useNavigate();
+
+  const handleInputChangePassword = (e) => {
+    const { value } = e.target;
+    setIngresarIngresarContrasenia(value);
+
+    // Validar la contraseña
+    const hasUpperCase = /[A-Z]/.test(value);
+    const isValidLength = value.length >= 8;
+
+    setIsInputFilled5(hasUpperCase && isValidLength);
+  };
 
   const handleInputChange = (e, setter) => {
     setter(e.target.value);
@@ -48,15 +60,21 @@ export default function Registrarse() {
         message: 'Faltó rellenar algún valor, revise el formulario y envíelo devuelta.',
       });
       setInvalid(true);
+    } else if (!isInputFilled5) {
+      setError({
+        title: 'La contraseña debe tener al menos 8 caracteres y una mayúscula',
+        message: 'Ingrese una contraseña válida para continuar.',
+      });
+      setInvalid(true);
     } else {
       enviarNombreAlBackend(ingresarNombre, ingresarCorreo, ingresarFechaNacimiento, ingresarContrasenia)
         .then((response) => {
-          // Manejar la respuesta si es necesario
+        // Manejar la respuesta si es necesario
         })
         .catch((error) => {
-          // Manejar el error si ocurre alguno
+        // Manejar el error si ocurre alguno
         });
-      navigate('../iniciarSesion');
+      navigate(`/${ingresarNombre}/home`);
     }
   };
 
@@ -100,7 +118,7 @@ export default function Registrarse() {
               type="text"
               placeholder="Ingrese su contraseña"
               value={ingresarContrasenia}
-              onChange={(e) => handleInputChange(e, setIngresarIngresarContrasenia)}
+              onChange={(e) => handleInputChangePassword(e, setIngresarIngresarContrasenia)}
               style={{ color: isInputFilled4 ? 'black' : '#888' }}
             />
 

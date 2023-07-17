@@ -42,7 +42,7 @@ export default function IniciarSesion() {
       });
       setInvalid(true);
     } else {
-      navigate('../user/home');
+      navigate(`/${inputUsername}/home`);
     }
   };
 
