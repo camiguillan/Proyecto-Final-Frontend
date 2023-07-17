@@ -1,6 +1,5 @@
 @import "../../assets/global.scss";
 
-
 .agregar-campo-titulo {
   color: $verde-musgo;
   width: 80%;
@@ -13,17 +12,13 @@
   text-align: center;
   border: 1px solid rgb(202, 202, 202);
   border-radius: 10px;
-  height: 20vh;
-  width: 45vh;
+  height: 70vh;
+  width: 100vh;
   margin-left: 4%;
 }
 
 .tarjetas {
-  display: flex;
-  gap:10px;
-  grid-template-columns: repeat(2, auto);
-  column-gap: 2vh;
-  
+  display: flex; 
 }
 
 .botones {

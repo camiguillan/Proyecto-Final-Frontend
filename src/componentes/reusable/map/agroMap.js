@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { useState, useCallback } from 'react';
-import { createRoot } from 'react-dom/client';
 import Map from 'react-map-gl';
 
+// eslint-disable-next-line no-unused-vars
 import DrawControl from './draw-control';
 import ControlPanel from './control-panel';
 
 const TOKEN = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw'; // Set your mapbox token here
 
-export default function App() {
+export default function AgroMap() {
   const [features, setFeatures] = useState({});
 
+  // eslint-disable-next-line no-unused-vars
   const onUpdate = useCallback((e) => {
     setFeatures((currFeatures) => {
       const newFeatures = { ...currFeatures };
@@ -21,6 +22,7 @@ export default function App() {
     });
   }, []);
 
+  // eslint-disable-next-line no-unused-vars
   const onDelete = useCallback((e) => {
     setFeatures((currFeatures) => {
       const newFeatures = { ...currFeatures };
@@ -39,6 +41,7 @@ export default function App() {
           latitude: 42.76,
           zoom: 12,
         }}
+        // logoPosition="top-left"
         mapStyle="mapbox://styles/mapbox/satellite-v9"
         mapboxAccessToken={TOKEN}
       >
@@ -56,8 +59,4 @@ export default function App() {
       <ControlPanel polygons={Object.values(features)} />
     </>
   );
-}
-
-export function renderToDom(container) {
-  createRoot(container).render(<App />);
 }

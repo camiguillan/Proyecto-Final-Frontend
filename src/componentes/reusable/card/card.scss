@@ -6,7 +6,14 @@
     align-content: center;
     margin: 15% 25%;
     border-radius: 10px;
-    width: 50vh;
+}
+
+.min-content{
+  width: min-content;
+}
+
+.max-content{
+  width: max-content;
 }
 
 .input {
@@ -14,12 +21,7 @@
     padding: 1rem;
     max-width: 40rem;
   }
-  
-  .input label {
-    
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
+
 
 
   .card{
