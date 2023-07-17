@@ -1,47 +1,47 @@
-.image-container {
+.image-container-mini {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-gap: 10px;
   max-height: calc(100vh - 112px);
   height: calc(100vh - 112px);
   overflow-y: auto;
 }
 
-.rounded-image {
+.rounded-image-mini {
   border-radius: 20px;
   width: 100%;
   height: auto;
 }
 
-.image-container img {
+.image-container-mini img {
   width: 97%; /* Las imágenes ocuparán todo el ancho disponible en el contenedor */
   height: 97%; /* Las imágenes ocuparán todo el alto disponible en el contenedor */
   object-fit: fill; /* Las imágenes se estirarán y deformarán para llenar el espacio disponible */
 }
 
-.image-wrapper {
+.image-wrapper-mini {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 55vh;
+  height: 25vh;
 }
 
-.image-wrapper img { 
+.image-wrapper-mini img { 
   width: 97%; /* Las imágenes ocuparán todo el ancho disponible en el contenedor */
   height: 97%; /* Las imágenes ocuparán todo el alto disponible en el contenedor */
   object-fit: fill;
 }
 
-.image-name {
+.text-name {
   position: absolute;
-  bottom: 10px;
-  left: 30px; /* Ajusta el valor de 'left' según tu preferencia */
-  font-size: 40px;
+  bottom: 2vh;
+  left: 2vh; /* Ajusta el valor de 'left' según tu preferencia */
+  font-size: 5vh;
   color: black;
   font-weight: normal;
   padding: 5px;
   border-radius: 5px;
-  text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white; /* Agrega el bordeado blanco */
+  text-shadow: -0.25vh -0.25vh 0 white, 0.25vh -0.25vh 0 white, -0.25vh 0.25vh 0 white, 0.25vh 0.25vh 0 white;
   pointer-events: none;
 }

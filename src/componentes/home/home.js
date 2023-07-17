@@ -40,7 +40,7 @@ export default function Home() {
       <Header />
       <div className="image-container">
         {images.map((image, index) => (
-          <Link to="/iniciarSesion" key={index}>
+          <Link to={`/user/VerCultivos/${imageNames[index]}`} key={index}>
             <div className="image-wrapper">
               <img
                 src={image}

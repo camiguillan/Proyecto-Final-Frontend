@@ -13,6 +13,7 @@ import Registrarse from './componentes/registrarse/registrarse';
 import Dashboards from './componentes/dashboards/dashboards';
 import OlvidoContra from './componentes/olvidoContra/olvidoContra';
 import EditarPerfil from './componentes/editarPerfil/editarPerfil';
+import VerCultivos from './componentes/verCultivos/verCultivos';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/user/campo/dashboards" element={<Dashboards />} />
         <Route path="/olvidoContra" element={<OlvidoContra />} />
         <Route path="/user/editarPerfil" element={<EditarPerfil />} />
+        <Route path="/user/VerCultivos/:imageName" element={<VerCultivos />} />
       </Routes>
     </div>
   );
