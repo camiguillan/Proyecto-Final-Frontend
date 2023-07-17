@@ -17,13 +17,14 @@ export default function AgregarCampo() {
   const [nombreCampo, setNombreCampo] = useState('');
   const [imagen, setImagen] = useState('');
   const nav = useNavigate();
+  const [coordinates, setCoordinates] = useState([]);
 
   return (
     <div className="layout">
       <Header />
       <h1 className="agregar-campo-titulo">
         {' '}
-        <Icon className="bi bi-plus-square" color="#464E47" />
+        <Icon className="bi bi-plus-square" color="#464E47" fontSize="" />
         {' '}
         AGREGAR CAMPO
       </h1>
@@ -31,7 +32,8 @@ export default function AgregarCampo() {
       <div className="tarjetas">
         <Card className="agregar-campo-container max-content">
           <div className="campo" id="mapa">
-            <AgroMap />
+            <AgroMap coordinates={(coord) => setCoordinates(coord)} />
+            { console.log(coordinates)}
           </div>
         </Card>
         <Card className="agregar-campo-container min-content">
@@ -42,6 +44,7 @@ export default function AgregarCampo() {
               onChange={(nombre) => setNombreCampo(nombre)}
               type="text"
               className="agregar-campo-input"
+              accept=""
             />
             <Input
               value={imagen}
@@ -55,8 +58,8 @@ export default function AgregarCampo() {
         </Card>
       </div>
       <div className="botones">
-        <Button onClick={() => nav('/user/home')} className="green-button cancelar">Cancelar</Button>
-        <Button onClick={() => console.log('')} className="green-button">Siguiente</Button>
+        <Button type="button" onClick={() => nav('/user/home')} className="green-button cancelar">Cancelar</Button>
+        <Button type="button" onClick={() => console.log('')} className="green-button">Siguiente</Button>
       </div>
     </div>
   );
