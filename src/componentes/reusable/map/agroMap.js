@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
-import MapboxGeocoder from 'mapbox-gl-geocoder';
+import MapboxGeocoder from 'mapbox-gl-geocoder'; // SEARCH BAR
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-import 'mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import 'mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
+import './agroMap.scss';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 
@@ -16,7 +17,7 @@ function AgroMap() {
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/satellite-v9',
       center: [-58.702963, -34.671792], // Default center coordinates
-      zoom: 9, // Default zoom level
+      zoom: 12, // Default zoom level
     });
 
     const drawOptions = {
@@ -34,10 +35,14 @@ function AgroMap() {
     const nav = new mapboxgl.NavigationControl();
     map.addControl(nav, 'bottom-right');
 
+    const geocoderContainer = () => <div id="geocoder-container" className="geocoder-container" style={{ width: '100%', borderRadius: '10px' }} />;
+    // SEARCH BAR
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl,
-      countries: 'ar',
+      countries: 'AR',
+      bbox: [-73.560222, -55.057499, -53.637810, -21.781235], // Limitamos resultados a solo arg
+      container: geocoderContainer,
     });
 
     map.addControl(geocoder, 'top-left');
@@ -75,7 +80,9 @@ function AgroMap() {
     };
   }, []);
 
-  return <div ref={mapContainer} className="mapa" style={{ height: '100%', borderRadius: '10px' }} />;
+  return (
+    <div ref={mapContainer} className="mapa" style={{ height: '100%', borderRadius: '10px' }} />
+  );
 }
 
 export default AgroMap;

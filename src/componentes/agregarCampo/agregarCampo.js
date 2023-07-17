@@ -30,7 +30,6 @@ export default function AgregarCampo() {
 
       <div className="tarjetas">
         <Card className="agregar-campo-container max-content">
-          <Input placeholder=" Buscar direccion del campo" />
           <div className="campo" id="mapa">
             <AgroMap />
           </div>
