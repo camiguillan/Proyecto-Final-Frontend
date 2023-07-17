@@ -20,6 +20,9 @@ function AgroMap() {
     const draw = new MapboxDraw();
     map.addControl(draw);
 
+    const nav = new mapboxgl.NavigationControl();
+    map.addControl(nav, 'bottom-right');
+
     function handleDraw() {
       const features = draw.getAll();
       console.log(features);
