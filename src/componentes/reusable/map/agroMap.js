@@ -20,12 +20,7 @@ function AgroMap() {
     const drawOptions = {
       displayControlsDefault: false,
       controls: {
-        point: true,
         trash: true,
-        combine_features: false,
-        uncombine_features: false,
-        // Remove the modes you don't need
-        line_string: false,
         polygon: true,
         // Add or customize modes as per your requirements
       },
