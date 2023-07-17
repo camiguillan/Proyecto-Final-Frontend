@@ -75,10 +75,13 @@ export default function AgregarCampo() {
 
             >
               {imagen ? (
-                <div className="imagen-campo">
-                  <img src={URL.createObjectURL(imagen)} alt="user-campo" />
-                  {console.log(imagen)}
-                  {' '}
+                <div>
+                  <div className="imagen-campo">
+                    <img src={URL.createObjectURL(imagen)} alt="user-campo" />
+                    {console.log(imagen)}
+                    {' '}
+                  </div>
+                  <Button className="button" onClick={() => setImagen('')}>Delete</Button>
                 </div>
               )
                 : (
