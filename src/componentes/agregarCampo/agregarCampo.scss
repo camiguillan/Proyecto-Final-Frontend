@@ -3,19 +3,20 @@
 .agregar-campo-titulo {
   color: $verde-musgo;
   width: 80%;
-  margin: 2% 0% 0% 3%;
+  margin: 1% 0% 0% 2%;
   text-align: left;
   font-size: xx-large;
 }
 
-.foto {
-  background-color: $verde-clarito;
+.campo {
+  //background-color: $verde-clarito;
   text-align: center;
-  border: 1px solid rgb(202, 202, 202);
+  //border: 1px solid rgb(202, 202, 202);
   border-radius: 10px;
-  width: 50vw;
+  width: 100%;
   height: 60vh;
-  margin-left: 4%;
+  //margin-left: 2%;
+  padding: 1rem;
 }
 
 .tarjetas {

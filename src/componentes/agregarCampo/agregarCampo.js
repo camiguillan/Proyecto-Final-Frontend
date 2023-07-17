@@ -29,13 +29,13 @@ export default function AgregarCampo() {
       </h1>
 
       <div className="tarjetas">
-        <Card className="agregar-campo-container input max-content">
+        <Card className="agregar-campo-container max-content">
           <Input placeholder=" Buscar direccion del campo" />
-          <div className="foto" id="mapa">
+          <div className="campo" id="mapa">
             <AgroMap />
           </div>
         </Card>
-        <Card className="agregar-campo-container input min-content">
+        <Card className="agregar-campo-container min-content">
           <form>
             <Input
               value={nombreCampo}
