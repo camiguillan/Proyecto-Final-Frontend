@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from 'mapbox-gl-geocoder';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+import 'mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 
@@ -31,6 +33,24 @@ function AgroMap() {
 
     const nav = new mapboxgl.NavigationControl();
     map.addControl(nav, 'bottom-right');
+
+    const geocoder = new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl,
+      countries: 'ar',
+    });
+
+    map.addControl(geocoder, 'top-left');
+
+    map.on('result', (event) => {
+      const { result } = event;
+
+      // Retrieve the coordinates from the geocoding result
+      const { center } = result.geometry;
+
+      // Center the map to the selected location
+      map.setCenter(center);
+    });
 
     function handleDraw() {
       const features = draw.getAll();
