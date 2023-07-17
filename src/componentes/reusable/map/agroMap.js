@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useState, useCallback } from 'react';
 import Map from 'react-map-gl';
-
+import 'mapbox-gl/dist/mapbox-gl.css';
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 // eslint-disable-next-line no-unused-vars
 import DrawControl from './draw-control';
 import ControlPanel from './control-panel';
