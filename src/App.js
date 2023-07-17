@@ -14,12 +14,14 @@ import Dashboards from './componentes/dashboards/dashboards';
 import OlvidoContra from './componentes/olvidoContra/olvidoContra';
 import EditarPerfil from './componentes/editarPerfil/editarPerfil';
 import VerCultivos from './componentes/verCultivos/verCultivos';
+import RecuperarContra from './componentes/recuperarContra/recuperarContra';
+import HomePrincipal from './componentes/homePrincipal/homePrincipal';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<IniciarSesion />} />
+        <Route path="/" element={<HomePrincipal />} />
         <Route path="/user/agregarCampo" element={<AgregarCampo />} />
         <Route path="/user/editarCampo" element={<EditarCampo />} />
         <Route path="/user/home" element={<Home />} />
@@ -27,6 +29,7 @@ function App() {
         <Route path="/registrarse" element={<Registrarse />} />
         <Route path="/user/campo/dashboards" element={<Dashboards />} />
         <Route path="/olvidoContra" element={<OlvidoContra />} />
+        <Route path="/recuperarContra" element={<RecuperarContra />} />
         <Route path="/user/editarPerfil" element={<EditarPerfil />} />
         <Route path="/user/VerCultivos/:imageName" element={<VerCultivos />} />
       </Routes>

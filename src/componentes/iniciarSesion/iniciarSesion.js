@@ -58,7 +58,7 @@ export default function IniciarSesion() {
             <input
               className="sub-rectangle"
               type="text"
-              placeholder="  Ingrese su nombre de usuario"
+              placeholder="  Ingrese su email"
               value={inputUsername}
               onChange={(e) => handleInputChange(e, setInputUsername)}
               style={{ color: isInputUsernameFilled ? 'black' : '#888' }}

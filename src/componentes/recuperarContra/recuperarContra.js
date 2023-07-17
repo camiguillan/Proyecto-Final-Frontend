@@ -9,7 +9,7 @@ import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y E
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
 import Button from '../reusable/boton/button';
 
-export default function OlvidoContra() {
+export default function RecuperarContra() {
   const [ingresarCorreo, setIngresarCorreo] = useState('');
   const [invalid, setInvalid] = useState(false);
 
@@ -51,18 +51,17 @@ export default function OlvidoContra() {
         <div>
           <CosoVerde />
           <div className="small-white-rectangle">
-            <span className="container-text">¿Olvido su contraseña?</span>
+            <span className="container-text">Recuperar contraseña</span>
             <input
               className="sub-rectangle"
               type="text"
-              placeholder="Ingrese su correo electrónico"
+              placeholder="Ingrese su nueva contraseña"
               value={ingresarCorreo}
               onChange={(e) => handleInputChange(e, setIngresarCorreo)}
               style={{ color: isInputFilled2 ? 'black' : '#888' }}
             />
             <Button type="submit" className="green-button">
-              <span className="button-text">Enviar link de</span>
-              <span className="button-text">recuperación</span>
+              <span className="button-text">Cambiar contraseña</span>
 
             </Button>
           </div>
