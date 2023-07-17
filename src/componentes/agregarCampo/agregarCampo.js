@@ -74,12 +74,20 @@ export default function AgregarCampo() {
               hoverTitle=" "
 
             >
-              <div className="upload-image-container">
-                <Icon className="bi bi-cloud-arrow-up" color="gray" fontSize="6vh" />
-                <span> Suba o arrastre una imagen de su campo aqui </span>
-                {' '}
-              </div>
-              {' '}
+              {imagen ? (
+                <div className="imagen-campo">
+                  <img src={URL.createObjectURL(imagen)} alt="user-campo" />
+                  {console.log(imagen)}
+                  {' '}
+                </div>
+              )
+                : (
+                  <div className="upload-image-container">
+                    <Icon className="bi bi-cloud-arrow-up" color="gray" fontSize="6vh" />
+                    <span> Suba o arrastre una imagen de su campo aqui </span>
+                    {' '}
+                  </div>
+                )}
             </FileUploader>
           </form>
         </Card>
