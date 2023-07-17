@@ -7,6 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import 'mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
+import * as MapboxDrawWaypoint from 'mapbox-gl-draw-waypoint';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 
@@ -21,6 +22,9 @@ function AgroMap({ coordinates }) {
       zoom: 12, // Default zoom level
     });
 
+    let { modes } = MapboxDraw;
+    modes = MapboxDrawWaypoint.enable(modes);
+
     const drawOptions = {
       displayControlsDefault: false,
       controls: {
@@ -29,7 +33,7 @@ function AgroMap({ coordinates }) {
         // Add or customize modes as per your requirements
 
       },
-      dragable: false,
+      modes: MapboxDrawWaypoint.enable(modes),
     };
 
     const draw = new MapboxDraw(drawOptions);
