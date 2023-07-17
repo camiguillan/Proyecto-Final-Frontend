@@ -55,7 +55,7 @@ function AgroMap() {
     };
   }, []);
 
-  return <div ref={mapContainer} className="mapa" style={{ height: '100%' }} />;
+  return <div ref={mapContainer} className="mapa" style={{ height: '100%', borderRadius: '10px' }} />;
 }
 
 export default AgroMap;
