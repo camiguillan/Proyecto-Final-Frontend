@@ -3,7 +3,6 @@
 /* eslint-disable no-shadow */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Map from 'react-map-gl/dist/esm/components/map';
 import Header from '../reusable/header/header';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './agregarCampo.scss';
@@ -13,9 +12,7 @@ import Icon from '../../assets/icons/icon';
 import Button from '../reusable/boton/button';
 // eslint-disable-next-line no-unused-vars
 import AgroMap from '../reusable/map/agroMap';
-import DrawControl from '../reusable/map/draw-control';
 
-const TOKEN = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 export default function AgregarCampo() {
   const [nombreCampo, setNombreCampo] = useState('');
   const [imagen, setImagen] = useState('');
@@ -31,26 +28,13 @@ export default function AgregarCampo() {
         AGREGAR CAMPO
       </h1>
 
-      <Map
-        initialViewState={{
-          longitude: -91.874,
-          latitude: 42.76,
-          zoom: 12,
-        }}
-        mapStyle="mapbox://styles/mapbox/satellite-v9"
-        mapboxAccessToken={TOKEN}
-      >
-        <DrawControl
-          position="top-left"
-          displayControlsDefault={false}
-          controls={{
-            polygon: true,
-            trash: true,
-          }}
-          defaultMode="draw_polygon"
-        />
-      </Map>
-      {/* <div className="tarjetas">
+      <div className="tarjetas">
+        <Card className="agregar-campo-container input max-content">
+          <Input placeholder=" Buscar direccion del campo" />
+          <div className="foto" id="mapa">
+            <AgroMap />
+          </div>
+        </Card>
         <Card className="agregar-campo-container input min-content">
           <form>
             <Input
@@ -67,15 +51,11 @@ export default function AgregarCampo() {
             />
           </form>
         </Card>
-        <Card className="agregar-campo-container input max-content">
-          <Input placeholder=" Buscar direccion del campo" />
-          <div className="foto" id="mapa" />
-        </Card>
-      </div> */}
-      {/* <div className="botones">
+      </div>
+      <div className="botones">
         <Button onClick={() => nav('/user/home')} className="green-button cancelar">Cancelar</Button>
         <Button onClick={() => console.log('')} className="green-button">Siguiente</Button>
-      </div> */}
+      </div>
     </div>
   );
 }

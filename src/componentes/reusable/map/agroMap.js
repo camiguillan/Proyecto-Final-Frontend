@@ -41,7 +41,7 @@ export default function AgroMap() {
           latitude: 42.76,
           zoom: 12,
         }}
-        // logoPosition="top-left"
+        logoPosition="top-left"
         mapStyle="mapbox://styles/mapbox/satellite-v9"
         mapboxAccessToken={TOKEN}
       >
