@@ -25,7 +25,7 @@ export default function HambMenu({ pageWrapId, outerContainerId }) {
     >
       <div className="menuNav">
         <UserInfo />
-        <div className="menuNavItem" onClick={() => nav('/')}>
+        <div className="menuNavItem" onClick={() => nav('/user/editarPerfil')}>
           <h5>
             {' '}
             <Icon className="bi bi-person-fill" color="white" />
