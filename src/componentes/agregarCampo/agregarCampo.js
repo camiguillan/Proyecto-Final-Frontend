@@ -39,15 +39,17 @@ export default function AgregarCampo() {
           <form>
             <Input
               value={nombreCampo}
-              placeholder="Inserte el nombre del campo"
+              placeholder="Inserte el nombre"
               onChange={(nombre) => setNombreCampo(nombre)}
               type="text"
+              className="agregar-campo-input"
             />
             <Input
               value={imagen}
-              placeholder="Inserte una imagen del campo"
+              placeholder="Inserte una imagen"
               onChange={(imagen) => setImagen(imagen)}
               type="text"
+              className="agregar-campo-input"
             />
           </form>
         </Card>

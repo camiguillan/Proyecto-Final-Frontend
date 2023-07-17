@@ -1,63 +1,49 @@
-import * as React from 'react';
-import { useState, useCallback } from 'react';
-import Map from 'react-map-gl';
+import React, { useEffect, useRef } from 'react';
+import mapboxgl from 'mapbox-gl';
+import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-// eslint-disable-next-line no-unused-vars
-import DrawControl from './draw-control';
-import ControlPanel from './control-panel';
 
-const TOKEN = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw'; // Set your mapbox token here
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 
-export default function AgroMap() {
-  const [features, setFeatures] = useState({});
+function AgroMap() {
+  const mapContainer = useRef(null);
 
-  // eslint-disable-next-line no-unused-vars
-  const onUpdate = useCallback((e) => {
-    setFeatures((currFeatures) => {
-      const newFeatures = { ...currFeatures };
-      for (const f of e.features) {
-        newFeatures[f.id] = f;
-      }
-      return newFeatures;
+  useEffect(() => {
+    const map = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: 'mapbox://styles/mapbox/satellite-v9',
+      center: [-58.702963, -34.671792], // Default center coordinates
+      zoom: 9, // Default zoom level
     });
+
+    const draw = new MapboxDraw();
+    map.addControl(draw);
+
+    function handleDraw() {
+      const features = draw.getAll();
+      console.log(features);
+
+      // Call your API with the processed data
+      // Example: fetch('YOUR_API_URL', { method: 'POST', body: JSON.stringify(features) })
+    }
+
+    function handleDrawDelete() {
+      // Handle when a user deletes a drawn feature
+    }
+    map.on('draw.create', handleDraw);
+    map.on('draw.update', handleDraw);
+    map.on('draw.delete', handleDrawDelete);
+
+    return () => {
+      map.off('draw.create', handleDraw);
+      map.off('draw.update', handleDraw);
+      map.off('draw.delete', handleDrawDelete);
+      map.remove();
+    };
   }, []);
 
-  // eslint-disable-next-line no-unused-vars
-  const onDelete = useCallback((e) => {
-    setFeatures((currFeatures) => {
-      const newFeatures = { ...currFeatures };
-      for (const f of e.features) {
-        delete newFeatures[f.id];
-      }
-      return newFeatures;
-    });
-  }, []);
-
-  return (
-    <>
-      <Map
-        initialViewState={{
-          longitude: -91.874,
-          latitude: 42.76,
-          zoom: 12,
-        }}
-        logoPosition="top-left"
-        mapStyle="mapbox://styles/mapbox/satellite-v9"
-        mapboxAccessToken={TOKEN}
-      >
-        <DrawControl
-          position="top-left"
-          displayControlsDefault={false}
-          polygon
-          trash
-          defaultMode="draw_polygon"
-          onCreate={onUpdate}
-          onUpdate={onUpdate}
-          onDelete={onDelete}
-        />
-      </Map>
-      <ControlPanel polygons={Object.values(features)} />
-    </>
-  );
+  return <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />;
 }
+
+export default AgroMap;
