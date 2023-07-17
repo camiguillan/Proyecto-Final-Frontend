@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from 'mapbox-gl-geocoder'; // SEARCH BAR
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
@@ -11,6 +11,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzb
 
 function AgroMap() {
   const mapContainer = useRef(null);
+  const [coordinates, setCoordinates] = useState([]);
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -26,7 +27,9 @@ function AgroMap() {
         trash: true,
         polygon: true,
         // Add or customize modes as per your requirements
+
       },
+      dragable: false,
     };
 
     const draw = new MapboxDraw(drawOptions);
@@ -59,7 +62,8 @@ function AgroMap() {
 
     function handleDraw() {
       const features = draw.getAll();
-      console.log(features);
+      setCoordinates(features.features[0].geometry.coordinates);
+      console.log(features.features[0].geometry.coordinates, coordinates);
 
       // Call your API with the processed data
       // Example: fetch('YOUR_API_URL', { method: 'POST', body: JSON.stringify(features) })
@@ -79,6 +83,8 @@ function AgroMap() {
       map.remove();
     };
   }, []);
+
+  console.log(coordinates);
 
   return (
     <div ref={mapContainer} className="mapa" style={{ height: '100%', borderRadius: '10px' }} />

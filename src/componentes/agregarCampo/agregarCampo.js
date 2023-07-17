@@ -47,8 +47,9 @@ export default function AgregarCampo() {
               value={imagen}
               placeholder="Inserte una imagen"
               onChange={(imagen) => setImagen(imagen)}
-              type="text"
+              type="file"
               className="agregar-campo-input"
+              accept="image/*"
             />
           </form>
         </Card>
