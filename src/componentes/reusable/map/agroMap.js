@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
-import MapboxGeocoder from 'mapbox-gl-geocoder'; // SEARCH BAR
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'; // SEARCH BAR
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-import 'mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
@@ -40,7 +40,52 @@ function AgroMap({ coordinates }) {
     map.addControl(nav, 'bottom-right');
 
     const geocoderContainer = () => <div id="geocoder-container" className="geocoder-container" style={{ width: '100%', borderRadius: '10px' }} />;
+    const coordinatesGeocoder = function (query) {
+      // Match anything which looks like
+      // decimal degrees coordinate pair.
+      const matches = query.match(
+        /^[ ]*(?:Lat: )?(-?\d+\.?\d*)[, ]+(?:Lng: )?(-?\d+\.?\d*)[ ]*$/i,
+      );
+      if (!matches) {
+        return null;
+      }
 
+      function coordinateFeature(lng, lat) {
+        return {
+          center: [lng, lat],
+          geometry: {
+            type: 'Point',
+            coordinates: [lng, lat],
+          },
+          place_name: `Lat: ${lat} Lng: ${lng}`,
+          place_type: ['coordinate'],
+          properties: {},
+          type: 'Feature',
+        };
+      }
+
+      const coord1 = Number(matches[1]);
+      const coord2 = Number(matches[2]);
+      const geocodes = [];
+
+      if (coord1 < -90 || coord1 > 90) {
+        // must be lng, lat
+        geocodes.push(coordinateFeature(coord1, coord2));
+      }
+
+      if (coord2 < -90 || coord2 > 90) {
+        // must be lat, lng
+        geocodes.push(coordinateFeature(coord2, coord1));
+      }
+
+      if (geocodes.length === 0) {
+        // else could be either lng, lat or lat, lng
+        geocodes.push(coordinateFeature(coord1, coord2));
+        geocodes.push(coordinateFeature(coord2, coord1));
+      }
+
+      return geocodes;
+    };
     // SEARCH BAR
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
@@ -51,6 +96,8 @@ function AgroMap({ coordinates }) {
       marker: {
         color: 'red',
       },
+      localGeocoder: coordinatesGeocoder,
+      reverseGeocode: true,
     });
 
     map.addControl(geocoder, 'top-left');
