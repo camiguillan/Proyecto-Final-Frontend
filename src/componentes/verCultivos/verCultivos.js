@@ -14,6 +14,9 @@ export default function VerCultivos() {
   return (
     <div>
       <Header />
+      <h1 className="agregar-campo-titulo">
+        Mis cultivos
+      </h1>
       <div className="image-container-mini">
         <div className="image-wrapper-mini">
           <Link to={`/user/VerCultivos/${imageName}/soja`}>
