@@ -2,7 +2,7 @@
 
 .agregar-campo-titulo {
   color: $verde-musgo;
-  width: 80%;
+  width: 90%;
   margin: 1% 0% 0% 2%;
   text-align: left;
   font-size: xx-large;
@@ -24,11 +24,19 @@
   align-items: flex-start;
 }
 
+@media screen and (max-width: 60em) {
+  .tarjetas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 .botones {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  gap:10px;
+  gap:2vw;
   column-gap: 2vh;
   position: absolute;
   bottom: 0;

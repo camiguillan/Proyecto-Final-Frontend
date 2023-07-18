@@ -12,3 +12,11 @@
 .mapboxgl-ctrl-geocoder{
   width: 100vw;
 }
+
+
+@media screen and (max-width: 60em) {
+  .mapboxgl-ctrl-geocoder{
+    width: 30vw;
+}
+}
+

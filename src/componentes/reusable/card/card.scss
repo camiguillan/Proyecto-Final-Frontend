@@ -20,6 +20,15 @@
   //width: min-content;
 }
 
+@media screen and (max-width: 60em) {
+  
+    .min-content{
+      max-width: 60vw ;
+      min-width: 10vw;
+      //width: min-content;
+    }
+}
+
 .max-content{
    max-width: 100vw;
 }
