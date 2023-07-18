@@ -2,7 +2,7 @@
 
 .bm-menu {
     background-color: $verde-oscuro;
-    padding: 2em 3em 0;
+    padding: 2em 3em 1em;
     font-size: 1.15em;
     height: 100%;
     width: auto; 
@@ -28,11 +28,34 @@
 
   .bm-burger-button {
     position: fixed;
-    width: 36px;
-    height: 30px;
-    top: 36px;
-    right: 36px;
+    width: 2vw;
+    height: 3vh;
+    top: 4vh;
+    right: 3vh;
+
   }
+
+  
+@media screen and (max-width: 60em) {
+   .bm-burger-button {
+    position: fixed;
+    width: 5vw;
+    height: 3vh;
+    top: 4vh;
+    right: 3vh;
+  }
+}
+
+@media screen and (max-width: 30em) {
+   .bm-burger-button {
+    position: fixed;
+    width: 7vw;
+    height: 3vh;
+    top: 4vh;
+    right: 3vh;
+  }
+}
+
 
 
 

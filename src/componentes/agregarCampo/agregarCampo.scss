@@ -24,13 +24,36 @@
   align-items: flex-start;
 }
 
-@media screen and (max-width: 60em) {
+@media screen and (max-width:60em) {
   .tarjetas{
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
+
+
 }
+
+@media screen and (max-width:62em) {
+    .botones{
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .agregar-campo-titulo{
+    font-size: 3vh;
+  }
+}
+
+@media screen and (max-width:75em){
+  .botones{
+    margin: 1vh !important;
+  }
+}
+
+
+
 
 .botones {
   display: flex;
@@ -38,7 +61,7 @@
   justify-content: flex-end;
   gap:2vw;
   column-gap: 2vh;
-  position: absolute;
+  //position: absolute;
   bottom: 0;
   right: 0;
   margin-top: 2rem;
@@ -57,6 +80,7 @@
   font-size: 100%;
   background-color: $verde-clarito;
   border-radius: 10px;
+  position: relative;
 
  span{
   font-size: 2vh;
