@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
@@ -70,10 +71,10 @@ export default function Registrarse() {
       const data = {
         name: ingresarNombre, birthDate: ingresarFechaNacimiento, email: ingresarCorreo, password: ingresarContrasenia,
       };
-      console.log(data);
-      const a = await post('user/', data);
+      const response = await post('user/', data);
+      const id = response.user._id;
 
-      navigate(`/${ingresarNombre}/home`);
+      navigate(`/home/${id}`);
     }
   };
 
