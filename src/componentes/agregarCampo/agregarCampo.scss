@@ -1,42 +1,113 @@
 @import "../../assets/global.scss";
 
-
 .agregar-campo-titulo {
   color: $verde-musgo;
-  width: 80%;
-  margin: 2% 5%;
+  width: 90%;
+  margin: 1% 0% 0% 2%;
   text-align: left;
+  font-size: xx-large;
 }
 
-.foto {
-  background-color: $verde-clarito;
+.campo {
+  //background-color: $verde-clarito;
   text-align: center;
-  border: 1px solid rgb(202, 202, 202);
+  //border: 1px solid rgb(202, 202, 202);
   border-radius: 10px;
-  height: 15vh;
-  width: 45vh;
-  margin-left: 4%;
+  width: 100%;
+  height: 60vh;
+  //margin-left: 2%;
+  padding: 1rem;
 }
 
 .tarjetas {
-  display: flex;
-  gap:10px;
-  grid-template-columns: repeat(2, auto);
-  column-gap: 2vh;
-  
+  display: flex; 
+  align-items: flex-start;
 }
+
+@media screen and (max-width:60em) {
+  .tarjetas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+
+}
+
+@media screen and (max-width:62em) {
+    .botones{
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .agregar-campo-titulo{
+    font-size: 3vh;
+  }
+}
+
+@media screen and (max-width:75em){
+  .botones{
+    margin: 1vh !important;
+  }
+}
+
+
+
 
 .botones {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  gap:10px;
+  gap:2vw;
   column-gap: 2vh;
-  position: absolute;
+  //position: absolute;
   bottom: 0;
   right: 0;
-  margin: 5vh;
+  margin-top: 2rem;
+  margin: 3vh;
 }
 
+
+.upload-image-container{
+  border: dashed;
+  border-color: gray;
+  width: 100%;
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 100%;
+  background-color: $verde-clarito;
+  border-radius: 10px;
+  position: relative;
+
+ span{
+  font-size: 2vh;
+  padding: 1rem;
+  color: gray;
+ }
+
+ :hover{
+  cursor: pointer;
+ }
+
+}
+
+.drop_area{
+  width: 100%;
+  display: flex;
+}
+
+.imagen-campo img{
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+}
+
+// .ejTjHV{
+//   position: absolute;
+// }
 
 
