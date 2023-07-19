@@ -13,7 +13,7 @@ import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y E
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
 import Header from '../reusable/header/header';
 import Button from '../reusable/boton/button';
-import enviarNombreAlBackend from '../conexionBack/conexionBack';
+import { post } from '../conexionBack/conexionBack';
 
 export default function EditarPerfil() {
 
@@ -58,7 +58,7 @@ export default function EditarPerfil() {
       });
       setInvalid(true);
     } else {
-      enviarNombreAlBackend(ingresarNombre, ingresarCorreo, ingresarFechaNacimiento, ingresarContrasenia)
+      post(ingresarNombre, ingresarCorreo, ingresarFechaNacimiento, ingresarContrasenia)
         .then((response) => {
           // Manejar la respuesta si es necesario
         })

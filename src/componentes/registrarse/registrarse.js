@@ -10,7 +10,7 @@ import ErrorModal from '../reusable/errorFolder/errores';
 import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
-import enviarNombreAlBackend from '../conexionBack/conexionBack';
+import { post } from '../conexionBack/conexionBack';
 
 export default function Registrarse() {
   const [ingresarNombre, setIngresarNombre] = useState('');
@@ -50,7 +50,7 @@ export default function Registrarse() {
 
   const okay = () => setInvalid(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (ingresarCorreo.trim().length === 0 || ingresarNombre.trim().length === 0
@@ -67,13 +67,12 @@ export default function Registrarse() {
       });
       setInvalid(true);
     } else {
-      enviarNombreAlBackend(ingresarNombre, ingresarCorreo, ingresarFechaNacimiento, ingresarContrasenia)
-        .then((response) => {
-        // Manejar la respuesta si es necesario
-        })
-        .catch((error) => {
-        // Manejar el error si ocurre alguno
-        });
+      const data = {
+        name: ingresarNombre, birthDate: ingresarFechaNacimiento, email: ingresarCorreo, password: ingresarContrasenia,
+      };
+      console.log(data);
+      const a = await post('user/', data);
+
       navigate(`/${ingresarNombre}/home`);
     }
   };
@@ -122,7 +121,7 @@ export default function Registrarse() {
               style={{ color: isInputFilled4 ? 'black' : '#888' }}
             />
 
-            <Button type="submit" className="green-button" onClick={handleSubmit}>Registrarse </Button>
+            <Button type="submit" className="green-button">Registrarse </Button>
           </form>
         </div>
 

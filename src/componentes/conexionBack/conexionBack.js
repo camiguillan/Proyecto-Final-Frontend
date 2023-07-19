@@ -1,24 +1,15 @@
-/* eslint-disable function-paren-newline */
-/* eslint-disable implicit-arrow-linebreak */
 import axios from 'axios';
 
-const enviarNombreAlBackend = (nombre, correo, fecha, contrasenia) => {
-  const data = {
-    nombre,
-    correo,
-    fecha,
-    contrasenia,
-  };
+const BACKEND_URL = 'http://localhost:8081/';
 
-  return axios.post('URL_DEL_ENDPOINT_BACKEND', data)
-    .then((response) =>
-      // Manejar la respuesta del backend si es necesario
-      response.data, // O cualquier otra manipulación de la respuesta
-    )
-    .catch((error) => {
-      // Manejar el error si ocurre alguno
-      throw error; // O cualquier otra manipulación del error
-    });
-};
+export const post = (url, data) => axios.post(BACKEND_URL + url, data)
+  .then((response) => response.data)
+  .catch((error) => {
+    throw error;
+  });
 
-export default enviarNombreAlBackend;
+export const get = (url, data) => axios.get(BACKEND_URL + url, data)
+  .then((response) => response.data)
+  .catch((error) => {
+    throw error;
+  });
