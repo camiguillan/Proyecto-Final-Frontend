@@ -17,6 +17,23 @@
     padding-left: 2%;
   }
 
+.sub-rectangle-red {
+  height: 3.2rem;
+  width: 26rem;
+  background-color: #fff5f1;
+  margin-bottom: 5vh;
+  border-radius: 2vh;
+  box-shadow: 1vh 1vh 1vh rgba(0, 0, 0, 0.2);
+  border: 0.2vh solid #8b8b8b;
+  color: $gris-titulo;
+  font-size: 1.5rem;
+  font-family: "Inter", sans-serif;
+  border-color: #c1c1c1;
+  border-style: solid;
+  padding-left: 2%;
+}
+
+
   /*
   .sub-rectangle-first {
     height: 45px;

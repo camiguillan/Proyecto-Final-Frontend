@@ -17,6 +17,7 @@ export default function Registrarse() {
   const [ingresarNombre, setIngresarNombre] = useState('');
   const [ingresarCorreo, setIngresarCorreo] = useState('');
   const [ingresarFechaNacimiento, setIngresarFechaNacimiento] = useState('');
+  const [campoNombreLleno, setcampoNombreLleno] = useState(false);
   const [invalid, setInvalid] = useState(false);
   // const [invalid2, setInvalid2] = useState(false);
   const [ingresarContrasenia, setIngresarIngresarContrasenia] = useState('');
@@ -56,11 +57,11 @@ export default function Registrarse() {
 
     if (ingresarCorreo.trim().length === 0 || ingresarNombre.trim().length === 0
     || ingresarFechaNacimiento.trim().length === 0 || ingresarContrasenia.trim().length === 0) {
+      setcampoNombreLleno(true);
       setError({
         title: 'Campo vacío',
         message: 'Faltó rellenar algún valor, revise el formulario y envíelo devuelta.',
       });
-      setInvalid(true);
     } else if (!isInputFilled5) {
       setError({
         title: 'La contraseña debe tener al menos 8 caracteres y una mayúscula',
@@ -90,7 +91,7 @@ export default function Registrarse() {
           <span className="container-text">Creá tu usuario</span>
           <form onSubmit={handleSubmit}>
             <input
-              className="sub-rectangle"
+              className={campoNombreLleno ? 'sub-rectangle' : 'sub-rectangle-red'}
               type="text"
               placeholder="Ingrese su nombre"
               value={ingresarNombre}
