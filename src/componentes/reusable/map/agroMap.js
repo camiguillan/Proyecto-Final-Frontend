@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'; // SEARCH BAR
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
@@ -12,22 +12,22 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzb
 
 function AgroMap({ coordinates }) {
   const mapContainer = useRef(null);
-  const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
+  // const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
 
   useEffect(() => {
-    console.log(searchedCoordinates);
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/satellite-v9',
-      center: searchedCoordinates, // Default center coordinates
+      center: coordinates.length === 0 ? coordinates[0] : [-58.702963, -34.671792],
       zoom: 15, // Default zoom level
-    }, [searchedCoordinates]);
+    });
 
     const drawOptions = {
       displayControlsDefault: false,
       controls: {
         trash: true,
         polygon: true,
+        line_string: true,
         // Add or customize modes as per your requirements
 
       },
@@ -104,13 +104,31 @@ function AgroMap({ coordinates }) {
 
     map.addControl(geocoder, 'top-left');
 
+    const defaultPolygon = {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [-58.78905150033654, -34.68022022276631],
+            [-58.78518370701069, -34.6825252635452],
+            [-58.788616916816935, -34.68570575709246],
+            [-58.79224568920641, -34.68341867294826],
+            [-58.78905150033654, -34.68022022276631],
+          ],
+        ],
+      },
+      properties: {},
+    };
+
+    draw.add(defaultPolygon);
+
     map.on('result', (event) => {
       const { result } = event;
       console.log(result);
 
       // Retrieve the coordinates from the geocoding result
       const { center } = result.geometry;
-      setSearchedCoordinates(center);
 
       // Center the map to the selected location
       map.setCenter(center);
