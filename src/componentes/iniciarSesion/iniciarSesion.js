@@ -45,9 +45,29 @@ export default function IniciarSesion() {
       setInvalid(true);
     } else {
       const data = { email: inputUsername, password: inputPassword };
-      const { user } = await post('sign_in', data);
-
-      navigate(`/home/${user._id}`);
+      try {
+        const { user } = await post('sign_in/', data);
+        navigate(`/home/${user._id}`);
+      } catch (error1) {
+      // Verificar si el error es de tipo 404
+        if (error1.response && error1.response.status === 404) {
+          setError({
+            title: 'No se encontró usuario asociado al mail ingresado',
+            message: 'Por favor, revise el mail ingresado.',
+          });
+        } else if (error1.response && error1.response.status === 401) {
+          setError({
+            title: 'La contraseña ingresada es incorrecta',
+            message: 'Por favor, revise la contraseña ingresada.',
+          });
+        } else {
+          setError({
+            title: 'Error de conexión',
+            message: `Ocurrió un error en la conexión con el servidor. Detalles del error: ${error1.message}`,
+          });
+        }
+        setInvalid(true);
+      }
     }
   };
 
