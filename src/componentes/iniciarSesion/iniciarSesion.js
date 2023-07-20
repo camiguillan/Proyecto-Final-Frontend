@@ -10,7 +10,7 @@ import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss';
 import ErrorModal from '../reusable/errorFolder/errores';
 import Button from '../reusable/boton/button';
-import { get } from '../conexionBack/conexionBack';
+import { post } from '../conexionBack/conexionBack';
 
 export default function IniciarSesion() {
   const [inputUsername, setInputUsername] = useState('');
@@ -44,13 +44,10 @@ export default function IniciarSesion() {
       });
       setInvalid(true);
     } else {
-      const data = {
-        email: inputUsername, password: inputPassword,
-      };
-      const response = await get('sign_in/', data);
-      const id = response.user._id;
+      const data = { email: inputUsername, password: inputPassword };
+      const { user } = await post('sign_in', data);
 
-      navigate(`/home/${id}`);
+      navigate(`/home/${user._id}`);
     }
   };
 
