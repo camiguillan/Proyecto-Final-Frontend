@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +10,7 @@ import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss';
 import ErrorModal from '../reusable/errorFolder/errores';
 import Button from '../reusable/boton/button';
+import { post } from '../conexionBack/conexionBack';
 
 export default function IniciarSesion() {
   const [inputUsername, setInputUsername] = useState('');
@@ -32,7 +34,7 @@ export default function IniciarSesion() {
 
   const okay = () => setInvalid(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (inputUsername.trim().length === 0 || inputPassword.trim().length === 0) {
@@ -42,7 +44,9 @@ export default function IniciarSesion() {
       });
       setInvalid(true);
     } else {
-      navigate(`/${inputUsername}/home`);
+      const { user } = await post('sign_in', { email: inputUsername, password: inputPassword });
+
+      navigate(`/home/${user._id}`);
     }
   };
 
@@ -78,7 +82,7 @@ export default function IniciarSesion() {
 
             <div className="espacio" />
 
-            <Button type="submit" className="green-button" onClick={handleSubmit}>Iniciar Sesion </Button>
+            <Button type="submit" className="green-button">Iniciar Sesion </Button>
 
             <div className="espacio" />
 
