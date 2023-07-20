@@ -111,10 +111,10 @@
   
   .cerrar-sesion-container{
     background-color: transparent;    
-    width: 100%;
+    width: 23vh;
     height: 5%;
-    position: relative;
-    margin-top: 250% !important;
+    position: absolute;
+    bottom: 5vh;    
   }
 
   .cerrar-sesion{
@@ -123,8 +123,7 @@
     width: 90% !important;
     border-radius: 10px !important;
     border-color: $verde-musgo;
-    height: 100%;
-   
+    height: 100%;  
     
   }
 
