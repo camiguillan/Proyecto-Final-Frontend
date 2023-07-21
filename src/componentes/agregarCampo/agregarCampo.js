@@ -46,17 +46,18 @@ export default function AgregarCampo() {
             { console.log(coordinates)}
           </div>
         </Card>
-        <Card className="agregar-campo-container min-content">
-          <form>
-            <Input
-              value={nombreCampo}
-              placeholder="Inserte el nombre"
-              onChange={(nombre) => setNombreCampo(nombre)}
-              type="text"
-              className="agregar-campo-input"
-              accept=""
-            />
-            {/* <Input
+        <div className="derecha">
+          <Card className="agregar-campo-container min-content">
+            <form>
+              <Input
+                value={nombreCampo}
+                placeholder="Inserte el nombre"
+                onChange={(nombre) => setNombreCampo(nombre)}
+                type="text"
+                className="agregar-campo-input"
+                accept=""
+              />
+              {/* <Input
               value={imagen}
               placeholder="Inserte una imagen"
               onChange={(imagen) => setImagen(imagen)}
@@ -64,40 +65,40 @@ export default function AgregarCampo() {
               className="agregar-campo-input"
               accept="image/*"
             /> */}
-            <FileUploader
-              handleChange={(imagen) => setImagen(imagen)}
-              name="foto-campo"
-              types={fileTypes}
-              required
-              label="Suba o arrastre una imagen de su campo aqui"
-              classes="drop_area"
-              hoverTitle=" "
-
-            >
-              {imagen ? (
-                <div>
-                  <div className="imagen-campo">
-                    <img src={URL.createObjectURL(imagen)} alt="user-campo" />
-                    {console.log(imagen)}
-                    {' '}
+              <FileUploader
+                handleChange={(imagen) => setImagen(imagen)}
+                name="foto-campo"
+                types={fileTypes}
+                required
+                label="Suba o arrastre una imagen de su campo aqui"
+                classes="drop_area"
+                hoverTitle=" "
+              >
+                {imagen ? (
+                  <div>
+                    <div className="imagen-campo">
+                      <img src={URL.createObjectURL(imagen)} alt="user-campo" />
+                      {console.log(imagen)}
+                      {' '}
+                    </div>
+                    <Button className="button" onClick={() => setImagen('')}>Delete</Button>
                   </div>
-                  <Button className="button" onClick={() => setImagen('')}>Delete</Button>
-                </div>
-              )
-                : (
-                  <div className="upload-image-container">
-                    <Icon className="bi bi-cloud-arrow-up" color="gray" fontSize="6vh" />
-                    <span> Suba o arrastre una imagen de su campo aqui </span>
-                    {' '}
-                  </div>
-                )}
-            </FileUploader>
-          </form>
-        </Card>
-      </div>
-      <div className="botones">
-        <Button type="button" onClick={() => nav('/user/home')} className="green-button cancelar">Cancelar</Button>
-        <Button type="button" onClick={() => console.log('')} className="green-button">Siguiente</Button>
+                )
+                  : (
+                    <div className="upload-image-container">
+                      <Icon className="bi bi-cloud-arrow-up" color="gray" fontSize="6vh" />
+                      <span> Suba o arrastre una imagen de su campo aqui </span>
+                      {' '}
+                    </div>
+                  )}
+              </FileUploader>
+            </form>
+          </Card>
+          <div className="botones">
+            <Button type="button" onClick={() => nav('/user/home')} className="green-button cancelar">Cancelar</Button>
+            <Button type="button" onClick={() => console.log('')} className="green-button">Siguiente</Button>
+          </div>
+        </div>
       </div>
     </div>
   );
