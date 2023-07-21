@@ -1,7 +1,3 @@
-/* eslint-disable react/no-children-prop */
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileUploader } from 'react-drag-drop-files';
@@ -21,13 +17,6 @@ export default function AgregarCampo() {
   const nav = useNavigate();
   const [coordinates, setCoordinates] = useState([]);
   const fileTypes = ['JPG', 'PNG'];
-  const stack1 = (
-    <div className="upload-image-container">
-      <Icon className="bi bi-cloud-arrow-up" color="gray" fontSize="6vh" />
-      <span> Suba o arrastre una imagen de su campo aqui </span>
-      {' '}
-    </div>
-  );
 
   return (
     <div className="layout">
@@ -57,16 +46,9 @@ export default function AgregarCampo() {
                 className="agregar-campo-input"
                 accept=""
               />
-              {/* <Input
-              value={imagen}
-              placeholder="Inserte una imagen"
-              onChange={(imagen) => setImagen(imagen)}
-              type="file"
-              className="agregar-campo-input"
-              accept="image/*"
-            /> */}
+
               <FileUploader
-                handleChange={(imagen) => setImagen(imagen)}
+                handleChange={(img) => setImagen(img)}
                 name="foto-campo"
                 types={fileTypes}
                 required

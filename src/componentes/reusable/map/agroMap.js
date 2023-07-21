@@ -17,7 +17,7 @@ function AgroMap({ coordinates }) {
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/satellite-v9',
+      style: 'mapbox://styles/mapbox/satellite-streets-v12',
       center: coordinates.length === 0 ? coordinates[0] : [-58.702963, -34.671792],
       zoom: 15, // Default zoom level
     });
