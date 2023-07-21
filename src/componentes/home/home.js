@@ -5,7 +5,7 @@
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import Header from '../reusable/header/header';
 import './home.scss';
 

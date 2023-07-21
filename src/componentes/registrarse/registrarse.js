@@ -1,3 +1,5 @@
+/* eslint-disable brace-style */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable no-shadow */
@@ -6,6 +8,7 @@ import React, { useState } from 'react';
 import '../../assets/global.scss';
 import '../background/background.scss';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import Button from '../reusable/boton/button';
 import ErrorModal from '../reusable/errorFolder/errores';
 import CosoVerde from '../reusable/coso_verde/coso_verde';
@@ -22,6 +25,8 @@ export default function Registrarse() {
   // const [invalid2, setInvalid2] = useState(false);
   const [ingresarContrasenia, setIngresarIngresarContrasenia] = useState('');
   const [isInputFilled5, setIsInputFilled5] = useState(false);
+  const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
+  const eyeIcon = mostrarContrasenia ? <AiOutlineEyeInvisible /> : <AiOutlineEye />;
 
   const [error, setError] = useState({
     title: '',
@@ -45,6 +50,10 @@ export default function Registrarse() {
     setter(e.target.value);
   };
 
+  const toggleMostrarContrasenia = () => {
+    setMostrarContrasenia(!mostrarContrasenia);
+  };
+
   const isInputFilled = ingresarNombre.trim() !== '';
   const isInputFilled2 = ingresarCorreo.trim() !== '';
   const isInputFilled3 = ingresarFechaNacimiento.trim() !== '';
@@ -57,16 +66,8 @@ export default function Registrarse() {
 
     if (ingresarCorreo.trim().length === 0 || ingresarNombre.trim().length === 0
     || ingresarFechaNacimiento.trim().length === 0 || ingresarContrasenia.trim().length === 0) {
-      setcampoNombreLleno(true);
-      setError({
-        title: 'Campo vacío',
-        message: 'Faltó rellenar algún valor, revise el formulario y envíelo devuelta.',
-      });
+      setcampoNombreLleno(false);
     } else if (!isInputFilled5) {
-      setError({
-        title: 'La contraseña debe tener al menos 8 caracteres y una mayúscula',
-        message: 'Ingrese una contraseña válida para continuar.',
-      });
       setInvalid(true);
     } else {
       const data = {
@@ -75,7 +76,9 @@ export default function Registrarse() {
       const response = await post('user/', data);
       const id = response.user._id;
 
-      navigate(`/home/${id}`);
+      navigate(`/home/${id}`, {
+        state: { response },
+      });
     }
   };
 
@@ -84,14 +87,12 @@ export default function Registrarse() {
     <div className="gradient-background">
       <CosoVerde />
 
-      {invalid && <ErrorModal title={error.title} message={error.message} onClick={okay} />}
-
       <div>
         <div className="white-rectangle">
           <span className="container-text">Creá tu usuario</span>
           <form onSubmit={handleSubmit}>
             <input
-              className={campoNombreLleno ? 'sub-rectangle' : 'sub-rectangle-red'}
+              className={campoNombreLleno || isInputFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
               type="text"
               placeholder="Ingrese su nombre"
               value={ingresarNombre}
@@ -99,7 +100,7 @@ export default function Registrarse() {
               style={{ color: isInputFilled ? 'black' : '#888' }}
             />
             <input
-              className="sub-rectangle"
+              className={campoNombreLleno || isInputFilled2 ? 'sub-rectangle' : 'sub-rectangle-red'}
               type="text"
               placeholder="Ingrese su correo electrónico"
               value={ingresarCorreo}
@@ -107,7 +108,7 @@ export default function Registrarse() {
               style={{ color: isInputFilled2 ? 'black' : '#888' }}
             />
             <input
-              className="sub-rectangle"
+              className={campoNombreLleno || isInputFilled3 ? 'sub-rectangle' : 'sub-rectangle-red'}
               type="date"
               placeholder="Ingrese su fecha de nacimiento"
               value={ingresarFechaNacimiento}
@@ -115,14 +116,17 @@ export default function Registrarse() {
               style={{ color: isInputFilled3 ? 'black' : '#888' }}
             />
             <input
-              className="sub-rectangle"
-              type="text"
+              className={campoNombreLleno || isInputFilled4 ? 'sub-rectangle' : 'sub-rectangle-red'}
+              type={mostrarContrasenia ? 'text' : 'password'}
               placeholder="Ingrese su contraseña"
               value={ingresarContrasenia}
               onChange={(e) => handleInputChangePassword(e, setIngresarIngresarContrasenia)}
               style={{ color: isInputFilled4 ? 'black' : '#888' }}
             />
-
+            <span className="mostrar-ocultar" onClick={toggleMostrarContrasenia}>
+              {eyeIcon}
+            </span>
+            {!isInputFilled5 && invalid && <p className="password-message">La contraseña debe tener al menos 8 caracteres y una mayúscula</p>}
             <Button type="submit" className="green-button">Registrarse </Button>
           </form>
         </div>

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
@@ -6,6 +7,7 @@ import '../../assets/global.scss';
 import '../background/background.scss';
 import './iniciarSesion.scss';
 import '../reusable/input_box/input_box.scss';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss';
 import ErrorModal from '../reusable/errorFolder/errores';
@@ -17,6 +19,9 @@ export default function IniciarSesion() {
   const [inputPassword, setInputPassword] = useState('');
   const [invalid, setInvalid] = useState(false);
   // const [invalid2, setInvalid2] = useState(false);
+  const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
+  const eyeIcon = mostrarContrasenia ? <AiOutlineEyeInvisible /> : <AiOutlineEye />;
+  const [campoNombreLleno, setcampoNombreLleno] = useState(false);
 
   const [error, setError] = useState({
     title: '',
@@ -25,6 +30,10 @@ export default function IniciarSesion() {
 
   const handleInputChange = (e, setInputValue) => {
     setInputValue(e.target.value);
+  };
+
+  const toggleMostrarContrasenia = () => {
+    setMostrarContrasenia(!mostrarContrasenia);
   };
 
   const isInputUsernameFilled = inputUsername.trim() !== '';
@@ -38,11 +47,7 @@ export default function IniciarSesion() {
     e.preventDefault();
 
     if (inputUsername.trim().length === 0 || inputPassword.trim().length === 0) {
-      setError({
-        title: 'Campo vacío',
-        message: 'Faltó rellenar algún valor, revise el formulario y envíelo devuelta.',
-      });
-      setInvalid(true);
+      setcampoNombreLleno(false);
     } else {
       const data = { email: inputUsername, password: inputPassword };
       try {
@@ -81,7 +86,7 @@ export default function IniciarSesion() {
             <span className="container-text">Iniciá Sesion</span>
 
             <input
-              className="sub-rectangle"
+              className={campoNombreLleno || isInputUsernameFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
               type="text"
               placeholder="  Ingrese su email"
               value={inputUsername}
@@ -89,13 +94,16 @@ export default function IniciarSesion() {
               style={{ color: isInputUsernameFilled ? 'black' : '#888' }}
             />
             <input
-              className="sub-rectangle"
-              type="text"
+              className={campoNombreLleno || isInputPasswordFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
+              type={mostrarContrasenia ? 'text' : 'password'}
               placeholder="  Ingrese su contraseña"
               value={inputPassword}
               onChange={(e) => handleInputChange(e, setInputPassword)}
               style={{ color: isInputPasswordFilled ? 'black' : '#888' }}
             />
+            <span className="mostrar-ocultar-init-sesion" onClick={toggleMostrarContrasenia}>
+              {eyeIcon}
+            </span>
 
             <div className="espacio" />
 
