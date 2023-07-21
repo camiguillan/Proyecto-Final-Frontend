@@ -27,11 +27,19 @@
 .agregar-campo-label{
   margin: 1vh;
   text-align: left;
+  font-size: 2vh;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 .agregar-campo-inputs{
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+    
 }
 
 @media screen and (max-width:60em) {

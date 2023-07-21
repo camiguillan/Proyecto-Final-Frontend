@@ -57,7 +57,7 @@ export default function AgregarCampo() {
                   Tipos de cultivos:
                   <Input
                     value={cantCultivos}
-                    placeholder="Ingrese la cantidad de tipos"
+                    placeholder="Ingrese cantidad de tipos"
                     onChange={(cant) => setCantCultivos(cant)}
                     type="number"
                     className="agregar-campo-input"
