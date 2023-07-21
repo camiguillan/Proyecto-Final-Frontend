@@ -8,6 +8,7 @@ import Icon from '../../assets/icons/icon';
 import '../reusable/header/header.scss';
 import './homePrincipal.scss';
 import Footer from '../reusable/footer/footer';
+import Carousel from '../reusable/carousel/carousel';
 
 export default function HomePrincipal() {
   const nav = useNavigate();
@@ -24,6 +25,7 @@ export default function HomePrincipal() {
           <Button onClick={() => nav('/registrarse')} className="green-button cancelar">Registrarse</Button>
         </div>
       </header>
+      <Carousel />
       <h1 className="agregar-campo-titulo">
         {' '}
         {' '}

@@ -1,8 +1,8 @@
 @import '../../assets/global.scss';
 
 .gradient-background {
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
   background: linear-gradient(to bottom,
     #{$verde-claro-iniciar-sesion},
     #{$verde-intermedio-iniciar-sesion},
