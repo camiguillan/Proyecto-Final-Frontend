@@ -120,7 +120,6 @@ function AgroMap({ coordinates }) {
       },
       properties: {},
     };
-
     draw.add(defaultPolygon);
 
     map.on('result', (event) => {

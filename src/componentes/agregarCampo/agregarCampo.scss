@@ -31,7 +31,7 @@
     align-items: center;
   }
 
-
+  
 
 }
 
@@ -44,12 +44,19 @@
   .agregar-campo-titulo{
     font-size: 3vh;
   }
+
+   .derecha{
+    justify-content: flex-start !important;
+  }
 }
 
 @media screen and (max-width:75em){
   .botones{
     margin: 1vh !important;
   }
+
+ 
+
 }
 
 .derecha{
