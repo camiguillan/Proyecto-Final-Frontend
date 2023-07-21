@@ -76,9 +76,7 @@ export default function Registrarse() {
       const response = await post('user/', data);
       const id = response.user._id;
 
-      navigate(`/home/${id}`, {
-        state: { response },
-      });
+      navigate(`/home/${id}`);
     }
   };
 
