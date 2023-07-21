@@ -24,16 +24,24 @@
   align-items: flex-start;
 }
 
+.agregar-campo-label{
+  margin: 1vh;
+  text-align: left;
+}
+
+.agregar-campo-inputs{
+  display: flex;
+  flex-direction: column;
+}
+
 @media screen and (max-width:60em) {
   .tarjetas{
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-
-  
-
 }
+
 
 @media screen and (max-width:62em) {
     .botones{
@@ -54,9 +62,6 @@
   .botones{
     margin: 1vh !important;
   }
-
- 
-
 }
 
 .derecha{
@@ -71,7 +76,7 @@
   display: flex;  
   justify-content: flex-end;
   align-items: center;
-  gap:2vw;
+  gap:1vw;
   column-gap: 2vh;
 }
 
@@ -79,7 +84,7 @@
 .upload-image-container{
   border: dashed;
   border-color: gray;
-  width: 100%;
+  width: 90%;
   height: 20vh;
   display: flex;
   justify-content: center;
@@ -88,6 +93,7 @@
   background-color: $verde-clarito;
   border-radius: 10px;
   position: relative;
+  margin: 1rem;
 
  span{
   font-size: 2vh;

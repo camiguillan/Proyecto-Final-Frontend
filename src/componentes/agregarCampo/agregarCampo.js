@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileUploader } from 'react-drag-drop-files';
@@ -16,6 +17,7 @@ export default function AgregarCampo() {
   const [imagen, setImagen] = useState('');
   const nav = useNavigate();
   const [coordinates, setCoordinates] = useState([]);
+  const [cantCultivos, setCantCultivos] = useState('');
   const fileTypes = ['JPG', 'PNG'];
 
   return (
@@ -38,15 +40,31 @@ export default function AgregarCampo() {
         <div className="derecha">
           <Card className="agregar-campo-container min-content">
             <form>
-              <Input
-                value={nombreCampo}
-                placeholder="Inserte el nombre"
-                onChange={(nombre) => setNombreCampo(nombre)}
-                type="text"
-                className="agregar-campo-input"
-                accept=""
-              />
+              <div className="agregar-campo-inputs">
+                <label className="agregar-campo-label">
+                  Nombre del Campo:
+                  <Input
+                    value={nombreCampo}
+                    placeholder="Ingrese el nombre"
+                    onChange={(nombre) => setNombreCampo(nombre)}
+                    type="text"
+                    className="agregar-campo-input"
+                    accept=""
+                  />
+                </label>
 
+                <label className="agregar-campo-label">
+                  Tipos de cultivos:
+                  <Input
+                    value={cantCultivos}
+                    placeholder="Ingrese la cantidad de tipos"
+                    onChange={(cant) => setCantCultivos(cant)}
+                    type="number"
+                    className="agregar-campo-input"
+                    accept=""
+                  />
+                </label>
+              </div>
               <FileUploader
                 handleChange={(img) => setImagen(img)}
                 name="foto-campo"
@@ -76,6 +94,7 @@ export default function AgregarCampo() {
               </FileUploader>
             </form>
           </Card>
+
           <div className="botones">
             <Button type="button" onClick={() => nav('/user/home')} className="green-button cancelar">Cancelar</Button>
             <Button type="button" onClick={() => console.log('')} className="green-button">Siguiente</Button>
