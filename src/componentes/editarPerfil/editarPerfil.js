@@ -19,9 +19,14 @@ import { post } from '../conexionBack/conexionBack';
 
 export default function EditarPerfil() {
 
-  const [ingresarNombre, setIngresarNombre] = useState('Juancho Pirata');
-  const [ingresarCorreo, setIngresarCorreo] = useState('juanchoPirata00@hotmail.com');
-  const [ingresarFechaNacimiento, setIngresarFechaNacimiento] = useState('');
+  const [data, setData] = useState([]);
+  const user = JSON.parse(localStorage.getItem('name')) || {};
+
+  console.log(user);
+
+  const [ingresarNombre, setIngresarNombre] = useState(user.name);
+  const [ingresarCorreo, setIngresarCorreo] = useState(user.email);
+  const [ingresarFechaNacimiento, setIngresarFechaNacimiento] = useState(user.birthDate.slice(0, 10));
   const [invalid, setInvalid] = useState(false);
   // const [invalid2, setInvalid2] = useState(false);
   const [ingresarContrasenia, setIngresarIngresarContrasenia] = useState('juanchoPirata2000');
@@ -29,12 +34,8 @@ export default function EditarPerfil() {
   const [campoNombreLleno, setcampoNombreLleno] = useState(false);
   const eyeIcon = mostrarContrasenia ? <AiOutlineEyeInvisible /> : <AiOutlineEye />;
 
-  const [error, setError] = useState({
-    title: '',
-    message: '',
-  });
-
   const navigate = useNavigate();
+  console.log(user.password);
 
   const handleInputChange = (e, setter) => {
     setter(e.target.value);
@@ -49,8 +50,6 @@ export default function EditarPerfil() {
   const isInputFilled3 = ingresarFechaNacimiento.trim() !== '';
   const isInputFilled4 = ingresarContrasenia.trim() !== '';
   const [isInputFilled5, setIsInputFilled5] = useState(false);
-
-  const okay = () => setInvalid(false);
 
   const handleInputChangePassword = (e) => {
     const { value } = e.target;

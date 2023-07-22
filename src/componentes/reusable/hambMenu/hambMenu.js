@@ -26,7 +26,7 @@ export default function HambMenu({ pageWrapId, outerContainerId }) {
     >
       <div className="menuNav">
         <UserInfo />
-        <div className="menuNavItem" onClick={() => nav(`/${userID}/editarPerfil`)}>
+        <div className="menuNavItem" onClick={() => nav(`/editarPerfil/${userID}`)}>
           <h5>
             {' '}
             <Icon className="bi bi-person-fill" color="white" />
@@ -35,7 +35,7 @@ export default function HambMenu({ pageWrapId, outerContainerId }) {
           </h5>
         </div>
 
-        <div className="menuNavItem" onClick={() => nav(`/${userID}/agregarCampo`)}>
+        <div className="menuNavItem" onClick={() => nav(`/agregarCampo/${userID}`)}>
 
           <h5>
             {' '}
@@ -45,7 +45,7 @@ export default function HambMenu({ pageWrapId, outerContainerId }) {
           </h5>
         </div>
 
-        <div className="menuNavItem" onClick={() => nav(`/${userID}/editarCampo`)}>
+        <div className="menuNavItem" onClick={() => nav(`/editarCampo/${userID}`)}>
           <h5>
             {' '}
             <Icon className="bi bi-pencil-square" color="white" />

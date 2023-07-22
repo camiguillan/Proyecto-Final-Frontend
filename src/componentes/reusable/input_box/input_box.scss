@@ -41,10 +41,41 @@
     font-size: 0.75rem;
 }
 
+.password-message-mini {
+    position: absolute;
+    bottom: 9.4rem; // Adjust this value to control the distance from the input
+    left: 7.8rem; // Adjust this value to move the message to the right
+    color: red;
+    font-size: 0.75rem;
+}
+
+.password-message-init-sesion {
+    position: absolute;
+    bottom: 21rem; // Adjust this value to control the distance from the input
+    left: 11.4rem; // Adjust this value to move the message to the right
+    color: red;
+    font-size: 0.75rem;
+}
+
+.password-message-mail {
+    position: absolute;
+    bottom: 27.5rem; // Adjust this value to control the distance from the input
+    left: 13.3rem; // Adjust this value to move the message to the right
+    color: red;
+    font-size: 0.75rem;
+}
+
 .mostrar-ocultar {
   position: absolute;
   top: 28.3rem;
   right: 4.5rem;
+  transform: translateY(-0.9rem);
+  cursor: pointer;
+}
+.mostrar-ocultar-mini {
+  position: absolute;
+  top: 8.9rem;
+  right: 5.5rem;
   transform: translateY(-0.9rem);
   cursor: pointer;
 }

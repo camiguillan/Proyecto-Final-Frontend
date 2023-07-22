@@ -17,6 +17,8 @@ import { post } from '../conexionBack/conexionBack';
 export default function IniciarSesion() {
   const [inputUsername, setInputUsername] = useState('');
   const [inputPassword, setInputPassword] = useState('');
+  const [invalidPassword, setInvalidPassword] = useState(false);
+  const [invalidUser, setInvalidUser] = useState(false);
   const [invalid, setInvalid] = useState(false);
   // const [invalid2, setInvalid2] = useState(false);
   const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
@@ -52,26 +54,22 @@ export default function IniciarSesion() {
       const data = { email: inputUsername, password: inputPassword };
       try {
         const { user } = await post('sign_in/', data);
+        localStorage.setItem('name', JSON.stringify(user));
         navigate(`/home/${user._id}`);
       } catch (error1) {
       // Verificar si el error es de tipo 404
         if (error1.response && error1.response.status === 404) {
-          setError({
-            title: 'No se encontró usuario asociado al mail ingresado',
-            message: 'Por favor, revise el mail ingresado.',
-          });
+          setInvalidUser(true);
         } else if (error1.response && error1.response.status === 401) {
-          setError({
-            title: 'La contraseña ingresada es incorrecta',
-            message: 'Por favor, revise la contraseña ingresada.',
-          });
+          setInvalidPassword(true);
+          setInvalidUser(false);
         } else {
           setError({
             title: 'Error de conexión',
             message: `Ocurrió un error en la conexión con el servidor. Detalles del error: ${error1.message}`,
           });
+          setInvalid(true);
         }
-        setInvalid(true);
       }
     }
   };
@@ -93,6 +91,8 @@ export default function IniciarSesion() {
               onChange={(e) => handleInputChange(e, setInputUsername)}
               style={{ color: isInputUsernameFilled ? 'black' : '#888' }}
             />
+            {invalidUser && <p className="password-message-mail">El mail ingresado no existe</p>}
+
             <input
               className={campoNombreLleno || isInputPasswordFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
               type={mostrarContrasenia ? 'text' : 'password'}
@@ -104,6 +104,7 @@ export default function IniciarSesion() {
             <span className="mostrar-ocultar-init-sesion" onClick={toggleMostrarContrasenia}>
               {eyeIcon}
             </span>
+            {invalidPassword && <p className="password-message-init-sesion">La contraseña ingresada es incorrecta</p>}
 
             <div className="espacio" />
 

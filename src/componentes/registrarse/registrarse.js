@@ -75,6 +75,7 @@ export default function Registrarse() {
       };
       const response = await post('user/', data);
       const id = response.user._id;
+      localStorage.setItem('name', JSON.stringify(response.user));
 
       navigate(`/home/${id}`);
     }

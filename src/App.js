@@ -22,16 +22,16 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePrincipal />} />
-        <Route path="/:userID/agregarCampo" element={<AgregarCampo />} />
-        <Route path="/:userID/editarCampo" element={<EditarCampo />} />
+        <Route path="/agregarCampo/:userID" element={<AgregarCampo />} />
+        <Route path="/editarCampo/:userID" element={<EditarCampo />} />
         <Route path="/home/:userID" element={<Home />} />
         <Route path="/iniciarSesion" element={<IniciarSesion />} />
         <Route path="/registrarse" element={<Registrarse />} />
-        <Route path="/:userID/campo/dashboards" element={<Dashboards />} />
+        <Route path="/campo/dashboards/:userID" element={<Dashboards />} />
         <Route path="/olvidoContra" element={<OlvidoContra />} />
-        <Route path="/recuperarContra" element={<RecuperarContra />} />
-        <Route path="/:userID/editarPerfil" element={<EditarPerfil />} />
-        <Route path="/:userID/VerCultivos/:imageName" element={<VerCultivos />} />
+        <Route path="/recover_password/:userID" element={<RecuperarContra />} />
+        <Route path="/editarPerfil/:userID" element={<EditarPerfil />} />
+        <Route path="/VerCultivos/:userID" element={<VerCultivos />} />
       </Routes>
     </div>
   );
