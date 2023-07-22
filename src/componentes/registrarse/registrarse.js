@@ -28,11 +28,6 @@ export default function Registrarse() {
   const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
   const eyeIcon = mostrarContrasenia ? <AiOutlineEyeInvisible /> : <AiOutlineEye />;
 
-  const [error, setError] = useState({
-    title: '',
-    message: '',
-  });
-
   const navigate = useNavigate();
 
   const handleInputChangePassword = (e) => {
