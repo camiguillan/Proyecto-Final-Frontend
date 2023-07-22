@@ -14,7 +14,7 @@
   //border: 1px solid rgb(202, 202, 202);
   border-radius: 10px;
   width: 100%;
-  height: 60vh;
+  height: 70vh;
   //margin-left: 2%;
   padding: 1rem;
 }
@@ -24,16 +24,32 @@
   align-items: flex-start;
 }
 
+.agregar-campo-label{
+  margin: 1vh;
+  text-align: left;
+  font-size: 2vh;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.agregar-campo-inputs{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+    
+}
+
 @media screen and (max-width:60em) {
   .tarjetas{
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-
-
-
 }
+
 
 @media screen and (max-width:62em) {
     .botones{
@@ -44,6 +60,10 @@
   .agregar-campo-titulo{
     font-size: 3vh;
   }
+
+   .derecha{
+    justify-content: flex-start !important;
+  }
 }
 
 @media screen and (max-width:75em){
@@ -52,27 +72,27 @@
   }
 }
 
-
-
+.derecha{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 80vh;  
+}
 
 .botones {
-  display: flex;
-  align-items: flex-end;
+  display: flex;  
   justify-content: flex-end;
-  gap:2vw;
+  align-items: center;
+  gap:1vw;
   column-gap: 2vh;
-  //position: absolute;
-  bottom: 0;
-  right: 0;
-  margin-top: 2rem;
-  margin: 3vh;
 }
 
 
 .upload-image-container{
   border: dashed;
   border-color: gray;
-  width: 100%;
+  width: 90%;
   height: 20vh;
   display: flex;
   justify-content: center;
@@ -81,6 +101,7 @@
   background-color: $verde-clarito;
   border-radius: 10px;
   position: relative;
+  margin: 1rem;
 
  span{
   font-size: 2vh;
