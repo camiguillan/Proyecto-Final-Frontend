@@ -28,7 +28,6 @@ export default function Home() {
   const user = JSON.parse(localStorage.getItem('name')) || {};
 
   console.log(user);
-
   // Recorre el array user.fields y genera los nombres de las imágenes
   user.fields.forEach((field, index) => {
     const imageName = `image${index + 1}`;
