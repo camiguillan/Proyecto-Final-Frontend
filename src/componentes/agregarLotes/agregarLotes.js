@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../reusable/header/header';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './agregarLotes.scss';
@@ -14,8 +14,9 @@ import AgroMap from '../reusable/map/agroMap';
 export default function AgregarLotes() {
   const [nombreCampo, setNombreCampo] = useState('');
   const nav = useNavigate();
-  const [coordinates, setCoordinates] = useState([]);
   const [cantCultivos, setCantCultivos] = useState('');
+  const location = useLocation();
+  const { campoInfo } = location.state;
 
   return (
     <div className="layout">
@@ -30,8 +31,7 @@ export default function AgregarLotes() {
       <div className="tarjetas">
         <Card className="agregar-campo-container max-content">
           <div className="campo" id="mapa">
-            <AgroMap coordinates={(coord) => setCoordinates(coord)} />
-            { console.log(coordinates)}
+            <AgroMap coordinates={campoInfo.coordinates} />
           </div>
         </Card>
         <div className="derecha">

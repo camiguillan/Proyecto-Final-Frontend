@@ -13,12 +13,18 @@ import Button from '../reusable/boton/button';
 import AgroMap from '../reusable/map/agroMap';
 
 export default function AgregarCampo() {
-  const [nombreCampo, setNombreCampo] = useState('');
-  const [imagen, setImagen] = useState('');
   const nav = useNavigate();
-  const [coordinates, setCoordinates] = useState([]);
-  const [cantCultivos, setCantCultivos] = useState('');
+  // const [nombreCampo, setNombreCampo] = useState('');
+  // const [imagen, setImagen] = useState('');
+  // const [coordinates, setCoordinates] = useState([]);
+  // const [cantCultivos, setCantCultivos] = useState('');
   const fileTypes = ['JPG', 'PNG'];
+  const [campoInfo, setCampoInfo] = useState({
+    nombreCampo: '',
+    imagen: '',
+    coordinates: [],
+    cantCultivos: '',
+  });
 
   return (
     <div className="layout">
@@ -33,8 +39,13 @@ export default function AgregarCampo() {
       <div className="tarjetas">
         <Card className="agregar-campo-container max-content">
           <div className="campo" id="mapa">
-            <AgroMap coordinates={(coord) => setCoordinates(coord)} />
-            { console.log(coordinates)}
+            <AgroMap
+              coordinates={campoInfo.coordinates}
+              changeCoordinates={(coord) => setCampoInfo((prevInfo) => ({
+                ...prevInfo,
+                coordinates: coord,
+              }))}
+            />
           </div>
         </Card>
         <div className="derecha">
@@ -44,9 +55,12 @@ export default function AgregarCampo() {
                 <label className="agregar-campo-label">
                   Nombre del Campo:
                   <Input
-                    value={nombreCampo}
+                    value={campoInfo.nombreCampo}
                     placeholder="Ingrese el nombre"
-                    onChange={(nombre) => setNombreCampo(nombre)}
+                    onChange={(nombre) => setCampoInfo((prevInfo) => ({
+                      ...prevInfo,
+                      nombreCampo: nombre,
+                    }))}
                     type="text"
                     className="agregar-campo-input"
                     accept=""
@@ -56,9 +70,12 @@ export default function AgregarCampo() {
                 <label className="agregar-campo-label">
                   Tipos de cultivos:
                   <Input
-                    value={cantCultivos}
+                    value={campoInfo.cantCultivos}
                     placeholder="Ingrese cantidad de tipos"
-                    onChange={(cant) => setCantCultivos(cant)}
+                    onChange={(cant) => setCampoInfo((prevInfo) => ({
+                      ...prevInfo,
+                      cantCultivos: cant,
+                    }))}
                     type="number"
                     className="agregar-campo-input"
                     accept=""
@@ -66,7 +83,10 @@ export default function AgregarCampo() {
                 </label>
               </div>
               <FileUploader
-                handleChange={(img) => setImagen(img)}
+                handleChange={(img) => setCampoInfo((prevInfo) => ({
+                  ...prevInfo,
+                  imagen: img,
+                }))}
                 name="foto-campo"
                 types={fileTypes}
                 required
@@ -74,14 +94,20 @@ export default function AgregarCampo() {
                 classes="drop_area"
                 hoverTitle=" "
               >
-                {imagen ? (
+                {campoInfo.imagen ? (
                   <div>
                     <div className="imagen-campo">
-                      <img src={URL.createObjectURL(imagen)} alt="user-campo" />
-                      {console.log(imagen)}
+                      <img src={URL.createObjectURL(campoInfo.imagen)} alt="user-campo" />
+
                       {' '}
                     </div>
-                    <Button className="button" onClick={() => setImagen('')}>Delete</Button>
+                    <Button
+                      className="button"
+                      onClick={() => setCampoInfo((prevInfo) => ({ ...prevInfo, imagen: '' }))}
+                    >
+                      Delete
+
+                    </Button>
                   </div>
                 )
                   : (
@@ -97,7 +123,7 @@ export default function AgregarCampo() {
 
           <div className="botones">
             <Button type="button" onClick={() => nav('/user/home')} className="green-button cancelar">Cancelar</Button>
-            <Button type="button" onClick={() => nav('/agregarLotes/1')} className="green-button">Siguiente</Button>
+            <Button type="button" onClick={() => nav('/agregarLotes/1', { state: campoInfo })} className="green-button">Siguiente</Button>
           </div>
         </div>
       </div>

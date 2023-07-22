@@ -27,9 +27,10 @@ function splitPolygon(draw, polygon) {
   }
 }
 
-function AgroMap({ coordinates }) {
+function AgroMap({ coordinates, changeCoordinates }) {
   const mapContainer = useRef(null);
   // const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
+  console.log(coordinates);
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -191,5 +192,6 @@ function AgroMap({ coordinates }) {
 export default AgroMap;
 
 AgroMap.propTypes = {
-  coordinates: PropTypes.func.isRequired,
+  coordinates: PropTypes.arrayOf.isRequired,
+  changeCoordinates: PropTypes.func.isRequired,
 };
