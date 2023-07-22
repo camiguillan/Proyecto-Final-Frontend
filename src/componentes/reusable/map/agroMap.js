@@ -7,8 +7,25 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
+import { lineToPolygon, difference } from '@turf/turf';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
+function splitPolygon(draw, polygon) {
+  const features = draw.getAll();
+
+  const drawnGeometry = features.features[features.features.length - 1].geometry;
+
+  console.log(drawnGeometry);
+  if (drawnGeometry.type === 'LineString') {
+    // Create a temporary polygon from the LineString to use with difference
+    const tempPolygon = lineToPolygon(drawnGeometry);
+
+    // Split the defaultPolygon with the temporary polygon (LineString)
+    const splitPolygons = difference(polygon, tempPolygon);
+    // Add the resulting polygons to the map
+    draw.add(splitPolygons);
+  }
+}
 
 function AgroMap({ coordinates }) {
   const mapContainer = useRef(null);
@@ -148,10 +165,7 @@ function AgroMap({ coordinates }) {
     function handleDraw() {
       const features = draw.getAll();
       coordinates(features.features[0].geometry.coordinates);
-      // console.log(features.features[0].geometry.coordinates, coordinates);
-
-      // Call your API with the processed data
-      // Example: fetch('YOUR_API_URL', { method: 'POST', body: JSON.stringify(features) })
+      splitPolygon(draw, defaultPolygon);
     }
 
     function handleDrawDelete() {
