@@ -7,7 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
-import { lineToPolygon, difference } from '@turf/turf';
+import { lineToPolygon, difference, centroid } from '@turf/turf';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 function splitPolygon(draw, polygon) {
@@ -25,6 +25,10 @@ function splitPolygon(draw, polygon) {
     // Add the resulting polygons to the map
     draw.add(splitPolygons);
   }
+}
+
+function addCentroid(draw, polygon) {
+  draw.add(centroid(polygon));
 }
 
 function AgroMap({ coordinates }) {
@@ -164,8 +168,10 @@ function AgroMap({ coordinates }) {
 
     function handleDraw() {
       const features = draw.getAll();
+      const lastDrawn = features.features[features.features.length - 1].geometry;
       coordinates(features.features[0].geometry.coordinates);
       splitPolygon(draw, defaultPolygon);
+      addCentroid(draw, lastDrawn);
     }
 
     function handleDrawDelete() {
