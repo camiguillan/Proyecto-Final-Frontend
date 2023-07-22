@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import Header from '../reusable/header/header';
 import './home.scss';
+import { PLOT_SIZE } from '../../constants/plots';
 
 const loadImage = (imageName) => {
   try {

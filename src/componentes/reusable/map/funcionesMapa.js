@@ -1,41 +1,16 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import { PLOT_SIZE } from '../../../constants/plots';
 
-function getHL(coordinates) {
-  let highestLatitude = -Infinity;
-  let lowestLatitude = Infinity;
-  let highestLongitude = -Infinity;
-  let lowestLongitude = Infinity;
+function createRectangle(listOfPolygons) {
+  const latitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates.map((coor) => coor[1]));
+  const longitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates.map((coor) => coor[0]));
+  const lowestLongitude = Math.min(longitudes);
+  const lowestLatitude = Math.min(latitudes);
+  const highestLongitude = Math.max(longitudes);
+  const highestLatitude = Math.max(latitudes);
 
-  for (const [longitude, latitude] of coordinates) {
-    highestLatitude = Math.max(highestLatitude, latitude);
-    lowestLatitude = Math.min(lowestLatitude, latitude);
-    highestLongitude = Math.max(highestLongitude, longitude);
-    lowestLongitude = Math.min(lowestLongitude, longitude);
-  }
-
-  return [highestLatitude, lowestLatitude, highestLongitude, lowestLongitude];
-}
-
-function createRectangle(coordinates) {
-  const {
-    highestLatitude, lowestLatitude, highestLongitude, lowestLongitude,
-  } = getHL(coordinates);
-  const rectangleCoordinates = [
-    [lowestLongitude, highestLatitude], // Top left
-    [highestLongitude, highestLatitude], // Top right
-    [highestLongitude, lowestLatitude], // Bottom right
-    [lowestLongitude, lowestLatitude], // Bottom left
-    [lowestLongitude, highestLatitude], // Closing the rectangle
-  ];
-
-  return {
-    rectangleCoordinates,
-    highestLatitude,
-    lowestLatitude,
-    highestLongitude,
-    lowestLongitude,
-  };
+  return [lowestLongitude, lowestLatitude, highestLongitude, highestLatitude];
 }
 
 const moveCoordinates = ({ lat, lon }, y, x) => ({
