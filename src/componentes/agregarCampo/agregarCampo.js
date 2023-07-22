@@ -22,7 +22,7 @@ export default function AgregarCampo() {
   const [campoInfo, setCampoInfo] = useState({
     nombreCampo: '',
     imagen: '',
-    coordinates: [],
+    coordinates: [-58.702963, -34.671792],
     cantCultivos: '',
   });
 

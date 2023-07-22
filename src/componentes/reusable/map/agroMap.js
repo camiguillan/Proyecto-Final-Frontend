@@ -40,7 +40,7 @@ function AgroMap({ coordinates, changeCoordinates }) {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/satellite-streets-v12',
-      center: coordinates.length === 0 ? coordinates[0] : [-58.702963, -34.671792],
+      center: coordinates,
       zoom: 15, // Default zoom level
     });
 
@@ -170,7 +170,8 @@ function AgroMap({ coordinates, changeCoordinates }) {
     function handleDraw() {
       const features = draw.getAll();
       const lastDrawn = features.features[features.features.length - 1].geometry;
-      coordinates(features.features[0].geometry.coordinates);
+      console.log(features.features[0].geometry.coordinates);
+      changeCoordinates(features.features[0].geometry.coordinates);
       splitPolygon(draw, defaultPolygon);
       addCentroid(draw, lastDrawn);
     }
@@ -198,6 +199,6 @@ function AgroMap({ coordinates, changeCoordinates }) {
 export default AgroMap;
 
 AgroMap.propTypes = {
-  coordinates: PropTypes.arrayOf.isRequired,
+  coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
   changeCoordinates: PropTypes.func.isRequired,
 };
