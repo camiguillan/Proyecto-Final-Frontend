@@ -6,6 +6,7 @@
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 import React, { useEffect, useState } from 'react';
+// import { squareGrid } from '@turf/turf';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import Header from '../reusable/header/header';
 import './home.scss';
@@ -21,6 +22,13 @@ const loadImage = (imageName) => {
 };
 
 export default function Home() {
+  const bbox = [-95, 30, -85, 40];
+  const cellSide = 50;
+  const options = { units: 'miles' };
+
+  const squareGridR = squareGrid(bbox, cellSide, options);
+
+  console.log(squareGridR);
   const { userID } = useParams();
   const images = [];
   const imageNames = [];

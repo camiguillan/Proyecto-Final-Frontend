@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { lineToPolygon, difference, centroid } from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'; // SEARCH BAR
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
@@ -7,7 +8,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
-import { lineToPolygon, difference, centroid } from '@turf/turf';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 function splitPolygon(draw, polygon) {

@@ -25,6 +25,42 @@ export default function AgregarCampo() {
     coordinates: [-58.702963, -34.671792],
     cantCultivos: '',
   });
+  const [cultivos, setCultivos] = useState(['']);
+  console.log(cultivos);
+
+  const handleChange = (cultivo, index) => {
+    const tempList = [...cultivos];
+    tempList[index] = cultivo;
+    setCultivos(tempList);
+    console.log(cultivos);
+  };
+
+  const addInput = () => {
+    setCultivos((cult) => [...cult, '']);
+  };
+
+  const removeInput = (index) => {
+    const tempList = [...cultivos];
+    tempList.splice(index, 1);
+    setCultivos(tempList);
+  };
+
+  const cultivosInputs = cultivos.map((cultivo, index) => (
+    // eslint-disable-next-line react/no-array-index-key
+    <label key={index} className="agregar-campo-label">
+      <Input
+        value={cultivo}
+        placeholder="Ingrese el cultivo"
+        onChange={(cult) => handleChange(cult, index)}
+        type="text"
+        className="agregar-campo-input"
+        accept=""
+      />
+      {cultivos.length - 1 === index
+        ? <Button type="button" onClick={addInput} className="green-button">+</Button>
+        : <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
+    </label>
+  ));
 
   return (
     <div className="layout">
@@ -65,9 +101,11 @@ export default function AgregarCampo() {
                     className="agregar-campo-input"
                     accept=""
                   />
-                </label>
 
-                <label className="agregar-campo-label">
+                </label>
+                {cultivosInputs}
+
+                {/* <label className="agregar-campo-label">
                   Tipos de cultivos:
                   <Input
                     value={campoInfo.cantCultivos}
@@ -80,7 +118,7 @@ export default function AgregarCampo() {
                     className="agregar-campo-input"
                     accept=""
                   />
-                </label>
+                </label> */}
               </div>
               <FileUploader
                 handleChange={(img) => setCampoInfo((prevInfo) => ({
