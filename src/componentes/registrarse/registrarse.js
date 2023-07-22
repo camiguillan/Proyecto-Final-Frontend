@@ -1,20 +1,32 @@
+/* eslint-disable brace-style */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable max-len */
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import '../../assets/global.scss';
 import '../background/background.scss';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import Button from '../reusable/boton/button';
 import ErrorModal from '../reusable/errorFolder/errores';
 import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
+import { post } from '../conexionBack/conexionBack';
 
 export default function Registrarse() {
   const [ingresarNombre, setIngresarNombre] = useState('');
   const [ingresarCorreo, setIngresarCorreo] = useState('');
-  const [ingresarUsuario, setIngresarIngresarUsuario] = useState('');
+  const [ingresarFechaNacimiento, setIngresarFechaNacimiento] = useState('');
+  const [campoNombreLleno, setcampoNombreLleno] = useState(false);
   const [invalid, setInvalid] = useState(false);
   // const [invalid2, setInvalid2] = useState(false);
   const [ingresarContrasenia, setIngresarIngresarContrasenia] = useState('');
+  const [isInputFilled5, setIsInputFilled5] = useState(false);
+  const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
+  const eyeIcon = mostrarContrasenia ? <AiOutlineEyeInvisible /> : <AiOutlineEye />;
 
   const [error, setError] = useState({
     title: '',
@@ -23,29 +35,49 @@ export default function Registrarse() {
 
   const navigate = useNavigate();
 
+  const handleInputChangePassword = (e) => {
+    const { value } = e.target;
+    setIngresarIngresarContrasenia(value);
+
+    // Validar la contraseña
+    const hasUpperCase = /[A-Z]/.test(value);
+    const isValidLength = value.length >= 8;
+
+    setIsInputFilled5(hasUpperCase && isValidLength);
+  };
+
   const handleInputChange = (e, setter) => {
     setter(e.target.value);
   };
 
+  const toggleMostrarContrasenia = () => {
+    setMostrarContrasenia(!mostrarContrasenia);
+  };
+
   const isInputFilled = ingresarNombre.trim() !== '';
   const isInputFilled2 = ingresarCorreo.trim() !== '';
-  const isInputFilled3 = ingresarUsuario.trim() !== '';
+  const isInputFilled3 = ingresarFechaNacimiento.trim() !== '';
   const isInputFilled4 = ingresarContrasenia.trim() !== '';
 
   const okay = () => setInvalid(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (ingresarCorreo.trim().length === 0 || ingresarNombre.trim().length === 0
-    || ingresarUsuario.trim().length === 0 || ingresarContrasenia.trim().length === 0) {
-      setError({
-        title: 'Campo vacío',
-        message: 'Faltó rellenar algún valor, revise el formulario y envíelo devuelta.',
-      });
+    || ingresarFechaNacimiento.trim().length === 0 || ingresarContrasenia.trim().length === 0) {
+      setcampoNombreLleno(false);
+    } else if (!isInputFilled5) {
       setInvalid(true);
     } else {
-      navigate('../iniciarSesion');
+      const data = {
+        name: ingresarNombre, birthDate: ingresarFechaNacimiento, email: ingresarCorreo, password: ingresarContrasenia,
+      };
+      const response = await post('user/', data);
+      const id = response.user._id;
+      localStorage.setItem('name', JSON.stringify(response.user));
+
+      navigate(`/home/${id}`);
     }
   };
 
@@ -54,14 +86,12 @@ export default function Registrarse() {
     <div className="gradient-background">
       <CosoVerde />
 
-      {invalid && <ErrorModal title={error.title} message={error.message} onClick={okay} />}
-
       <div>
         <div className="white-rectangle">
           <span className="container-text">Creá tu usuario</span>
           <form onSubmit={handleSubmit}>
             <input
-              className="sub-rectangle"
+              className={campoNombreLleno || isInputFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
               type="text"
               placeholder="Ingrese su nombre"
               value={ingresarNombre}
@@ -69,7 +99,7 @@ export default function Registrarse() {
               style={{ color: isInputFilled ? 'black' : '#888' }}
             />
             <input
-              className="sub-rectangle"
+              className={campoNombreLleno || isInputFilled2 ? 'sub-rectangle' : 'sub-rectangle-red'}
               type="text"
               placeholder="Ingrese su correo electrónico"
               value={ingresarCorreo}
@@ -77,23 +107,26 @@ export default function Registrarse() {
               style={{ color: isInputFilled2 ? 'black' : '#888' }}
             />
             <input
-              className="sub-rectangle"
-              type="text"
-              placeholder="Ingrese su nombre de usuario"
-              value={ingresarUsuario}
-              onChange={(e) => handleInputChange(e, setIngresarIngresarUsuario)}
+              className={campoNombreLleno || isInputFilled3 ? 'sub-rectangle' : 'sub-rectangle-red'}
+              type="date"
+              placeholder="Ingrese su fecha de nacimiento"
+              value={ingresarFechaNacimiento}
+              onChange={(e) => handleInputChange(e, setIngresarFechaNacimiento)}
               style={{ color: isInputFilled3 ? 'black' : '#888' }}
             />
             <input
-              className="sub-rectangle"
-              type="text"
+              className={campoNombreLleno || isInputFilled4 ? 'sub-rectangle' : 'sub-rectangle-red'}
+              type={mostrarContrasenia ? 'text' : 'password'}
               placeholder="Ingrese su contraseña"
               value={ingresarContrasenia}
-              onChange={(e) => handleInputChange(e, setIngresarIngresarContrasenia)}
+              onChange={(e) => handleInputChangePassword(e, setIngresarIngresarContrasenia)}
               style={{ color: isInputFilled4 ? 'black' : '#888' }}
             />
-
-            <Button type="submit" className="green-button" onClick={handleSubmit}>Registrarse </Button>
+            <span className="mostrar-ocultar" onClick={toggleMostrarContrasenia}>
+              {eyeIcon}
+            </span>
+            {!isInputFilled5 && invalid && <p className="password-message">La contraseña debe tener al menos 8 caracteres y una mayúscula</p>}
+            <Button type="submit" className="green-button">Registrarse </Button>
           </form>
         </div>
 

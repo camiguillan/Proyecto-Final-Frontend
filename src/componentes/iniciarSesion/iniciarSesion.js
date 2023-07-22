@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -5,16 +7,23 @@ import '../../assets/global.scss';
 import '../background/background.scss';
 import './iniciarSesion.scss';
 import '../reusable/input_box/input_box.scss';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss';
 import ErrorModal from '../reusable/errorFolder/errores';
 import Button from '../reusable/boton/button';
+import { post } from '../conexionBack/conexionBack';
 
 export default function IniciarSesion() {
   const [inputUsername, setInputUsername] = useState('');
   const [inputPassword, setInputPassword] = useState('');
+  const [invalidPassword, setInvalidPassword] = useState(false);
+  const [invalidUser, setInvalidUser] = useState(false);
   const [invalid, setInvalid] = useState(false);
   // const [invalid2, setInvalid2] = useState(false);
+  const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
+  const eyeIcon = mostrarContrasenia ? <AiOutlineEyeInvisible /> : <AiOutlineEye />;
+  const [campoNombreLleno, setcampoNombreLleno] = useState(false);
 
   const [error, setError] = useState({
     title: '',
@@ -25,6 +34,10 @@ export default function IniciarSesion() {
     setInputValue(e.target.value);
   };
 
+  const toggleMostrarContrasenia = () => {
+    setMostrarContrasenia(!mostrarContrasenia);
+  };
+
   const isInputUsernameFilled = inputUsername.trim() !== '';
   const isInputPasswordFilled = inputPassword.trim() !== '';
 
@@ -32,17 +45,32 @@ export default function IniciarSesion() {
 
   const okay = () => setInvalid(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (inputUsername.trim().length === 0 || inputPassword.trim().length === 0) {
-      setError({
-        title: 'Campo vacío',
-        message: 'Faltó rellenar algún valor, revise el formulario y envíelo devuelta.',
-      });
-      setInvalid(true);
+      setcampoNombreLleno(false);
     } else {
-      navigate('../home');
+      const data = { email: inputUsername, password: inputPassword };
+      try {
+        const { user } = await post('sign_in/', data);
+        localStorage.setItem('name', JSON.stringify(user));
+        navigate(`/home/${user._id}`);
+      } catch (error1) {
+      // Verificar si el error es de tipo 404
+        if (error1.response && error1.response.status === 404) {
+          setInvalidUser(true);
+        } else if (error1.response && error1.response.status === 401) {
+          setInvalidPassword(true);
+          setInvalidUser(false);
+        } else {
+          setError({
+            title: 'Error de conexión',
+            message: `Ocurrió un error en la conexión con el servidor. Detalles del error: ${error1.message}`,
+          });
+          setInvalid(true);
+        }
+      }
     }
   };
 
@@ -56,21 +84,27 @@ export default function IniciarSesion() {
             <span className="container-text">Iniciá Sesion</span>
 
             <input
-              className="sub-rectangle"
+              className={campoNombreLleno || isInputUsernameFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
               type="text"
-              placeholder="  Ingrese su nombre de usuario"
+              placeholder="  Ingrese su email"
               value={inputUsername}
               onChange={(e) => handleInputChange(e, setInputUsername)}
               style={{ color: isInputUsernameFilled ? 'black' : '#888' }}
             />
+            {invalidUser && <p className="password-message-mail">El mail ingresado no existe</p>}
+
             <input
-              className="sub-rectangle"
-              type="text"
+              className={campoNombreLleno || isInputPasswordFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
+              type={mostrarContrasenia ? 'text' : 'password'}
               placeholder="  Ingrese su contraseña"
               value={inputPassword}
               onChange={(e) => handleInputChange(e, setInputPassword)}
               style={{ color: isInputPasswordFilled ? 'black' : '#888' }}
             />
+            <span className="mostrar-ocultar-init-sesion" onClick={toggleMostrarContrasenia}>
+              {eyeIcon}
+            </span>
+            {invalidPassword && <p className="password-message-init-sesion">La contraseña ingresada es incorrecta</p>}
 
             <div className="espacio" />
 
@@ -78,7 +112,7 @@ export default function IniciarSesion() {
 
             <div className="espacio" />
 
-            <Button type="submit" className="green-button" onClick={handleSubmit}>Iniciar Sesion </Button>
+            <Button type="submit" className="green-button">Iniciar Sesion </Button>
 
             <div className="espacio" />
 

@@ -9,21 +9,26 @@ import Registrarse from './componentes/registrarse/registrarse';
 import Dashboards from './componentes/dashboards/dashboards';
 import OlvidoContra from './componentes/olvidoContra/olvidoContra';
 import EditarPerfil from './componentes/editarPerfil/editarPerfil';
+import VerCultivos from './componentes/verCultivos/verCultivos';
+import RecuperarContra from './componentes/recuperarContra/recuperarContra';
+import HomePrincipal from './componentes/homePrincipal/homePrincipal';
 
 function App() {
   document.title = 'AGROIA';
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<IniciarSesion />} />
-        <Route path="/user/agregarCampo" element={<AgregarCampo />} />
-        <Route path="/user/editarCampo" element={<EditarCampo />} />
-        <Route path="/user/home" element={<Home />} />
+        <Route path="/" element={<HomePrincipal />} />
+        <Route path="/agregarCampo/:userID" element={<AgregarCampo />} />
+        <Route path="/editarCampo/:userID" element={<EditarCampo />} />
+        <Route path="/home/:userID" element={<Home />} />
         <Route path="/iniciarSesion" element={<IniciarSesion />} />
         <Route path="/registrarse" element={<Registrarse />} />
-        <Route path="/user/campo/dashboards" element={<Dashboards />} />
+        <Route path="/campo/dashboards/:userID" element={<Dashboards />} />
         <Route path="/olvidoContra" element={<OlvidoContra />} />
-        <Route path="/user/editarPerfil" element={<EditarPerfil />} />
+        <Route path="/recover_password/:userID" element={<RecuperarContra />} />
+        <Route path="/editarPerfil/:userID" element={<EditarPerfil />} />
+        <Route path="/VerCultivos/:userID" element={<VerCultivos />} />
       </Routes>
     </div>
   );

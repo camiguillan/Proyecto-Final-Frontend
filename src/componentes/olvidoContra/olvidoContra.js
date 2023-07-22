@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable linebreak-style */
 import React, { useState } from 'react';
 import '../../assets/global.scss';
@@ -8,6 +9,7 @@ import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
 import Button from '../reusable/boton/button';
+import { post } from '../conexionBack/conexionBack';
 
 export default function OlvidoContra() {
   const [ingresarCorreo, setIngresarCorreo] = useState('');
@@ -28,7 +30,7 @@ export default function OlvidoContra() {
 
   const okay = () => setInvalid(false);
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (ingresarCorreo.trim().length === 0) {
@@ -38,9 +40,10 @@ export default function OlvidoContra() {
       });
       setInvalid(true);
     } else {
-      navigate('../iniciarSesion');
+      const data = { email: ingresarCorreo };
+      const response = await post('restore_password/', data);
     }
-  }
+  };
 
   return (
 
@@ -51,7 +54,7 @@ export default function OlvidoContra() {
         <div>
           <CosoVerde />
           <div className="small-white-rectangle">
-            <span className="container-text">Recuperar contraseña</span>
+            <span className="container-text">¿Olvido su contraseña?</span>
             <input
               className="sub-rectangle"
               type="text"

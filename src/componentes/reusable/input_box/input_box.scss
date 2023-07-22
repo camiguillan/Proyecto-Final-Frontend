@@ -2,16 +2,15 @@
 
 
 .sub-rectangle {
-    height: 5vh;
-    width: 45vh;
+    height: 3.2rem;
+    width: 26rem;
     background-color: #F1FFFA;
-    margin-left: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 10px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-    border: 1px #8B8B8B;
+    margin-bottom: 3rem;
+    border-radius: 2vh;
+    box-shadow: 1vh 1vh 1vh rgba(0, 0, 0, 0.2);
+    border: 0.2vh #8B8B8B;
     color: $gris-titulo;
-    font-size: 2vh;
+    font-size: 1.5rem;
     font-family: "Inter", sans-serif;
     border-color: #c1c1c1;
     border-style: solid ;
@@ -24,6 +23,77 @@
     width: min-content;
     align-items: end;
   }
+.sub-rectangle-red {
+  height: 3rem;
+  width: 26rem;
+  background-color: #fff5f1;
+  margin-bottom: 3.2rem;
+  border-radius: 2vh;
+  box-shadow: 1vh 1vh 1vh rgba(0, 0, 0, 0.2);
+  border: 0.3vh solid red;
+  color: $gris-titulo;
+  font-size: 1.5rem;
+  font-family: "Inter", sans-serif;
+  border-color: red;
+  border-style: solid;
+  padding-left: 2%;
+}
+
+.password-message {
+    position: absolute;
+    bottom: 8rem; // Adjust this value to control the distance from the input
+    left: 7.2rem; // Adjust this value to move the message to the right
+    color: red;
+    font-size: 0.75rem;
+}
+
+.password-message-mini {
+    position: absolute;
+    bottom: 9.4rem; // Adjust this value to control the distance from the input
+    left: 7.8rem; // Adjust this value to move the message to the right
+    color: red;
+    font-size: 0.75rem;
+}
+
+.password-message-init-sesion {
+    position: absolute;
+    bottom: 21rem; // Adjust this value to control the distance from the input
+    left: 11.4rem; // Adjust this value to move the message to the right
+    color: red;
+    font-size: 0.75rem;
+}
+
+.password-message-mail {
+    position: absolute;
+    bottom: 27.5rem; // Adjust this value to control the distance from the input
+    left: 13.3rem; // Adjust this value to move the message to the right
+    color: red;
+    font-size: 0.75rem;
+}
+
+.mostrar-ocultar {
+  position: absolute;
+  top: 28.3rem;
+  right: 4.5rem;
+  transform: translateY(-0.9rem);
+  cursor: pointer;
+}
+.mostrar-ocultar-mini {
+  position: absolute;
+  top: 8.9rem;
+  right: 5.5rem;
+  transform: translateY(-0.9rem);
+  cursor: pointer;
+}
+
+.mostrar-ocultar-init-sesion {
+  position: absolute;
+  top: 15.3rem;
+  right: 4.5rem;
+  transform: translateY(-0.9rem);
+  cursor: pointer;
+}
+
 
   /*
   .sub-rectangle-first {

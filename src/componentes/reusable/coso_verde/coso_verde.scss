@@ -3,22 +3,26 @@
 
 .green-rectangle {
     background-color: $verde-principal;
-    height: 10vh; /* Ajusta el tamaño vertical */
-    width: 35vh; /* Ajusta el tamaño horizontal */
+    height: 5.8rem; /* Ajusta el tamaño vertical */
+    width: 18rem; /* Ajusta el tamaño horizontal */
     margin: 0 auto; /* Centra horizontalmente */
     position: absolute;
-    top: 5vh; /* Ajusta la distancia con el rectángulo blanco */
+    top: 3rem; /* Ajusta la distancia con el rectángulo blanco */
     left: 0;
     right: 0;
-    border-radius: 15px;
+    border-radius: 2vh;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
   }
 
+  .green-rectangle:hover{
+    cursor: pointer;
+  }
+
   .text {
-    font-size: 35px;
+    font-size: 2.7rem;
     font-family: "Inter", sans-serif;
     font-weight: bold;
     color: #333;

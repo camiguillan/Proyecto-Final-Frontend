@@ -1,0 +1,47 @@
+.image-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  max-height: calc(100vh - 112px);
+  height: calc(100vh - 112px);
+  overflow-y: auto;
+}
+
+.rounded-image {
+  border-radius: 20px;
+  width: 100%;
+  height: auto;
+}
+
+.image-container img {
+  width: 97%; /* Las imágenes ocuparán todo el ancho disponible en el contenedor */
+  height: 97%; /* Las imágenes ocuparán todo el alto disponible en el contenedor */
+  object-fit: fill; /* Las imágenes se estirarán y deformarán para llenar el espacio disponible */
+}
+
+.image-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55vh;
+}
+
+.image-wrapper img { 
+  width: 97%; /* Las imágenes ocuparán todo el ancho disponible en el contenedor */
+  height: 97%; /* Las imágenes ocuparán todo el alto disponible en el contenedor */
+  object-fit: fill;
+}
+
+.image-name {
+  position: absolute;
+  bottom: 10px;
+  left: 30px; /* Ajusta el valor de 'left' según tu preferencia */
+  font-size: 40px;
+  color: black;
+  font-weight: normal;
+  padding: 5px;
+  border-radius: 5px;
+  text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white; /* Agrega el bordeado blanco */
+  pointer-events: none;
+}
