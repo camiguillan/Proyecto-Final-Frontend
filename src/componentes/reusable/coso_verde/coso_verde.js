@@ -8,7 +8,7 @@ export default function CosoVerde() {
 
   return (
     <div className="green-rectangle" onClick={() => navigate('../')}>
-      <Icon className="bi bi-flower1" color="white" fontSize="6vh" />
+      <Icon className="bi bi-flower1" color="white" fontSize="3.8rem" />
       <span className="text"> AGROIA</span>
     </div>
   );
