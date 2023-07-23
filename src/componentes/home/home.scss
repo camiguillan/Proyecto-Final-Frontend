@@ -1,22 +1,12 @@
 .image-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 10px;
-  max-height: calc(100vh - 112px);
-  height: calc(100vh - 112px);
-  overflow-y: auto;
+  grid-template-columns: repeat(auto-fill, minmax(13.2rem, 1fr));
+  grid-gap: 1.2rem;
+  margin-top: 1rem;
 }
 
 .rounded-image {
-  border-radius: 20px;
-  width: 100%;
-  height: auto;
-}
-
-.image-container img {
-  width: 97%; /* Las imágenes ocuparán todo el ancho disponible en el contenedor */
-  height: 97%; /* Las imágenes ocuparán todo el alto disponible en el contenedor */
-  object-fit: fill; /* Las imágenes se estirarán y deformarán para llenar el espacio disponible */
+  border-radius: 0.5rem;
 }
 
 .image-wrapper {
@@ -24,24 +14,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 55vh;
+  align-items: flex-start;
+  height: 20rem;
+  width: 13.2rem;
+  border-radius: 0.5rem;
+  background-color: rgb(225, 215, 215); /* Add this line to set the background color to red */
 }
 
-.image-wrapper img { 
-  width: 97%; /* Las imágenes ocuparán todo el ancho disponible en el contenedor */
-  height: 97%; /* Las imágenes ocuparán todo el alto disponible en el contenedor */
-  object-fit: fill;
+.image-wrapper img {
+  width: 90%;
+  height: 50%;
+  object-fit: cover;
+  margin-top: 5%;
 }
 
 .image-name {
   position: absolute;
-  bottom: 10px;
-  left: 30px; /* Ajusta el valor de 'left' según tu preferencia */
-  font-size: 40px;
+  bottom: 6.7rem;
+  left: 0.7rem;
+  font-size: 1.6rem;
+  font-family: 'Roboto', sans-serif; /* Cambia la fuente a Roboto */
+  font-weight: bold;
   color: black;
-  font-weight: normal;
-  padding: 5px;
-  border-radius: 5px;
-  text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white; /* Agrega el bordeado blanco */
+  //text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white;
   pointer-events: none;
 }
