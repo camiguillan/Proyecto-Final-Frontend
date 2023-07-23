@@ -30,7 +30,7 @@
   font-size: 2vh;
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .agregar-campo-inputs{
@@ -127,8 +127,22 @@
   margin-top: 0.5rem;
 }
 
-// .ejTjHV{
-//   position: absolute;
-// }
+.select{
+  height: 3.2rem;
+  width: 10rem;
+  background-color: #F1FFFA;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  border: 1px #8B8B8B;
+  color: $gris-titulo;
+  font-size: 2vh;
+  font-family: "Inter", sans-serif;
+  border-color: #c1c1c1;
+  border-style: solid ;
+  padding-left: 2%;
+}
 
 

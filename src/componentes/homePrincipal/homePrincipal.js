@@ -128,23 +128,26 @@ export default function HomePrincipal() {
   const createRectangle = (listOfPolygons) => {
     const latitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[1]));
     const longitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[0]));
-    const lowestLongitude = Math.min(longitudes);
-    const lowestLatitude = Math.min(latitudes);
-    const highestLongitude = Math.max(longitudes);
-    const highestLatitude = Math.max(latitudes);
+    const lowestLongitude = Math.min(...longitudes);
+    const lowestLatitude = Math.min(...latitudes);
+    const highestLongitude = Math.max(...longitudes);
+    const highestLatitude = Math.max(...latitudes);
 
     return [lowestLongitude, lowestLatitude, highestLongitude, highestLatitude];
   };
 
   const cropCheck = (coordinates, cropPolygons) => {
-    const answer = cropPolygons.find((oneCrop) => coordinates.some((corner) => booleanPointInPolygon(corner, oneCrop.polygon)));
-    return answer.crop || 'NONE';
+    const answer = cropPolygons.filter((oneCrop) => coordinates[0].some((corner) => booleanPointInPolygon(corner, oneCrop.polygon)))[0];
+
+    if (!answer) {
+      return 'NONE';
+    }
+    return answer.crop;
   };
 
   // eslint-disable-next-line no-unused-vars
   const cropCheckFullField = (cropPolygons) => {
     const bbox = createRectangle(cropPolygons);
-
     const options = { units: 'degrees' };
     const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
     return squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, cropPolygons));
