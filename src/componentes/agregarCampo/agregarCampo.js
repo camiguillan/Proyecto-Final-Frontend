@@ -11,6 +11,7 @@ import Icon from '../../assets/icons/icon';
 import Button from '../reusable/boton/button';
 // eslint-disable-next-line no-unused-vars
 import AgroMap from '../reusable/map/agroMap';
+import { CROP_TYPES_KEYS } from '../../constants/plots';
 
 export default function AgregarCampo() {
   const nav = useNavigate();
@@ -26,7 +27,9 @@ export default function AgregarCampo() {
     cantCultivos: '',
   });
   const [cultivos, setCultivos] = useState(['']);
-  console.log(cultivos);
+  const [features, setFeatures] = useState([]);
+  const cultivosOpciones = Object.keys(CROP_TYPES_KEYS);
+  console.log(cultivosOpciones);
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
@@ -45,22 +48,39 @@ export default function AgregarCampo() {
     setCultivos(tempList);
   };
 
+  const opciones = cultivosOpciones.map((opcion) => (
+    <option key={opcion} value={opcion}>
+      {' '}
+      {opcion}
+      {' '}
+    </option>
+  ));
+
   const cultivosInputs = cultivos.map((cultivo, index) => (
     // eslint-disable-next-line react/no-array-index-key
     <label key={index} className="agregar-campo-label">
-      <Input
+      Tipo de cultivo:
+      <select className="select" onChange={(e) => handleChange(e.target.value, index)}>
+        {' '}
+        {opciones}
+        {' '}
+      </select>
+      {/* <Input
         value={cultivo}
         placeholder="Ingrese el cultivo"
         onChange={(cult) => handleChange(cult, index)}
         type="text"
         className="agregar-campo-input"
         accept=""
-      />
+      /> */}
       {cultivos.length - 1 === index
         ? <Button type="button" onClick={addInput} className="green-button">+</Button>
         : <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
     </label>
   ));
+  console.log(cultivos);
+  console.log(campoInfo.coordinates);
+  console.log(features);
 
   return (
     <div className="layout">
@@ -81,6 +101,7 @@ export default function AgregarCampo() {
                 ...prevInfo,
                 coordinates: coord,
               }))}
+              addFeatures={(feature) => setFeatures((prevInfo) => [...prevInfo, feature])}
             />
           </div>
         </Card>
