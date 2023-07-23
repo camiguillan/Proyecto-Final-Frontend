@@ -56,6 +56,22 @@ export default function AgregarCampo() {
     </option>
   ));
 
+  const addFeature = (newFeatures) => {
+    const tempList = [...features];
+    newFeatures.forEach((feat, index) => {
+      const hasFeature = features.includes(feat.id);
+      if (hasFeature) {
+        tempList[index] = feat;
+      } else {
+        tempList.push(feat);
+      }
+      setFeatures(tempList);
+    });
+    console.log('TEMP LIST', tempList);
+    console.log('features', newFeatures);
+    setFeatures(tempList);
+  };
+
   const cultivosInputs = cultivos.map((cultivo, index) => (
     // eslint-disable-next-line react/no-array-index-key
     <label key={index} className="agregar-campo-label">
@@ -80,7 +96,7 @@ export default function AgregarCampo() {
   ));
   console.log(cultivos);
   console.log(campoInfo.coordinates);
-  console.log(features);
+  console.log('LISTA FEATURES', features);
 
   return (
     <div className="layout">
@@ -101,7 +117,7 @@ export default function AgregarCampo() {
                 ...prevInfo,
                 coordinates: coord,
               }))}
-              addFeatures={(feature) => setFeatures((prevInfo) => [...prevInfo, feature])}
+              addFeatures={(feature) => addFeature(feature)}
             />
           </div>
         </Card>

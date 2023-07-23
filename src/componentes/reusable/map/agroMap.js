@@ -175,7 +175,9 @@ function AgroMap({ coordinates, changeCoordinates, addFeatures }) {
       console.log(features.features[0].geometry.coordinates);
       changeCoordinates(features.features[0].geometry.coordinates[0]);
       splitPolygon(draw, defaultPolygon);
-      addFeatures(features);
+      // eslint-disable-next-line guard-for-in
+      addFeatures(features.features);
+
       // addCentroid(draw, lastDrawn);
     }
 
