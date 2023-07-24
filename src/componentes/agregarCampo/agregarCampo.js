@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileUploader } from 'react-drag-drop-files';
 import Header from '../reusable/header/header';
@@ -28,6 +28,8 @@ export default function AgregarCampo() {
   });
   const [cultivos, setCultivos] = useState(['']);
   const [features, setFeatures] = useState([]);
+  const [newFeatures, setNewFeatures] = useState([]);
+  // const [erased, setNewErased] = useState([]);
   const [mainField, setMainField] = useState([]);
   const cultivosOpciones = Object.keys(CROP_TYPES_KEYS);
   // console.log(cultivosOpciones);
@@ -64,11 +66,13 @@ export default function AgregarCampo() {
     </option>
   ));
 
-  const addFeature = (newFeatures) => {
+  const addFeature = () => {
     const tempList = [...features];
     newFeatures.forEach((feat, index) => {
-      const hasFeature = features.includes(feat.id);
+      const hasFeature = features.map((fea) => fea.id).includes(feat.id);
+      console.log(feat.id, features);
       if (hasFeature) {
+        console.log('ASFET', hasFeature);
         tempList[index] = feat;
       } else {
         tempList.push(feat);
@@ -80,15 +84,13 @@ export default function AgregarCampo() {
     setFeatures(tempList);
     if (features.length === 0) {
       setMainField(tempList[0]);
-    }
-    addInput();
+    } else addInput();
   };
 
-  const removeFeature = (feats) => {
-    console.log(mainField, features);
-    // const cropIndex = features.indexOf
-    // removeInput(cropIndex);
-    setFeatures(feats);
+  const removeFeature = (feats, removedFeature) => {
+    console.log('ACA!', features, mainField);
+    setNewFeatures(feats);
+    console.log(removedFeature);
   };
 
   const cultivosInputs = cultivos.map((cultivo, index) => (
@@ -118,6 +120,14 @@ export default function AgregarCampo() {
   console.log('LISTA FEATURES', features);
   console.log('MAIN FIELD', mainField);
 
+  useEffect(() => {
+    addFeature();
+  }, [newFeatures]);
+
+  // useEffect(() => {
+  //   removeFeatures(newFeatures, erased);
+  // }, [erased]);
+
   return (
     <div className="layout">
       <Header />
@@ -137,7 +147,7 @@ export default function AgregarCampo() {
                 ...prevInfo,
                 coordinates: coord,
               }))}
-              addFeatures={(feats) => addFeature(feats)}
+              addFeatures={setNewFeatures}
               removeFeature={(feats, removedFeature) => removeFeature(feats, removedFeature)}
             />
           </div>
