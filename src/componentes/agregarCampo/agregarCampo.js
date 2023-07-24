@@ -25,29 +25,29 @@ export default function AgregarCampo() {
     imagen: '',
     coordinates: [-58.702963, -34.671792],
     cantCultivos: '',
+    features: [], // feature = [polygon: {}, crop: tipo cultivo]
   });
+
   const [cultivos, setCultivos] = useState(['']);
   const [features, setFeatures] = useState([]);
   const [mainField, setMainField] = useState([]);
+  const [drawField, setdrawField] = useState(true);
   const cultivosOpciones = Object.keys(CROP_TYPES_KEYS);
-  // console.log(cultivosOpciones);
-
-  // function removeItem(list, index) {
-  //   const tempList = [...list];
-  //   tempList.splice(index, 1);
-  //   console.log('LISTA TEMPORAL REMOVE', tempList, list);
-  //   return tempList;
-  // }
+  const [selectedCrop, setSelectedCrop] = useState('NONE');
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
     tempList[index] = cultivo;
     setCultivos(tempList);
+    setSelectedCrop(cultivo);
     // console.log(cultivos);
   };
 
   const addInput = () => {
-    setCultivos((cult) => [...cult, '']);
+    if (selectedCrop !== 'NONE') {
+      setCultivos((cult) => [...cult, '']);
+      setSelectedCrop('NONE');
+    }
   };
 
   const removeInput = (index) => {
@@ -66,22 +66,32 @@ export default function AgregarCampo() {
 
   const addFeature = (newFeatures) => {
     const tempList = [...features];
+    const lista2 = [...campoInfo.features];
     newFeatures.forEach((feat, index) => {
       const hasFeature = features.includes(feat.id);
       if (hasFeature) {
         tempList[index] = feat;
       } else {
         tempList.push(feat);
+        const feat2 = {
+          polygon: feat,
+          crop: cultivos[index + 1],
+        };
+        lista2.push(feat2);
       }
-      setFeatures(tempList);
     });
     // console.log('TEMP LIST', tempList);
     // console.log('features', newFeatures);
+    setCampoInfo((prevInfo) => ({
+      ...prevInfo,
+      features: lista2,
+    }));
     setFeatures(tempList);
-    if (features.length === 0) {
+    if (mainField.length === 0) {
       setMainField(tempList[0]);
-    }
-    addInput();
+      setdrawField(false);
+    } else addInput();
+    console.log('CAMPO INFO. FEATURES', campoInfo.features, lista2);
   };
 
   const removeFeature = (feats) => {
@@ -113,7 +123,7 @@ export default function AgregarCampo() {
         : <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
     </label>
   ));
-  // console.log(cultivos);
+  console.log(cultivos);
   // console.log(campoInfo.coordinates);
   console.log('LISTA FEATURES', features);
   console.log('MAIN FIELD', mainField);
@@ -161,7 +171,7 @@ export default function AgregarCampo() {
                   />
 
                 </label>
-                {cultivosInputs}
+                {drawField ? <p>Dibuje el campo principal</p> : cultivosInputs}
 
                 {/* <label className="agregar-campo-label">
                   Tipos de cultivos:
