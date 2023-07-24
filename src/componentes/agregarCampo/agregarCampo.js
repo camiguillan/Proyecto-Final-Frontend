@@ -81,9 +81,13 @@ export default function AgregarCampo() {
     if (features.length === 0) {
       setMainField(tempList[0]);
     }
+    addInput();
   };
 
   const removeFeature = (feats) => {
+    console.log(mainField, features);
+    // const cropIndex = features.indexOf
+    // removeInput(cropIndex);
     setFeatures(feats);
   };
 
