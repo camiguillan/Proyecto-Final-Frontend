@@ -199,7 +199,9 @@ function AgroMap({
       changeCoordinates(features.features[0].geometry.coordinates[0]);
       // splitPolygon(draw, defaultPolygon);
       // eslint-disable-next-line guard-for-in
-      addFeatures(features.features);
+      if (features.features.length !== 0) {
+        addFeatures(features.features);
+      }
 
       // addCentroid(draw, lastDrawn);
     }

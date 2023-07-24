@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileUploader } from 'react-drag-drop-files';
 import Header from '../reusable/header/header';
@@ -32,10 +32,17 @@ export default function AgregarCampo() {
   const [features, setFeatures] = useState([]);
   const [newFeatures, setNewFeatures] = useState([]);
   // const [erased, setNewErased] = useState([]);
-  const [mainField, setMainField] = useState([]);
+  const [mainField, setMainField] = useState({
+    geometry: [],
+    id: '',
+    properties: {},
+    type: '',
+  });
+
   const [drawField, setdrawField] = useState(true);
   const cultivosOpciones = Object.keys(CROP_TYPES_KEYS);
   const [selectedCrop, setSelectedCrop] = useState('NONE');
+  console.log(drawField);
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
@@ -66,6 +73,7 @@ export default function AgregarCampo() {
     </option>
   ));
 
+  // eslint-disable-next-line no-unused-vars
   const addFeature = () => {
     const tempList = [...features];
     const lista2 = [...campoInfo.features];
@@ -91,8 +99,19 @@ export default function AgregarCampo() {
       features: lista2,
     }));
     setFeatures(tempList);
-    if (mainField.length === 0) {
-      setMainField(tempList[0]);
+    console.log(mainField);
+    if (mainField.id === '' || !mainField) {
+      const {
+        geometry, id, properties, type,
+      } = tempList[0];
+      setMainField(
+        {
+          geometry,
+          id,
+          properties,
+          type,
+        },
+      );
       setdrawField(false);
     } else addInput();
     console.log('CAMPO INFO. FEATURES', campoInfo.features, lista2);
@@ -132,7 +151,7 @@ export default function AgregarCampo() {
   console.log('MAIN FIELD', mainField);
 
   useEffect(() => {
-    addFeature();
+    if ((mainField || mainField.id !== '') && newFeatures.length !== 0) { addFeature(); }
   }, [newFeatures]);
 
   // useEffect(() => {
