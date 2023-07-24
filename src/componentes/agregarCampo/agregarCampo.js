@@ -138,7 +138,7 @@ export default function AgregarCampo() {
                 coordinates: coord,
               }))}
               addFeatures={(feats) => addFeature(feats)}
-              removeFeature={(feats) => removeFeature(feats)}
+              removeFeature={(feats, removedFeature) => removeFeature(feats, removedFeature)}
             />
           </div>
         </Card>
