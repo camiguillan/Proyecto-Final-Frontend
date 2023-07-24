@@ -22,7 +22,6 @@ export default function AgregarCampo() {
   // const [cantCultivos, setCantCultivos] = useState('');
   const fileTypes = ['JPG', 'PNG'];
   const [campoInfo, setCampoInfo] = useState({
-    nombreCampo: '',
     imagen: '',
     coordinates: [-58.702963, -34.671792],
     cantCultivos: '',
@@ -280,7 +279,7 @@ export default function AgregarCampo() {
 
           <div className="botones">
             <Button type="button" onClick={() => nav('/user/home')} className="green-button cancelar">Cancelar</Button>
-            <Button type="button" onClick={() => nav('/agregarLotes/1', { state: campoInfo })} className="green-button">Siguiente</Button>
+            <Button type="button" onClick={() => console.log(campoInfo)} className="green-button">Siguiente</Button>
           </div>
         </div>
       </div>

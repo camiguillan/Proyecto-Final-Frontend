@@ -196,7 +196,7 @@ function AgroMap({
 
       draw.setFeatureProperty(lastDrawn.id, 'portColor', getRandomColor());
       // console.log(features);
-      changeCoordinates(features.features[0].geometry.coordinates[0]);
+      changeCoordinates(features.features[0].geometry.coordinates[0][0]);
       // splitPolygon(draw, defaultPolygon);
       // eslint-disable-next-line guard-for-in
       if (features.features.length !== 0) {
