@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/self-closing-comp */
-import React, { useState } from 'react';
+/* eslint-disable object-curly-spacing */
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 // import Header from '../reusable/header/header';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -17,7 +18,7 @@ import '../../assets/global.scss';
 export default function HomePrincipal() {
   const nav = useNavigate();
 
-  const [listChooseUs] = useState(['Analisis de imagenes de alta calidad', 'Diagnosticos acertivos', 'Bla bla bla']);
+  const listChooseUs = [{reason: 'Analisis de imagenes de alta calidad', extra: 'Bla bla'}, {reason: 'Analisis de imagenes de alta calidad', extra: 'Bla bla'}, {reason: 'Analisis de imagenes de alta calidad', extra: 'Bla bla'}];
 
   return (
     <div className="layout">
@@ -73,7 +74,8 @@ export default function HomePrincipal() {
           {listChooseUs.map((item) => (
             <div className="left">
               <Icon className="bi bi-check2-circle" color="#2a7d2e" fontSize="6vh" />
-              <span className="text-home-principal checks">{item}</span>
+              <span className="text-home-principal checks">{item.reason}</span>
+              <span className="text-home-principal">{item.extra}</span>
             </div>
           ))}
         </div>
