@@ -32,7 +32,9 @@ function splitPolygon(draw, polygon) {
 //   draw.add(centroid(polygon));
 // }
 
-function AgroMap({ coordinates, changeCoordinates, addFeatures }) {
+function AgroMap({
+  coordinates, changeCoordinates, addFeatures, removeFeature,
+}) {
   const mapContainer = useRef(null);
   // const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
   console.log(coordinates);
@@ -187,6 +189,7 @@ function AgroMap({ coordinates, changeCoordinates, addFeatures }) {
       // Handle when a user deletes a drawn feature
       const selectedFeature = event.features;
       console.log('selected feature', selectedFeature);
+      removeFeature(selectedFeature[0]);
     }
     map.on('draw.create', handleDraw);
     map.on('draw.update', handleDraw);
@@ -211,4 +214,5 @@ AgroMap.propTypes = {
   coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
   changeCoordinates: PropTypes.func.isRequired,
   addFeatures: PropTypes.func.isRequired,
+  removeFeature: PropTypes.func.isRequired,
 };

@@ -29,19 +29,20 @@ export default function AgregarCampo() {
   const [cultivos, setCultivos] = useState(['']);
   const [features, setFeatures] = useState([]);
   const cultivosOpciones = Object.keys(CROP_TYPES_KEYS);
-  console.log(cultivosOpciones);
+  // console.log(cultivosOpciones);
 
-  function removeItem(list, index) {
-    const tempList = [...list];
-    tempList.splice(index, 1);
-    return tempList;
-  }
+  // function removeItem(list, index) {
+  //   const tempList = [...list];
+  //   tempList.splice(index, 1);
+  //   console.log('LISTA TEMPORAL REMOVE', tempList, list);
+  //   return tempList;
+  // }
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
     tempList[index] = cultivo;
     setCultivos(tempList);
-    console.log(cultivos);
+    // console.log(cultivos);
   };
 
   const addInput = () => {
@@ -73,15 +74,14 @@ export default function AgregarCampo() {
       }
       setFeatures(tempList);
     });
-    console.log('TEMP LIST', tempList);
-    console.log('features', newFeatures);
+    // console.log('TEMP LIST', tempList);
+    // console.log('features', newFeatures);
     setFeatures(tempList);
   };
 
   const removeFeature = (feature) => {
-    const featureToRemove = features.find((feat) => feat.id === feature.id);
-    const index = features.indexOf(featureToRemove);
-    const newFeaturesList = removeItem(features, index);
+    const newFeaturesList = features.filter((feat) => feat.id !== feature.id);
+    console.log(newFeaturesList, feature.id);
     setFeatures(newFeaturesList);
   };
 
@@ -107,8 +107,8 @@ export default function AgregarCampo() {
         : <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
     </label>
   ));
-  console.log(cultivos);
-  console.log(campoInfo.coordinates);
+  // console.log(cultivos);
+  // console.log(campoInfo.coordinates);
   console.log('LISTA FEATURES', features);
 
   return (
