@@ -203,12 +203,12 @@ function AgroMap({
       // addCentroid(draw, lastDrawn);
     }
 
-    function handleDrawDelete(event) {
-      // Handle when a user deletes a drawn feature
-      const selectedFeature = event.features;
-      console.log('selected feature', selectedFeature);
-      removeFeature(selectedFeature[0]);
+    function handleDrawDelete() {
+      const feats = draw.getAll();
+      console.log('FEATURES REMOVES', feats.features);
+      removeFeature(feats.features);
     }
+
     map.on('draw.create', handleDraw);
     map.on('draw.update', handleDraw);
     map.on('draw.delete', handleDrawDelete);

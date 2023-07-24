@@ -79,10 +79,8 @@ export default function AgregarCampo() {
     setFeatures(tempList);
   };
 
-  const removeFeature = (feature) => {
-    const newFeaturesList = features.filter((feat) => feat.id !== feature.id);
-    console.log(newFeaturesList, feature.id);
-    setFeatures(newFeaturesList);
+  const removeFeature = (feats) => {
+    setFeatures(feats);
   };
 
   const cultivosInputs = cultivos.map((cultivo, index) => (
@@ -131,7 +129,7 @@ export default function AgregarCampo() {
                 coordinates: coord,
               }))}
               addFeatures={(feats) => addFeature(feats)}
-              removeFeature={(feature) => removeFeature(feature)}
+              removeFeature={(feats) => removeFeature(feats)}
             />
           </div>
         </Card>
