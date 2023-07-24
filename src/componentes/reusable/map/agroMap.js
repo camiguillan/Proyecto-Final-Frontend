@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from 'react';
 import { lineToPolygon, difference } from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
@@ -37,7 +38,7 @@ function AgroMap({
 }) {
   const mapContainer = useRef(null);
   // const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
-  console.log(coordinates);
+  // console.log(coordinates);
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -131,24 +132,24 @@ function AgroMap({
 
     map.addControl(geocoder, 'top-left');
 
-    const defaultPolygon = {
-      type: 'Feature',
-      geometry: {
-        type: 'Polygon',
-        coordinates: [
-          [
-            [-58.78905150033654, -34.68022022276631],
-            [-58.78518370701069, -34.6825252635452],
-            [-58.788616916816935, -34.68570575709246],
-            [-58.79224568920641, -34.68341867294826],
-            [-58.78905150033654, -34.68022022276631],
-          ],
-        ],
-      },
-      properties: {},
-    };
+    // const defaultPolygon = {
+    //   type: 'Feature',
+    //   geometry: {
+    //     type: 'Polygon',
+    //     coordinates: [
+    //       [
+    //         [-58.78905150033654, -34.68022022276631],
+    //         [-58.78518370701069, -34.6825252635452],
+    //         [-58.788616916816935, -34.68570575709246],
+    //         [-58.79224568920641, -34.68341867294826],
+    //         [-58.78905150033654, -34.68022022276631],
+    //       ],
+    //     ],
+    //   },
+    //   properties: {},
+    // };
 
-    draw.add(defaultPolygon);
+    // draw.add(defaultPolygon);
 
     map.on('result', (event) => {
       const { result } = event;
@@ -196,7 +197,7 @@ function AgroMap({
       draw.setFeatureProperty(lastDrawn.id, 'portColor', getRandomColor());
       console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0]);
-      splitPolygon(draw, defaultPolygon);
+      // splitPolygon(draw, defaultPolygon);
       // eslint-disable-next-line guard-for-in
       addFeatures(features.features);
 
