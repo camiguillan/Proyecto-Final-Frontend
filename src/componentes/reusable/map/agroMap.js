@@ -169,11 +169,29 @@ function AgroMap({ coordinates, changeCoordinates, addFeatures }) {
         .addTo(map);
       map.flyTo({ center: e.result.center, zoom: 17 });
     });
+    const usedColors = [];
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+
+      do {
+        color = '#'; // Reset color on each iteration
+
+        for (let i = 0; i < 6; i += 1) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+      } while (usedColors.includes(color)); // Continue generating until a distinct color is found
+
+      usedColors.push(color);
+
+      return color;
+    }
 
     function handleDraw() {
       const features = draw.getAll();
       const lastDrawn = features.features[features.features.length - 1];
-      draw.setFeatureProperty(lastDrawn.id, 'portColor', '#FF0000');
+
+      draw.setFeatureProperty(lastDrawn.id, 'portColor', getRandomColor());
       console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0]);
       splitPolygon(draw, defaultPolygon);
