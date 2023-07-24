@@ -8,7 +8,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
-import Styles from './styles';
+import styles from './styles';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 function splitPolygon(draw, polygon) {
@@ -47,7 +47,8 @@ function AgroMap({ coordinates, changeCoordinates, addFeatures }) {
 
     const drawOptions = {
       displayControlsDefault: false,
-      Styles,
+      userProperties: true,
+      styles,
       controls: {
         trash: true,
         polygon: true,
@@ -171,8 +172,9 @@ function AgroMap({ coordinates, changeCoordinates, addFeatures }) {
 
     function handleDraw() {
       const features = draw.getAll();
-      // const lastDrawn = features.features[features.features.length - 1].geometry;
-      console.log(features.features[0].geometry.coordinates);
+      const lastDrawn = features.features[features.features.length - 1];
+      draw.setFeatureProperty(lastDrawn.id, 'portColor', '#FF0000');
+      console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0]);
       splitPolygon(draw, defaultPolygon);
       // eslint-disable-next-line guard-for-in
