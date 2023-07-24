@@ -1,17 +1,18 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
+import { squareGrid, booleanPointInPolygon } from '@turf/turf';
 import { PLOT_SIZE } from '../../../constants/plots';
 
-function createRectangle(listOfPolygons) {
-  const latitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates.map((coor) => coor[1]));
-  const longitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates.map((coor) => coor[0]));
-  const lowestLongitude = Math.min(longitudes);
-  const lowestLatitude = Math.min(latitudes);
-  const highestLongitude = Math.max(longitudes);
-  const highestLatitude = Math.max(latitudes);
+const createRectangle = (listOfPolygons) => {
+  const latitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[1]));
+  const longitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[0]));
+  const lowestLongitude = Math.min(...longitudes);
+  const lowestLatitude = Math.min(...latitudes);
+  const highestLongitude = Math.max(...longitudes);
+  const highestLatitude = Math.max(...latitudes);
 
   return [lowestLongitude, lowestLatitude, highestLongitude, highestLatitude];
-}
+};
 
 const moveCoordinates = ({ lat, lon }, y, x) => ({
   lat: lat - y * PLOT_SIZE,
@@ -28,6 +29,23 @@ const plotToCoordinates = (height, width, coordinates) => {
     coordinatesForPlots.push(line);
   }
   return coordinatesForPlots;
+};
+
+const cropCheck = (coordinates, cropPolygons) => {
+  const answer = cropPolygons.filter((oneCrop) => coordinates[0].some((corner) => booleanPointInPolygon(corner, oneCrop.polygon)))[0];
+
+  if (!answer) {
+    return 'NONE';
+  }
+  return answer.crop;
+};
+
+// eslint-disable-next-line no-unused-vars
+const cropCheckFullField = (cropPolygons) => {
+  const bbox = createRectangle(cropPolygons);
+  const options = { units: 'degrees' };
+  const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
+  return squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, cropPolygons));
 };
 
 const polygonToField = (polygonCoordinates) => {
@@ -85,3 +103,112 @@ const plotInsidePolygon = (polygonCoordinates, plotCoordinates) => {
 
   return corners.some((corner) => isPointInsidePolygon(corner, polygonCoordinates));
 };
+
+// CROP ARRAY EXAMPLE:
+// const arrayPolygons = [
+//   {
+//     polygon: {
+//       id: '8b8757926d83859f768d6c8b7388c41f',
+//       type: 'Feature',
+//       properties: {},
+//       geometry: {
+//         coordinates: [
+//           [
+//             [
+//               -58.842927470178196,
+//               -34.713909381521454,
+//             ],
+//             [
+//               -58.83916704112572,
+//               -34.71070434243838,
+//             ],
+//             [
+//               -58.840789963137766,
+//               -34.7095003870391,
+//             ],
+//             [
+//               -58.844570183922,
+//               -34.7128030876505,
+//             ],
+//             [
+//               -58.842927470178196,
+//               -34.713909381521454,
+//             ],
+//           ],
+//         ],
+//         type: 'Polygon',
+//       },
+//     },
+//     crop: 'CORN',
+//   },
+//   {
+//     polygon: {
+//       id: '41a1e75ad36923c719db75f07e4ab95a',
+//       type: 'Feature',
+//       properties: {},
+//       geometry: {
+//         coordinates: [
+//           [
+//             [
+//               -58.8408295466013,
+//               -34.70951665682382,
+//             ],
+//             [
+//               -58.84237330168635,
+//               -34.70828014409184,
+//             ],
+//             [
+//               -58.84613373073826,
+//               -34.711599162801576,
+//             ],
+//             [
+//               -58.84462955911725,
+//               -34.7128030876505,
+//             ],
+//             [
+//               -58.8408295466013,
+//               -34.70951665682382,
+//             ],
+//           ],
+//         ],
+//         type: 'Polygon',
+//       },
+//     },
+//     crop: 'AVOCADO',
+//   },
+//   {
+//     polygon: {
+//       id: '9c501507ecc9c4301acd9e76ce963eef',
+//       type: 'Feature',
+//       properties: {},
+//       geometry: {
+//         coordinates: [
+//           [
+//             [
+//               -58.84231392649052,
+//               -34.708231333999294,
+//             ],
+//             [
+//               -58.8404930871598,
+//               -34.706588044085045,
+//             ],
+//             [
+//               -58.83730661833151,
+//               -34.70899602213684,
+//             ],
+//             [
+//               -58.839147249393974,
+//               -34.710688072888196,
+//             ],
+//             [
+//               -58.84231392649052,
+//               -34.708231333999294,
+//             ],
+//           ],
+//         ],
+//         type: 'Polygon',
+//       },
+//     },
+//     crop: 'SOY',
+//   },
+// ];
