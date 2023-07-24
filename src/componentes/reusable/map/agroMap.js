@@ -203,12 +203,12 @@ function AgroMap({
       // addCentroid(draw, lastDrawn);
     }
 
-    function handleDrawDelete() {
+    function handleDrawDelete(event) {
       const feats = draw.getAll();
+      const removedFeature = event.features;
       console.log('FEATURES REMOVES', feats.features);
-      removeFeature(feats.features);
+      removeFeature(feats.features, removedFeature);
     }
-
     map.on('draw.create', handleDraw);
     map.on('draw.update', handleDraw);
     map.on('draw.delete', handleDrawDelete);

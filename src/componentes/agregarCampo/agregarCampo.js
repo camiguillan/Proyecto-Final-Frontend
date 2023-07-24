@@ -79,7 +79,8 @@ export default function AgregarCampo() {
     setFeatures(tempList);
   };
 
-  const removeFeature = (feats) => {
+  const removeFeature = (feats, removedFeature) => {
+    console.log(removedFeature);
     setFeatures(feats);
   };
 
@@ -129,7 +130,7 @@ export default function AgregarCampo() {
                 coordinates: coord,
               }))}
               addFeatures={(feats) => addFeature(feats)}
-              removeFeature={(feats) => removeFeature(feats)}
+              removeFeature={(feats, removedFeature) => removeFeature(feats, removedFeature)}
             />
           </div>
         </Card>
