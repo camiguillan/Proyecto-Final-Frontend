@@ -31,6 +31,12 @@ export default function AgregarCampo() {
   const cultivosOpciones = Object.keys(CROP_TYPES_KEYS);
   console.log(cultivosOpciones);
 
+  function removeItem(list, index) {
+    const tempList = [...list];
+    tempList.splice(index, 1);
+    return tempList;
+  }
+
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
     tempList[index] = cultivo;
@@ -70,6 +76,13 @@ export default function AgregarCampo() {
     console.log('TEMP LIST', tempList);
     console.log('features', newFeatures);
     setFeatures(tempList);
+  };
+
+  const removeFeature = (feature) => {
+    const featureToRemove = features.find((feat) => feat.id === feature.id);
+    const index = features.indexOf(featureToRemove);
+    const newFeaturesList = removeItem(features, index);
+    setFeatures(newFeaturesList);
   };
 
   const cultivosInputs = cultivos.map((cultivo, index) => (
@@ -117,7 +130,8 @@ export default function AgregarCampo() {
                 ...prevInfo,
                 coordinates: coord,
               }))}
-              addFeatures={(feature) => addFeature(feature)}
+              addFeatures={(feats) => addFeature(feats)}
+              removeFeature={(feature) => removeFeature(feature)}
             />
           </div>
         </Card>

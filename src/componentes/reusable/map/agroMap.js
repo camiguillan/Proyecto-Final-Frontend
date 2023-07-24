@@ -181,8 +181,10 @@ function AgroMap({ coordinates, changeCoordinates, addFeatures }) {
       // addCentroid(draw, lastDrawn);
     }
 
-    function handleDrawDelete() {
+    function handleDrawDelete(event) {
       // Handle when a user deletes a drawn feature
+      const selectedFeature = event.features;
+      console.log('selected feature', selectedFeature);
     }
     map.on('draw.create', handleDraw);
     map.on('draw.update', handleDraw);
