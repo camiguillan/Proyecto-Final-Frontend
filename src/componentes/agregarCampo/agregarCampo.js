@@ -28,6 +28,7 @@ export default function AgregarCampo() {
   });
   const [cultivos, setCultivos] = useState(['']);
   const [features, setFeatures] = useState([]);
+  const [mainField, setMainField] = useState([]);
   const cultivosOpciones = Object.keys(CROP_TYPES_KEYS);
   // console.log(cultivosOpciones);
 
@@ -77,6 +78,9 @@ export default function AgregarCampo() {
     // console.log('TEMP LIST', tempList);
     // console.log('features', newFeatures);
     setFeatures(tempList);
+    if (features.length === 0) {
+      setMainField(tempList[0]);
+    }
   };
 
   const removeFeature = (feats, removedFeature) => {
@@ -109,6 +113,7 @@ export default function AgregarCampo() {
   // console.log(cultivos);
   // console.log(campoInfo.coordinates);
   console.log('LISTA FEATURES', features);
+  console.log('MAIN FIELD', mainField);
 
   return (
     <div className="layout">

@@ -45,7 +45,7 @@ const cropCheckFullField = (cropPolygons) => {
   const bbox = createRectangle(cropPolygons);
   const options = { units: 'degrees' };
   const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
-  return squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, cropPolygons));
+  return squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, cropPolygons.shift()));// le saco el primero
 };
 
 const polygonToField = (polygonCoordinates) => {
