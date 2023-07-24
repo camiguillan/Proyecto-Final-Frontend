@@ -195,21 +195,20 @@ function AgroMap({
       const lastDrawn = features.features[features.features.length - 1];
 
       draw.setFeatureProperty(lastDrawn.id, 'portColor', getRandomColor());
-      console.log(features);
+      // console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0]);
       // splitPolygon(draw, defaultPolygon);
       // eslint-disable-next-line guard-for-in
       if (features.features.length !== 0) {
         addFeatures(features.features);
       }
-
       // addCentroid(draw, lastDrawn);
     }
 
     function handleDrawDelete(event) {
       const feats = draw.getAll();
       const removedFeature = event.features;
-      console.log('FEATURES REMOVES', feats.features);
+      // console.log('FEATURES REMOVES', feats.features);
       removeFeature(feats.features, removedFeature);
     }
     map.on('draw.create', handleDraw);

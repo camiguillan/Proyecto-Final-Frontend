@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +32,7 @@ export default function AgregarCampo() {
   const [cultivos, setCultivos] = useState(['']);
   const [features, setFeatures] = useState([]);
   const [newFeatures, setNewFeatures] = useState([]);
-  // const [erased, setNewErased] = useState([]);
+  const [erased, setNewErased] = useState([]);
   const [mainField, setMainField] = useState({
     geometry: [],
     id: '',
@@ -42,7 +43,7 @@ export default function AgregarCampo() {
   const [drawField, setdrawField] = useState(true);
   const cultivosOpciones = Object.keys(CROP_TYPES_KEYS);
   const [selectedCrop, setSelectedCrop] = useState('NONE');
-  console.log(drawField);
+  // console.log(drawField);
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
@@ -59,9 +60,9 @@ export default function AgregarCampo() {
     }
   };
 
-  const removeInput = (index) => {
+  const removeInput = (deletedCrop) => {
     const tempList = [...cultivos];
-    tempList.splice(index, 1);
+    tempList.splice(cultivos.indexOf(deletedCrop), 1);
     setCultivos(tempList);
   };
 
@@ -72,62 +73,80 @@ export default function AgregarCampo() {
       {' '}
     </option>
   ));
-
+  function areNewFeatures() {
+    const featIds = features.map((feat) => feat.id);
+    const newFeatIds = newFeatures.map((feat) => feat.id);
+    // console.log(featIds, newFeatIds);
+    return features.length <= newFeatures.length;
+  }
   // eslint-disable-next-line no-unused-vars
   const addFeature = () => {
-    const tempList = [...features];
-    const lista2 = [...campoInfo.features];
-    newFeatures.forEach((feat, index) => {
-      const hasFeature = features.map((fea) => fea.id).includes(feat.id);
-      console.log(feat.id, features);
-      if (hasFeature) {
-        console.log('ASFET', hasFeature);
-        tempList[index] = feat;
-      } else {
-        tempList.push(feat);
-        const feat2 = {
-          polygon: feat,
-          crop: cultivos[index + 1],
-        };
-        lista2.push(feat2);
+    if (areNewFeatures()) {
+      const tempList = [...features];
+      const lista2 = [...campoInfo.features];
+      newFeatures.forEach((feat, index) => {
+        const hasFeature = features.map((fea) => fea.id).includes(feat.id);
+        if (hasFeature) {
+          tempList[index] = feat;
+          lista2[index].polygon = feat;
+        } else {
+          tempList.push(feat);
+          const feat2 = {
+            polygon: feat,
+            crop: cultivos[index - 1],
+          };
+          // console.log('ADDING ', cultivos[index - 1], ' to ', feat.id);
+          lista2.push(feat2);
+        }
+      });
+      // console.log('TEMP LIST', tempList);
+      // console.log('features', newFeatures);
+      setCampoInfo((prevInfo) => ({
+        ...prevInfo,
+        features: lista2,
+      }));
+      setFeatures(tempList);
+      // console.log(mainField);
+      if (mainField.id === '' || !mainField) {
+        const {
+          geometry, id, properties, type,
+        } = tempList[0];
+        setMainField(
+          {
+            geometry,
+            id,
+            properties,
+            type,
+          },
+        );
+        setdrawField(false);
       }
-    });
-    // console.log('TEMP LIST', tempList);
-    // console.log('features', newFeatures);
-    setCampoInfo((prevInfo) => ({
-      ...prevInfo,
-      features: lista2,
-    }));
-    setFeatures(tempList);
-    console.log(mainField);
-    if (mainField.id === '' || !mainField) {
-      const {
-        geometry, id, properties, type,
-      } = tempList[0];
-      setMainField(
-        {
-          geometry,
-          id,
-          properties,
-          type,
-        },
-      );
-      setdrawField(false);
-    } else addInput();
-    console.log('CAMPO INFO. FEATURES', campoInfo.features, lista2);
+      //  else addInput();
+      console.log('CAMPO INFO. FEATURES', campoInfo.features, lista2);
+    }
   };
 
-  const removeFeature = (feats, removedFeature) => {
-    console.log('ACA!', features, mainField);
+  const removeFeatureSt = (feats, removedFeature) => {
     setNewFeatures(feats);
-    console.log(removedFeature);
+    setNewErased(removedFeature[0]);
+  };
+
+  const removeFeature = () => {
+    const erasedId = erased.id;
+    const erasedCrop = campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0].crop;
+    removeInput(erasedCrop);
+    setFeatures(newFeatures);
+    setCampoInfo((prevInfo) => ({
+      ...prevInfo,
+      features: campoInfo.features.filter(({ polygon }) => polygon.id !== erasedId),
+    }));
   };
 
   const cultivosInputs = cultivos.map((cultivo, index) => (
     // eslint-disable-next-line react/no-array-index-key
     <label key={index} className="agregar-campo-label">
       Tipo de cultivo:
-      <select className="select" onChange={(e) => handleChange(e.target.value, index)}>
+      <select className="select" value={cultivo} onChange={(e) => handleChange(e.target.value, index)}>
         {' '}
         {opciones}
         {' '}
@@ -148,15 +167,17 @@ export default function AgregarCampo() {
   console.log(cultivos);
   // console.log(campoInfo.coordinates);
   console.log('LISTA FEATURES', features);
-  console.log('MAIN FIELD', mainField);
+  // console.log('MAIN FIELD', mainField);
 
   useEffect(() => {
-    if ((mainField || mainField.id !== '') && newFeatures.length !== 0) { addFeature(); }
+    if (((mainField || mainField.id !== '') && newFeatures.length !== 0) && areNewFeatures()) { addFeature(); }
   }, [newFeatures]);
 
-  // useEffect(() => {
-  //   removeFeatures(newFeatures, erased);
-  // }, [erased]);
+  useEffect(() => {
+    if (campoInfo.features.length !== 0) {
+      removeFeature();
+    }
+  }, [erased]);
 
   return (
     <div className="layout">
@@ -178,7 +199,7 @@ export default function AgregarCampo() {
                 coordinates: coord,
               }))}
               addFeatures={setNewFeatures}
-              removeFeature={(feats, removedFeature) => removeFeature(feats, removedFeature)}
+              removeFeature={(feats, removedFeature) => removeFeatureSt(feats, removedFeature)}
             />
           </div>
         </Card>
