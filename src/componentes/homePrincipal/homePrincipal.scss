@@ -11,3 +11,167 @@
     margin: 5vh;
     white-space: nowrap;
   }
+
+
+  // IMAGES
+
+  .full-width-image{
+    width: 100%; 
+    height: 50vh;
+    object-fit: cover;
+    opacity: 0.6;
+  }
+
+  .img-container{
+    position: relative; 
+    width: 100%;
+    overflow: hidden;
+    height: 50vh;
+    margin-bottom: 5vh;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+  }
+
+  .header-principal{
+    width: 100%;
+    margin-top: 0%;
+    background-color: white;
+    height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.image-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  flex-direction: column; 
+  color: white;
+  font-family: "Inter", sans-serif;
+}
+
+.image-title{
+  font-size: 8vh; 
+  color: white;
+  font-weight: bold;
+}
+
+.image-text2{
+  font-size: 6vh; 
+  color: white;
+  width: 40%;
+}
+
+
+// COLUMNS
+
+.flexbox-container {
+	display: -ms-flex;
+	display: -webkit-flex;
+	display: flex;
+  max-width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  margin-bottom: 5vh;
+}
+
+.flexbox-container > div {
+	width: 30%;
+	padding: 1.5vh;
+  background: #fff;
+  text-align: center; 
+  display: flex;
+  flex-direction: column; /* Alinear el contenido verticalmente */
+  justify-content: center;
+}
+
+.flexbox-container > div:first-child {
+	margin-right: 1.5vh;
+}
+
+.flexbox-container > div + div {
+  border-left: 0.15vh solid #ccc;
+  padding-left: 3vh;
+}
+
+// TEXTS
+.green-title{
+  color: $verde-nuevo;
+  font-size: 6vh; 
+  font-weight: bold;
+  font-family: "Inter", sans-serif;
+}
+
+.gray-title{
+  color: $gris-texto;
+  width: 80%;
+  font-size: 5vh; 
+  font-weight: bold;
+  font-family: "Inter", sans-serif;
+}
+
+.text-home-principal{
+  color: $gris-texto;
+  width: 80%;
+  font-size: 3vh; 
+  font-family: "Inter", sans-serif;
+  margin: 10px 0;
+}
+
+// GRAY BOX
+.gray-square{
+  width: 160vh; 
+  height: 50vh; 
+  margin: 0 auto;
+  background-color: #eaf3ea; 
+  margin-top: 8vh;
+  margin-bottom: 8vh;
+  border-radius: 3vh;
+  display: flex;
+  align-items: center;
+  //flex-direction: column
+}
+
+.small-img{
+  width: 70vh; 
+  justify-content: left;
+  margin-left: 8vh;
+}
+
+.text-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  align-items: center;
+}
+
+// LEFT ALIGNED
+.section-left-aligned{
+  width: 62%; /* Ajusta el ancho de la sección según tus necesidades */
+  margin: 20px auto;
+}
+
+.left{
+  text-align: left;
+  display: flex; /* Utilizar flexbox para alinear verticalmente los elementos */
+  align-items: center;
+}
+
+.checks{
+  margin-left: 2vh;
+  font-weight: bold;
+}
