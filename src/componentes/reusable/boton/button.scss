@@ -6,11 +6,11 @@
     margin: 0.5%;
     margin-top: 10px;
     padding: 10px 30px;
-    border-radius: 10px;
+    border-radius: 30px;
     cursor: pointer;
     font-size: 20px;
     border: solid;
-    border-style: 1px $verde-oscuro; 
+    border-style: 1px $verde-nuevo; 
     font-family: "Inter", sans-serif;
   }
 
@@ -20,13 +20,13 @@
 
   .cancelar{
     background-color: white !important;
-    color: $verde-oscuro !important;
+    color: $verde-nuevo !important;
   }
 
   .cancelar:hover{
-    background-color: $verde-principal !important;
+    background-color: $verde-nuevo !important;
     color: white  !important;
-    border-style: $verde-principal !important;
+    //border-style: $verde-nuevo !important;
   }
 
   .button-text {
