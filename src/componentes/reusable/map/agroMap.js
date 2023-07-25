@@ -1,6 +1,8 @@
+/* eslint-disable import/named */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from 'react';
-import { lineToPolygon, difference } from '@turf/turf';
+import { lineToPolygon, difference, squareGrid } from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'; // SEARCH BAR
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
@@ -10,6 +12,8 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
 import styles from './styles';
+import { createRectangle } from './funcionesMapa';
+import { PLOT_SIZE } from '../../../constants/plots';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 function splitPolygon(draw, polygon) {
@@ -193,6 +197,11 @@ function AgroMap({
     function handleDraw() {
       const features = draw.getAll();
       const lastDrawn = features.features[features.features.length - 1];
+      const bbox = createRectangle([{ polygon: lastDrawn, crop: 'NONE' }]);
+      const options = { units: 'degrees' };
+      const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
+      console.log(squareGridR);
+      draw.add(squareGridR);
 
       draw.setFeatureProperty(lastDrawn.id, 'portColor', getRandomColor());
       // console.log(features);
@@ -214,6 +223,27 @@ function AgroMap({
     map.on('draw.create', handleDraw);
     map.on('draw.update', handleDraw);
     map.on('draw.delete', handleDrawDelete);
+    // Assuming draw is initialized correctly before this code block
+    const all = draw.getAll();
+    document.getElementById('grid').addEventListener('click', () => {
+      if (all) {
+        const allFeatures = all;
+
+        if (allFeatures !== null && allFeatures.length !== 0) {
+          console.log(allFeatures);
+          const cropPolygons = allFeatures.features[0];
+          const bbox = createRectangle([{ polygon: cropPolygons, crop: 'NONE' }]);
+          const options = { units: 'degrees' };
+          const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
+          console.log(squareGridR);
+          draw.add(squareGridR);
+        } else {
+          console.error("No features found in 'draw' object.");
+        }
+      } else {
+        console.error("'draw' object or its 'getAll' method is not available.");
+      }
+    });
 
     return () => {
       map.off('draw.create', handleDraw);

@@ -289,6 +289,7 @@ export default function AgregarCampo() {
 
           <div className="botones">
             <Button type="button" onClick={() => nav(`/home/${userID}`)} className="green-button cancelar">Cancelar</Button>
+            <button id="grid" type="button">Add grid</button>
             <Button type="button" onClick={() => guardarCampoInfo()} className="green-button">Guardar</Button>
           </div>
         </div>

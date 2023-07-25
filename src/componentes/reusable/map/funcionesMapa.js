@@ -3,7 +3,7 @@
 import { squareGrid, booleanPointInPolygon } from '@turf/turf';
 import { PLOT_SIZE } from '../../../constants/plots';
 
-const createRectangle = (listOfPolygons) => {
+export const createRectangle = (listOfPolygons) => {
   console.log(listOfPolygons);
   const latitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[1]));
   const longitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[0]));
