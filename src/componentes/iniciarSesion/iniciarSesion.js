@@ -8,7 +8,7 @@ import '../background/background.scss';
 import './iniciarSesion.scss';
 import '../reusable/input_box/input_box.scss';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import HeaderWhite from '../reusable/header_white/header_white';
+// import HeaderWhite from '../reusable/header_white/header_white';
 import '../reusable/white_container/white_container.scss';
 import ErrorModal from '../reusable/errorFolder/errores';
 import Button from '../reusable/boton/button';
@@ -76,7 +76,6 @@ export default function IniciarSesion() {
 
   return (
     <div className="gradient-background">
-      <HeaderWhite>.</HeaderWhite>
       {invalid && <ErrorModal title={error.title} message={error.message} onClick={okay} />}
       <form onSubmit={handleSubmit}>
         <div>

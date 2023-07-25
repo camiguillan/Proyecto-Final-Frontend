@@ -14,7 +14,7 @@ import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
 import { post } from '../conexionBack/conexionBack';
-import HeaderWhite from '../reusable/header_white/header_white';
+// import HeaderWhite from '../reusable/header_white/header_white';
 
 export default function Registrarse() {
   const [ingresarNombre, setIngresarNombre] = useState('');
@@ -82,7 +82,6 @@ export default function Registrarse() {
   return (
 
     <div className="gradient-background">
-      <HeaderWhite>.</HeaderWhite>
       <div>
         <div className="white-rectangle">
           <span className="container-text">Creá tu usuario</span>
