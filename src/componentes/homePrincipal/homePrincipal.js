@@ -10,13 +10,14 @@ import '../reusable/header/header.scss';
 import './homePrincipal.scss';
 import grass from '../../images/grass3.jpg';
 import leaf from '../../images/leaf.jpg';
+import trigo from '../../images/trigo.jpg';
 import vistaSat from '../../images/vistasatelital.jpg';
 import '../../assets/global.scss';
 
 export default function HomePrincipal() {
   const nav = useNavigate();
 
-  const listChooseUs = [{reason: 'Analisis de imagenes de alta calidad', extra: 'Bla bla'}, {reason: 'Somos re capos', extra: 'Bla bla'}, {reason: 'Aguante boca', extra: 'Bla bla'}];
+  const listChooseUs = [{reason: 'Precisión en el diagnóstico', extra: 'Utilizamos algoritmos avanzados de inteligencia artificial y análisis de imágenes para identificar enfermedades, plagas y otros problemas de salud en los cultivos con alta precisión.'}, {reason: 'Optimización de recursos', extra: 'Ayudamos a maximizar la producción agrícola al optimizar el uso de recursos como el agua, los fertilizantes y los pesticidas.'}, {reason: 'Recomendaciones personalizadas', extra: 'Proporcionamos recomendaciones específicas y personalizadas para cada cultivo y situación, considerando factores como el tipo de cultivo, las condiciones climáticas y las características del suelo.'}];
 
   return (
     <div className="layout">
@@ -38,18 +39,19 @@ export default function HomePrincipal() {
             ¿Qué es AgroIA?
           </text>
           <text className="image-text2">
-            AgroIA es un sistema para bla bla bla bla bla bla bla bla
+            AgroIA es un sistema orientado a brindar soluciones y recomendaciones
+            precisas en el cuidado y manejo de cultivos agrícolas
           </text>
         </div>
       </div>
       <div className="flexbox-container">
         <div className="green-title">
-          AgroIA permite bla bla bla bla bla bla bla bla bla
+          AgroIA facilita la toma de decisiones relacionadas con la producción
+          agraria
         </div>
         <div className="text-home-principal">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a neque
-          nec ligula bibendum auctor. Nunc dignissim euismod justo, nec ultrices
-          elit consectetur a. Vivamus id neque quis nunc tincidunt consectetur.
+          Utilizando inteligencia artificial y análisis de imágenes agrícolas para brindar
+          soluciones a diagnósticos generados por medio de imágenes de cultivos
         </div>
       </div>
       <div className="gray-square">
@@ -59,8 +61,10 @@ export default function HomePrincipal() {
             ¿Cómo funciona AgroIA?
           </div>
           <div className="text-home-principal">
-            AgroIA utiliza imagenes satelitales para bla bla bla lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Proin a neque nec ligula bibendum auctor.
+            AgroIA utiliza inteligencia artificial y análisis de imágenes agrícolas para
+            diagnosticar y brindar recomendaciones precisas sobre el cuidado y manejo de
+            cultivos. Ayuda a los agricultores a optimizar el rendimiento, reducir riesgos
+            y tomar decisiones informadas para una producción agrícola más eficiente y sostenible.
           </div>
         </div>
       </div>
@@ -84,6 +88,7 @@ export default function HomePrincipal() {
           </div>
           <div className="photo-container">
             <img src={leaf} alt="Imagen 4" className="small-img" />
+            <img src={trigo} alt="Imagen 4" className="small-img" />
           </div>
         </div>
       </div>
