@@ -8,11 +8,12 @@ import '../background/background.scss';
 import './iniciarSesion.scss';
 import '../reusable/input_box/input_box.scss';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import HeaderWhite from '../reusable/header_white/header_white';
+// import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss';
 import ErrorModal from '../reusable/errorFolder/errores';
 import Button from '../reusable/boton/button';
 import { post } from '../conexionBack/conexionBack';
+import Icon from '../../assets/icons/icon';
 
 export default function IniciarSesion() {
   const [inputUsername, setInputUsername] = useState('');
@@ -76,7 +77,14 @@ export default function IniciarSesion() {
 
   return (
     <div className="gradient-background">
-      <HeaderWhite>.</HeaderWhite>
+      <div className="layout">
+        <header className="header-principal">
+          <div className="agroIa">
+            <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="6vh" />
+            <h1>AGROIA</h1>
+          </div>
+        </header>
+      </div>
       {invalid && <ErrorModal title={error.title} message={error.message} onClick={okay} />}
       <form onSubmit={handleSubmit}>
         <div>

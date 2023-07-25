@@ -27,14 +27,15 @@
     font-size: 20px; 
     font-family: "Inter", sans-serif; 
     text-align: center;
-    color: $celeste-link;
+    color: $gris-texto;
+    font-weight: bold;
 }
 
 .registrate:hover{
     font-size: 20px; 
     font-family: "Inter", sans-serif; 
     text-align: center;
-    color: $celeste-link;
+    color: $gris-texto;
     text-decoration: underline;
     cursor: pointer;
 }

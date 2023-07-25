@@ -2,9 +2,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable object-curly-spacing */
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import Button from '../reusable/boton/button';
 import Icon from '../../assets/icons/icon';
 import '../reusable/header/header.scss';
 import './homePrincipal.scss';
@@ -13,24 +11,14 @@ import leaf from '../../images/leaf.jpg';
 import trigo from '../../images/trigo.jpg';
 import vistaSat from '../../images/vistasatelital.jpg';
 import '../../assets/global.scss';
+import HeaderHome from '../reusable/header_home/header_home';
 
 export default function HomePrincipal() {
-  const nav = useNavigate();
-
   const listChooseUs = [{reason: 'Precisión en el diagnóstico', extra: 'Utilizamos algoritmos avanzados de inteligencia artificial y análisis de imágenes para identificar enfermedades, plagas y otros problemas de salud en los cultivos con alta precisión.'}, {reason: 'Optimización de recursos', extra: 'Ayudamos a maximizar la producción agrícola al optimizar el uso de recursos como el agua, los fertilizantes y los pesticidas.'}, {reason: 'Recomendaciones personalizadas', extra: 'Proporcionamos recomendaciones específicas y personalizadas para cada cultivo y situación, considerando factores como el tipo de cultivo, las condiciones climáticas y las características del suelo.'}];
 
   return (
     <div className="layout">
-      <header className="header-principal">
-        <div className="agroIa">
-          <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="6vh" />
-          <h1>AGROIA</h1>
-        </div>
-        <div className="botonesInicio">
-          <Button onClick={() => nav('/iniciarSesion')} className="green-button cancelar">Iniciar Sesion</Button>
-          <Button onClick={() => nav('/registrarse')} className="green-button cancelar">Registrarse</Button>
-        </div>
-      </header>
+      <HeaderHome>.</HeaderHome>
       <div className="img-container">
         <div className="overlay"></div>
         <img src={grass} alt="Imagen 1" className="full-width-image" />

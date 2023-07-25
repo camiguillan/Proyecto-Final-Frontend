@@ -1,0 +1,18 @@
+@import "../../assets/global.scss";
+
+.botonesInicio {
+    display: flex;
+    align-items: flex;
+    justify-content: flex;
+    gap:10px;
+    column-gap: 2vh;
+    bottom: 0;
+    right: 0;
+    margin: 5vh;
+    white-space: nowrap;
+  }
+
+  .header_main{
+    display: flex;
+    align-items: flex;
+  }

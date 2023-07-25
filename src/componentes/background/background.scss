@@ -4,8 +4,5 @@
   min-height: 100vh;
   height: 58.5rem;
   min-width: 80rem;
-  background: linear-gradient(to bottom,
-    #{$verde-claro-iniciar-sesion},
-    #{$verde-intermedio-iniciar-sesion},
-    #{$verde-oscuro-iniciar-sesion});
+  background: linear-gradient(to right,$verde-nuevo 60%, #3e8b42 40%);
 }
