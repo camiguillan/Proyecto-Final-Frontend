@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FileUploader } from 'react-drag-drop-files';
+import axios from 'axios';
 import Header from '../reusable/header/header';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './agregarCampo.scss';
@@ -185,21 +186,32 @@ export default function AgregarCampo() {
   }, [erased]);
 
   function guardarCampoInfo() {
-    // console.log(campoInfo);
     const {
       plots, height, width, coordinates,
     } = cropCheckFullField(campoInfo.features);
-    const finalInfo = {
-      name: campoInfo.nombreCampo,
-      coordinates,
-      plots,
-      height,
-      width,
-      image: campoInfo.imagen, // deberiamos pasarla a string
-    };
-    // post('/field', finalInfo);
-    console.log(finalInfo);
-    // nav(`/home/${userID}`);
+    const formData = new FormData();
+    formData.append('name', campoInfo.nombreCampo);
+    formData.append('coordinates', JSON.stringify(coordinates));
+    formData.append('plots', JSON.stringify(plots));
+    formData.append('height', height);
+    formData.append('width', width);
+    formData.append('image', campoInfo.imagen); // Assuming campoInfo.image is a File object
+
+    // console.log(formData);
+    const accessToken = 'Bearer 64b2ac85eff3ad0202f4ef49';
+    axios
+      .post('http://localhost:8081/field', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -250,10 +262,13 @@ export default function AgregarCampo() {
 
               </div>
               <FileUploader
-                handleChange={(img) => setCampoInfo((prevInfo) => ({
-                  ...prevInfo,
-                  imagen: img,
-                }))}
+                handleChange={(img) => {
+                  console.log(img);
+                  setCampoInfo((prevInfo) => ({
+                    ...prevInfo,
+                    imagen: img,
+                  }));
+                }}
                 name="foto-campo"
                 types={fileTypes}
                 required
