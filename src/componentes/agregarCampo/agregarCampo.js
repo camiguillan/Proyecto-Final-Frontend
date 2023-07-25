@@ -198,7 +198,7 @@ export default function AgregarCampo() {
     formData.append('image', campoInfo.imagen); // Assuming campoInfo.image is a File object
 
     // console.log(formData);
-    const accessToken = 'Bearer 64b03ad9a89920b8129ad738';
+    const accessToken = 'Bearer 64b2ac85eff3ad0202f4ef49';
     axios
       .post('http://localhost:8081/field', formData, {
         headers: {

@@ -5,8 +5,9 @@ import { PLOT_SIZE } from '../../../constants/plots';
 
 export const createRectangle = (listOfPolygons) => {
   console.log(listOfPolygons);
-  const latitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[1]));
-  const longitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[0]));
+  const aux = listOfPolygons;
+  const latitudes = aux.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[1]));
+  const longitudes = aux.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[0]));
   const lowestLongitude = Math.min(...longitudes);
   const lowestLatitude = Math.min(...latitudes);
   const highestLongitude = Math.max(...longitudes);
@@ -61,7 +62,6 @@ const cropCheckFullField = (cropPolygons) => {
   const options = { units: 'degrees' };
   const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
   console.log(squareGrid);
-  const removed = cropPolygons.splice(0, 1);
   const tempList = cropPolygons;
   // console.log('CROPPOLYGONS, SHIF, SPLICE, REMAINING LIST', cropPolygons, cropPolygons.shift(), removed, tempList);
   const plots = squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, tempList));// le saco el primero
