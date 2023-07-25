@@ -69,7 +69,7 @@ const cropCheckFullField = (cropPolygons) => {
     plots,
     height,
     width,
-    coordinates: topCoordinates,
+    coordinates: { lat: topCoordinates[1], lon: topCoordinates[0] },
   };
 };
 

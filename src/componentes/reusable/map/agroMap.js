@@ -197,11 +197,11 @@ function AgroMap({
     function handleDraw() {
       const features = draw.getAll();
       const lastDrawn = features.features[features.features.length - 1];
-      const bbox = createRectangle([{ polygon: lastDrawn, crop: 'NONE' }]);
-      const options = { units: 'degrees' };
-      const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
-      console.log(squareGridR);
-      draw.add(squareGridR);
+      // const bbox = createRectangle([{ polygon: lastDrawn, crop: 'NONE' }]);
+      // const options = { units: 'degrees' };
+      // const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
+      // console.log(squareGridR);
+      // draw.add(squareGridR);
 
       draw.setFeatureProperty(lastDrawn.id, 'portColor', getRandomColor());
       // console.log(features);

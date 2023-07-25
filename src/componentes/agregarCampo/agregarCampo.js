@@ -195,6 +195,7 @@ export default function AgregarCampo() {
       plots,
       height,
       width,
+      image: campoInfo.imagen, // deberiamos pasarla a string
     };
     // post('/field', finalInfo);
     console.log(finalInfo);
