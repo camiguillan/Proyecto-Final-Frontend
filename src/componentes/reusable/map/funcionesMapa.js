@@ -4,6 +4,7 @@ import { squareGrid, booleanPointInPolygon } from '@turf/turf';
 import { PLOT_SIZE } from '../../../constants/plots';
 
 const createRectangle = (listOfPolygons) => {
+  console.log(listOfPolygons);
   const latitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[1]));
   const longitudes = listOfPolygons.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[0]));
   const lowestLongitude = Math.min(...longitudes);
@@ -32,21 +33,47 @@ const plotToCoordinates = (height, width, coordinates) => {
 };
 
 const cropCheck = (coordinates, cropPolygons) => {
+  // console.log(cropPolygons);
   const answer = cropPolygons.filter((oneCrop) => coordinates[0].some((corner) => booleanPointInPolygon(corner, oneCrop.polygon)))[0];
 
   if (!answer) {
-    return 'NONE';
+    return { crop: 'NONE' };
   }
-  return answer.crop;
+  return { crop: answer.crop };
 };
 
 // eslint-disable-next-line no-unused-vars
 const cropCheckFullField = (cropPolygons) => {
   const bbox = createRectangle(cropPolygons);
+  const lowestLongitude = bbox[0];
+  const lowestLatitude = bbox[1];
+  const highestLongitude = bbox[2];
+  const highestLatitude = bbox[3];
+  const topCoordinates = [lowestLongitude, highestLatitude];
+
+  // Calculate latitude and longitude ranges
+  const latitudeRange = highestLatitude - lowestLatitude;
+  const longitudeRange = highestLongitude - lowestLongitude;
+
+  // Calculate the number of rows and columns in the matrix
+  const height = Math.ceil(latitudeRange / PLOT_SIZE);
+  const width = Math.ceil(longitudeRange / PLOT_SIZE);
   const options = { units: 'degrees' };
   const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
-  return squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, cropPolygons.shift()));// le saco el primero
+  console.log(squareGrid);
+  const removed = cropPolygons.splice(0, 1);
+  const tempList = cropPolygons;
+  // console.log('CROPPOLYGONS, SHIF, SPLICE, REMAINING LIST', cropPolygons, cropPolygons.shift(), removed, tempList);
+  const plots = squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, tempList));// le saco el primero
+  return {
+    plots,
+    height,
+    width,
+    coordinates: topCoordinates,
+  };
 };
+
+export default cropCheckFullField;
 
 const polygonToField = (polygonCoordinates) => {
   const rectangleObject = createRectangle(polygonCoordinates);

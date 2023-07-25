@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FileUploader } from 'react-drag-drop-files';
 import Header from '../reusable/header/header';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -13,18 +13,18 @@ import Button from '../reusable/boton/button';
 // eslint-disable-next-line no-unused-vars
 import AgroMap from '../reusable/map/agroMap';
 import { CROP_TYPES_KEYS } from '../../constants/plots';
+import cropCheckFullField from '../reusable/map/funcionesMapa';
+import { post } from '../conexionBack/conexionBack';
 
 export default function AgregarCampo() {
+  const { userID } = useParams();
   const nav = useNavigate();
-  // const [nombreCampo, setNombreCampo] = useState('');
-  // const [imagen, setImagen] = useState('');
-  // const [coordinates, setCoordinates] = useState([]);
-  // const [cantCultivos, setCantCultivos] = useState('');
+
   const fileTypes = ['JPG', 'PNG'];
   const [campoInfo, setCampoInfo] = useState({
+    nombreCampo: '',
     imagen: '',
     coordinates: [-58.702963, -34.671792],
-    cantCultivos: '',
     features: [], // feature = [polygon: {}, crop: tipo cultivo]
   });
 
@@ -47,6 +47,12 @@ export default function AgregarCampo() {
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
     tempList[index] = cultivo;
+    const list2 = [...campoInfo.features];
+    // list2[index + 1].crop = cultivo;
+    setCampoInfo((prevInfo) => ({
+      ...prevInfo,
+      features: list2,
+    }));
     setCultivos(tempList);
     setSelectedCrop(cultivo);
     // console.log(cultivos);
@@ -92,7 +98,7 @@ export default function AgregarCampo() {
           tempList.push(feat);
           const feat2 = {
             polygon: feat,
-            crop: cultivos[index - 1],
+            crop: cultivos[index - 1] ? cultivos[index - 1] : 'NONE',
           };
           // console.log('ADDING ', cultivos[index - 1], ' to ', feat.id);
           lista2.push(feat2);
@@ -121,7 +127,7 @@ export default function AgregarCampo() {
         setdrawField(false);
       }
       //  else addInput();
-      console.log('CAMPO INFO. FEATURES', campoInfo.features, lista2);
+      // console.log('CAMPO INFO. FEATURES', campoInfo.features, lista2);
     }
   };
 
@@ -163,9 +169,9 @@ export default function AgregarCampo() {
         : <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
     </label>
   ));
-  console.log(cultivos);
-  // console.log(campoInfo.coordinates);
-  console.log('LISTA FEATURES', features);
+  // console.log(cultivos);
+  // console.log('CAMPO INFO', campoInfo);
+  // console.log('LISTA FEATURES', features);
   // console.log('MAIN FIELD', mainField);
 
   useEffect(() => {
@@ -177,6 +183,23 @@ export default function AgregarCampo() {
       removeFeature();
     }
   }, [erased]);
+
+  function guardarCampoInfo() {
+    // console.log(campoInfo);
+    const {
+      plots, height, width, coordinates,
+    } = cropCheckFullField(campoInfo.features);
+    const finalInfo = {
+      name: campoInfo.nombreCampo,
+      coordinates,
+      plots,
+      height,
+      width,
+    };
+    // post('/field', finalInfo);
+    console.log(finalInfo);
+    // nav(`/home/${userID}`);
+  }
 
   return (
     <div className="layout">
@@ -215,6 +238,7 @@ export default function AgregarCampo() {
                       ...prevInfo,
                       nombreCampo: nombre,
                     }))}
+                    required
                     type="text"
                     className="agregar-campo-input"
                     accept=""
@@ -223,20 +247,6 @@ export default function AgregarCampo() {
                 </label>
                 {drawField ? <p>Dibuje el campo principal</p> : cultivosInputs}
 
-                {/* <label className="agregar-campo-label">
-                  Tipos de cultivos:
-                  <Input
-                    value={campoInfo.cantCultivos}
-                    placeholder="Ingrese cantidad de tipos"
-                    onChange={(cant) => setCampoInfo((prevInfo) => ({
-                      ...prevInfo,
-                      cantCultivos: cant,
-                    }))}
-                    type="number"
-                    className="agregar-campo-input"
-                    accept=""
-                  />
-                </label> */}
               </div>
               <FileUploader
                 handleChange={(img) => setCampoInfo((prevInfo) => ({
@@ -278,8 +288,8 @@ export default function AgregarCampo() {
           </Card>
 
           <div className="botones">
-            <Button type="button" onClick={() => nav('/user/home')} className="green-button cancelar">Cancelar</Button>
-            <Button type="button" onClick={() => console.log(campoInfo)} className="green-button">Siguiente</Button>
+            <Button type="button" onClick={() => nav(`/home/${userID}`)} className="green-button cancelar">Cancelar</Button>
+            <Button type="button" onClick={() => guardarCampoInfo()} className="green-button">Guardar</Button>
           </div>
         </div>
       </div>
