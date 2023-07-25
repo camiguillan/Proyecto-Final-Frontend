@@ -3,22 +3,20 @@
 /* eslint-disable object-curly-spacing */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-// import Header from '../reusable/header/header';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Button from '../reusable/boton/button';
 import Icon from '../../assets/icons/icon';
 import '../reusable/header/header.scss';
 import './homePrincipal.scss';
-// import Footer from '../reusable/footer/footer';
-// import Carousel from '../reusable/carousel/carousel';
 import grass from '../../images/grass3.jpg';
+import leaf from '../../images/leaf.jpg';
 import vistaSat from '../../images/vistasatelital.jpg';
 import '../../assets/global.scss';
 
 export default function HomePrincipal() {
   const nav = useNavigate();
 
-  const listChooseUs = [{reason: 'Analisis de imagenes de alta calidad', extra: 'Bla bla'}, {reason: 'Analisis de imagenes de alta calidad', extra: 'Bla bla'}, {reason: 'Analisis de imagenes de alta calidad', extra: 'Bla bla'}];
+  const listChooseUs = [{reason: 'Analisis de imagenes de alta calidad', extra: 'Bla bla'}, {reason: 'Somos re capos', extra: 'Bla bla'}, {reason: 'Aguante boca', extra: 'Bla bla'}];
 
   return (
     <div className="layout">
@@ -70,18 +68,35 @@ export default function HomePrincipal() {
         <div className="green-title left">
           ¿Por qué elegirnos?
         </div>
-        <div>
-          {listChooseUs.map((item) => (
-            <div className="left">
-              <Icon className="bi bi-check2-circle" color="#2a7d2e" fontSize="6vh" />
-              <span className="text-home-principal checks">{item.reason}</span>
-              <span className="text-home-principal">{item.extra}</span>
-            </div>
-          ))}
+        <div className="flex-container">
+          <div>
+            {listChooseUs.map((item) => (
+              <div className="left">
+                <div className="icon-reason">
+                  <Icon className="bi bi-check2-circle" color="#2a7d2e" fontSize="6vh" />
+                  <p className="text-home-principal checks">{item.reason}</p>
+                </div>
+                <div className="extra-reason">
+                  <p className="text-home-principal">{item.extra}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="photo-container">
+            <img src={leaf} alt="Imagen 4" className="small-img" />
+          </div>
         </div>
       </div>
       <div>
-        Contactanos!
+        <div className="flex-container center">
+          <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="6vh" />
+          <h1>AGROIA</h1>
+        </div>
+        <div className="contact-info">
+          <div className="text-home-2 margin">agroIA00@gmail.com</div>
+          <div className="text-home-2 margin">+54 9 11 6893-7938</div>
+          <div className="text-home-2">Buenos Aires, Argentina</div>
+        </div>
       </div>
     </div>
   );
