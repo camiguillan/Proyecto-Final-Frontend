@@ -41,8 +41,8 @@ export default function AgregarCampo() {
   });
 
   const [drawField, setdrawField] = useState(true);
-  const cultivosOpciones = Object.keys(CROP_TYPES_KEYS);
-  const [selectedCrop, setSelectedCrop] = useState('NONE');
+  const cultivosOpciones = Object.values(CROP_TYPES_KEYS);
+  const [selectedCrop, setSelectedCrop] = useState(CROP_TYPES_KEYS.NONE);
   // console.log(drawField);
 
   const handleChange = (cultivo, index) => {
@@ -60,9 +60,9 @@ export default function AgregarCampo() {
   };
 
   const addInput = () => {
-    if (selectedCrop !== 'NONE') {
+    if (selectedCrop !== CROP_TYPES_KEYS.NONE) {
       setCultivos((cult) => [...cult, '']);
-      setSelectedCrop('NONE');
+      setSelectedCrop(CROP_TYPES_KEYS.NONE);
     }
   };
 
@@ -99,7 +99,7 @@ export default function AgregarCampo() {
           tempList.push(feat);
           const feat2 = {
             polygon: feat,
-            crop: cultivos[index - 1] ? cultivos[index - 1] : 'NONE',
+            crop: cultivos[index - 1] ? cultivos[index - 1] : CROP_TYPES_KEYS.NONE,
           };
           // console.log('ADDING ', cultivos[index - 1], ' to ', feat.id);
           lista2.push(feat2);
@@ -198,7 +198,7 @@ export default function AgregarCampo() {
     formData.append('image', campoInfo.imagen); // Assuming campoInfo.image is a File object
 
     // console.log(formData);
-    const accessToken = 'Bearer 64b2ac85eff3ad0202f4ef49';
+    const accessToken = 'Bearer 64b03ad9a89920b8129ad738';
     axios
       .post('http://localhost:8081/field', formData, {
         headers: {
