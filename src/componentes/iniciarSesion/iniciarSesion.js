@@ -92,7 +92,7 @@ export default function IniciarSesion() {
               style={{ color: isInputUsernameFilled ? 'black' : '#888' }}
             />
             {invalidUser && <p className="password-message-mail">El mail ingresado no existe</p>}
-
+            <div className={campoNombreLleno || isInputPasswordFilled ? 'sub-rectangle-overlay' : 'sub-rectangle-overlay-red'} />
             <input
               className={campoNombreLleno || isInputPasswordFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
               type={mostrarContrasenia ? 'text' : 'password'}

@@ -16,6 +16,7 @@ import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
 import Header from '../reusable/header/header';
 import Button from '../reusable/boton/button';
 import { post } from '../conexionBack/conexionBack';
+import Icon from '../../assets/icons/icon';
 
 export default function EditarPerfil() {
 
@@ -88,8 +89,14 @@ export default function EditarPerfil() {
       <Header />
       <form onSubmit={handleSubmit}>
         <div>
+          <h1 className="agregar-campo-titulo">
+            {' '}
+            <Icon className="bi bi-person-fill" color="#464E47" fontSize="" />
+            {' '}
+            EDITAR PERFIL
+          </h1>
           <div className="invisible-white-rectangle">
-            <span className="container-text">Editar Perfil</span>
+            <span className="container-text">   </span>
             <input
               className={campoNombreLleno || isInputFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
               type="text"
@@ -114,6 +121,7 @@ export default function EditarPerfil() {
               onChange={(e) => handleInputChange(e, setIngresarFechaNacimiento)}
               style={{ color: isInputFilled3 ? 'black' : '#888' }}
             />
+            <div className={campoNombreLleno || isInputFilled4 ? 'sub-rectangle-edit-overlay' : 'sub-rectangle-overlay-regist-red'} />
             <input
               className={campoNombreLleno || isInputFilled4 ? 'sub-rectangle' : 'sub-rectangle-red'}
               type={mostrarContrasenia ? 'text' : 'password'}
@@ -124,7 +132,7 @@ export default function EditarPerfil() {
                 setIngresarIngresarContrasenia(e.target.value);
               }}
             />
-            <span className="mostrar-ocultar" onClick={toggleMostrarContrasenia}>
+            <span className="mostrar-ocultar-edit-perfil" onClick={toggleMostrarContrasenia}>
               {eyeIcon}
             </span>
             {!isInputFilled5 && invalid && <p className="password-message">La contraseña debe tener al menos 8 caracteres y una mayúscula</p>}

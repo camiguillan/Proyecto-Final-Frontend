@@ -47,7 +47,7 @@ export default function Home() {
       <Header />
       <div className="image-container">
         {images.map((image, index) => (
-          <Link to={`/VerCultivos/${userID}`} key={index}>
+          <Link to={`/VerCultivos/${user.fields[index].name}/${userID}`} key={index}>
             <div className="image-wrapper">
               <img
                 src={image}

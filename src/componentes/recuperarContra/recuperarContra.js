@@ -68,9 +68,10 @@ export default function RecuperarContra() {
           <CosoVerde />
           <div className="small-white-rectangle">
             <span className="container-text">Recuperar contraseña</span>
+            <div className={campoNombreLleno || isInputFilled ? 'sub-rectangle-recupContra-overlay' : 'sub-rectangle-overlay-recupContra-red'} />
             <input
               className={campoNombreLleno || isInputFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
-              type="text"
+              type={mostrarContrasenia ? 'text' : 'password'}
               placeholder="Ingrese su nueva contraseña"
               value={ingresarContrasenia}
               onChange={(e) => handleInputChangePassword(e, setIngresarIngresarContrasenia)}

@@ -10,7 +10,6 @@ import '../background/background.scss';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import Button from '../reusable/boton/button';
-import ErrorModal from '../reusable/errorFolder/errores';
 import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
@@ -58,8 +57,6 @@ export default function Registrarse() {
   const isInputFilled2 = ingresarCorreo.trim() !== '';
   const isInputFilled3 = ingresarFechaNacimiento.trim() !== '';
   const isInputFilled4 = ingresarContrasenia.trim() !== '';
-
-  const okay = () => setInvalid(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -114,6 +111,7 @@ export default function Registrarse() {
               onChange={(e) => handleInputChange(e, setIngresarFechaNacimiento)}
               style={{ color: isInputFilled3 ? 'black' : '#888' }}
             />
+            <div className={campoNombreLleno || isInputFilled4 ? 'sub-rectangle-regist-overlay' : 'sub-rectangle-overlay-regist-red'} />
             <input
               className={campoNombreLleno || isInputFilled4 ? 'sub-rectangle' : 'sub-rectangle-red'}
               type={mostrarContrasenia ? 'text' : 'password'}

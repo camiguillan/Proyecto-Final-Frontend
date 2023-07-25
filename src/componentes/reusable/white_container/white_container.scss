@@ -62,3 +62,99 @@
     align-items: center;
     justify-content: flex-start; 
   }  
+
+  .sub-rectangle-overlay{
+    position: absolute;
+  top: 13.75rem;
+  left: 28.35rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: #F1FFFA;
+    margin-bottom: 3rem;
+    border-radius: 2vh;
+    border: 0vh #F1FFFA;
+  }
+
+    .sub-rectangle-overlay-red{
+    position: absolute;
+  top: 13.75rem;
+  left: 28.35rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: #fff5f1;
+    margin-bottom: 3rem;
+    border-radius: 2vh;
+    border: 0vh #F1FFFA;
+  }
+
+    .sub-rectangle-regist-overlay{
+    position: absolute;
+  top: 26.75rem;
+  left: 28.35rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: #F1FFFA;
+    margin-bottom: 3rem;
+    border-radius: 2vh;
+    border: 0vh #F1FFFA;
+  }
+
+    .sub-rectangle-overlay-regist-red{
+    position: absolute;
+  top: 23.75rem;
+  left: 28.35rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: #fff5f1;
+    margin-bottom: 3rem;
+    border-radius: 2vh;
+    border: 0vh #F1FFFA;
+  }
+
+      .sub-rectangle-edit-overlay{
+    position: absolute;
+  top: 23.75rem;
+  left: 28.35rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: #F1FFFA;
+    margin-bottom: 3rem;
+    border-radius: 2vh;
+    border: 0vh #F1FFFA;
+  }
+
+    .sub-rectangle-overlay-edit-red{
+    position: absolute;
+  top: 26.75rem;
+  left: 28.35rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: #fff5f1;
+    margin-bottom: 3rem;
+    border-radius: 2vh;
+    border: 0vh #F1FFFA;
+  }
+
+      .sub-rectangle-recupContra-overlay{
+    position: absolute;
+  top: 7.2rem;
+  left: 29.35rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: #F1FFFA;
+    margin-bottom: 3rem;
+    border-radius: 2vh;
+    border: 0vh #F1FFFA;
+  }
+
+    .sub-rectangle-overlay-recupContra-red{
+    position: absolute;
+  top: 7.2rem;
+  left: 29.35rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: #fff5f1;
+    margin-bottom: 3rem;
+    border-radius: 2vh;
+    border: 0vh #fff5f1;
+  }

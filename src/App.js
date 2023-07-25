@@ -28,7 +28,7 @@ function App() {
         <Route path="/olvidoContra" element={<OlvidoContra />} />
         <Route path="/recover_password/:userID" element={<RecuperarContra />} />
         <Route path="/editarPerfil/:userID" element={<EditarPerfil />} />
-        <Route path="/VerCultivos/:userID" element={<VerCultivos />} />
+        <Route path="/VerCultivos/:field/:userID" element={<VerCultivos />} />
       </Routes>
     </div>
   );

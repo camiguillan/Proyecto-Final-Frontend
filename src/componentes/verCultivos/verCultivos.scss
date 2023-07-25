@@ -1,47 +1,49 @@
-.image-container-mini {
+.image-container-cult {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 3%;
-  max-height: calc(50% - 55%);
-  height: calc(50% - 55%);
-  overflow-y: auto;
+  grid-template-columns: repeat(auto-fill, minmax(13.2rem, 1fr));
+  grid-gap: 1.2rem;
+  margin-top: 1rem;
+  margin-left: 1.2rem;
 }
 
-.rounded-image-mini {
-  border-radius: 1.3rem;
-  width: 100%;
-  height: auto;
+.rounded-image-cult {
+  border-radius: 0.5rem;
 }
 
-.image-container-mini img {
-  width: 50%; /* Las imágenes ocuparán todo el ancho disponible en el contenedor */
-  height: 50%; /* Las imágenes ocuparán todo el alto disponible en el contenedor */
-  object-fit: fill; /* Las imágenes se estirarán y deformarán para llenar el espacio disponible */
-}
-
-.image-wrapper-mini {
+.image-wrapper-cult {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  align-items: flex-start;
   height: 14rem;
+  width: 13.2rem;
+  border-radius: 0.5rem;
+  background-color: rgb(225, 215, 215); /* Add this line to set the background color to red */
 }
 
-.image-wrapper-mini img { 
-  width: 90%; /* Las imágenes ocuparán todo el ancho disponible en el contenedor */
-  height: 100%; /* Las imágenes ocuparán todo el alto disponible en el contenedor */
-  object-fit: fill;
+.image-wrapper-cult img {
+  width: 90%;
+  height: 65%;
+  object-fit: cover;
+  margin-top: 5%;
 }
 
-.text-name {
+.image-name-cult {
   position: absolute;
-  bottom: 38%;
-  left: 10%; /* Ajusta el valor de 'left' según tu preferencia */
-  font-size: 300%;
+  bottom: 2rem;
+  left: 0.7rem;
+  font-size: 1.6rem;
+  font-family: 'Roboto', sans-serif; /* Cambia la fuente a Roboto */
+  font-weight: bold;
   color: black;
-  font-weight: normal;
-  padding: .02rem;
-  border-radius: 5px;
-  text-shadow: -0.25vh -0.25vh 0 white, 0.25vh -0.25vh 0 white, -0.25vh 0.25vh 0 white, 0.25vh 0.25vh 0 white;
+  //text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white;
   pointer-events: none;
+}
+
+.titulo-fachero-facherito {
+  width: 15rem;
+  margin: 1rem 0% 0% 2%;
+  text-align: left;
+  font-size: xx-large;
 }
