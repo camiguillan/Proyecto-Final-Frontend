@@ -8,6 +8,8 @@
 import React, { useState } from 'react';
 import '../../assets/global.scss';
 import '../background/background.scss';
+import '../homePrincipal/homePrincipal.scss';
+import './editarPerfil.scss';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import ErrorModal from '../reusable/errorFolder/errores';
@@ -17,6 +19,8 @@ import Header from '../reusable/header/header';
 import Button from '../reusable/boton/button';
 import { post } from '../conexionBack/conexionBack';
 import Icon from '../../assets/icons/icon';
+import Campito from '../../images/segador.png';
+import HeaderWhite from '../reusable/header_white/header_white';
 
 export default function EditarPerfil() {
 
@@ -86,59 +90,62 @@ export default function EditarPerfil() {
 
   return (
     <div>
-      <Header />
+      <HeaderWhite />
       <form onSubmit={handleSubmit}>
-        <div>
-          <h1 className="agregar-campo-titulo">
-            {' '}
-            <Icon className="bi bi-person-fill" color="#464E47" fontSize="" />
-            {' '}
-            EDITAR PERFIL
-          </h1>
-          <div className="invisible-white-rectangle">
-            <span className="container-text">   </span>
-            <input
-              className={campoNombreLleno || isInputFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
-              type="text"
-              placeholder="Ingrese su nombre"
-              value={ingresarNombre}
-              onChange={(e) => handleInputChange(e, setIngresarNombre)}
-              style={{ color: isInputFilled ? 'black' : '#888' }}
-            />
-            <input
-              className={campoNombreLleno || isInputFilled2 ? 'sub-rectangle' : 'sub-rectangle-red'}
-              type="text"
-              placeholder="Ingrese su correo electrónico"
-              value={ingresarCorreo}
-              onChange={(e) => handleInputChange(e, setIngresarCorreo)}
-              style={{ color: isInputFilled2 ? 'black' : '#888' }}
-            />
-            <input
-              className={campoNombreLleno || isInputFilled3 ? 'sub-rectangle' : 'sub-rectangle-red'}
-              type="date"
-              placeholder="Ingrese su fecha de nacimiento"
-              value={ingresarFechaNacimiento}
-              onChange={(e) => handleInputChange(e, setIngresarFechaNacimiento)}
-              style={{ color: isInputFilled3 ? 'black' : '#888' }}
-            />
-            <div className={campoNombreLleno || isInputFilled4 ? 'sub-rectangle-edit-overlay' : 'sub-rectangle-overlay-regist-red'} />
-            <input
-              className={campoNombreLleno || isInputFilled4 ? 'sub-rectangle' : 'sub-rectangle-red'}
-              type={mostrarContrasenia ? 'text' : 'password'}
-              placeholder="Ingrese su contraseña"
-              value={ingresarContrasenia}
-              onChange={(e) => {
-                handleInputChangePassword(e, setIngresarIngresarContrasenia);
-                setIngresarIngresarContrasenia(e.target.value);
-              }}
-            />
-            <span className="mostrar-ocultar-edit-perfil" onClick={toggleMostrarContrasenia}>
-              {eyeIcon}
-            </span>
-            {!isInputFilled5 && invalid && <p className="password-message">La contraseña debe tener al menos 8 caracteres y una mayúscula</p>}
-            <Button type="submit" className="green-button">Actualizar datos </Button>
+        <div className="fondoverde">
+          <div className="white-rectangle3">
+            <div className="flexbox-container4">
+              <div className="title-inicio center">
+                <input
+                  className={campoNombreLleno || isInputFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
+                  type="text"
+                  placeholder="Ingrese su nombre"
+                  value={ingresarNombre}
+                  onChange={(e) => handleInputChange(e, setIngresarNombre)}
+                  style={{ color: isInputFilled ? 'black' : '#888' }}
+                />
+                <input
+                  className={campoNombreLleno || isInputFilled2 ? 'sub-rectangle' : 'sub-rectangle-red'}
+                  type="text"
+                  placeholder="Ingrese su correo electrónico"
+                  value={ingresarCorreo}
+                  onChange={(e) => handleInputChange(e, setIngresarCorreo)}
+                  style={{ color: isInputFilled2 ? 'black' : '#888' }}
+                />
+                <input
+                  className={campoNombreLleno || isInputFilled3 ? 'sub-rectangle' : 'sub-rectangle-red'}
+                  type="date"
+                  placeholder="Ingrese su fecha de nacimiento"
+                  value={ingresarFechaNacimiento}
+                  onChange={(e) => handleInputChange(e, setIngresarFechaNacimiento)}
+                  style={{ color: isInputFilled3 ? 'black' : '#888' }}
+                />
+                <input
+                  className={campoNombreLleno || isInputFilled4 ? 'sub-rectangle' : 'sub-rectangle-red'}
+                  type={mostrarContrasenia ? 'text' : 'password'}
+                  placeholder="Ingrese su contraseña"
+                  value={ingresarContrasenia}
+                  onChange={(e) => {
+                    handleInputChangePassword(e, setIngresarIngresarContrasenia);
+                    setIngresarIngresarContrasenia(e.target.value);
+                  }}
+                />
+                <span className="mostrar-ocultar-edit-perfil" onClick={toggleMostrarContrasenia}>
+                  {eyeIcon}
+                </span>
+                {!isInputFilled5 && invalid && <p className="password-message">La contraseña debe tener al menos 8 caracteres y una mayúscula</p>}
+                <Button type="submit" className="green-button cancelar">Actualizar datos </Button>
+              </div>
+              <div>
+                <h1 className="gray-title2">
+                  Editar Perfil
+                </h1>
+                <div>
+                  <img src={Campito} alt="Imagen 4" className="imagen-editarperf" />
+                </div>
+              </div>
+            </div>
           </div>
-
         </div>
       </form>
     </div>
