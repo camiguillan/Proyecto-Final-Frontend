@@ -12,6 +12,7 @@ import EditarPerfil from './componentes/editarPerfil/editarPerfil';
 import VerCultivos from './componentes/verCultivos/verCultivos';
 import RecuperarContra from './componentes/recuperarContra/recuperarContra';
 import HomePrincipal from './componentes/homePrincipal/homePrincipal';
+import IniciarSesion2 from './componentes/iniciarSesion/backup_iniciosesion';
 
 function App() {
   document.title = 'AGROIA';
@@ -23,6 +24,7 @@ function App() {
         <Route path="/editarCampo/:userID" element={<EditarCampo />} />
         <Route path="/home/:userID" element={<Home />} />
         <Route path="/iniciarSesion" element={<IniciarSesion />} />
+        <Route path="/iniciarSesion2" element={<IniciarSesion2 />} />
         <Route path="/registrarse" element={<Registrarse />} />
         <Route path="/campo/dashboards/:userID" element={<Dashboards />} />
         <Route path="/olvidoContra" element={<OlvidoContra />} />

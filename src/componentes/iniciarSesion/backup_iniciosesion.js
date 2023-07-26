@@ -13,9 +13,8 @@ import '../reusable/white_container/white_container.scss';
 import ErrorModal from '../reusable/errorFolder/errores';
 import Button from '../reusable/boton/button';
 import { post } from '../conexionBack/conexionBack';
-import Icon from '../../assets/icons/icon';
 
-export default function IniciarSesion() {
+export default function IniciarSesion2() {
   const [inputUsername, setInputUsername] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [invalidPassword, setInvalidPassword] = useState(false);
@@ -77,14 +76,6 @@ export default function IniciarSesion() {
 
   return (
     <div className="gradient-background">
-      <div className="layout">
-        <header className="header-principal">
-          <div className="agroIa">
-            <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="6vh" />
-            <h1>AGROIA</h1>
-          </div>
-        </header>
-      </div>
       {invalid && <ErrorModal title={error.title} message={error.message} onClick={okay} />}
       <form onSubmit={handleSubmit}>
         <div>

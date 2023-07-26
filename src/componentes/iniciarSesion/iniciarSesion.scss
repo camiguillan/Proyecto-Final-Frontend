@@ -4,7 +4,8 @@
     font-size: 20px; 
     font-family: "Inter", sans-serif; 
     text-align: center;
-    color: $verde-texto;
+    color: $verde-oscuro-nuevo;
+    font-weight: bold;
 }
 
 .green-text:hover {
@@ -42,4 +43,75 @@
 
 .espacio{
     margin-top: 30px;
+}
+
+.espacio2{
+    margin-top: 55px;
+}
+
+// COLUMNS
+
+.flexbox-container2 {
+	//display: -ms-flex;
+	//display: -webkit-flex;
+  display: flex;
+  max-width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  //margin-bottom: 5vh;
+  margin-top: 5vh;
+}
+
+.flexbox-container2 > div {
+  width: 50%;
+  padding: 1.5vh;
+  text-align: center; 
+  //display: flex;
+  //flex-direction: column;
+  justify-content: center;
+  padding-top: 5vh;
+}
+
+.flexbox-container2 > div:first-child {
+	margin-right: 1.5vh;
+}
+
+.flexbox-container2 > div + div {
+  border-left: 0.40vh solid #ccc;
+  padding-left: 3vh;
+}
+
+.agroia2{
+    display: flex;
+    //flex-wrap: nowrap;
+    align-items: center;
+    //justify-content: center;
+    margin-bottom: 5vh;
+    margin-left: 17vh;
+}
+
+.agroia2:hover{
+    cursor: pointer;
+}
+
+.center{
+    align-items: center;
+    justify-content: center;
+}
+
+.title-inicio{
+    font-size: 1.5rem; 
+    font-family: "Inter", sans-serif; 
+    text-align: center;
+    color: $gris-texto;
+    font-weight: bold;
+}
+
+.title-inicio2{
+    font-size: 2.5rem; 
+    font-family: "Inter", sans-serif; 
+    text-align: center;
+    color: $gris-texto;
+    font-weight: bold;
+    margin-top: 4vh;
 }

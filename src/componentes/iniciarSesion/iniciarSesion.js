@@ -13,6 +13,8 @@ import '../reusable/white_container/white_container.scss';
 import ErrorModal from '../reusable/errorFolder/errores';
 import Button from '../reusable/boton/button';
 import { post } from '../conexionBack/conexionBack';
+import Icon from '../../assets/icons/icon';
+import tractor from '../../images/granjero.png';
 
 export default function IniciarSesion() {
   const [inputUsername, setInputUsername] = useState('');
@@ -80,45 +82,57 @@ export default function IniciarSesion() {
       <form onSubmit={handleSubmit}>
         <div>
           <div className="white-rectangle">
-            <span className="container-text">Iniciá Sesion</span>
-            <input
-              className={campoNombreLleno || isInputUsernameFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
-              type="text"
-              placeholder="  Ingrese su email"
-              value={inputUsername}
-              onChange={(e) => handleInputChange(e, setInputUsername)}
-              style={{ color: isInputUsernameFilled ? 'black' : '#888' }}
-            />
-            {invalidUser && <p className="password-message-mail">El mail ingresado no existe</p>}
-            <div className={campoNombreLleno || isInputPasswordFilled ? 'sub-rectangle-overlay' : 'sub-rectangle-overlay-red'} />
-            <input
-              className={campoNombreLleno || isInputPasswordFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
-              type={mostrarContrasenia ? 'text' : 'password'}
-              placeholder="  Ingrese su contraseña"
-              value={inputPassword}
-              onChange={(e) => handleInputChange(e, setInputPassword)}
-              style={{ color: isInputPasswordFilled ? 'black' : '#888' }}
-            />
-            <span className="mostrar-ocultar-init-sesion" onClick={toggleMostrarContrasenia}>
-              {eyeIcon}
-            </span>
-            {invalidPassword && <p className="password-message-init-sesion">La contraseña ingresada es incorrecta</p>}
+            <div className="flexbox-container2">
+              <div className="title-inicio center">
+                <div className="agroia2" onClick={() => navigate('../')}>
+                  <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="6vh" />
+                  <h1>AGROIA</h1>
+                </div>
+                <div>
+                  <img src={tractor} alt="Imagen 4" />
+                </div>
+                <div className="title-inicio2">Bienvenid@ de nuevo!</div>
+              </div>
+              <div className="text-home-principal">
+                <text className="gray-title">Iniciá Sesión</text>
+                <div className="espacio" />
+                <input
+                  className={campoNombreLleno || isInputUsernameFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
+                  type="text"
+                  placeholder="Ingrese su email"
+                  value={inputUsername}
+                  onChange={(e) => handleInputChange(e, setInputUsername)}
+                  style={{ color: isInputUsernameFilled ? 'black' : '#888' }}
+                />
+                {invalidUser && <p className="password-message-mail">El mail ingresado no existe</p>}
+                <input
+                  className={campoNombreLleno || isInputPasswordFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
+                  type={mostrarContrasenia ? 'text' : 'password'}
+                  placeholder="Ingrese su contraseña"
+                  value={inputPassword}
+                  onChange={(e) => handleInputChange(e, setInputPassword)}
+                  style={{ color: isInputPasswordFilled ? 'black' : '#888' }}
+                />
+                <span className="mostrar-ocultar-init-sesion" onClick={toggleMostrarContrasenia}>
+                  <div className="espacio2" />
+                  {eyeIcon}
+                </span>
+                {invalidPassword && <p className="password-message-init-sesion">La contraseña ingresada es incorrecta</p>}
 
-            <div className="espacio" />
+                <div className="green-text" onClick={() => navigate('../olvidoContra')}>¿Olvidó su contraseña?</div>
 
-            <div className="green-text" onClick={() => navigate('../olvidoContra')}>¿Olvido su contraseña?</div>
+                <div className="espacio" />
 
-            <div className="espacio" />
+                <Button type="submit" className="green-button cancelar-lleno">Iniciar Sesion </Button>
 
-            <Button type="submit" className="green-button">Iniciar Sesion </Button>
+                <div className="espacio" />
 
-            <div className="espacio" />
-
-            <div>
-              <text className="texto-normal">¿No tienes una cuenta? </text>
-              <text className="registrate" onClick={() => navigate('../registrarse')}>Regístrate!</text>
+                <div>
+                  <text className="texto-normal">¿No tienes una cuenta? </text>
+                  <text className="registrate" onClick={() => navigate('../registrarse')}>Regístrate!</text>
+                </div>
+              </div>
             </div>
-
           </div>
         </div>
       </form>

@@ -6,7 +6,7 @@
     margin: 0.5%;
     margin-top: 10px;
     padding: 10px 30px;
-    border-radius: 30px;
+    border-radius: 20px;
     cursor: pointer;
     font-size: 20px;
     border: solid;
@@ -27,6 +27,18 @@
     background-color: $verde-nuevo !important;
     color: white  !important;
     //border-style: $verde-nuevo !important;
+  }
+
+  .cancelar-lleno{
+    background-color: white !important;
+    color: $verde-nuevo !important;
+    border-style: 1px $verde-nuevo;
+  }
+
+  .cancelar-lleno:hover{
+    background-color: $verde-nuevo !important;
+    color: white !important;
+    border-style: 5px $verde-nuevo;
   }
 
   .button-text {
