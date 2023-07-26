@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FileUploader } from 'react-drag-drop-files';
+import axios from 'axios';
 import Header from '../reusable/header/header';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './agregarCampo.scss';
@@ -11,14 +13,207 @@ import Icon from '../../assets/icons/icon';
 import Button from '../reusable/boton/button';
 // eslint-disable-next-line no-unused-vars
 import AgroMap from '../reusable/map/agroMap';
+import { CROP_TYPES_KEYS } from '../../constants/plots';
+import cropCheckFullField from '../reusable/map/funcionesMapa';
+import { post } from '../conexionBack/conexionBack';
 
 export default function AgregarCampo() {
-  const [nombreCampo, setNombreCampo] = useState('');
-  const [imagen, setImagen] = useState('');
+  const { userID } = useParams();
   const nav = useNavigate();
-  const [coordinates, setCoordinates] = useState([]);
-  const [cantCultivos, setCantCultivos] = useState('');
+
   const fileTypes = ['JPG', 'PNG'];
+  const [campoInfo, setCampoInfo] = useState({
+    nombreCampo: '',
+    imagen: '',
+    coordinates: [-58.702963, -34.671792],
+    features: [], // feature = [polygon: {}, crop: tipo cultivo]
+  });
+
+  const [cultivos, setCultivos] = useState(['']);
+  const [features, setFeatures] = useState([]);
+  const [newFeatures, setNewFeatures] = useState([]);
+  const [erased, setNewErased] = useState([]);
+  const [mainField, setMainField] = useState({
+    geometry: [],
+    id: '',
+    properties: {},
+    type: '',
+  });
+
+  const [drawField, setdrawField] = useState(true);
+  const cultivosOpciones = Object.values(CROP_TYPES_KEYS);
+  const [selectedCrop, setSelectedCrop] = useState(CROP_TYPES_KEYS.NONE);
+  // console.log(drawField);
+
+  const handleChange = (cultivo, index) => {
+    const tempList = [...cultivos];
+    tempList[index] = cultivo;
+    const list2 = [...campoInfo.features];
+    // list2[index + 1].crop = cultivo;
+    setCampoInfo((prevInfo) => ({
+      ...prevInfo,
+      features: list2,
+    }));
+    setCultivos(tempList);
+    setSelectedCrop(cultivo);
+    // console.log(cultivos);
+  };
+
+  const addInput = () => {
+    if (selectedCrop !== CROP_TYPES_KEYS.NONE) {
+      setCultivos((cult) => [...cult, '']);
+      setSelectedCrop(CROP_TYPES_KEYS.NONE);
+    }
+  };
+
+  const removeInput = (deletedCrop) => {
+    const tempList = [...cultivos];
+    tempList.splice(cultivos.indexOf(deletedCrop), 1);
+    setCultivos(tempList);
+  };
+
+  const opciones = cultivosOpciones.map((opcion) => (
+    <option key={opcion} value={opcion}>
+      {' '}
+      {opcion}
+      {' '}
+    </option>
+  ));
+  function areNewFeatures() {
+    const featIds = features.map((feat) => feat.id);
+    const newFeatIds = newFeatures.map((feat) => feat.id);
+    // console.log(featIds, newFeatIds);
+    return features.length <= newFeatures.length;
+  }
+  // eslint-disable-next-line no-unused-vars
+  const addFeature = () => {
+    if (areNewFeatures()) {
+      const tempList = [...features];
+      const lista2 = [...campoInfo.features];
+      newFeatures.forEach((feat, index) => {
+        const hasFeature = features.map((fea) => fea.id).includes(feat.id);
+        if (hasFeature) {
+          tempList[index] = feat;
+          lista2[index].polygon = feat;
+        } else {
+          tempList.push(feat);
+          const feat2 = {
+            polygon: feat,
+            crop: cultivos[index - 1] ? cultivos[index - 1] : CROP_TYPES_KEYS.NONE,
+          };
+          // console.log('ADDING ', cultivos[index - 1], ' to ', feat.id);
+          lista2.push(feat2);
+        }
+      });
+      // console.log('TEMP LIST', tempList);
+      // console.log('features', newFeatures);
+      setCampoInfo((prevInfo) => ({
+        ...prevInfo,
+        features: lista2,
+      }));
+      setFeatures(tempList);
+      // console.log(mainField);
+      if (mainField.id === '' || !mainField) {
+        const {
+          geometry, id, properties, type,
+        } = tempList[0];
+        setMainField(
+          {
+            geometry,
+            id,
+            properties,
+            type,
+          },
+        );
+        setdrawField(false);
+      }
+      //  else addInput();
+      // console.log('CAMPO INFO. FEATURES', campoInfo.features, lista2);
+    }
+  };
+
+  const removeFeatureSt = (feats, removedFeature) => {
+    setNewFeatures(feats);
+    setNewErased(removedFeature[0]);
+  };
+
+  const removeFeature = () => {
+    const erasedId = erased.id;
+    const erasedCrop = campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0].crop;
+    removeInput(erasedCrop);
+    setFeatures(newFeatures);
+    setCampoInfo((prevInfo) => ({
+      ...prevInfo,
+      features: campoInfo.features.filter(({ polygon }) => polygon.id !== erasedId),
+    }));
+  };
+
+  const cultivosInputs = cultivos.map((cultivo, index) => (
+    // eslint-disable-next-line react/no-array-index-key
+    <label key={index} className="agregar-campo-label">
+      Tipo de cultivo:
+      <select className="select" value={cultivo} onChange={(e) => handleChange(e.target.value, index)}>
+        {' '}
+        {opciones}
+        {' '}
+      </select>
+      {/* <Input
+        value={cultivo}
+        placeholder="Ingrese el cultivo"
+        onChange={(cult) => handleChange(cult, index)}
+        type="text"
+        className="agregar-campo-input"
+        accept=""
+      /> */}
+      {cultivos.length - 1 === index
+        ? <Button type="button" onClick={addInput} className="green-button">+</Button>
+        : <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
+    </label>
+  ));
+  // console.log(cultivos);
+  // console.log('CAMPO INFO', campoInfo);
+  // console.log('LISTA FEATURES', features);
+  // console.log('MAIN FIELD', mainField);
+
+  useEffect(() => {
+    if (((mainField || mainField.id !== '') && newFeatures.length !== 0) && areNewFeatures()) { addFeature(); }
+  }, [newFeatures]);
+
+  useEffect(() => {
+    if (campoInfo.features.length !== 0) {
+      removeFeature();
+    }
+  }, [erased]);
+
+  function guardarCampoInfo() {
+    const {
+      plots, height, width, coordinates,
+    } = cropCheckFullField(campoInfo.features);
+    const formData = new FormData();
+    formData.append('name', campoInfo.nombreCampo);
+    formData.append('coordinates', JSON.stringify(coordinates));
+    formData.append('plots', JSON.stringify(plots));
+    formData.append('height', height);
+    formData.append('width', width);
+    formData.append('image', campoInfo.imagen); // Assuming campoInfo.image is a File object
+
+    // console.log(formData);
+    const accessToken = `Bearer ${userID}`;
+    axios
+      .post('http://localhost:8081/field', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: accessToken,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    nav(`/home/${userID}`);
+  }
 
   return (
     <div className="layout">
@@ -33,8 +228,15 @@ export default function AgregarCampo() {
       <div className="tarjetas">
         <Card className="agregar-campo-container max-content">
           <div className="campo" id="mapa">
-            <AgroMap coordinates={(coord) => setCoordinates(coord)} />
-            { console.log(coordinates)}
+            <AgroMap
+              coordinates={campoInfo.coordinates}
+              changeCoordinates={(coord) => setCampoInfo((prevInfo) => ({
+                ...prevInfo,
+                coordinates: coord,
+              }))}
+              addFeatures={setNewFeatures}
+              removeFeature={(feats, removedFeature) => removeFeatureSt(feats, removedFeature)}
+            />
           </div>
         </Card>
         <div className="derecha">
@@ -44,29 +246,30 @@ export default function AgregarCampo() {
                 <label className="agregar-campo-label">
                   Nombre del Campo:
                   <Input
-                    value={nombreCampo}
+                    value={campoInfo.nombreCampo}
                     placeholder="Ingrese el nombre"
-                    onChange={(nombre) => setNombreCampo(nombre)}
+                    onChange={(nombre) => setCampoInfo((prevInfo) => ({
+                      ...prevInfo,
+                      nombreCampo: nombre,
+                    }))}
+                    required
                     type="text"
                     className="agregar-campo-input"
                     accept=""
                   />
-                </label>
 
-                <label className="agregar-campo-label">
-                  Tipos de cultivos:
-                  <Input
-                    value={cantCultivos}
-                    placeholder="Ingrese cantidad de tipos"
-                    onChange={(cant) => setCantCultivos(cant)}
-                    type="number"
-                    className="agregar-campo-input"
-                    accept=""
-                  />
                 </label>
+                {drawField ? <p>Dibuje el campo principal</p> : cultivosInputs}
+
               </div>
               <FileUploader
-                handleChange={(img) => setImagen(img)}
+                handleChange={(img) => {
+                  console.log(img);
+                  setCampoInfo((prevInfo) => ({
+                    ...prevInfo,
+                    imagen: img,
+                  }));
+                }}
                 name="foto-campo"
                 types={fileTypes}
                 required
@@ -74,14 +277,20 @@ export default function AgregarCampo() {
                 classes="drop_area"
                 hoverTitle=" "
               >
-                {imagen ? (
+                {campoInfo.imagen ? (
                   <div>
                     <div className="imagen-campo">
-                      <img src={URL.createObjectURL(imagen)} alt="user-campo" />
-                      {console.log(imagen)}
+                      <img src={URL.createObjectURL(campoInfo.imagen)} alt="user-campo" />
+
                       {' '}
                     </div>
-                    <Button className="button" onClick={() => setImagen('')}>Delete</Button>
+                    <Button
+                      className="button"
+                      onClick={() => setCampoInfo((prevInfo) => ({ ...prevInfo, imagen: '' }))}
+                    >
+                      Delete
+
+                    </Button>
                   </div>
                 )
                   : (
@@ -96,8 +305,8 @@ export default function AgregarCampo() {
           </Card>
 
           <div className="botones">
-            <Button type="button" onClick={() => nav('/user/home')} className="green-button cancelar">Cancelar</Button>
-            <Button type="button" onClick={() => console.log('')} className="green-button">Siguiente</Button>
+            <Button type="button" onClick={() => nav(`/home/${userID}`)} className="green-button cancelar">Cancelar</Button>
+            <Button type="button" onClick={() => guardarCampoInfo()} className="green-button">Guardar</Button>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 /* eslint-disable no-shadow */
+/* eslint-disable max-len */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 // import Header from '../reusable/header/header';
@@ -9,6 +10,7 @@ import '../reusable/header/header.scss';
 import './homePrincipal.scss';
 import Footer from '../reusable/footer/footer';
 import Carousel from '../reusable/carousel/carousel';
+import '../reusable/map/funcionesMapa';
 
 export default function HomePrincipal() {
   const nav = useNavigate();

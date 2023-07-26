@@ -2,6 +2,7 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import React from 'react';
 import AgregarCampo from './componentes/agregarCampo/agregarCampo';
+import AgregarLotes from './componentes/agregarLotes/agregarLotes';
 import EditarCampo from './componentes/editarCampo/editarCampo';
 import Home from './componentes/home/home';
 import IniciarSesion from './componentes/iniciarSesion/iniciarSesion';
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePrincipal />} />
         <Route path="/agregarCampo/:userID" element={<AgregarCampo />} />
+        <Route path="/agregarLotes/:userID" element={<AgregarLotes />} />
         <Route path="/editarCampo/:userID" element={<EditarCampo />} />
         <Route path="/home/:userID" element={<Home />} />
         <Route path="/iniciarSesion" element={<IniciarSesion />} />
