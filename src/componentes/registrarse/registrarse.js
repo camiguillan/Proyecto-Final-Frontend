@@ -96,6 +96,11 @@ export default function Registrarse() {
                 <img src={tractor} alt="Imagen 4" />
               </div>
               <span className="container-text">Creá tu usuario</span>
+              <div className="espacio" />
+              <div>
+                <span className="texto-normal no-bold">¿Ya tenés una cuenta? </span>
+                <span className="registrate" onClick={() => navigate('../iniciarSesion')}>Iniciá sesión</span>
+              </div>
             </div>
             <div className="text-home-principal">
               <form onSubmit={handleSubmit}>

@@ -1,13 +1,13 @@
 @import "../../assets/global.scss";
 
 .botonesInicio {
-    display: flex;
-    align-items: flex;
-    justify-content: flex;
-    gap:10px;
-    column-gap: 2vh;
-    bottom: 0;
-    right: 0;
-    margin: 5vh;
-    white-space: nowrap;
-  }
+  display: flex;
+  align-items: flex;
+  justify-content: flex;
+  gap:0.19rem;
+  column-gap: 1.4rem;
+  bottom: 0;
+  right: 0;
+  margin: 2rem;
+  white-space: nowrap;
+}

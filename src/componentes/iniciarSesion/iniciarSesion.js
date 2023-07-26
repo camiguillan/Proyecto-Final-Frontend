@@ -127,7 +127,7 @@ export default function IniciarSesion() {
                 <div className="espacio" />
 
                 <div>
-                  <text className="texto-normal">¿No tienes una cuenta? </text>
+                  <text className="texto-normal">¿No tenés una cuenta? </text>
                   <text className="registrate" onClick={() => navigate('../registrarse')}>Regístrate!</text>
                 </div>
               </div>

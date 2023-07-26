@@ -41,10 +41,11 @@
 
 .password-message {
     position: absolute;
-    bottom: 8rem; // Adjust this value to control the distance from the input
-    left: 7.2rem; // Adjust this value to move the message to the right
+    bottom: 8.5rem; // Adjust this value to control the distance from the input
+    left: 40rem; // Adjust this value to move the message to the right
     color: red;
-    font-size: 0.75rem;
+    font-size: 0.9rem;
+    font-family: "Inter", sans-serif; 
 }
 
 .password-message-mini {
@@ -52,23 +53,26 @@
     bottom: 9.4rem; // Adjust this value to control the distance from the input
     left: 7.8rem; // Adjust this value to move the message to the right
     color: red;
-    font-size: 0.75rem;
+    font-size: 1rem;
+    font-family: "Inter", sans-serif; 
 }
 
 .password-message-init-sesion {
     position: absolute;
-    bottom: 21rem; // Adjust this value to control the distance from the input
-    left: 11.4rem; // Adjust this value to move the message to the right
+    bottom: 14rem; // Adjust this value to control the distance from the input
+    left: 40rem; // Adjust this value to move the message to the right
     color: red;
-    font-size: 0.75rem;
+    font-size: 1rem;
+    font-family: "Inter", sans-serif; 
 }
 
 .password-message-mail {
     position: absolute;
-    bottom: 27.5rem; // Adjust this value to control the distance from the input
-    left: 13.3rem; // Adjust this value to move the message to the right
+    bottom: 20.5rem; // Adjust this value to control the distance from the input
+    left: 40rem; // Adjust this value to move the message to the right
     color: red;
-    font-size: 0.75rem;
+    font-size: 1rem;
+    font-family: "Inter", sans-serif; 
 }
 
 .mostrar-ocultar {
