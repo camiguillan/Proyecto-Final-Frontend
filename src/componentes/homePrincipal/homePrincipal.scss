@@ -4,11 +4,11 @@
     display: flex;
     align-items: flex;
     justify-content: flex;
-    gap:10px;
-    column-gap: 2vh;
+    gap:0.19rem;
+    column-gap: 1.4rem;
     bottom: 0;
     right: 0;
-    margin: 5vh;
+    margin: 2rem;
     white-space: nowrap;
   }
 
@@ -17,7 +17,7 @@
 
   .full-width-image{
     width: 100%; 
-    height: 50vh;
+    height: 26rem;
     object-fit: cover;
     opacity: 0.6;
   }
@@ -26,8 +26,8 @@
     position: relative; 
     width: 100%;
     overflow: hidden;
-    height: 50vh;
-    margin-bottom: 5vh;
+    height: 26rem;
+    margin-bottom: 2.6rem;
   }
 
   .overlay {
@@ -43,7 +43,7 @@
     width: 100%;
     margin-top: 0%;
     background-color: white;
-    height: 15vh;
+    height: 7.8rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -65,14 +65,14 @@
 }
 
 .image-title{
-  font-size: 8vh; 
+  font-size: 4rem; 
   color: white;
   font-weight: bold;
   font-family: "Inter", sans-serif;
 }
 
 .image-text2{
-  font-size: 6vh; 
+  font-size: 3rem; 
   color: white;
   width: 40%;
   font-family: "Inter", sans-serif;
@@ -88,12 +88,12 @@
   max-width: 100%;
   margin: 0 auto;
   justify-content: center;
-  margin-bottom: 5vh;
+  margin-bottom: 2.6rem;
 }
 
 .flexbox-container > div {
 	width: 30%;
-	padding: 1.5vh;
+	padding: 0.78rem;
   background: #fff;
   text-align: center; 
   display: flex;
@@ -102,18 +102,18 @@
 }
 
 .flexbox-container > div:first-child {
-	margin-right: 1.5vh;
+	margin-right: 0.78rem;
 }
 
 .flexbox-container > div + div {
-  border-left: 0.15vh solid #ccc;
-  padding-left: 3vh;
+  border-left: 0.078rem solid #ccc;
+  padding-left: 1.56rem;
 }
 
 // TEXTS
 .green-title{
   color: $verde-nuevo;
-  font-size: 6vh; 
+  font-size: 3.12rem; 
   font-weight: bold;
   font-family: "Inter", sans-serif;
 }
@@ -121,7 +121,7 @@
 .gray-title{
   color: $gris-texto;
   width: 80%;
-  font-size: 5vh; 
+  font-size: 2.6rem; 
   font-weight: bold;
   font-family: "Inter", sans-serif;
 }
@@ -129,28 +129,28 @@
 .text-home-principal{
   color: $gris-texto;
   width: 80%;
-  font-size: 3vh; 
+  font-size: 1.56rem; 
   font-family: "Inter", sans-serif;
-  margin: 10px 0;
+  margin: 0.19rem 0;
 }
 
 // GRAY BOX
 .gray-square{
-  width: 160vh; 
-  height: 50vh; 
+  width: 83.2rem; 
+  height: 26rem; 
   margin: 0 auto;
   background-color: #eaf3ea; 
-  margin-top: 8vh;
-  margin-bottom: 8vh;
-  border-radius: 3vh;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  border-radius: 1.5rem;
   display: flex;
   align-items: center;
 }
 
 .small-img{
-  width: 70vh; 
+  width: 39rem; 
   justify-content: left;
-  margin-left: 8vh;
+  margin-left: 4rem;
 }
 
 .text-container{
@@ -164,8 +164,8 @@
 // LEFT ALIGNED
 .section-left-aligned{
   width: 77%; 
-  margin: 20px auto;
-  margin-left: 23vh;
+  margin: 0.38rem auto;
+  margin-left: 11rem;
 }
 
 .left{
@@ -179,11 +179,11 @@
 }
 
 .extra-reason {
-  margin-left: 8vh;
+  margin-left: 4rem;
 }
 
 .checks{
-  margin-left: 2vh;
+  margin-left: 1rem;
   font-weight: bold;
 }
 
@@ -205,9 +205,9 @@
 
 .text-home-2{
   color: $gris-texto;
-  font-size: 3vh; 
+  font-size: 1.5rem; 
   font-family: "Inter", sans-serif;
-  margin: 10px 0;
+  margin: 0.19rem 0;
 }
 
 .contact-info{
@@ -217,5 +217,5 @@
 }
 
 .margin{
-  margin-right: 9vh;
+  margin-right: 4.5rem;
 }
