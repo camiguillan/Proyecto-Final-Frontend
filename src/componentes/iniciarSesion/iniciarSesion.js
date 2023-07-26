@@ -114,7 +114,6 @@ export default function IniciarSesion() {
                   style={{ color: isInputPasswordFilled ? 'black' : '#888' }}
                 />
                 <span className="mostrar-ocultar-init-sesion" onClick={toggleMostrarContrasenia}>
-                  <div className="espacio2" />
                   {eyeIcon}
                 </span>
                 {invalidPassword && <p className="password-message-init-sesion">La contraseña ingresada es incorrecta</p>}
@@ -123,7 +122,7 @@ export default function IniciarSesion() {
 
                 <div className="espacio" />
 
-                <Button type="submit" className="green-button cancelar-lleno">Iniciar Sesion </Button>
+                <Button type="submit" className="green-button cancelar-lleno">Iniciar Sesión </Button>
 
                 <div className="espacio" />
 
