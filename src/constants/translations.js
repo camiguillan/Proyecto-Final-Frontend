@@ -1,0 +1,28 @@
+import { CROP_TYPES_KEYS, DIAGNOSTICS_KEYS, GROWTH_STAGES_KEYS } from './plots';
+
+export const CROP_TYPES_TRANSLATIONS = {
+  [CROP_TYPES_KEYS.NONE]: 'Sin Cultivo',
+  [CROP_TYPES_KEYS.SOY]: 'Soja',
+  [CROP_TYPES_KEYS.WHEAT]: 'Trigo',
+  [CROP_TYPES_KEYS.SUNFLOWER]: 'Girasol',
+  [CROP_TYPES_KEYS.CORN]: 'Maiz',
+};
+
+export const DIAGNOSTICS_TRANSLATIONS = {
+  [DIAGNOSTICS_KEYS.OVERHYDRATION]: 'Sobrehidratación',
+  [DIAGNOSTICS_KEYS.DEHYDRATION]: 'Deshidratación',
+  [DIAGNOSTICS_KEYS.FROSTING]: 'Congelamiento',
+  [DIAGNOSTICS_KEYS.GOOD]: 'Bueno',
+  [DIAGNOSTICS_KEYS.VERY_GOOD]: 'Muy Bueno',
+  [DIAGNOSTICS_KEYS.EXCELENT]: 'Excelente',
+  [DIAGNOSTICS_KEYS.NONE]: 'Sin Diagnóstico',
+};
+
+export const GROWTH_STAGES_TRANSLATIONS = {
+  [GROWTH_STAGES_KEYS.NONE]: 'Sin Información',
+  [GROWTH_STAGES_KEYS.GERMINATION]: 'Germinación',
+  [GROWTH_STAGES_KEYS.VEGETATIVE_GROWTH]: 'Crecimiento Vegetativo',
+  [GROWTH_STAGES_KEYS.FLOWERING]: 'Florecimiento',
+  [GROWTH_STAGES_KEYS.POD_FORMATION]: 'Formación de Vainas',
+  [GROWTH_STAGES_KEYS.MATURITY]: 'Madurez',
+};
