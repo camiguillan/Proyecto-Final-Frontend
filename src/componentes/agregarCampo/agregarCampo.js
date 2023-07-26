@@ -11,11 +11,11 @@ import Card from '../reusable/card/card';
 import Input from '../reusable/input_box/input';
 import Icon from '../../assets/icons/icon';
 import Button from '../reusable/boton/button';
-// eslint-disable-next-line no-unused-vars
 import AgroMap from '../reusable/map/agroMap';
 import { CROP_TYPES_KEYS } from '../../constants/plots';
 import cropCheckFullField from '../reusable/map/funcionesMapa';
 import { post } from '../conexionBack/conexionBack';
+import { CROP_TYPES_TRANSLATIONS } from '../../constants/translations';
 
 export default function AgregarCampo() {
   const { userID } = useParams();
@@ -26,7 +26,7 @@ export default function AgregarCampo() {
     nombreCampo: '',
     imagen: '',
     coordinates: [-58.702963, -34.671792],
-    features: [], // feature = [polygon: {}, crop: tipo cultivo]
+    features: [],
   });
 
   const [cultivos, setCultivos] = useState(['']);
@@ -43,20 +43,17 @@ export default function AgregarCampo() {
   const [drawField, setdrawField] = useState(true);
   const cultivosOpciones = Object.values(CROP_TYPES_KEYS);
   const [selectedCrop, setSelectedCrop] = useState(CROP_TYPES_KEYS.NONE);
-  // console.log(drawField);
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
     tempList[index] = cultivo;
     const list2 = [...campoInfo.features];
-    // list2[index + 1].crop = cultivo;
     setCampoInfo((prevInfo) => ({
       ...prevInfo,
       features: list2,
     }));
     setCultivos(tempList);
     setSelectedCrop(cultivo);
-    // console.log(cultivos);
   };
 
   const addInput = () => {
@@ -75,17 +72,15 @@ export default function AgregarCampo() {
   const opciones = cultivosOpciones.map((opcion) => (
     <option key={opcion} value={opcion}>
       {' '}
-      {opcion}
+      {CROP_TYPES_TRANSLATIONS[opcion]}
       {' '}
     </option>
   ));
   function areNewFeatures() {
     const featIds = features.map((feat) => feat.id);
     const newFeatIds = newFeatures.map((feat) => feat.id);
-    // console.log(featIds, newFeatIds);
     return features.length <= newFeatures.length;
   }
-  // eslint-disable-next-line no-unused-vars
   const addFeature = () => {
     if (areNewFeatures()) {
       const tempList = [...features];
@@ -101,18 +96,14 @@ export default function AgregarCampo() {
             polygon: feat,
             crop: cultivos[index - 1] ? cultivos[index - 1] : CROP_TYPES_KEYS.NONE,
           };
-          // console.log('ADDING ', cultivos[index - 1], ' to ', feat.id);
           lista2.push(feat2);
         }
       });
-      // console.log('TEMP LIST', tempList);
-      // console.log('features', newFeatures);
       setCampoInfo((prevInfo) => ({
         ...prevInfo,
         features: lista2,
       }));
       setFeatures(tempList);
-      // console.log(mainField);
       if (mainField.id === '' || !mainField) {
         const {
           geometry, id, properties, type,
@@ -127,8 +118,6 @@ export default function AgregarCampo() {
         );
         setdrawField(false);
       }
-      //  else addInput();
-      // console.log('CAMPO INFO. FEATURES', campoInfo.features, lista2);
     }
   };
 
@@ -157,23 +146,12 @@ export default function AgregarCampo() {
         {opciones}
         {' '}
       </select>
-      {/* <Input
-        value={cultivo}
-        placeholder="Ingrese el cultivo"
-        onChange={(cult) => handleChange(cult, index)}
-        type="text"
-        className="agregar-campo-input"
-        accept=""
-      /> */}
+
       {cultivos.length - 1 === index
         ? <Button type="button" onClick={addInput} className="green-button">+</Button>
         : <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
     </label>
   ));
-  // console.log(cultivos);
-  // console.log('CAMPO INFO', campoInfo);
-  // console.log('LISTA FEATURES', features);
-  // console.log('MAIN FIELD', mainField);
 
   useEffect(() => {
     if (((mainField || mainField.id !== '') && newFeatures.length !== 0) && areNewFeatures()) { addFeature(); }
@@ -197,21 +175,13 @@ export default function AgregarCampo() {
     formData.append('width', width);
     formData.append('image', campoInfo.imagen); // Assuming campoInfo.image is a File object
 
-    // console.log(formData);
     const accessToken = `Bearer ${userID}`;
-    axios
-      .post('http://localhost:8081/field', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: accessToken,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    post('field', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: accessToken,
+      },
+    });
     nav(`/home/${userID}`);
   }
 
@@ -264,7 +234,6 @@ export default function AgregarCampo() {
               </div>
               <FileUploader
                 handleChange={(img) => {
-                  console.log(img);
                   setCampoInfo((prevInfo) => ({
                     ...prevInfo,
                     imagen: img,
@@ -288,8 +257,7 @@ export default function AgregarCampo() {
                       className="button"
                       onClick={() => setCampoInfo((prevInfo) => ({ ...prevInfo, imagen: '' }))}
                     >
-                      Delete
-
+                      Quitar Imagen
                     </Button>
                   </div>
                 )
