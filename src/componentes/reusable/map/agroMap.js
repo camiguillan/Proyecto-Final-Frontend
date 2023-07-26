@@ -224,26 +224,27 @@ function AgroMap({
     map.on('draw.update', handleDraw);
     map.on('draw.delete', handleDrawDelete);
     // Assuming draw is initialized correctly before this code block
-    const all = draw.getAll();
-    document.getElementById('grid').addEventListener('click', () => {
-      if (all) {
-        const allFeatures = all;
 
-        if (allFeatures !== null && allFeatures.length !== 0) {
-          console.log(allFeatures);
-          const cropPolygons = allFeatures.features[0];
-          const bbox = createRectangle([{ polygon: cropPolygons, crop: 'NONE' }]);
-          const options = { units: 'degrees' };
-          const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
-          console.log(squareGridR);
-          draw.add(squareGridR);
-        } else {
-          console.error("No features found in 'draw' object.");
-        }
-      } else {
-        console.error("'draw' object or its 'getAll' method is not available.");
-      }
-    });
+    // document.getElementById('grid').addEventListener('click', () => {
+    //   if (draw.getAll) {
+    //     const allFeatures = draw.getAll();
+
+    //     if (allFeatures !== null && allFeatures.length !== 0) {
+    //       console.log(allFeatures);
+    //       const cropPolygons = allFeatures.features[0];
+    //       const bbox = createRectangle([{ polygon: cropPolygons, crop: 'NONE' }]);
+    //       console.log(bbox);
+    //       const options = { units: 'degrees' };
+    //       const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
+    //       console.log(squareGridR);
+    //       draw.add(squareGridR);
+    //     } else {
+    //       console.error("No features found in 'draw' object.");
+    //     }
+    //   } else {
+    //     console.error("'draw' object or its 'getAll' method is not available.");
+    //   }
+    // });
 
     return () => {
       map.off('draw.create', handleDraw);
