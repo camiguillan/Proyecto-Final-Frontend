@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import { squareGrid, booleanPointInPolygon } from '@turf/turf';
-import { PLOT_SIZE } from '../../../constants/plots';
+import { PLOT_SIZE, CROP_TYPES_KEYS } from '../../../constants/plots';
 
 export const createRectangle = (listOfPolygons) => {
   console.log(listOfPolygons);
@@ -38,7 +38,7 @@ const cropCheck = (coordinates, cropPolygons) => {
   const answer = cropPolygons.filter((oneCrop) => coordinates[0].some((corner) => booleanPointInPolygon(corner, oneCrop.polygon)))[0];
 
   if (!answer) {
-    return { crop: 'NONE' };
+    return { crop: CROP_TYPES_KEYS.NONE };
   }
   return { crop: answer.crop };
 };
@@ -61,8 +61,8 @@ const cropCheckFullField = (cropPolygons) => {
   const width = Math.ceil(longitudeRange / PLOT_SIZE);
   const options = { units: 'degrees' };
   const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
-  console.log(squareGrid);
   const tempList = cropPolygons;
+  tempList.splice(0, 1);
   // console.log('CROPPOLYGONS, SHIF, SPLICE, REMAINING LIST', cropPolygons, cropPolygons.shift(), removed, tempList);
   const plots = squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, tempList));// le saco el primero
   return {
