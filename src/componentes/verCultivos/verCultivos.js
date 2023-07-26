@@ -68,7 +68,7 @@ export default function VerCultivos() {
       </h1>
       <div className="image-container-cult">
         {images.map((image, index) => (
-          <Link to={`/VerCultivos/${user.fields[index].name}/${userID}`} key={index}>
+          <Link to={`/VerCultivos/${field}/${imageNames[index]}/${userID}`} key={index}>
             <div className="image-wrapper-cult">
               <img
                 src={image}
