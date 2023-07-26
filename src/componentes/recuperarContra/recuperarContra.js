@@ -2,13 +2,16 @@
 import React, { useState } from 'react';
 import '../../assets/global.scss';
 import '../background/background.scss';
+import '../olvidoContra/olvidoContra.scss';
+import './recuperarContra.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import CosoVerde from '../reusable/coso_verde/coso_verde';
+// import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
 import Button from '../reusable/boton/button';
 import { post } from '../conexionBack/conexionBack';
+import Icon from '../../assets/icons/icon';
 
 export default function RecuperarContra() {
   const [ingresarContrasenia, setIngresarIngresarContrasenia] = useState('');
@@ -65,10 +68,12 @@ export default function RecuperarContra() {
 
       <form onSubmit={handleSubmit}>
         <div>
-          <CosoVerde />
           <div className="small-white-rectangle">
+            <div className="agroia-olvidocontra" onClick={() => navigate('../')}>
+              <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="6vh" />
+              <h1>AGROIA</h1>
+            </div>
             <span className="container-text">Recuperar contraseña</span>
-            <div className={campoNombreLleno || isInputFilled ? 'sub-rectangle-recupContra-overlay' : 'sub-rectangle-overlay-recupContra-red'} />
             <input
               className={campoNombreLleno || isInputFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
               type={mostrarContrasenia ? 'text' : 'password'}
@@ -82,10 +87,9 @@ export default function RecuperarContra() {
               {eyeIcon}
             </span>
             {!isInputFilled5 && invalid && <p className="password-message-mini">La contraseña debe tener al menos 8 caracteres y una mayúscula</p>}
-
-            <Button type="submit" className="green-button">
+            <div className="espacio3" />
+            <Button type="submit" className="green-button cancelar">
               <span className="button-text">Cambiar contraseña</span>
-
             </Button>
           </div>
 

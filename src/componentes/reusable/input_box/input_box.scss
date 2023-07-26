@@ -50,10 +50,10 @@
 
 .password-message-mini {
     position: absolute;
-    bottom: 9.4rem; // Adjust this value to control the distance from the input
-    left: 7.8rem; // Adjust this value to move the message to the right
+    bottom: 10.7rem; // Adjust this value to control the distance from the input
+    left: 5.6rem; // Adjust this value to move the message to the right
     color: red;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-family: "Inter", sans-serif; 
 }
 
@@ -93,10 +93,12 @@
 
 .mostrar-ocultar-mini {
   position: absolute;
-  top: 8.9rem;
-  right: 5.5rem;
+  top: 15rem;
+  right: 6rem;
   transform: translateY(-0.9rem);
   cursor: pointer;
+  color: #535353;
+  font-size: 1.56rem;
 }
 
 .mostrar-ocultar-init-sesion {
