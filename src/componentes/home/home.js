@@ -22,13 +22,6 @@ const loadImage = (imageName) => {
 };
 
 export default function Home() {
-  const bbox = [-95, 30, -85, 40];
-  const cellSide = 50;
-  const options = { units: 'miles' };
-
-  const squareGridR = squareGrid(bbox, cellSide, options);
-
-  console.log(squareGridR);
   const { userID } = useParams();
   const images = [];
   const imageNames = [];
