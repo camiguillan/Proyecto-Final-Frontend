@@ -53,7 +53,7 @@ export default function OlvidoContra() {
         <div>
           <div className="small-white-rectangle">
             <div className="agroia-olvidocontra" onClick={() => navigate('../')}>
-              <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="6vh" />
+              <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="3.5rem" />
               <h1>AGROIA</h1>
             </div>
             <span className="title-olvidocontra">¿Olvidó su contraseña?</span>
