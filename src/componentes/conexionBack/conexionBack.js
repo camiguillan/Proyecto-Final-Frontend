@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BACKEND_URL = 'http://localhost:8081/';
 
-export const post = (url, data) => axios.post(BACKEND_URL + url, data)
+export const post = (url, data, options) => axios.post(BACKEND_URL + url, data, options)
   .then((response) => response.data)
   .catch((error) => {
     throw error;
