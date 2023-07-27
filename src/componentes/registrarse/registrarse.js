@@ -44,8 +44,9 @@ export default function Registrarse() {
     // Validar la contraseña
     const hasUpperCase = /[A-Z]/.test(value);
     const isValidLength = value.length >= 8;
+    const hasLowerCase = /[a-z]/.test(value);
 
-    setIsInputFilled5(hasUpperCase && isValidLength);
+    setIsInputFilled5(hasUpperCase && isValidLength && hasLowerCase);
   };
 
   const handleInputChange = (e, setter) => {
