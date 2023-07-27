@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
@@ -29,7 +30,7 @@ export default function VerCultivos() {
     }
   };
   user.fields.forEach((fiel, index) => {
-    if (fiel.name === field) {
+    if (fiel._id === field) {
       user.fields[index].plots.forEach((plot) => {
         if (plot.crop === 'sunflower' || plot.crop === 'girasol' || plot.crop === 'Sunflower' || plot.crop === 'Sunflower' || plot.crop === 'Girasol') {
           const imageName = 'Girasol';

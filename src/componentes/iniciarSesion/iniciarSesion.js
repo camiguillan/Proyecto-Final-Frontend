@@ -62,6 +62,7 @@ export default function IniciarSesion() {
       // Verificar si el error es de tipo 404
         if (error1.response && error1.response.status === 404) {
           setInvalidUser(true);
+          setInvalidPassword(false);
         } else if (error1.response && error1.response.status === 401) {
           setInvalidPassword(true);
           setInvalidUser(false);
@@ -104,7 +105,11 @@ export default function IniciarSesion() {
                   onChange={(e) => handleInputChange(e, setInputUsername)}
                   style={{ color: isInputUsernameFilled ? 'black' : '#888' }}
                 />
-                {invalidUser && <p className="password-message-mail">El mail ingresado no existe</p>}
+                {invalidUser && (
+                <p className="password-message-mail">
+                  El mail ingresado no existe
+                </p>
+                )}
                 <input
                   className={campoNombreLleno || isInputPasswordFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
                   type={mostrarContrasenia ? 'text' : 'password'}
