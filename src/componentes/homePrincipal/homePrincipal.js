@@ -81,7 +81,7 @@ export default function HomePrincipal() {
           </div>
         </div>
       </div>
-      <div className="footer-ppal">
+      <div className="footer">
         <div className="flex-container center">
           <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="2.7rem" />
           <h1>AGROIA</h1>
