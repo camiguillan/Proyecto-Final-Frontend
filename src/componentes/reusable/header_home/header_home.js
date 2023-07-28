@@ -17,7 +17,7 @@ export default function HeaderHome() {
     <div className="layout">
       <header className="header-principal">
         <div className="agroIa" onClick={() => nav('../')}>
-          <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="6vh" />
+          <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="3rem" />
           <h1>AGROIA</h1>
         </div>
         <div className="botonesInicio">

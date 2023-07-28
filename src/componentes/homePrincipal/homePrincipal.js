@@ -65,7 +65,7 @@ export default function HomePrincipal() {
             {listChooseUs.map((item) => (
               <div className="left">
                 <div className="icon-reason">
-                  <Icon className="bi bi-check2-circle" color="#2a7d2e" fontSize="6vh" />
+                  <Icon className="bi bi-check2-circle" color="#2a7d2e" fontSize="2.7rem" />
                   <p className="text-home-principal checks">{item.reason}</p>
                 </div>
                 <div className="extra-reason">
@@ -75,18 +75,18 @@ export default function HomePrincipal() {
             ))}
           </div>
           <div className="photo-container">
-            <img src={leaf} alt="Imagen 4" className="small-img" />
-            <img src={trigo} alt="Imagen 4" className="small-img" />
+            <img src={leaf} alt="Imagen 4" className="small-img2" />
+            <img src={trigo} alt="Imagen 4" className="small-img2" />
           </div>
         </div>
       </div>
-      <div>
+      <div className="footer">
         <div className="flex-container center">
-          <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="6vh" />
+          <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="2.7rem" />
           <h1>AGROIA</h1>
         </div>
         <div className="contact-info">
-          <div className="text-home-2 margin">agroIA00@gmail.com</div>
+          <div className="text-home-2 margin">agroiaapp@gmail.com</div>
           <div className="text-home-2 margin">+54 9 11 6893-7938</div>
           <div className="text-home-2">Buenos Aires, Argentina</div>
         </div>

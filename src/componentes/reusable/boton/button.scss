@@ -10,7 +10,7 @@
     cursor: pointer;
     font-size: 1.4rem;
     border: solid;
-    border-style: 1px $verde-nuevo; 
+    border-style: 1px $main-green; 
     font-family: "Inter", sans-serif;
   }
 
@@ -20,25 +20,25 @@
 
   .cancelar{
     background-color: white !important;
-    color: $verde-nuevo !important;
+    color: $main-green !important;
   }
 
   .cancelar:hover{
-    background-color: $verde-nuevo !important;
+    background-color: $main-green !important;
     color: white  !important;
-    //border-style: $verde-nuevo !important;
+    //border-style: $main-green !important;
   }
 
   .cancelar-lleno{
     background-color: white !important;
-    color: $verde-nuevo !important;
-    border-style: 1px $verde-nuevo;
+    color: $main-green !important;
+    border-style: 1px $main-green;
   }
 
   .cancelar-lleno:hover{
-    background-color: $verde-nuevo !important;
+    background-color: $main-green !important;
     color: white !important;
-    border-style: 5px $verde-nuevo;
+    border-style: 5px $main-green;
   }
 
   .button-text {

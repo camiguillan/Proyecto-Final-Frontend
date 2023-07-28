@@ -16,15 +16,17 @@
   // IMAGES
 
   .full-width-image{
-    width: 100%; 
+    width: 100%; //100%
     height: 26rem;
     object-fit: cover;
     opacity: 0.6;
+    align-items: center;
+    justify-content: center;
   }
 
   .img-container{
     position: relative; 
-    width: 100%;
+    width: 100%; //100%
     overflow: hidden;
     height: 26rem;
     margin-bottom: 2.6rem;
@@ -41,7 +43,7 @@
 
   .header-principal{
     width: 100%;
-    margin-top: 0%;
+    //margin-top: 0%;
     background-color: white;
     height: 7rem;
     display: flex;
@@ -54,8 +56,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100rem;
+  height: 25rem;
   display: flex;
   justify-content: center; 
   align-items: center;
@@ -74,7 +76,7 @@
 .image-text2{
   font-size: 3rem; 
   color: white;
-  width: 40%;
+  width: 40rem;
   font-family: "Inter", sans-serif;
 }
 
@@ -85,14 +87,14 @@
 	display: -ms-flex;
 	display: -webkit-flex;
 	display: flex;
-  max-width: 100%;
+  max-width: 100rem;
   margin: 0 auto;
   justify-content: center;
   margin-bottom: 2.6rem;
 }
 
 .flexbox-container > div {
-	width: 30%;
+	width: 30rem;
 	padding: 0.78rem;
   background: #fff;
   text-align: center; 
@@ -112,7 +114,7 @@
 
 // TEXTS
 .green-title{
-  color: $verde-nuevo;
+  color: $main-green;
   font-size: 3.12rem; 
   font-weight: bold;
   font-family: "Inter", sans-serif;
@@ -120,7 +122,7 @@
 
 .gray-title{
   color: $gris-texto;
-  width: 80%;
+  width: 40rem;
   font-size: 2.6rem; 
   font-weight: bold;
   font-family: "Inter", sans-serif;
@@ -128,7 +130,7 @@
 
 .text-home-principal{
   color: $gris-texto;
-  width: 80%;
+  width: 35rem;
   font-size: 1.56rem; 
   font-family: "Inter", sans-serif;
   margin: 0.19rem 0;
@@ -163,9 +165,18 @@
 
 // LEFT ALIGNED
 .section-left-aligned{
-  width: 77%; 
-  margin: 0.38rem auto;
-  margin-left: 11rem;
+  width: 40rem; 
+  //margin: 0.38rem auto;
+  //margin-left: 11rem;
+  justify-content: center;
+  align-items: center;
+  margin-left: 35rem;
+}
+
+.small-img2{
+  width: 30rem; 
+  justify-content: left;
+  margin-left: 9rem;
 }
 
 .left{
@@ -195,6 +206,7 @@
 .flex-container {
   display: flex;
   align-items: center;
+  //margin-top: 1rem;
 }
 
 // CONTACT US
@@ -218,4 +230,11 @@
 
 .margin{
   margin-right: 4.5rem;
+}
+
+.footer{
+  background-color: rgb(213, 238, 213);
+  margin-top: 3rem;
+  padding-bottom: 1.5rem;
+  padding-top: 1rem;
 }
