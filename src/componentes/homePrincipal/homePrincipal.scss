@@ -16,7 +16,7 @@
   // IMAGES
 
   .full-width-image{
-    width: 115.5rem; //100%
+    width: 100%; //100%
     height: 26rem;
     object-fit: cover;
     opacity: 0.6;
@@ -37,13 +37,13 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 500rem;
-    height: 500rem;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.5); 
   }
 
   .header-principal{
-    width: 115.5rem;
+    width: 100%;
     //margin-top: 0%;
     background-color: white;
     height: 7rem;
@@ -95,12 +95,13 @@
 // COLUMNS
 
 .flexbox-container {
-  display: -ms-flex;
-  display: -webkit-flex;
-  display: flex;
+	display: -ms-flex;
+	display: -webkit-flex;
+	display: flex;
   max-width: 100rem;
+  margin: 0 auto;
+  justify-content: center;
   margin-bottom: 2.6rem;
-  margin-left: 5rem; /* Ajustar el valor del margen izquierdo */
 }
 
 .flexbox-container > div {
@@ -150,7 +151,7 @@
 .gray-square{
   width: 83.2rem; 
   height: 26rem; 
-  margin-left: 17rem;
+  margin: 0 auto;
   background-color: #eaf3ea; 
   margin-top: 4rem;
   margin-bottom: 4rem;
