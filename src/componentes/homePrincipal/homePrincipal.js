@@ -26,6 +26,7 @@ export default function HomePrincipal() {
           <text className="image-title">
             ¿Qué es AgroIA?
           </text>
+          <br />
           <text className="image-text2">
             AgroIA es un sistema orientado a brindar soluciones y recomendaciones
             precisas en el cuidado y manejo de cultivos agrícolas
@@ -57,11 +58,11 @@ export default function HomePrincipal() {
         </div>
       </div>
       <div className="section-left-aligned">
-        <div className="green-title left">
-          ¿Por qué elegirnos?
-        </div>
         <div className="flex-container">
           <div>
+            <div className="green-title left">
+              ¿Por qué elegirnos?
+            </div>
             {listChooseUs.map((item) => (
               <div className="left">
                 <div className="icon-reason">
