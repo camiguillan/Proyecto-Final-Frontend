@@ -11,7 +11,7 @@ import '../iniciarSesion/iniciarSesion.scss';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import Button from '../reusable/boton/button';
-import CosoVerde from '../reusable/coso_verde/coso_verde';
+// import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
 import { post } from '../conexionBack/conexionBack';
