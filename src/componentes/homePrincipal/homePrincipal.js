@@ -29,18 +29,18 @@ export default function HomePrincipal() {
           <br />
           <text className="image-text2">
             AgroIA es un sistema orientado a brindar soluciones y recomendaciones
-            precisas en el cuidado y manejo de cultivos agrícolas
+            precisas en el cuidado y manejo de cultivos agrícolas.
           </text>
         </div>
       </div>
       <div className="flexbox-container">
         <div className="green-title">
           AgroIA facilita la toma de decisiones relacionadas con la producción
-          agraria
+          agraria.
         </div>
         <div className="text-home-principal">
           Utilizando inteligencia artificial y análisis de imágenes agrícolas para brindar
-          soluciones a diagnósticos generados por medio de imágenes de cultivos
+          soluciones a diagnósticos generados por medio de imágenes de cultivos.
         </div>
       </div>
       <div className="gray-square">

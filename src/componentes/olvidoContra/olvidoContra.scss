@@ -5,7 +5,6 @@
     font-family: "Inter", sans-serif; 
     text-align: center;
     color: $gris-titulo; 
-    //position: absolute;
     top: 1rem; 
     left: 0;
     right: 0;
@@ -16,9 +15,7 @@
 
   .agroia-olvidocontra{
     display: flex;
-    //flex-wrap: nowrap;
     align-items: center;
-    //justify-content: center;
     margin-bottom: 1.5rem;
     margin-top: 1rem;
 }

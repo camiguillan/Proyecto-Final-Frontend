@@ -7,7 +7,7 @@
     background-color: #F1FFFA;
     margin-bottom: 3rem;
     border-radius: 1.5vh;
-    box-shadow: 1vh 1vh 1vh rgba(0, 0, 0, 0.2);
+    box-shadow: 1vh 1vh 1vh $black-shadows;
     border: 0.2vh #8B8B8B;
     color: $gris-titulo;
     font-size: 1.5rem;
@@ -29,7 +29,7 @@
   background-color: #fff5f1;
   margin-bottom: 3.2rem;
   border-radius: 1.5vh;
-  box-shadow: 1vh 1vh 1vh rgba(0, 0, 0, 0.2);
+  box-shadow: 1vh 1vh 1vh $black-shadows;
   border: 0.3vh solid red;
   color: $gris-titulo;
   font-size: 1.5rem;
@@ -75,6 +75,15 @@
     font-family: "Inter", sans-serif; 
 }
 
+.password-message-olvido-contra {
+    position: absolute;
+    bottom: 8rem; // Adjust this value to control the distance from the input
+    left: 12.4rem; // Adjust this value to move the message to the right
+    color: red;
+    font-size: 1rem;
+    font-family: "Inter", sans-serif; 
+}
+
 .mostrar-ocultar {
   position: absolute;
   top: 26.5rem;
@@ -93,7 +102,7 @@
 
 .mostrar-ocultar-mini {
   position: absolute;
-  top: 15rem;
+  top: 15.6rem;
   right: 6rem;
   transform: translateY(-0.9rem);
   cursor: pointer;
@@ -103,7 +112,7 @@
 
 .mostrar-ocultar-init-sesion {
   position: absolute;
-  top: 17.5rem;
+  top: 17.6rem;
   right: 4.5rem;
   transform: translateY(-0.9rem);
   cursor: pointer;
@@ -118,6 +127,6 @@
     margin-bottom: 30px;
     margin-top: 100px; //Separación del primer sub-rectangle 
     border-radius: 10px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 5px 5px $black-shadows;
 }
 */

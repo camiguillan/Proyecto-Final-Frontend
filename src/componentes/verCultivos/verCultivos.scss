@@ -19,7 +19,7 @@
   height: 14rem;
   width: 13.2rem;
   border-radius: 0.5rem;
-  background-color: rgb(225, 215, 215); /* Add this line to set the background color to red */
+  background-color: rgb(225, 215, 215); 
 }
 
 .image-wrapper-cult img {
@@ -34,10 +34,9 @@
   bottom: 2rem;
   left: 0.7rem;
   font-size: 1.6rem;
-  font-family: 'Roboto', sans-serif; /* Cambia la fuente a Roboto */
+  font-family: 'Roboto', sans-serif; 
   font-weight: bold;
   color: black;
-  //text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white;
   pointer-events: none;
 }
 

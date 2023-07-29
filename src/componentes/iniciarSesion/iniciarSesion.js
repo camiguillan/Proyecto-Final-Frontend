@@ -8,7 +8,6 @@ import '../background/background.scss';
 import './iniciarSesion.scss';
 import '../reusable/input_box/input_box.scss';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-// import HeaderWhite from '../reusable/header_white/header_white';
 import '../reusable/white_container/white_container.scss';
 import ErrorModal from '../reusable/errorFolder/errores';
 import Button from '../reusable/boton/button';
@@ -26,6 +25,7 @@ export default function IniciarSesion() {
   const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
   const eyeIcon = mostrarContrasenia ? <AiOutlineEyeInvisible /> : <AiOutlineEye />;
   const [campoNombreLleno, setcampoNombreLleno] = useState(false);
+  const [submit, setSubmit] = useState(false);
 
   const [error, setError] = useState({
     title: '',
@@ -49,6 +49,7 @@ export default function IniciarSesion() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmit(true);
 
     if (inputUsername.trim().length === 0 || inputPassword.trim().length === 0) {
       setcampoNombreLleno(false);
@@ -98,12 +99,12 @@ export default function IniciarSesion() {
                 <text className="gray-title">Iniciá Sesión</text>
                 <div className="espacio" />
                 <input
-                  className={campoNombreLleno || isInputUsernameFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
+                  className={(campoNombreLleno || !submit) || isInputUsernameFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
                   type="text"
                   placeholder="Ingrese su email"
                   value={inputUsername}
                   onChange={(e) => handleInputChange(e, setInputUsername)}
-                  style={{ color: isInputUsernameFilled ? 'black' : '#888' }}
+                  style={{ color: isInputUsernameFilled ? 'black' : '$gris-input-to-fill' }}
                 />
                 {invalidUser && (
                 <p className="password-message-mail">
@@ -111,12 +112,12 @@ export default function IniciarSesion() {
                 </p>
                 )}
                 <input
-                  className={campoNombreLleno || isInputPasswordFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
+                  className={(campoNombreLleno || !submit) || isInputPasswordFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
                   type={mostrarContrasenia ? 'text' : 'password'}
                   placeholder="Ingrese su contraseña"
                   value={inputPassword}
                   onChange={(e) => handleInputChange(e, setInputPassword)}
-                  style={{ color: isInputPasswordFilled ? 'black' : '#888' }}
+                  style={{ color: isInputPasswordFilled ? 'black' : '$gris-input-to-fill' }}
                 />
                 <span className="mostrar-ocultar-init-sesion" onClick={toggleMostrarContrasenia}>
                   {eyeIcon}

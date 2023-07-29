@@ -6,7 +6,6 @@ import '../olvidoContra/olvidoContra.scss';
 import './recuperarContra.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-// import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
 import Button from '../reusable/boton/button';
@@ -20,6 +19,7 @@ export default function RecuperarContra() {
   const [campoNombreLleno, setcampoNombreLleno] = useState(false);
   const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
   const eyeIcon = mostrarContrasenia ? <AiOutlineEyeInvisible /> : <AiOutlineEye />;
+  const [submit, setSubmit] = useState(false);
 
   const { userID } = useParams();
 
@@ -45,7 +45,7 @@ export default function RecuperarContra() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+    setSubmit(true);
     if (ingresarContrasenia.trim().length === 0) {
       setcampoNombreLleno(false);
       setInvalid(true);
@@ -76,12 +76,12 @@ export default function RecuperarContra() {
             </div>
             <span className="container-text">Recuperar contraseña</span>
             <input
-              className={campoNombreLleno || isInputFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
+              className={(campoNombreLleno || !submit) || isInputFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
               type={mostrarContrasenia ? 'text' : 'password'}
               placeholder="Ingrese su nueva contraseña"
               value={ingresarContrasenia}
               onChange={(e) => handleInputChangePassword(e, setIngresarIngresarContrasenia)}
-              style={{ color: isInputFilled2 ? 'black' : '#888' }}
+              style={{ color: isInputFilled2 ? 'black' : '$gris-input-to-fill' }}
             />
             {' '}
             <span className="mostrar-ocultar-mini" onClick={toggleMostrarContrasenia}>

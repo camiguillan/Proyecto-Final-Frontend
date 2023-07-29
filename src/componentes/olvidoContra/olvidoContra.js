@@ -6,7 +6,6 @@ import '../background/background.scss';
 import './olvidoContra.scss';
 import { useNavigate } from 'react-router-dom';
 import ErrorModal from '../reusable/errorFolder/errores';
-// import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
 import Button from '../reusable/boton/button';
@@ -17,6 +16,8 @@ export default function OlvidoContra() {
   const [ingresarCorreo, setIngresarCorreo] = useState('');
   const [invalid, setInvalid] = useState(false);
   const [campoNombreLleno, setcampoNombreLleno] = useState(false);
+  const [submit, setSubmit] = useState(false);
+  const [invalidUser, setInvalidUser] = useState(false);
 
   const [error, setError] = useState({
     title: '',
@@ -35,12 +36,20 @@ export default function OlvidoContra() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setSubmit(true);
     if (ingresarCorreo.trim().length === 0) {
       setcampoNombreLleno(false);
     } else {
       const data = { email: ingresarCorreo };
-      const response = await post('restore_password/', data);
+      try {
+        const response = await post('restore_password/', data);
+
+        navigate('../iniciarSesion');
+      } catch (error1) {
+        if (error1.response && error1.response.status === 401) {
+          setInvalidUser(true);
+        }
+      }
     }
   };
 
@@ -60,13 +69,18 @@ export default function OlvidoContra() {
             <text className="texto-normal">Introduzca su correo electrónico y se le enviará un link de recuperación.</text>
             <div className="espacio" />
             <input
-              className={campoNombreLleno || isInputFilled2 ? 'sub-rectangle' : 'sub-rectangle-red'}
+              className={(campoNombreLleno || !submit) || isInputFilled2 ? 'sub-rectangle' : 'sub-rectangle-red'}
               type="text"
               placeholder="Ingrese su correo electrónico"
               value={ingresarCorreo}
               onChange={(e) => handleInputChange(e, setIngresarCorreo)}
-              style={{ color: isInputFilled2 ? 'black' : '#888' }}
+              style={{ color: isInputFilled2 ? 'black' : '$gris-input-to-fill' }}
             />
+            {invalidUser && (
+            <p className="password-message-olvido-contra">
+              El mail ingresado no existe
+            </p>
+            )}
             <Button type="submit" className="green-button cancelar">
               <span className="button-text">Enviar</span>
             </Button>

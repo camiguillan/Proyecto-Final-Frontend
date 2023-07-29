@@ -32,24 +32,24 @@ export default function VerCultivos() {
   user.fields.forEach((fiel, index) => {
     if (fiel._id === field) {
       user.fields[index].plots.forEach((plot) => {
-        if (plot.crop === 'sunflower' || plot.crop === 'girasol' || plot.crop === 'Sunflower' || plot.crop === 'Sunflower' || plot.crop === 'Girasol') {
+        if (plot.crop === 'sunflower') {
           const imageName = 'Girasol';
           const image = loadImage('girasol');
           images.push(image);
           imageNames.push(imageName); // Usa el nombre del campo como nombre de la imagen
-        } else if (plot.crop === 'soja' || plot.crop === 'soy' || plot.crop === 'SOY' || plot.crop === 'Soy' || plot.crop === 'Soja') {
+        } else if (plot.crop === 'soy') {
           const imageName = 'Soja';
           const image = loadImage('soja');
           images.push(image);
           imageNames.push(imageName); // Usa el nombre del campo como nombre de la imagen
         }
-        if (plot.crop === 'WHEAT' || plot.crop === 'Wheat' || plot.crop === 'wheat' || plot.crop === 'trigo' || plot.crop === 'Trigo') {
+        if (plot.crop === 'wheat') {
           const imageName = 'Trigo';
           const image = loadImage('trigo');
           images.push(image);
           imageNames.push(imageName); // Usa el nombre del campo como nombre de la imagen
         }
-        if (plot.crop === 'CORN' || plot.crop === 'Corn' || plot.crop === 'corn' || plot.crop === 'maiz' || plot.crop === 'Maiz') {
+        if (plot.crop === 'corn') {
           const imageName = 'Maiz';
           const image = loadImage('maiz');
           images.push(image);

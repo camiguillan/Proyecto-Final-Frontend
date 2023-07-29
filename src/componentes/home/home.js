@@ -27,7 +27,6 @@ export default function Home() {
   const [data, setData] = useState([]);
   const user = JSON.parse(localStorage.getItem('name')) || {};
 
-  console.log(user);
   // Recorre el array user.fields y genera los nombres de las imágenes
   user.fields.forEach((field, index) => {
     const imageName = `image${index + 1}`;
@@ -47,7 +46,7 @@ export default function Home() {
       <Header />
       <div className="image-container">
         {images.map((image, index) => (
-          <Link to={`/VerCultivos/${user.fields[index]._id}/${userID}`} key={index}>
+          <Link to={`/${userID}/VerCultivos/${user.fields[index]._id}`} key={index}>
             <div className="image-wrapper">
               <img
                 src={image}
