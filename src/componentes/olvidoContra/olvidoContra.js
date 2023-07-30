@@ -40,7 +40,7 @@ export default function OlvidoContra() {
     if (ingresarCorreo.trim().length === 0) {
       setcampoNombreLleno(false);
     } else {
-      const data = { email: ingresarCorreo };
+      const data = { email: ingresarCorreo.toLowerCase() };
       try {
         const response = await post('restore_password/', data);
 

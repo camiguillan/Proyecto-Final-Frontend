@@ -73,7 +73,7 @@ export default function Registrarse() {
       setInvalid(true);
     } else {
       const data = {
-        name: ingresarNombre, birthDate: ingresarFechaNacimiento, email: ingresarCorreo, password: ingresarContrasenia,
+        name: ingresarNombre, birthDate: ingresarFechaNacimiento, email: ingresarCorreo.toLowerCase(), password: ingresarContrasenia,
       };
       const response = await post('user/', data);
       const id = response.user._id;

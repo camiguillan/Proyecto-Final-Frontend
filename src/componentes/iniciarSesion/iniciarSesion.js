@@ -54,7 +54,7 @@ export default function IniciarSesion() {
     if (inputUsername.trim().length === 0 || inputPassword.trim().length === 0) {
       setcampoNombreLleno(false);
     } else {
-      const data = { email: inputUsername, password: inputPassword };
+      const data = { email: inputUsername.toLowerCase(), password: inputPassword };
       try {
         const { user } = await post('sign_in/', data);
         localStorage.setItem('name', JSON.stringify(user));

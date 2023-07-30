@@ -78,7 +78,7 @@ export default function EditarPerfil() {
       setInvalid(true);
 
     } else {
-      post(ingresarNombre, ingresarCorreo, ingresarFechaNacimiento, ingresarContrasenia)
+      post(ingresarNombre, ingresarCorreo.toLowerCase(), ingresarFechaNacimiento, ingresarContrasenia)
         .then((response) => {
           // Manejar la respuesta si es necesario
         })
