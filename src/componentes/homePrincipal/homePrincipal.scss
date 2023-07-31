@@ -1,5 +1,16 @@
 @import "../../assets/global.scss";
 
+.layout{
+  margin: 0;
+}
+
+@media screen and (max-width:60em) {
+  .layout{
+    width: 100rem;
+    margin: 0;
+}
+}
+
 .botonesInicio {
     display: flex;
     align-items: flex;
