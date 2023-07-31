@@ -1,4 +1,4 @@
-export const PLOT_SIZE = 0.001;
+export const PLOT_SIZE = 0.0005;
 
 export const DIAGNOSTICS_KEYS = {
   OVERHYDRATION: 'overhydration',
