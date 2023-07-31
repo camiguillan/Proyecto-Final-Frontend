@@ -16,6 +16,7 @@ import { CROP_TYPES_KEYS } from '../../constants/plots';
 import cropCheckFullField from '../reusable/map/funcionesMapa';
 import { post } from '../conexionBack/conexionBack';
 import { CROP_TYPES_TRANSLATIONS } from '../../constants/translations';
+import ErrorModal from '../reusable/errorFolder/errores';
 
 export default function AgregarCampo() {
   const { userID } = useParams();
@@ -43,6 +44,8 @@ export default function AgregarCampo() {
   const [drawField, setdrawField] = useState(true);
   const cultivosOpciones = Object.values(CROP_TYPES_KEYS);
   const [selectedCrop, setSelectedCrop] = useState(CROP_TYPES_KEYS.NONE);
+  const [invalid, setinValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState({ title: '', message: '' });
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
@@ -163,7 +166,45 @@ export default function AgregarCampo() {
     }
   }, [erased]);
 
+  function validateForm() {
+    console.log(campoInfo);
+    if (campoInfo.nombreCampo === '') {
+      setErrorMessage({
+        title: 'No se puede enviar su solicitud',
+        message: 'Por favor complete el nombre de su campo',
+      });
+      setinValid(true);
+      return false;
+    }
+    if (cultivos.filter((cultivo) => cultivo === CROP_TYPES_KEYS.NONE).length > 1
+    || campoInfo.features.length === 0) {
+      setErrorMessage({
+        title: 'No se puede enviar su solicitud',
+        message: 'Por favor complete el dibujo de su campo o el tipo de cultivo que posee su lote',
+      });
+      setinValid(true);
+      console.log('Falta subir imagen');
+      return false;
+    }
+    if (campoInfo.imagen === '') {
+      setErrorMessage({
+        title: 'No se puede enviar su solicitud',
+        message: 'Por favor suba una foto de su campo',
+      });
+      setinValid(true);
+      console.log('Falta subir imagen');
+      return false;
+    }
+    // Si sacamos main field, cambiar a cultivos.includes(CROP_TYPES_KEYS.NONE) TODO
+
+    return true;
+  }
+
   function guardarCampoInfo() {
+    const valid = validateForm();
+    if (!valid) {
+      return;
+    }
     const {
       plots, height, width, coordinates,
     } = cropCheckFullField(campoInfo.features);
@@ -185,6 +226,11 @@ export default function AgregarCampo() {
     nav(`/home/${userID}`);
   }
 
+  const okay = () => {
+    setinValid(false);
+    setErrorMessage({ title: '', message: '' });
+  };
+
   return (
     <div className="layout">
       <Header />
@@ -196,6 +242,8 @@ export default function AgregarCampo() {
       </h1>
 
       <div className="tarjetas">
+        {invalid
+        && <ErrorModal title={errorMessage.title} message={errorMessage.message} onClick={okay} />}
         <Card className="agregar-campo-container max-content">
           <div className="campo" id="mapa">
             <AgroMap
