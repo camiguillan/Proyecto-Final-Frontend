@@ -1,9 +1,13 @@
+/* eslint-disable no-new */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Header from '../reusable/header/header';
 import './infoCampo.scss';
 import '../verCultivos/verCultivos.scss';
+import Papa from 'papaparse';
+import Chart from 'chart.js/auto';
+import Header from '../reusable/header/header';
 
 export default function InfoCampo() {
   const { userID } = useParams();
@@ -14,6 +18,68 @@ export default function InfoCampo() {
 
   const handleButtonClick = (buttonText) => {
     setSelectedButton(buttonText);
+  };
+
+  const processData = (csvData) => {
+    const labels = [];
+    const dataMap = new Map();
+    for (let i = 1; i < csvData.length; i += 1) {
+      const [cropCSV, xValue, yValue] = csvData[i];
+
+      if (!dataMap.has(xValue)) {
+        dataMap.set(xValue, Number(yValue));
+        console.log(dataMap);
+      } else {
+        dataMap.set(xValue, dataMap.get(xValue) + Number(yValue));
+        console.log(dataMap);
+      }
+
+      if (!labels.includes(xValue)) {
+        labels.push(xValue);
+      }
+    }
+
+    const data = labels.map((label) => dataMap.get(label));
+
+    return { labels, data };
+  };
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    const createLineChart = (labels, data) => {
+      const ctx = document.getElementById('lineChart').getContext('2d');
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'Datos',
+              data,
+              borderColor: 'blue',
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+        },
+      });
+    };
+
+    Papa.parse(file, {
+      complete: (result) => {
+        const { labels, data } = processData(result.data);
+        createLineChart(labels, data);
+      },
+    });
   };
 
   return (
@@ -76,8 +142,16 @@ export default function InfoCampo() {
               Humedad
             </div>
           </div>
-
         </div>
+
+        {/* Agrega el formulario para cargar el archivo CSV */}
+        <form>
+          <input type="file" id="csvInput" accept=".csv" onChange={handleFileUpload} />
+          <button type="submit">Cargar</button>
+        </form>
+
+        {/* Agrega un elemento canvas para el gráfico */}
+        <canvas id="lineChart" width="400" height="200" />
       </div>
     </div>
   );
