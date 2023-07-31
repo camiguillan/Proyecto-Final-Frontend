@@ -6,7 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 import './infoCampo.scss';
 import '../verCultivos/verCultivos.scss';
 import Papa from 'papaparse';
-import Chart from 'chart.js/auto';
+import Chart from 'react-google-charts';
 import Header from '../reusable/header/header';
 
 export default function InfoCampo() {
@@ -15,6 +15,28 @@ export default function InfoCampo() {
   const { crop } = useParams();
   const user = JSON.parse(localStorage.getItem('name')) || {};
   const [selectedButton, setSelectedButton] = useState('1');
+  const [lineData, setLineData] = useState([[]]);
+
+  const handleDataChange = (dataArray) => {
+    const newData = lineData.slice();
+    for (let i = 0; i < dataArray.length; i += 1) {
+      newData.push([dataArray[i]]);
+    }
+    setLineData(newData);
+    console.log(lineData);
+  };
+
+  const LineChartOptions = {
+    hAxis: {
+      title: 'Time',
+    },
+    vAxis: {
+      title: 'Popularity',
+    },
+    series: {
+      0: { curveType: 'function', pointShape: 'circle', pointSize: '10' },
+    },
+  };
 
   const handleButtonClick = (buttonText) => {
     setSelectedButton(buttonText);
@@ -23,15 +45,14 @@ export default function InfoCampo() {
   const processData = (csvData) => {
     const labels = [];
     const dataMap = new Map();
-    for (let i = 1; i < csvData.length; i += 1) {
+    const [a, otherName, name] = csvData[0];
+    for (let i = 1; i < csvData.length - 1; i += 1) {
       const [cropCSV, xValue, yValue] = csvData[i];
 
       if (!dataMap.has(xValue)) {
         dataMap.set(xValue, Number(yValue));
-        console.log(dataMap);
       } else {
         dataMap.set(xValue, dataMap.get(xValue) + Number(yValue));
-        console.log(dataMap);
       }
 
       if (!labels.includes(xValue)) {
@@ -41,43 +62,22 @@ export default function InfoCampo() {
 
     const data = labels.map((label) => dataMap.get(label));
 
-    return { labels, data };
+    return data;
   };
 
   const handleFileUpload = (event) => {
+    event.preventDefault();
     const file = event.target.files[0];
 
     if (!file) {
       return;
     }
 
-    const createLineChart = (labels, data) => {
-      const ctx = document.getElementById('lineChart').getContext('2d');
-
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels,
-          datasets: [
-            {
-              label: 'Datos',
-              data,
-              borderColor: 'blue',
-              fill: false,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-        },
-      });
-    };
-
     Papa.parse(file, {
       complete: (result) => {
-        const { labels, data } = processData(result.data);
-        createLineChart(labels, data);
+        const data = processData(result.data);
+        console.log('Data:', data);
+        handleDataChange(data);
       },
     });
   };
@@ -146,12 +146,21 @@ export default function InfoCampo() {
 
         {/* Agrega el formulario para cargar el archivo CSV */}
         <form>
-          <input type="file" id="csvInput" accept=".csv" onChange={handleFileUpload} />
-          <button type="submit">Cargar</button>
+          <input type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} />
+          <button type="submit" onChange={handleFileUpload}>Cargar</button>
         </form>
 
-        {/* Agrega un elemento canvas para el gráfico */}
-        <canvas id="lineChart" width="400" height="200" />
+        <div className="container mt-5">
+          <Chart
+            width="700px"
+            height="410px"
+            chartType="LineChart"
+            loader={<div>Loading Chart</div>}
+            data={lineData}
+            options={LineChartOptions}
+            rootProps={{ 'data-testid': '2' }}
+          />
+        </div>
       </div>
     </div>
   );
