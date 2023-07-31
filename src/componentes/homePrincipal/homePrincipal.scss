@@ -244,9 +244,10 @@
 }
 
 .footer{
-  background-color: rgb(213, 238, 213);
+  background-color: $footer-light-green;
   margin-top: 3rem;
   padding-bottom: 1.5rem;
   padding-top: 1rem;
   min-width: 100rem;
+
 }
