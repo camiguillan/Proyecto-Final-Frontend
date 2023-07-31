@@ -12,6 +12,7 @@ import EditarPerfil from './componentes/editarPerfil/editarPerfil';
 import VerCultivos from './componentes/verCultivos/verCultivos';
 import RecuperarContra from './componentes/recuperarContra/recuperarContra';
 import HomePrincipal from './componentes/homePrincipal/homePrincipal';
+import InfoCampo from './componentes/infoCampo/infoCampo';
 
 function App() {
   document.title = 'AGROIA';
@@ -28,7 +29,8 @@ function App() {
         <Route path="/olvidoContra" element={<OlvidoContra />} />
         <Route path="/recover_password/:userID" element={<RecuperarContra />} />
         <Route path="/editarPerfil/:userID" element={<EditarPerfil />} />
-        <Route path="/:userId/vercultivos/:field" element={<VerCultivos />} />
+        <Route path="/:userID/vercultivos/:field" element={<VerCultivos />} />
+        <Route path="/:userID/infoCampo/:field/:crop" element={<InfoCampo />} />
       </Routes>
     </div>
   );

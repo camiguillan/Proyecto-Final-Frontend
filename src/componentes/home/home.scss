@@ -1,3 +1,5 @@
+@import "../../assets/global.scss";
+
 .image-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(13.2rem, 1fr));
@@ -18,7 +20,7 @@
   height: 20rem;
   width: 13.2rem;
   border-radius: 0.5rem;
-  background-color: rgb(225, 215, 215); /* Add this line to set the background color to red */
+  background-color: $gris-tarjetas-fondo-infoCampos; /* Add this line to set the background color to red */
 }
 
 .image-wrapper img {

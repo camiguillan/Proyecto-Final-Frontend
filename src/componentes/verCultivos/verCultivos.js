@@ -8,7 +8,6 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './verCultivos.scss';
-import sojaImage from '../../images/soja.jpg';
 import Header from '../reusable/header/header';
 
 export default function VerCultivos() {
@@ -69,7 +68,7 @@ export default function VerCultivos() {
       </h1>
       <div className="image-container-cult">
         {images.map((image, index) => (
-          <Link to={`/VerCultivos/${field}/${imageNames[index]}/${userID}`} key={index}>
+          <Link to={`/${userID}/infoCampo/${field}/${imageNames[index]}`} key={index}>
             <div className="image-wrapper-cult">
               <img
                 src={image}

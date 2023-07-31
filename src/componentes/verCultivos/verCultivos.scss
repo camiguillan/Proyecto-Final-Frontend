@@ -1,3 +1,6 @@
+@import "../../assets/global.scss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+
 .image-container-cult {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(13.2rem, 1fr));
@@ -19,7 +22,7 @@
   height: 14rem;
   width: 13.2rem;
   border-radius: 0.5rem;
-  background-color: rgb(225, 215, 215); 
+  background-color: $gris-tarjetas-fondo-infoCampos; 
 }
 
 .image-wrapper-cult img {
@@ -41,8 +44,10 @@
 }
 
 .titulo-fachero-facherito {
-  width: 15rem;
-  margin: 1rem 0% 0% 2%;
-  text-align: left;
-  font-size: xx-large;
+  width: 100%;
+  margin: 1rem 0% 0% 0%;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: normal;
 }

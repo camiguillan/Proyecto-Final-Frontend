@@ -1,0 +1,138 @@
+@import "../../assets/global.scss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+
+.buttons-container {
+  display: flex;
+  margin: 0.5rem 0% 0% 0%;
+  justify-content: center;
+}
+
+.button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem; /* 12px pasado a rem */
+  margin-right: 1rem;
+  color: black; /* Color de fuente normal */
+}
+
+.selected {
+  color: $blue-titles-infoCampo; /* Color de fuente azul cuando está seleccionado */
+}
+
+.selected-line {
+  height: 2px;
+  background-color: $blue-titles-infoCampo;
+  margin-top: 0.25rem;
+}
+
+.white-column {
+  background-color: white; 
+  width: 20%; 
+  height: 100%; 
+  position: fixed;
+  left: 0; 
+}
+
+.gray-space {
+  background-color: $gris-tarjetas-fondo-infoCampos;
+  min-width: 100%;
+  min-height: 90vh; /* Asegura que al menos ocupe toda la altura de la pantalla */
+  position: absolute; /* Cambia a "absolute" para que no bloquee las barras de desplazamiento */
+}
+
+.cards-container {
+  display: flex;
+  justify-content: center;
+  width: 90rem; /* Ajusta el valor según tus necesidades */
+  margin: 1.5rem auto; /* Utiliza "auto" para centrar horizontalmente */
+}
+
+.cards-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 10rem;
+  border-radius: 0.5rem;
+  background-color: white;
+  margin: 1%;
+}
+
+.cards-titles {
+  font-family: 'Inter', sans-serif;
+  margin-top: -7rem;
+  margin-left: 3rem; /* Adjust the distance between title and circle here */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
+}
+
+.circle-first-card {
+  position: absolute;
+  margin-top: -3.5rem;
+  margin-left: 3rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background-color: $color-circulo-verde;
+  left: -2.5rem; /* Adjust the distance between circle and title here */
+  top: 50%;
+  transform: translateY(-50%);
+    background-image: url('../../images/plantacion.png'); /* Ruta de la imagen de la plantita */
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el círculo */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-position: center; /* Centra la imagen dentro del círculo */
+} 
+
+.circle-second-card {
+  position: absolute;
+  margin-top: -3.5rem;
+  margin-left: 3rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background-color: #FFB8B8;
+  left: -2.5rem; /* Adjust the distance between circle and title here */
+  top: 50%;
+  transform: translateY(-50%);
+    background-image: url('../../images/hospital.png'); /* Ruta de la imagen de la plantita */
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el círculo */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-position: center; /* Centra la imagen dentro del círculo */
+} 
+
+.circle-third-card {
+  position: absolute;
+  margin-top: -3.5rem;
+  margin-left: 3rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background-color: #B5C5FD;
+  left: -2.5rem; /* Adjust the distance between circle and title here */
+  top: 50%;
+  transform: translateY(-50%);
+    background-image: url('../../images/velocimetro.png'); /* Ruta de la imagen de la plantita */
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el círculo */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-position: center; /* Centra la imagen dentro del círculo */
+} 
+
+.circle-fourth-card {
+  position: absolute;
+  margin-top: -3.5rem;
+  margin-left: 3rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background-color: #FFF6A9;
+  left: -2.5rem; /* Adjust the distance between circle and title here */
+  top: 50%;
+  transform: translateY(-50%);
+    background-image: url('../../images/gota-de-agua.png'); /* Ruta de la imagen de la plantita */
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el círculo */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-position: center; /* Centra la imagen dentro del círculo */
+} 
