@@ -232,7 +232,7 @@ export default function AgregarCampo() {
   };
 
   return (
-    <div className="layout">
+    <div>
       <Header />
       <h1 className="agregar-campo-titulo">
         {' '}
