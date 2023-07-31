@@ -20,11 +20,11 @@ export const GROWTH_STAGES_KEYS = {
 };
 
 export const CROP_TYPES_KEYS = {
+  NONE: 'none',
   SOY: 'soy',
   WHEAT: 'wheat',
   SUNFLOWER: 'sunflower',
   CORN: 'corn',
-  NONE: 'none',
 };
 
 // TODO PEDIRSELAS AL BACK SERIA LO MAS LOGICO
