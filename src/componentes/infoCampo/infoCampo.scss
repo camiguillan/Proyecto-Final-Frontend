@@ -139,7 +139,7 @@
 
 .file-upload-container {
   position: relative;
-  left: -35.5em; /* Puedes ajustar el valor de 50px según el espacio que desees */
+  left: -30em; /* Puedes ajustar el valor de 50px según el espacio que desees */
   top: -2rem;
 }
 
@@ -147,4 +147,11 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+}
+
+.dashboards-container {
+  display: flex;
+  justify-content: center;
+  width: 90rem; /* Ajusta el valor según tus necesidades */
+  margin: -1rem auto; /* Utiliza "auto" para centrar horizontalmente */
 }

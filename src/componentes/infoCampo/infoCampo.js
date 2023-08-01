@@ -8,6 +8,7 @@ import './infoCampo.scss';
 import '../verCultivos/verCultivos.scss';
 import Papa from 'papaparse';
 import Chart from 'react-google-charts';
+import DownloadButton from './downloadButton';
 import Header from '../reusable/header/header';
 
 export default function InfoCampo() {
@@ -16,7 +17,9 @@ export default function InfoCampo() {
   const { crop } = useParams();
   const user = JSON.parse(localStorage.getItem('name')) || {};
   const [selectedButton, setSelectedButton] = useState('1');
-  const [lineData, setLineData] = useState([['', '']]);
+  const [lineData, setLineData] = useState([['', crop]]);
+  const [barData, setBarData] = useState([['', crop]]);
+  const [fileButtonText, setfileButtonText] = useState('Cargar archivo');
 
   const [lineChartOptions, setlineChartOptions] = useState({
     hAxis: {
@@ -25,28 +28,48 @@ export default function InfoCampo() {
     vAxis: {
       title: 'Popularity',
     },
+    colors: ['#2a7d2e'], // Uso Main green, pero no me deja poner la variable
     series: {
-      0: { curveType: 'function', pointShape: 'circle', pointSize: '10' },
+      0: { curveType: 'normal', pointShape: 'circle', pointSize: '7' },
     },
   });
 
-  const handleDataChange = (years, dataArray, xName, yName) => {
+  const [barChartOptions, setBarChartOptions] = useState({
+    hAxis: {
+      title: 'Time',
+    },
+    vAxis: {
+      title: 'Popularity',
+    },
+    colors: ['#2a7d2e'], // Uso Main green, pero no me deja poner la variable
+    series: {
+      0: { curveType: 'normal', pointShape: 'circle', pointSize: '7' },
+    },
+  });
+
+  const handleDataChange = (years, dataArray, xName, yName, magicNumber) => {
     const newData = lineData.slice();
     for (let i = 0; i < dataArray.length; i += 1) {
       newData.push([dataArray[i], years[i]]);
     }
-    console.log(xName);
-    setLineData(newData);
-    console.log(yName);
-    setlineChartOptions((prevOptions) => ({
-      ...prevOptions,
-      hAxis: { ...prevOptions.hAxis, title: xName },
-      vAxis: { ...prevOptions.vAxis, title: yName },
-    }));
+    if (magicNumber === 1) {
+      setLineData(newData);
+      setlineChartOptions((prevOptions) => ({
+        ...prevOptions,
+        hAxis: { ...prevOptions.hAxis, title: xName },
+        vAxis: { ...prevOptions.vAxis, title: yName },
+      }));
+    } else {
+      setBarData(newData);
+      setBarChartOptions((prevOptions) => ({
+        ...prevOptions,
+        hAxis: { ...prevOptions.hAxis, title: xName },
+        vAxis: { ...prevOptions.vAxis, title: yName },
+      }));
+    }
   };
 
   useEffect(() => {
-    console.log('lineData actualizado:', lineData);
   }, [lineData]);
 
   const handleButtonClick = (buttonText) => {
@@ -60,15 +83,47 @@ export default function InfoCampo() {
     const [a, otherName, name] = csvData[0];
     for (let i = 1; i < csvData.length - 1; i += 1) {
       const [cropCSV, xValue, yValue] = csvData[i];
+      if (cropCSV === crop) {
+        if (!dataMap.has(xValue)) {
+          dataMap.set(xValue, Number(yValue));
+        } else {
+          dataMap.set(xValue, dataMap.get(xValue) + Number(yValue));
+        }
 
-      if (!dataMap.has(xValue)) {
-        dataMap.set(xValue, Number(yValue));
-      } else {
-        dataMap.set(xValue, dataMap.get(xValue) + Number(yValue));
+        if (!labels.includes(xValue)) {
+          labels.push(xValue);
+        }
       }
+    }
+    dataMap.forEach((value) => {
+      valoresY.push(value);
+    });
 
-      if (!labels.includes(xValue)) {
-        labels.push(xValue);
+    const years = labels.map((label) => dataMap.get(label));
+    const data = valoresY.map((valorY) => dataMap.get(valorY));
+
+    return {
+      years, data, otherName, name,
+    };
+  };
+
+  const processDataBar = (csvData) => {
+    const labels = [];
+    const valoresY = [];
+    const dataMap = new Map();
+    const [a, otherName, x, name] = csvData[0];
+    for (let i = 1; i < csvData.length - 1; i += 1) {
+      const [cropCSV, xValue, yValue, yValueBar] = csvData[i];
+      if (cropCSV === crop) {
+        if (!dataMap.has(xValue)) {
+          dataMap.set(xValue, Number(yValueBar));
+        } else {
+          dataMap.set(xValue, dataMap.get(xValue) + Number(yValueBar));
+        }
+
+        if (!labels.includes(xValue)) {
+          labels.push(xValue);
+        }
       }
     }
     dataMap.forEach((value) => {
@@ -97,7 +152,15 @@ export default function InfoCampo() {
         const {
           years, data, otherName, name,
         } = processData(result.data);
-        handleDataChange(years, data, otherName, name);
+        handleDataChange(years, data, otherName, name, 1);
+      },
+    });
+    Papa.parse(file, {
+      complete: (result) => {
+        const {
+          years, data, otherName, name,
+        } = processDataBar(result.data);
+        handleDataChange(years, data, otherName, name, 2);
       },
     });
   };
@@ -164,30 +227,32 @@ export default function InfoCampo() {
           </div>
         </div>
         <div className="file-upload-container">
+          <DownloadButton />
           <input className="button selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} />
         </div>
-
-        <div className="cards-container">
+        {lineData.length > 1 && (
+        <div className="dashboards-container">
           <Chart
-            width="41.25rem"
-            height="410px"
+            width="42.75rem"
+            height="26rem"
             chartType="LineChart"
             loader={<div>Loading Chart</div>}
             data={lineData}
             options={lineChartOptions}
             rootProps={{ 'data-testid': '2' }}
           />
-          <div style={{ marginRight: '5rem' }} />
+          <div style={{ marginRight: '2rem' }} />
           <Chart
-            width="41.25rem"
-            height="410px"
-            chartType="LineChart"
+            width="42.75rem"
+            height="26rem"
+            chartType="ColumnChart"
             loader={<div>Loading Chart</div>}
-            data={lineData}
-            options={lineChartOptions}
+            data={barData}
+            options={barChartOptions}
             rootProps={{ 'data-testid': '2' }}
           />
         </div>
+        )}
       </div>
     </div>
   );
