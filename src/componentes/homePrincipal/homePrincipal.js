@@ -18,66 +18,68 @@ export default function HomePrincipal() {
 
   return (
     <div className="layout">
-      <HeaderHome>.</HeaderHome>
-      <div className="img-container">
-        <div className="overlay"></div>
-        <img src={grass} alt="Imagen 1" className="full-width-image" />
-        <div className="image-text">
-          <text className="image-title">
-            ¿Qué es AgroIA?
-          </text>
-          <br />
-          <text className="image-text2">
-            AgroIA es un sistema orientado a brindar soluciones y recomendaciones
-            precisas en el cuidado y manejo de cultivos agrícolas.
-          </text>
+      <div className="full-page">
+        <HeaderHome>.</HeaderHome>
+        <div className="img-container">
+          <div className="overlay"></div>
+          <img src={grass} alt="Imagen 1" className="full-width-image" />
+          <div className="image-text">
+            <text className="image-title">
+              ¿Qué es AgroIA?
+            </text>
+            <br />
+            <text className="image-text2">
+              AgroIA es un sistema orientado a brindar soluciones y recomendaciones
+              precisas en el cuidado y manejo de cultivos agrícolas.
+            </text>
+          </div>
         </div>
-      </div>
-      <div className="flexbox-container">
-        <div className="green-title">
-          AgroIA facilita la toma de decisiones relacionadas con la producción
-          agraria.
-        </div>
-        <div className="text-home-principal">
-          Utilizando inteligencia artificial y análisis de imágenes agrícolas para brindar
-          soluciones a diagnósticos generados por medio de imágenes de cultivos.
-        </div>
-      </div>
-      <div className="gray-square">
-        <img src={vistaSat} alt="Imagen 4" className="small-img" />
-        <div className="text-container">
-          <div className="gray-title">
-            ¿Cómo funciona AgroIA?
+        <div className="flexbox-container">
+          <div className="green-title">
+            AgroIA facilita la toma de decisiones relacionadas con la producción
+            agraria.
           </div>
           <div className="text-home-principal">
-            AgroIA utiliza inteligencia artificial y análisis de imágenes agrícolas para
-            diagnosticar y brindar recomendaciones precisas sobre el cuidado y manejo de
-            cultivos. Ayuda a los agricultores a optimizar el rendimiento, reducir riesgos
-            y tomar decisiones informadas para una producción agrícola más eficiente y sostenible.
+            Utilizando inteligencia artificial y análisis de imágenes agrícolas para brindar
+            soluciones a diagnósticos generados por medio de imágenes de cultivos.
           </div>
         </div>
-      </div>
-      <div className="section-left-aligned">
-        <div className="flex-container">
-          <div>
-            <div className="green-title left">
-              ¿Por qué elegirnos?
+        <div className="gray-square">
+          <img src={vistaSat} alt="Imagen 4" className="small-img" />
+          <div className="text-container">
+            <div className="gray-title">
+              ¿Cómo funciona AgroIA?
             </div>
-            {listChooseUs.map((item) => (
-              <div className="left">
-                <div className="icon-reason">
-                  <Icon className="bi bi-check2-circle" color="#2a7d2e" fontSize="2.7rem" />
-                  <p className="text-home-principal checks">{item.reason}</p>
-                </div>
-                <div className="extra-reason">
-                  <p className="text-home-principal">{item.extra}</p>
-                </div>
-              </div>
-            ))}
+            <div className="text-home-principal">
+              AgroIA utiliza inteligencia artificial y análisis de imágenes agrícolas para
+              diagnosticar y brindar recomendaciones precisas sobre el cuidado y manejo de
+              cultivos. Ayuda a los agricultores a optimizar el rendimiento, reducir riesgos
+              y tomar decisiones informadas para una producción agrícola más eficiente y sostenible.
+            </div>
           </div>
-          <div className="photo-container">
-            <img src={leaf} alt="Imagen 4" className="small-img2" />
-            <img src={trigo} alt="Imagen 4" className="small-img2" />
+        </div>
+        <div className="section-left-aligned">
+          <div className="flex-container">
+            <div>
+              <div className="green-title left">
+                ¿Por qué elegirnos?
+              </div>
+              {listChooseUs.map((item) => (
+                <div className="left">
+                  <div className="icon-reason">
+                    <Icon className="bi bi-check2-circle" color="#2a7d2e" fontSize="2.7rem" />
+                    <p className="text-home-principal checks">{item.reason}</p>
+                  </div>
+                  <div className="extra-reason">
+                    <p className="text-home-principal">{item.extra}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="photo-container">
+              <img src={leaf} alt="Imagen 4" className="small-img2" />
+              <img src={trigo} alt="Imagen 4" className="small-img2" />
+            </div>
           </div>
         </div>
       </div>

@@ -12,6 +12,10 @@
     white-space: nowrap;
   }
 
+  .full-page{
+    min-height: 92vh; 
+  }
+
 
   // IMAGES
 
@@ -20,8 +24,6 @@
     height: 26rem;
     object-fit: cover;
     opacity: 0.6;
-    //align-items: center;
-    //justify-content: center;
   }
 
   .img-container{
@@ -38,31 +40,22 @@
     top: 0;
     left: 0;
     width: 100%;
+    min-width: 100rem;
     height: 100%;
     background: rgba(0, 0, 0, 0.5); 
   }
 
   .header-principal{
     width: 100%;
-    //margin-top: 0%;
+    min-width: 100rem;
     background-color: white;
     height: 7rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    //position: fixed;
 }
 
 .image-text {
-  position: absolute;
-  //top: 0;
-  //left: 0;
-  //width: 100rem;
-  //height: 25rem;
-  //display: flex;
-  //justify-content: center; 
-  //align-items: center;
-  //flex-direction: column; 
   position: absolute;
   top: 50%;
   left: 50%;
@@ -99,6 +92,7 @@
 	display: -webkit-flex;
 	display: flex;
   max-width: 100rem;
+  min-width: 100rem;
   margin: 0 auto;
   justify-content: center;
   margin-bottom: 2.6rem;
@@ -158,6 +152,7 @@
   border-radius: 1.5rem;
   display: flex;
   align-items: center;
+  min-width: 83.2rem;
 }
 
 .small-img{
@@ -177,7 +172,6 @@
 // LEFT ALIGNED
 .section-left-aligned{
   width: 100rem; 
-  //margin: 0.38rem auto;
   display: flex;
   max-width: 75rem;
   margin: 0 auto;
@@ -186,7 +180,6 @@
 
 .small-img2{
   width: 30rem; 
-  //justify-content: left;
   margin-left: 5rem;
 }
 
@@ -210,14 +203,12 @@
 }
 
 .photo-container {
-  //float: right;
   flex: 1;
 }
 
 .flex-container {
   display: flex;
   align-items: center;
-  //margin-top: 1rem;
 }
 
 // CONTACT US
@@ -245,9 +236,8 @@
 
 .footer{
   background-color: $footer-light-green;
-  margin-top: 3rem;
-  padding-bottom: 1.5rem;
-  padding-top: 1rem;
+  margin-top: 4rem;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
   min-width: 100rem;
-
 }
