@@ -136,3 +136,15 @@
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   background-position: center; /* Centra la imagen dentro del círculo */
 } 
+
+.file-upload-container {
+  position: relative;
+  left: -35.5em; /* Puedes ajustar el valor de 50px según el espacio que desees */
+  top: -2rem;
+}
+
+.first-dashboard-aligned{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}

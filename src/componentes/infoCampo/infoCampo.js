@@ -1,7 +1,8 @@
+/* eslint-disable prefer-const */
 /* eslint-disable no-new */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './infoCampo.scss';
 import '../verCultivos/verCultivos.scss';
@@ -15,18 +16,9 @@ export default function InfoCampo() {
   const { crop } = useParams();
   const user = JSON.parse(localStorage.getItem('name')) || {};
   const [selectedButton, setSelectedButton] = useState('1');
-  const [lineData, setLineData] = useState([[]]);
+  const [lineData, setLineData] = useState([['', '']]);
 
-  const handleDataChange = (dataArray) => {
-    const newData = lineData.slice();
-    for (let i = 0; i < dataArray.length; i += 1) {
-      newData.push([dataArray[i]]);
-    }
-    setLineData(newData);
-    console.log(lineData);
-  };
-
-  const LineChartOptions = {
+  const [lineChartOptions, setlineChartOptions] = useState({
     hAxis: {
       title: 'Time',
     },
@@ -36,7 +28,26 @@ export default function InfoCampo() {
     series: {
       0: { curveType: 'function', pointShape: 'circle', pointSize: '10' },
     },
+  });
+
+  const handleDataChange = (years, dataArray, xName, yName) => {
+    const newData = lineData.slice();
+    for (let i = 0; i < dataArray.length; i += 1) {
+      newData.push([dataArray[i], years[i]]);
+    }
+    console.log(xName);
+    setLineData(newData);
+    console.log(yName);
+    setlineChartOptions((prevOptions) => ({
+      ...prevOptions,
+      hAxis: { ...prevOptions.hAxis, title: xName },
+      vAxis: { ...prevOptions.vAxis, title: yName },
+    }));
   };
+
+  useEffect(() => {
+    console.log('lineData actualizado:', lineData);
+  }, [lineData]);
 
   const handleButtonClick = (buttonText) => {
     setSelectedButton(buttonText);
@@ -44,6 +55,7 @@ export default function InfoCampo() {
 
   const processData = (csvData) => {
     const labels = [];
+    const valoresY = [];
     const dataMap = new Map();
     const [a, otherName, name] = csvData[0];
     for (let i = 1; i < csvData.length - 1; i += 1) {
@@ -59,14 +71,21 @@ export default function InfoCampo() {
         labels.push(xValue);
       }
     }
+    dataMap.forEach((value) => {
+      valoresY.push(value);
+    });
 
-    const data = labels.map((label) => dataMap.get(label));
+    const years = labels.map((label) => dataMap.get(label));
+    const data = valoresY.map((valorY) => dataMap.get(valorY));
 
-    return data;
+    return {
+      years, data, otherName, name,
+    };
   };
 
   const handleFileUpload = (event) => {
     event.preventDefault();
+    setLineData([['', '']]);
     const file = event.target.files[0];
 
     if (!file) {
@@ -75,9 +94,10 @@ export default function InfoCampo() {
 
     Papa.parse(file, {
       complete: (result) => {
-        const data = processData(result.data);
-        console.log('Data:', data);
-        handleDataChange(data);
+        const {
+          years, data, otherName, name,
+        } = processData(result.data);
+        handleDataChange(years, data, otherName, name);
       },
     });
   };
@@ -143,21 +163,28 @@ export default function InfoCampo() {
             </div>
           </div>
         </div>
+        <div className="file-upload-container">
+          <input className="button selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} />
+        </div>
 
-        {/* Agrega el formulario para cargar el archivo CSV */}
-        <form>
-          <input type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} />
-          <button type="submit" onChange={handleFileUpload}>Cargar</button>
-        </form>
-
-        <div className="container mt-5">
+        <div className="cards-container">
           <Chart
-            width="700px"
+            width="41.25rem"
             height="410px"
             chartType="LineChart"
             loader={<div>Loading Chart</div>}
             data={lineData}
-            options={LineChartOptions}
+            options={lineChartOptions}
+            rootProps={{ 'data-testid': '2' }}
+          />
+          <div style={{ marginRight: '5rem' }} />
+          <Chart
+            width="41.25rem"
+            height="410px"
+            chartType="LineChart"
+            loader={<div>Loading Chart</div>}
+            data={lineData}
+            options={lineChartOptions}
             rootProps={{ 'data-testid': '2' }}
           />
         </div>
