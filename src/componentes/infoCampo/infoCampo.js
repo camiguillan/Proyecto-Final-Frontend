@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable prefer-const */
 /* eslint-disable no-new */
 /* eslint-disable import/no-extraneous-dependencies */
@@ -10,6 +11,8 @@ import Papa from 'papaparse';
 import Chart from 'react-google-charts';
 import DownloadButton from './downloadButton';
 import Header from '../reusable/header/header';
+import axios from 'axios';
+import ProductCard from './meliCard';
 
 export default function InfoCampo() {
   const { userID } = useParams();
@@ -20,6 +23,8 @@ export default function InfoCampo() {
   const [lineData, setLineData] = useState([['', crop]]);
   const [barData, setBarData] = useState([['', crop]]);
   const [fileButtonText, setfileButtonText] = useState('Cargar archivo');
+  const [searchTerm, setSearchTerm] = useState('lampara');
+  const [products, setProducts] = useState([]);
 
   const [lineChartOptions, setlineChartOptions] = useState({
     hAxis: {
@@ -165,6 +170,21 @@ export default function InfoCampo() {
     });
   };
 
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.mercadolibre.com/sites/MLA/search?q=${searchTerm}`,
+      );
+      setProducts(response.data.results);
+    } catch (error) {
+      console.error('Error fetching data from MercadoLibre API:', error);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, []);
+
   return (
     <div className="layout">
       <Header />
@@ -253,6 +273,12 @@ export default function InfoCampo() {
           />
         </div>
         )}
+        <div className="dashboards-container">
+          {products.slice(0, 10).map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+
       </div>
     </div>
   );

@@ -155,3 +155,30 @@
   width: 90rem; /* Ajusta el valor según tus necesidades */
   margin: -1rem auto; /* Utiliza "auto" para centrar horizontalmente */
 }
+
+.nombre-producto {
+  width: 100%;
+  margin: 1rem 0% 0% 0%;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: normal;
+  color: black;
+}
+
+.product-card {
+  align-items: center;
+  position: relative;
+  height: 15rem;
+  border-radius: 0.5rem;
+  background-color: white;
+  margin: 1%;
+}
+
+  .product-image {
+    margin-top: 0.7rem; 
+  }
+
+  .product-card .product-price {
+  font-weight: bold; /* Aplica el estilo de letra negrita (bold) */
+}
