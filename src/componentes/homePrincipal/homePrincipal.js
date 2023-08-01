@@ -6,7 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Icon from '../../assets/icons/icon';
 import '../reusable/header/header.scss';
 import './homePrincipal.scss';
-import grass from '../../images/grass3.jpg';
+// import grass from '../../images/grass3.jpg';
 import leaf from '../../images/leaf.jpg';
 import trigo from '../../images/trigo.jpg';
 import vistaSat from '../../images/vistasatelital.jpg';
@@ -22,7 +22,6 @@ export default function HomePrincipal() {
         <HeaderHome>.</HeaderHome>
         <div className="img-container">
           <div className="overlay"></div>
-          <img src={grass} alt="Imagen 1" className="full-width-image" />
           <div className="image-text">
             <text className="image-title">
               ¿Qué es AgroIA?
