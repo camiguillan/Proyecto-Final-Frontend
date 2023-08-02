@@ -66,7 +66,7 @@ export default function OlvidoContra() {
               <h1>AGROIA</h1>
             </div>
             <span className="title-olvidocontra">¿Olvidó su contraseña?</span>
-            <text className="texto-normal">Introduzca su correo electrónico y se le enviará un link de recuperación.</text>
+            <text className="texto-normal agrego-width">Introduzca su correo electrónico y se le enviará un link de recuperación.</text>
             <div className="espacio" />
             <input
               className={(campoNombreLleno || !submit) || isInputFilled2 ? 'sub-rectangle' : 'sub-rectangle-red'}

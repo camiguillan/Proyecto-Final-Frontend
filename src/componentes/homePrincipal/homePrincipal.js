@@ -50,7 +50,7 @@ export default function HomePrincipal() {
               <div className="gray-title">
                 ¿Cómo funciona AgroIA?
               </div>
-              <div className="text-home-principal">
+              <div className="text-home-principal2">
                 AgroIA utiliza inteligencia artificial y análisis de imágenes agrícolas para
                 diagnosticar y brindar recomendaciones precisas sobre el cuidado y manejo de
                 cultivos. Ayuda a los agricultores a optimizar el rendimiento, reducir riesgos
@@ -69,11 +69,11 @@ export default function HomePrincipal() {
               {listChooseUs.map((item) => (
                 <div className="left">
                   <div className="icon-reason">
-                    <Icon className="bi bi-check2-circle" color="#2a7d2e" fontSize="2.7rem" />
-                    <p className="text-home-principal checks">{item.reason}</p>
+                    <Icon className="bi bi-check2-circle" color="#2a7d2e" fontSize="2.3rem" />
+                    <p className="text-home-principal2 checks">{item.reason}</p>
                   </div>
                   <div className="extra-reason">
-                    <p className="text-home-principal">{item.extra}</p>
+                    <p className="text-home-principal2">{item.extra}</p>
                   </div>
                 </div>
               ))}
