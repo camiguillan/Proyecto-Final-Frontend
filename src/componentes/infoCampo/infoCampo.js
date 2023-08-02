@@ -29,8 +29,6 @@ export default function InfoCampo() {
   const [products, setProducts] = useState([]);
   const [diagnostico, setdiagnostico] = useState(['EXCELENTE']);
 
-  console.log(user);
-
   const [lineChartOptions, setlineChartOptions] = useState({
     hAxis: {
       title: 'Time',
@@ -58,7 +56,12 @@ export default function InfoCampo() {
   });
 
   const handleDataChange = (years, dataArray, xName, yName, magicNumber) => {
-    const newData = lineData.slice();
+    const newData = ([['', crop]]);
+    if (magicNumber === 1) {
+      setLineData([['', crop]]);
+    } else {
+      setBarData([['', crop]]);
+    }
     for (let i = 0; i < dataArray.length; i += 1) {
       newData.push([dataArray[i], years[i]]);
     }
@@ -78,9 +81,6 @@ export default function InfoCampo() {
       }));
     }
   };
-
-  useEffect(() => {
-  }, [lineData]);
 
   const handleButtonClick = (buttonText) => {
     setSelectedButton(buttonText);
@@ -160,7 +160,6 @@ export default function InfoCampo() {
 
   const handleFileUpload = (event) => {
     event.preventDefault();
-    setLineData([['', '']]);
     const file = event.target.files[0];
 
     if (!file) {
