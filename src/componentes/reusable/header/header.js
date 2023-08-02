@@ -8,7 +8,7 @@ export default function Header() {
   const nav = useNavigate();
 
   return (
-    <div>
+    <div className="header-container">
       <HambMenu pageWrapId="page-wrap" outerContainerId="user" />
       <header id="header">
         <div className="agroIa" onClick={() => nav('/user/home')}>

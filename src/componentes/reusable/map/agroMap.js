@@ -49,7 +49,7 @@ function AgroMap({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/satellite-streets-v12',
       center: coordinates,
-      zoom: 15, // Default zoom level
+      zoom: 11, // Default zoom level
     });
 
     const drawOptions = {
@@ -176,22 +176,9 @@ function AgroMap({
         .addTo(map);
       map.flyTo({ center: e.result.center, zoom: 17 });
     });
-    const usedColors = [];
-    function getRandomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-
-      do {
-        color = '#'; // Reset color on each iteration
-
-        for (let i = 0; i < 6; i += 1) {
-          color += letters[Math.floor(Math.random() * 16)];
-        }
-      } while (usedColors.includes(color)); // Continue generating until a distinct color is found
-
-      usedColors.push(color);
-
-      return color;
+    const Colors = [];
+    function getRandomColor(index) {
+      return Colors[index];
     }
 
     function handleDraw() {
@@ -202,14 +189,15 @@ function AgroMap({
       // const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
       // console.log(squareGridR);
       // draw.add(squareGridR);
+      const color = getRandomColor(features.features.length);
 
-      draw.setFeatureProperty(lastDrawn.id, 'portColor', getRandomColor());
+      draw.setFeatureProperty(lastDrawn.id, 'portColor', color);
       // console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0][0]);
       // splitPolygon(draw, defaultPolygon);
       // eslint-disable-next-line guard-for-in
       if (features.features.length !== 0) {
-        addFeatures(features.features);
+        addFeatures(features.features, color);
       }
       // addCentroid(draw, lastDrawn);
     }

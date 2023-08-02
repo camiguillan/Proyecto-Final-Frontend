@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
@@ -26,7 +27,7 @@ export default function AgregarCampo() {
   const [campoInfo, setCampoInfo] = useState({
     nombreCampo: '',
     imagen: '',
-    coordinates: [-58.702963, -34.671792],
+    coordinates: [-58.44657291015618, -34.595435305682834],
     features: [],
   });
 
@@ -150,9 +151,12 @@ export default function AgregarCampo() {
         {' '}
       </select>
 
-      {cultivos.length - 1 === index
+      {/* {cultivos.length - 1 === index
         ? <Button type="button" onClick={addInput} className="green-button">+</Button>
-        : <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
+        :
+        <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
+        */}
+      <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>
     </label>
   ));
 
@@ -277,7 +281,14 @@ export default function AgregarCampo() {
                   />
 
                 </label>
-                {drawField ? <p>Dibuje el campo principal</p> : cultivosInputs}
+                {drawField ? <p>Dibuje el campo principal</p>
+                  : (
+                    <div>
+                      <p>Dibuje la superficie de cada lote con su cultivo asociado</p>
+                      {cultivosInputs}
+                      <Button type="button" onClick={addInput} className="green-button mas-button">+</Button>
+                    </div>
+                  )}
 
               </div>
               <FileUploader
