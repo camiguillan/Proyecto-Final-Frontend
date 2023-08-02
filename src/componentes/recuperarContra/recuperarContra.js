@@ -57,7 +57,7 @@ export default function RecuperarContra() {
       };
       post(`change_password/${userID}`, data);
 
-      navigate('../iniciarSesion');
+      navigate('../pswUpdated');
     }
   }
 
