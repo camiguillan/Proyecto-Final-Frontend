@@ -14,6 +14,8 @@ import VerCultivos from './componentes/verCultivos/verCultivos';
 import RecuperarContra from './componentes/recuperarContra/recuperarContra';
 import HomePrincipal from './componentes/homePrincipal/homePrincipal';
 import InfoCampo from './componentes/infoCampo/infoCampo';
+import PswRecoveryEmailSent from './componentes/pswRecoveryEmailSent/pswRecoveryEmailSent';
+import PswUpdated from './componentes/pswUpdated/pswUpdated';
 
 function App() {
   document.title = 'AGROIA';
@@ -33,6 +35,8 @@ function App() {
         <Route path="/editarPerfil/:userID" element={<EditarPerfil />} />
         <Route path="/:userID/vercultivos/:field" element={<VerCultivos />} />
         <Route path="/:userID/infoCampo/:field/:crop" element={<InfoCampo />} />
+        <Route path="/olvidoContraConf" element={<PswRecoveryEmailSent />} />
+        <Route path="/pswUpdated" element={<PswUpdated />} />
       </Routes>
     </div>
   );
