@@ -21,16 +21,97 @@ const moveCoordinates = ({ lat, lon }, y, x) => ({
   lon: lon + x * PLOT_SIZE,
 });
 
+const plotToCoordinates2 = (height, width, topLeftCoordinates, index) => {
+  const { lat: topLeftLat, lon: topLeftLon } = topLeftCoordinates;
+
+  // Calculate the row and column of the plot in the matrix
+  const row = Math.floor(index / width);
+  const col = index % width;
+
+  // Calculate the latitude and longitude of the plot based on its position in the matrix
+  const lat = topLeftLat - row * PLOT_SIZE;
+  const lon = topLeftLon + col * PLOT_SIZE;
+
+  return { lon, lat };
+};
+
+function getCoordinatesFromPosition(topLeftRow, topLeftCol, matrixWidth, position) {
+  // Calculate the row and column offset from the top-left corner
+  const rowOffset = Math.floor(position / matrixWidth);
+  const colOffset = position % matrixWidth;
+
+  // Calculate the actual row and column in the matrix
+  const row = topLeftRow + rowOffset;
+  const col = topLeftCol + colOffset;
+
+  return { row, col };
+}
+
 const plotToCoordinates = (height, width, coordinates) => {
   const coordinatesForPlots = [];
   for (let y = 0; y < height; y += 1) {
-    const line = [];
     for (let x = 0; x < width; x += 1) {
-      line.push(moveCoordinates(coordinates, y, x));
+      const topLeftCoordinate = moveCoordinates(coordinates, y, x);
+      coordinatesForPlots.push(topLeftCoordinate);
     }
-    coordinatesForPlots.push(line);
   }
+  console.log(coordinatesForPlots);
   return coordinatesForPlots;
+};
+const createPlotPolygon = (plotCoordinates) => {
+  const plotTopLeft = {
+    lon: plotCoordinates.lon,
+    lat: plotCoordinates.lat,
+  };
+  const plotBottomRight = {
+    lon: plotCoordinates.lon + PLOT_SIZE,
+    lat: plotCoordinates.lat + PLOT_SIZE,
+  };
+  // [
+  //   [
+  //     -58.70695353056989, -34.67268620400039,
+  //   ],
+  //   [
+  //     -58.70695353056989,-34.67218561980293,
+  //   ],
+  //   [
+  //     -58.70634485389354,-34.67218561980293,
+  //   ],
+  //   [
+  //     -58.70634485389354, -34.67268620400039,
+  //   ],
+  //   [
+  //     -58.70695353056989,-34.67268620400039,
+  //   ],
+  // ];
+
+  return [
+    [plotTopLeft.lon, plotTopLeft.lat],
+    [plotTopLeft.lon, plotBottomRight.lat],
+    [plotBottomRight.lon, plotBottomRight.lat],
+    [plotBottomRight.lon, plotTopLeft.lat],
+    [plotTopLeft.lon, plotTopLeft.lat],
+  ];
+};
+
+export const createPolygonFromPlots = ({
+  plots, height, width, coordinates,
+}) => {
+  console.log(plots);
+  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) })).filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
+  console.log(plotsCoordinates);
+  const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
+    const polygonCoordinates = createPlotPolygon(coordinate);
+    return {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'Polygon',
+        coordinates: [polygonCoordinates],
+      },
+    };
+  });
+  return { features: plotsFeatures, type: 'FeatureCollection' };
 };
 
 const cropCheck = (coordinates, cropPolygons) => {
