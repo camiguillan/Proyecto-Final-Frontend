@@ -25,7 +25,7 @@ const styles = [
     ],
     paint: {
       'fill-color': '#fbb03b',
-      'fill-outline-color': '#fbb03b',
+      'fill-outline-color': '#0d0d0d',
       'fill-opacity': 0.1,
     },
   },
@@ -52,7 +52,7 @@ const styles = [
       'line-join': 'round',
     },
     paint: {
-      'line-color': '#3bb2d0',
+      'line-color': '#0d0d0d',
       'line-width': 2,
     },
   },
@@ -251,7 +251,7 @@ const styles = [
     ],
     paint: {
       'fill-color': ['get', 'user_portColor'],
-      'fill-outline-color': ['get', 'user_portColor'],
+      'fill-outline-color': '#0d0d0d',
       'fill-opacity': 0.5,
     },
   },

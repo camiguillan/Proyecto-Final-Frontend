@@ -176,9 +176,9 @@ function AgroMap({
         .addTo(map);
       map.flyTo({ center: e.result.center, zoom: 17 });
     });
-    const Colors = [];
+    const Colors = ['#21f216', '#16f2ee', '#f23400', '#be03fc', '#f29e0c', '#73b564', '#f08473', '#696261'];
     function getRandomColor(index) {
-      return Colors[index];
+      return Colors[index - 1];
     }
 
     function handleDraw() {
