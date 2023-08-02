@@ -170,6 +170,8 @@
 .product-card {
   align-items: center;
   position: relative;
+  min-width: 5rem; /* Establece un ancho mínimo para cada product card */
+  flex: 1 1 auto; /* Permite que la product card se ensanche para ocupar el espacio disponible */
   height: 15rem;
   border-radius: 0.5rem;
   background-color: white;
@@ -182,4 +184,113 @@
 
   .product-card .product-price {
   font-weight: bold; /* Aplica el estilo de letra negrita (bold) */
+}
+
+
+.cards-subtitle {
+  font-family: 'Inter', sans-serif;
+  margin-top: rem;
+   margin-left: -6.7rem;
+  font-size: 0.9rem;
+  text-align: left;
+  color: black;
+}
+
+.excellent-class {
+  font-family: 'Inter', sans-serif;
+  margin-top: -7rem;
+  margin-left: 3rem; /* Adjust the distance between title and circle here */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $main-green;
+}
+
+.overhydration-class {
+  font-family: 'Inter', sans-serif;
+  margin-top: rem;
+   margin-left: -12rem;
+  font-size: 0.9rem;
+  text-align: left;
+  color: black;
+}
+
+.dehydration-subtitle {
+  font-family: 'Inter', sans-serif;
+  margin-top: -7rem;
+  margin-left: 3rem; /* Adjust the distance between title and circle here */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #F3C432;
+}
+
+.overhydration-subtitle {
+  font-family: 'Inter', sans-serif;
+  margin-top: -7rem;
+  margin-left: 3rem; /* Adjust the distance between title and circle here */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #184A9D;
+}
+
+.dehydration-class {
+  font-family: 'Inter', sans-serif;
+  margin-top: rem;
+   margin-left: -10.5rem;
+  font-size: 0.9rem;
+  text-align: left;
+  color: black;
+}
+
+.frosting-subtitle {
+  font-family: 'Inter', sans-serif;
+  margin-top: -7rem;
+  margin-left: 3rem; /* Adjust the distance between title and circle here */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #7CE3FF;
+}
+
+.frosting-class {
+  font-family: 'Inter', sans-serif;
+  margin-top: rem;
+   margin-left: -10.5rem;
+  font-size: 0.9rem;
+  text-align: left;
+  color: black;
+}
+
+.good-subtitle {
+  font-family: 'Inter', sans-serif;
+  margin-top: -7rem;
+  margin-left: 3rem; /* Adjust the distance between title and circle here */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $main-green;
+}
+
+.good-class {
+  font-family: 'Inter', sans-serif;
+  margin-top: rem;
+   margin-left: -4.5rem;
+  font-size: 0.9rem;
+  text-align: left;
+  color: black;
+}
+
+.very-subtitle {
+  font-family: 'Inter', sans-serif;
+  margin-top: -7rem;
+  margin-left: 3rem; /* Adjust the distance between title and circle here */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $main-green;
+}
+
+.very-class {
+  font-family: 'Inter', sans-serif;
+  margin-top: rem;
+   margin-left: -7.9rem;
+  font-size: 0.9rem;
+  text-align: left;
+  color: black;
 }

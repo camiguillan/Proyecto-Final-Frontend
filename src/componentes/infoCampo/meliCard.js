@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import './infoCampo.scss';
 
 function MeliCard({ product }) {
-  const titlePreview = product.title.substring(0, 15);
-  const truncatedTitle = product.title.length > 15 ? `${titlePreview}...` : product.title;
+  const titlePreview = product.title.substring(0, 20);
+  const truncatedTitle = product.title.length > 20 ? `${titlePreview}...` : product.title;
 
   const handleProductClick = () => {
     window.open(product.permalink, '_blank'); // Abre el enlace en una nueva pestaña

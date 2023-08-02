@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable import/order */
 /* eslint-disable prefer-const */
 /* eslint-disable no-new */
@@ -10,9 +11,11 @@ import '../verCultivos/verCultivos.scss';
 import Papa from 'papaparse';
 import Chart from 'react-google-charts';
 import DownloadButton from './downloadButton';
+import Diagnostico from './diagnostico';
 import Header from '../reusable/header/header';
 import axios from 'axios';
 import ProductCard from './meliCard';
+import excelent from '../../images/excelent.png';
 
 export default function InfoCampo() {
   const { userID } = useParams();
@@ -22,9 +25,11 @@ export default function InfoCampo() {
   const [selectedButton, setSelectedButton] = useState('1');
   const [lineData, setLineData] = useState([['', crop]]);
   const [barData, setBarData] = useState([['', crop]]);
-  const [fileButtonText, setfileButtonText] = useState('Cargar archivo');
   const [searchTerm, setSearchTerm] = useState('lampara');
   const [products, setProducts] = useState([]);
+  const [diagnostico, setdiagnostico] = useState(['EXCELENTE']);
+
+  console.log(user);
 
   const [lineChartOptions, setlineChartOptions] = useState({
     hAxis: {
@@ -79,6 +84,16 @@ export default function InfoCampo() {
 
   const handleButtonClick = (buttonText) => {
     setSelectedButton(buttonText);
+
+    if (selectedButton === '1') {
+      console.log(1);
+    } else if (selectedButton === '2') {
+      console.log(1);
+    } else if (selectedButton === '3') {
+      console.log(1);
+    } else {
+      console.log(1);
+    }
   };
 
   const processData = (csvData) => {
@@ -273,8 +288,14 @@ export default function InfoCampo() {
           />
         </div>
         )}
+        <div className="cards-container">
+          <Diagnostico diagnostico={diagnostico} />
+          <div className="cards-wrapper">
+            <img src={excelent} alt="Imagen 4" style={{ width: '7rem' }} />
+          </div>
+        </div>
         <div className="dashboards-container">
-          {products.slice(0, 10).map((product) => (
+          {products.slice(0, 6).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

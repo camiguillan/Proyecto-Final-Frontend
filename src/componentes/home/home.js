@@ -28,6 +28,7 @@ export default function Home() {
 
   const [data, setData] = useState([]);
   const user = JSON.parse(localStorage.getItem('name')) || {};
+  console.log(user);
 
   // Recorre el array user.fields y genera los nombres de las imágenes
   user.fields.forEach((field, index) => {
