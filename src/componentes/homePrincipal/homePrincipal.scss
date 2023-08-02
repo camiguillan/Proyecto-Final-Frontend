@@ -14,6 +14,7 @@
 
   .full-page{
     min-height: 92vh; 
+    min-width: 90vw;
   }
 
 
@@ -147,30 +148,31 @@
 
 // GRAY BOX
 .gray-square{
-  width: 83.2rem; 
-  height: 26rem; 
+  width: 83.2rem;
+  height: 26rem;
   margin: 0 auto;
-  background-color: #eaf3ea; 
+  background-color: #eaf3ea;
   margin-top: 4rem;
   margin-bottom: 4rem;
   border-radius: 1.5rem;
   display: flex;
   align-items: center;
-  min-width: 83.2rem;
+  justify-content: center;
 }
 
 .small-img{
-  width: 39rem; 
-  justify-content: left;
+  width: 37rem; 
+  height: 20rem;
   margin-left: 4rem;
 }
 
 .text-container{
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex: 1;
   align-items: center;
+  text-align: center;
 }
 
 // LEFT ALIGNED
@@ -180,6 +182,7 @@
   max-width: 75rem;
   margin: 0 auto;
   justify-content: space-between;
+  align-items: center;
 }
 
 .small-img2{

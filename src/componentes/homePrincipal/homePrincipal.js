@@ -43,17 +43,20 @@ export default function HomePrincipal() {
             soluciones a diagnósticos generados por medio de imágenes de cultivos.
           </div>
         </div>
-        <div className="gray-square">
-          <img src={vistaSat} alt="Imagen 4" className="small-img" />
-          <div className="text-container">
-            <div className="gray-title">
-              ¿Cómo funciona AgroIA?
-            </div>
-            <div className="text-home-principal">
-              AgroIA utiliza inteligencia artificial y análisis de imágenes agrícolas para
-              diagnosticar y brindar recomendaciones precisas sobre el cuidado y manejo de
-              cultivos. Ayuda a los agricultores a optimizar el rendimiento, reducir riesgos
-              y tomar decisiones informadas para una producción agrícola más eficiente y sostenible.
+        <div>
+          <div className="gray-square">
+            <img src={vistaSat} alt="Imagen 4" className="small-img" />
+            <div className="text-container">
+              <div className="gray-title">
+                ¿Cómo funciona AgroIA?
+              </div>
+              <div className="text-home-principal">
+                AgroIA utiliza inteligencia artificial y análisis de imágenes agrícolas para
+                diagnosticar y brindar recomendaciones precisas sobre el cuidado y manejo de
+                cultivos. Ayuda a los agricultores a optimizar el rendimiento, reducir riesgos
+                y tomar decisiones informadas para una producción agrícola más eficiente y
+                sostenible.
+              </div>
             </div>
           </div>
         </div>
