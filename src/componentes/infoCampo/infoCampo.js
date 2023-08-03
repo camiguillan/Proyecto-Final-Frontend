@@ -30,7 +30,7 @@ export default function InfoCampo() {
   const [barData, setBarData] = useState([['', crop]]);
   const [searchTerm, setSearchTerm] = useState('lampara');
   const [products, setProducts] = useState([]);
-  const [diagnostico, setdiagnostico] = useState(['EXCELENTE']);
+  const [diagnostico, setdiagnostico] = useState(['OVERHYDRATION']);
   const [erased, setNewErased] = useState([]);
   const [newFeatures, setNewFeatures] = useState([]);
 
