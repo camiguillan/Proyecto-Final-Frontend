@@ -25,7 +25,7 @@ export default function InfoCampo() {
   const { field } = useParams();
   const { crop } = useParams();
   const user = JSON.parse(localStorage.getItem('name')) || {};
-  const [selectedButton, setSelectedButton] = useState('1');
+  const [selectedTimePeriod, setSelectedTimePeriod] = useState('1');
   const [lineData, setLineData] = useState([['', crop]]);
   const [barData, setBarData] = useState([['', crop]]);
   const [searchTerm, setSearchTerm] = useState('lampara');
@@ -100,16 +100,16 @@ export default function InfoCampo() {
   };
 
   const handleButtonClick = (buttonText) => {
-    setSelectedButton(buttonText);
+    setSelectedTimePeriod(buttonText);
 
-    if (selectedButton === '1') {
-      console.log(1);
-    } else if (selectedButton === '2') {
-      console.log(1);
-    } else if (selectedButton === '3') {
-      console.log(1);
+    if (selectedTimePeriod === 'LastWeek') {
+      console.log('LastWeek');
+    } else if (selectedTimePeriod === 'LastMonth') {
+      console.log('LastMonth');
+    } else if (selectedTimePeriod === 'LastYear') {
+      console.log('LastYear');
     } else {
-      console.log(1);
+      console.log('FullHistory');
     }
   };
 
@@ -223,32 +223,32 @@ export default function InfoCampo() {
         <text className="titulo-fachero-facherito">Dashboards</text>
         <div className="buttons-container">
           <button
-            className={selectedButton === '1' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => handleButtonClick('1')}
+            className={selectedTimePeriod === 'LastWeek' ? 'button-dashboard selected' : 'button-dashboard'}
+            onClick={() => handleButtonClick('LastWeek')}
           >
             Última semana
-            <div className={selectedButton === '1' ? 'selected-line' : ''} />
+            <div className={selectedTimePeriod === 'LastWeek' ? 'selected-line' : ''} />
           </button>
           <button
-            className={selectedButton === '2' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => handleButtonClick('2')}
+            className={selectedTimePeriod === 'LastMonth' ? 'button-dashboard selected' : 'button-dashboard'}
+            onClick={() => handleButtonClick('LastMonth')}
           >
             Último mes
-            <div className={selectedButton === '2' ? 'selected-line' : ''} />
+            <div className={selectedTimePeriod === 'LastMonth' ? 'selected-line' : ''} />
           </button>
           <button
-            className={selectedButton === '3' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => handleButtonClick('3')}
+            className={selectedTimePeriod === 'LastYear' ? 'button-dashboard selected' : 'button-dashboard'}
+            onClick={() => handleButtonClick('LastYear')}
           >
             Último año
-            <div className={selectedButton === '3' ? 'selected-line' : ''} />
+            <div className={selectedTimePeriod === 'LastYear' ? 'selected-line' : ''} />
           </button>
           <button
-            className={selectedButton === '4' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => handleButtonClick('4')}
+            className={selectedTimePeriod === 'FullHistory' ? 'button-dashboard selected' : 'button-dashboard'}
+            onClick={() => handleButtonClick('FullHistory')}
           >
             Historial completo
-            <div className={selectedButton === '4' ? 'selected-line' : ''} />
+            <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
           </button>
         </div>
         <div className="cards-container">

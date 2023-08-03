@@ -29,6 +29,13 @@ $verde-claro-iniciar-sesion: #CCFCCB;
 $verde-intermedio-iniciar-sesion: #96E6B3;
 $verde-oscuro-iniciar-sesion: $verde-oscuro;
 
+//INPUT BOX
+$inputbox-background-red: #fff5f1;
+$inputbox-background-gray: #F1FFFA;
+$inputbox-border-gray:#8B8B8B;
+$inputbox-border2-gray:#c1c1c1;
+$eye-gray:#535353;
+
 
 @mixin alignHorizontally{
     display: flex;

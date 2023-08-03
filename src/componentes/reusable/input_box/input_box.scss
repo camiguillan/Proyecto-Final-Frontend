@@ -4,15 +4,15 @@
 .sub-rectangle {
     height: 3.2rem;
     width: 26rem;
-    background-color: #F1FFFA;
+    background-color: $inputbox-background-gray;
     margin-bottom: 2rem;
     border-radius: 1.5vh;
     //box-shadow: 0.5vh 0.5vh 1vh $black-shadows;
-    border: 0.2vh #8B8B8B;
+    border: 0.2vh $inputbox-border-gray;
     color: $gris-titulo;
     font-size: 1.5rem;
     font-family: "Inter", sans-serif;
-    border-color: #c1c1c1;
+    border-color: $inputbox-border2-gray;
     border-style: solid ;
     padding-left: 2%;
   }
@@ -26,7 +26,7 @@
 .sub-rectangle-red {
   height: 3rem;
   width: 26rem;
-  background-color: #fff5f1;
+  background-color: $inputbox-background-red;
   margin-bottom: 3.2rem;
   border-radius: 1.5vh;
   //box-shadow: 1vh 1vh 1vh $black-shadows;
@@ -106,7 +106,7 @@
   right: 6rem;
   transform: translateY(-0.9rem);
   cursor: pointer;
-  color: #535353;
+  color: $eye-gray;
   font-size: 1.56rem;
 }
 
