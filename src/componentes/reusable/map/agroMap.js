@@ -12,7 +12,7 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
 import styles from './styles';
-import { createRectangle } from './funcionesMapa';
+import { createRectangle, createGrid } from './funcionesMapa';
 import { PLOT_SIZE } from '../../../constants/plots';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
@@ -187,8 +187,10 @@ function AgroMap({
       // const bbox = createRectangle([{ polygon: lastDrawn, crop: 'NONE' }]);
       // const options = { units: 'degrees' };
       // const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
+      // const myGrid = createGrid(bbox, PLOT_SIZE);
       // console.log(squareGridR);
       // draw.add(squareGridR);
+      // draw.add(myGrid);
       const color = getRandomColor(features.features.length);
 
       draw.setFeatureProperty(lastDrawn.id, 'portColor', color);
