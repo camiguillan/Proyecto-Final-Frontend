@@ -155,6 +155,13 @@
   width: 90rem; /* Ajusta el valor según tus necesidades */
   margin: -1rem auto; /* Utiliza "auto" para centrar horizontalmente */
    height: 27.5rem;
+
+}
+
+.dashboard {
+  border-radius: 0.5rem; /* Ajusta el valor del radio de borde según tus necesidades */
+  overflow: hidden; /* Asegura que el contenido dentro del dashboard no desborde */
+  height: 26rem;
 }
 
 .nombre-producto {

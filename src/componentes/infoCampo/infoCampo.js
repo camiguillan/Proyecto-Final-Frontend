@@ -266,25 +266,29 @@ export default function InfoCampo() {
         </div>
         {lineData.length > 1 && (
         <div className="dashboards-container">
-          <Chart
-            width="42.75rem"
-            height="26rem"
-            chartType="LineChart"
-            loader={<div>Loading Chart</div>}
-            data={lineData}
-            options={lineChartOptions}
-            rootProps={{ 'data-testid': '2' }}
-          />
+          <div className="dashboard">
+            <Chart
+              width="42.75rem"
+              height="26rem"
+              chartType="LineChart"
+              loader={<div>Loading Chart</div>}
+              data={lineData}
+              options={lineChartOptions}
+              rootProps={{ 'data-testid': '2' }}
+            />
+          </div>
           <div style={{ marginRight: '2rem' }} />
-          <Chart
-            width="42.75rem"
-            height="26rem"
-            chartType="ColumnChart"
-            loader={<div>Loading Chart</div>}
-            data={barData}
-            options={barChartOptions}
-            rootProps={{ 'data-testid': '2' }}
-          />
+          <div className="dashboard">
+            <Chart
+              width="42.75rem"
+              height="26rem"
+              chartType="ColumnChart"
+              loader={<div>Loading Chart</div>}
+              data={barData}
+              options={barChartOptions}
+              rootProps={{ 'data-testid': '2' }}
+            />
+          </div>
         </div>
         )}
         <div className="cards-container">
