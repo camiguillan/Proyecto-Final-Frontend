@@ -16,6 +16,9 @@ import Header from '../reusable/header/header';
 import axios from 'axios';
 import ProductCard from './meliCard';
 import excelent from '../../images/excelent.png';
+import cropCheckFullField from '../reusable/map/funcionesMapa';
+import AgroMap from '../reusable/map/agroMap';
+import Card from '../reusable/card/card';
 
 export default function InfoCampo() {
   const { userID } = useParams();
@@ -28,6 +31,20 @@ export default function InfoCampo() {
   const [searchTerm, setSearchTerm] = useState('lampara');
   const [products, setProducts] = useState([]);
   const [diagnostico, setdiagnostico] = useState(['EXCELENTE']);
+  const [erased, setNewErased] = useState([]);
+  const [newFeatures, setNewFeatures] = useState([]);
+
+  const [campoInfo, setCampoInfo] = useState({
+    nombreCampo: '',
+    imagen: '',
+    coordinates: [-58.702963, -34.671792],
+    features: [],
+  });
+
+  const removeFeatureSt = (feats, removedFeature) => {
+    setNewFeatures(feats);
+    setNewErased(removedFeature[0]);
+  };
 
   const [lineChartOptions, setlineChartOptions] = useState({
     hAxis: {
@@ -292,6 +309,21 @@ export default function InfoCampo() {
         </div>
         )}
         <div className="cards-container">
+          <Card className="mapa-card max-content">
+            <div className="campo-mapa-cultivo" id="mapa">
+              <AgroMap
+                coordinates={campoInfo.coordinates}
+                changeCoordinates={(coord) => setCampoInfo((prevInfo) => ({
+                  ...prevInfo,
+                  coordinates: coord,
+                }))}
+                addFeatures={setNewFeatures}
+                removeFeature={(feats, removedFeature) => removeFeatureSt(feats, removedFeature)}
+              />
+            </div>
+          </Card>
+        </div>
+        <div className="cards-container">
           <Diagnostico diagnostico={diagnostico} />
           <div className="cards-wrapper">
             <img src={excelent} alt="Imagen 4" style={{ width: '7rem' }} />
@@ -302,7 +334,6 @@ export default function InfoCampo() {
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
-
       </div>
     </div>
   );
