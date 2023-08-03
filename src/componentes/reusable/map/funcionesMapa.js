@@ -67,23 +67,6 @@ const createPlotPolygon = (plotCoordinates) => {
     lon: plotCoordinates.lon + PLOT_SIZE,
     lat: plotCoordinates.lat + PLOT_SIZE,
   };
-  // [
-  //   [
-  //     -58.70695353056989, -34.67268620400039,
-  //   ],
-  //   [
-  //     -58.70695353056989,-34.67218561980293,
-  //   ],
-  //   [
-  //     -58.70634485389354,-34.67218561980293,
-  //   ],
-  //   [
-  //     -58.70634485389354, -34.67268620400039,
-  //   ],
-  //   [
-  //     -58.70695353056989,-34.67268620400039,
-  //   ],
-  // ];
 
   return [
     [plotTopLeft.lon, plotTopLeft.lat],
@@ -124,33 +107,71 @@ const cropCheck = (coordinates, cropPolygons) => {
   return { crop: answer.crop };
 };
 
+export const createGrid = (bbox, boxSize) => {
+  const grid = {
+    type: 'FeatureCollection',
+    features: [],
+  };
+
+  // Adjust the bounding box to ensure divisibility by boxSize
+  const lowestLongitude = Math.floor(bbox[0] / boxSize) * boxSize;
+  const lowestLatitude = Math.floor(bbox[1] / boxSize) * boxSize;
+  const highestLongitude = Math.ceil(bbox[2] / boxSize) * boxSize;
+  const highestLatitude = Math.ceil(bbox[3] / boxSize) * boxSize;
+
+  // Calculate the number of boxes in each direction
+  const width = Math.ceil((highestLongitude - lowestLongitude) / boxSize);
+  const height = Math.ceil((highestLatitude - lowestLatitude) / boxSize);
+
+  // Loop through each mini square and create the coordinates
+  for (let i = 0; i < width; i += 1) {
+    for (let j = 0; j < height; j += 1) {
+      const topLeftLongitude = lowestLongitude + i * boxSize;
+      const topLeftLatitude = lowestLatitude + j * boxSize;
+      const bottomRightLongitude = Math.min(topLeftLongitude + boxSize, highestLongitude);
+      const bottomRightLatitude = Math.min(topLeftLatitude + boxSize, highestLatitude);
+
+      const boxCoordinates = [
+        [topLeftLongitude, topLeftLatitude],
+        [bottomRightLongitude, topLeftLatitude],
+        [bottomRightLongitude, bottomRightLatitude],
+        [topLeftLongitude, bottomRightLatitude],
+        [topLeftLongitude, topLeftLatitude], // Closing the polygon
+      ];
+
+      const feature = {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Polygon',
+          coordinates: [boxCoordinates],
+        },
+      };
+
+      grid.features.push(feature);
+    }
+  }
+
+  return { squareGridR: grid, height, width };
+};
 // eslint-disable-next-line no-unused-vars
 const cropCheckFullField = (cropPolygons) => {
   const bbox = createRectangle(cropPolygons);
   const lowestLongitude = bbox[0];
-  const lowestLatitude = bbox[1];
-  const highestLongitude = bbox[2];
   const highestLatitude = bbox[3];
-  const topCoordinates = [lowestLongitude, highestLatitude];
 
-  // Calculate latitude and longitude ranges
-  const latitudeRange = highestLatitude - lowestLatitude;
-  const longitudeRange = highestLongitude - lowestLongitude;
-
-  // Calculate the number of rows and columns in the matrix
-  const height = Math.ceil(latitudeRange / PLOT_SIZE);
-  const width = Math.ceil(longitudeRange / PLOT_SIZE);
-  const options = { units: 'degrees' };
-  const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
+  const { squareGridR, height, width } = createGrid(bbox, PLOT_SIZE);
+  console.log(squareGridR);
   const tempList = cropPolygons;
   tempList.splice(0, 1);
   // console.log('CROPPOLYGONS, SHIF, SPLICE, REMAINING LIST', cropPolygons, cropPolygons.shift(), removed, tempList);
-  const plots = squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, tempList));// le saco el primero
+  const plots = squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, tempList));
+  console.log(plots);
   return {
     plots,
     height,
     width,
-    coordinates: { lat: topCoordinates[1], lon: topCoordinates[0] },
+    coordinates: { lat: highestLatitude, lon: lowestLongitude },
   };
 };
 
