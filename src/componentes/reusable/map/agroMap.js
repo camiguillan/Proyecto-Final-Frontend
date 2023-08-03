@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable import/named */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
@@ -38,7 +39,7 @@ function splitPolygon(draw, polygon) {
 // }
 
 function AgroMap({
-  coordinates, changeCoordinates, addFeatures, removeFeature,
+  coordinates, changeCoordinates, addFeatures, removeFeature, feats,
 }) {
   const mapContainer = useRef(null);
   // const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
@@ -155,6 +156,16 @@ function AgroMap({
 
     // draw.add(defaultPolygon);
 
+    if (feats.length !== 0) {
+      console.log('feats agro map', feats);
+      feats.map((feature) => draw.add(feature.polygon));
+      const long = feats[0].polygon.geometry.coordinates[0][0][0];
+      const lat = feats[0].polygon.geometry.coordinates[0][0][1];
+      console.log(long, lat);
+      map.setCenter([long, lat]);
+      map.flyTo({ center: [long, lat], zoom: 14 });
+    }
+
     map.on('result', (event) => {
       const { result } = event;
       console.log(result);
@@ -184,29 +195,11 @@ function AgroMap({
     function handleDraw() {
       const features = draw.getAll();
       const lastDrawn = features.features[features.features.length - 1];
-      // const bbox = createRectangle([{ polygon: lastDrawn, crop: 'NONE' }]);
-      // const options = { units: 'degrees' };
-      // const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
-      // const myGrid = createGrid(bbox, PLOT_SIZE);
-      // console.log(squareGridR);
-      // draw.add(squareGridR);
-      // draw.add(myGrid);
-      // if (features.features.length === 2) {
-      //   // eslint-disable-next-line max-len
-      //   const allPolys = features.features.map((poly) =>
-      //  ({ polygon: poly, crop: CROP_TYPES_KEYS.NONE }));
-      //   const bbox = createRectangle(allPolys);
-      //   const myGrid = createGrid(bbox, PLOT_SIZE).squareGridR;
-      //   console.log(myGrid);
-      //   draw.add(myGrid);
-      // }
       const color = getRandomColor(features.features.length);
 
       draw.setFeatureProperty(lastDrawn.id, 'portColor', color);
       // console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0][0]);
-      // splitPolygon(draw, defaultPolygon);
-      // eslint-disable-next-line guard-for-in
       if (features.features.length !== 0) {
         addFeatures(features.features, color);
       }
@@ -214,10 +207,10 @@ function AgroMap({
     }
 
     function handleDrawDelete(event) {
-      const feats = draw.getAll();
+      const fts = draw.getAll();
       const removedFeature = event.features;
       // console.log('FEATURES REMOVES', feats.features);
-      removeFeature(feats.features, removedFeature);
+      removeFeature(fts.features, removedFeature);
     }
     map.on('draw.create', handleDraw);
     map.on('draw.update', handleDraw);
@@ -265,4 +258,5 @@ AgroMap.propTypes = {
   changeCoordinates: PropTypes.func.isRequired,
   addFeatures: PropTypes.func.isRequired,
   removeFeature: PropTypes.func.isRequired,
+  feats: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

@@ -5,8 +5,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FileUploader } from 'react-drag-drop-files';
-import PropTypes, { string } from 'prop-types';
-import Header from '../header/header';
+import PropTypes from 'prop-types';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './mapContainer.scss';
 import Card from '../card/card';
@@ -29,22 +28,48 @@ export default function MapContainer({
   const fileTypes = ['JPG', 'PNG'];
   const [campoInfo, setCampoInfo] = useState(campInfo);
 
-  const [cultivos, setCultivos] = useState(cultivosSeleccionados);
+  const [cultivos, setCultivos] = useState([...cultivosSeleccionados]);
   const [features, setFeatures] = useState(feats);
   const [newFeatures, setNewFeatures] = useState([]);
   const [erased, setNewErased] = useState([]);
-  const [mainField, setMainField] = useState(campoPrincipal);
+  const [mainField, setMainField] = useState({
+    geometry: campoPrincipal.geometry,
+    id: campoPrincipal.id,
+    properties: campoPrincipal.properties,
+    type: campoPrincipal.type,
+  });
 
-  const [drawField, setdrawField] = useState(true);
+  const [drawField, setdrawField] = useState(!edit);
   const cultivosOpciones = Object.values(CROP_TYPES_KEYS);
   const [selectedCrop, setSelectedCrop] = useState(CROP_TYPES_KEYS.NONE);
   const [invalid, setinValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ title: '', message: '' });
+  console.log(cultivos, cultivosSeleccionados);
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
     tempList[index] = cultivo;
-    const list2 = [...campoInfo.features];
+    let list2 = [...campoInfo.features];
+    console.log(list2, 'CROP VACIO');
+    if (features.length === 0) {
+      list2 = [{
+        polygon: {
+          id: '',
+          type: '',
+          properties: {},
+          geometry: {
+            coordinates: [],
+            type: '',
+          },
+        },
+        crop: cultivo,
+      }];
+      console.log(list2, index, 'hola?');
+    }
+    if (list2.length === index + 1) {
+      list2[index].crop = cultivo;
+      console.log('list length == index + 1', list2);
+    }
     setCampoInfo((prevInfo) => ({
       ...prevInfo,
       features: list2,
@@ -101,20 +126,20 @@ export default function MapContainer({
         features: lista2,
       }));
       setFeatures(tempList);
-      if (mainField.id === '' || !mainField) {
-        const {
-          geometry, id, properties, type,
-        } = tempList[0];
-        setMainField(
-          {
-            geometry,
-            id,
-            properties,
-            type,
-          },
-        );
-        setdrawField(false);
-      }
+      // if (mainField.id === '' || !mainField) {
+      //   const {
+      //     geometry, id, properties, type,
+      //   } = tempList[0];
+      //   setMainField(
+      //     {
+      //       geometry,
+      //       id,
+      //       properties,
+      //       type,
+      //     },
+      //   );
+      //   setdrawField(false);
+      // }
     }
   };
 
@@ -125,7 +150,8 @@ export default function MapContainer({
 
   const removeFeature = () => {
     const erasedId = erased.id;
-    const erasedCrop = campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0].crop;
+    console.log(campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0]);
+    const erasedCrop = erased.length !== 0 && campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0].crop;
     removeInput(erasedCrop);
     setFeatures(newFeatures);
     setCampoInfo((prevInfo) => ({
@@ -133,7 +159,7 @@ export default function MapContainer({
       features: campoInfo.features.filter(({ polygon }) => polygon.id !== erasedId),
     }));
   };
-
+  console.log(cultivos);
   const cultivosInputs = cultivos.map((cultivo, index) => (
     // eslint-disable-next-line react/no-array-index-key
     <label key={index} className="agregar-campo-label">
@@ -143,25 +169,24 @@ export default function MapContainer({
         {opciones}
         {' '}
       </select>
-
-      {/* {cultivos.length - 1 === index
-        ? <Button type="button" onClick={addInput} className="green-button">+</Button>
-        :
-        <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
-        */}
       <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>
     </label>
   ));
 
   useEffect(() => {
-    if (((mainField || mainField.id !== '') && newFeatures.length !== 0) && areNewFeatures()) { addFeature(); }
+    if (newFeatures.length !== 0 && areNewFeatures()) { addFeature(); }
   }, [newFeatures]);
 
   useEffect(() => {
     if (campoInfo.features.length !== 0) {
+      console.log('Camp info', campoInfo, erased);
       removeFeature();
     }
   }, [erased]);
+
+  useEffect(() => {
+    setCultivos(cultivosSeleccionados);
+  }, []);
 
   function validateForm() {
     console.log(campoInfo);
@@ -223,6 +248,8 @@ export default function MapContainer({
     formData.append('width', width);
     formData.append('image', campoInfo.imagen); // Assuming campoInfo.image is a File object
 
+    console.log(formData, campoInfo, cultivos);
+
     if (edit) {
       // guardar campo editado
       sendData('endpoint', formData);
@@ -250,6 +277,7 @@ export default function MapContainer({
                 ...prevInfo,
                 coordinates: coord,
               }))}
+              feats={features}
               addFeatures={setNewFeatures}
               removeFeature={(fts, removedFeature) => removeFeatureSt(fts, removedFeature)}
             />
@@ -275,14 +303,13 @@ export default function MapContainer({
                   />
 
                 </label>
-                {drawField ? <p>Dibuje el campo principal</p>
-                  : (
-                    <div>
-                      <p>Dibuje la superficie de cada lote con su cultivo asociado</p>
-                      {cultivosInputs}
-                      <Button type="button" onClick={addInput} className="green-button mas-button">+</Button>
-                    </div>
-                  )}
+                {/* {drawField ? <p>Dibuje el campo principal</p> */}
+
+                <div>
+                  <p>Dibuje la superficie de cada lote con su cultivo asociado</p>
+                  {cultivosInputs}
+                  <Button type="button" onClick={addInput} className="green-button mas-button">+</Button>
+                </div>
 
               </div>
               <FileUploader
@@ -337,7 +364,7 @@ export default function MapContainer({
 
 MapContainer.propTypes = {
   campInfo: PropTypes.object.isRequired,
-  cultivosSeleccionados: PropTypes.arrayOf(PropTypes.number).isRequired,
+  cultivosSeleccionados: PropTypes.arrayOf(PropTypes.string).isRequired,
   feats: PropTypes.arrayOf(PropTypes.object).isRequired,
   campoPrincipal: PropTypes.object.isRequired,
   edit: PropTypes.bool.isRequired,
