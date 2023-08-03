@@ -5,8 +5,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FileUploader } from 'react-drag-drop-files';
-import PropTypes, { string } from 'prop-types';
-import Header from '../header/header';
+import PropTypes from 'prop-types';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './mapContainer.scss';
 import Card from '../card/card';
@@ -29,17 +28,23 @@ export default function MapContainer({
   const fileTypes = ['JPG', 'PNG'];
   const [campoInfo, setCampoInfo] = useState(campInfo);
 
-  const [cultivos, setCultivos] = useState(cultivosSeleccionados);
+  const [cultivos, setCultivos] = useState([...cultivosSeleccionados]);
   const [features, setFeatures] = useState(feats);
   const [newFeatures, setNewFeatures] = useState([]);
   const [erased, setNewErased] = useState([]);
-  const [mainField, setMainField] = useState(campoPrincipal);
+  const [mainField, setMainField] = useState({
+    geometry: campoPrincipal.geometry,
+    id: campoPrincipal.id,
+    properties: campoPrincipal.properties,
+    type: campoPrincipal.type,
+  });
 
-  const [drawField, setdrawField] = useState(true);
+  const [drawField, setdrawField] = useState(!edit);
   const cultivosOpciones = Object.values(CROP_TYPES_KEYS);
   const [selectedCrop, setSelectedCrop] = useState(CROP_TYPES_KEYS.NONE);
   const [invalid, setinValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ title: '', message: '' });
+  console.log(cultivos, cultivosSeleccionados);
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
@@ -125,7 +130,8 @@ export default function MapContainer({
 
   const removeFeature = () => {
     const erasedId = erased.id;
-    const erasedCrop = campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0].crop;
+    console.log(campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0]);
+    const erasedCrop = erased.length !== 0 && campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0].crop;
     removeInput(erasedCrop);
     setFeatures(newFeatures);
     setCampoInfo((prevInfo) => ({
@@ -133,7 +139,7 @@ export default function MapContainer({
       features: campoInfo.features.filter(({ polygon }) => polygon.id !== erasedId),
     }));
   };
-
+  console.log(cultivos);
   const cultivosInputs = cultivos.map((cultivo, index) => (
     // eslint-disable-next-line react/no-array-index-key
     <label key={index} className="agregar-campo-label">
@@ -159,6 +165,7 @@ export default function MapContainer({
 
   useEffect(() => {
     if (campoInfo.features.length !== 0) {
+      console.log('Camp info', campoInfo, erased);
       removeFeature();
     }
   }, [erased]);
@@ -223,6 +230,8 @@ export default function MapContainer({
     formData.append('width', width);
     formData.append('image', campoInfo.imagen); // Assuming campoInfo.image is a File object
 
+    console.log(formData, campoInfo, cultivos);
+
     if (edit) {
       // guardar campo editado
       sendData('endpoint', formData);
@@ -250,6 +259,7 @@ export default function MapContainer({
                 ...prevInfo,
                 coordinates: coord,
               }))}
+              feats={features}
               addFeatures={setNewFeatures}
               removeFeature={(fts, removedFeature) => removeFeatureSt(fts, removedFeature)}
             />
@@ -337,7 +347,7 @@ export default function MapContainer({
 
 MapContainer.propTypes = {
   campInfo: PropTypes.object.isRequired,
-  cultivosSeleccionados: PropTypes.arrayOf(PropTypes.number).isRequired,
+  cultivosSeleccionados: PropTypes.arrayOf(PropTypes.string).isRequired,
   feats: PropTypes.arrayOf(PropTypes.object).isRequired,
   campoPrincipal: PropTypes.object.isRequired,
   edit: PropTypes.bool.isRequired,
