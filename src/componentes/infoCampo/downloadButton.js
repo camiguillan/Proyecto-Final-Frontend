@@ -1,4 +1,5 @@
 import React from 'react';
+import './infoCampo.scss';
 
 function DownloadButton() {
   const handleDownload = () => {

@@ -12,13 +12,13 @@ import Papa from 'papaparse';
 import Chart from 'react-google-charts';
 import DownloadButton from './downloadButton';
 import Diagnostico from './diagnostico';
-import Header from '../reusable/header/header';
 import axios from 'axios';
 import ProductCard from './meliCard';
 import excelent from '../../images/excelent.png';
 import cropCheckFullField from '../reusable/map/funcionesMapa';
 import AgroMap from '../reusable/map/agroMap';
 import Card from '../reusable/card/card';
+import HeaderWhite from '../reusable/header_white/header_white';
 
 export default function InfoCampo() {
   const { userID } = useParams();
@@ -217,34 +217,34 @@ export default function InfoCampo() {
   }, []);
 
   return (
-    <div className="layout">
-      <Header />
+    <div>
+      <HeaderWhite />
       <div className="gray-space">
-        <h1 className="titulo-fachero-facherito">Dashboards</h1>
+        <text className="titulo-fachero-facherito">Dashboards</text>
         <div className="buttons-container">
           <button
-            className={selectedButton === '1' ? 'button selected' : 'button'}
+            className={selectedButton === '1' ? 'button-dashboard selected' : 'button-dashboard'}
             onClick={() => handleButtonClick('1')}
           >
             Última semana
             <div className={selectedButton === '1' ? 'selected-line' : ''} />
           </button>
           <button
-            className={selectedButton === '2' ? 'button selected' : 'button'}
+            className={selectedButton === '2' ? 'button-dashboard selected' : 'button-dashboard'}
             onClick={() => handleButtonClick('2')}
           >
             Último mes
             <div className={selectedButton === '2' ? 'selected-line' : ''} />
           </button>
           <button
-            className={selectedButton === '3' ? 'button selected' : 'button'}
+            className={selectedButton === '3' ? 'button-dashboard selected' : 'button-dashboard'}
             onClick={() => handleButtonClick('3')}
           >
             Último año
             <div className={selectedButton === '3' ? 'selected-line' : ''} />
           </button>
           <button
-            className={selectedButton === '4' ? 'button selected' : 'button'}
+            className={selectedButton === '4' ? 'button-dashboard selected' : 'button-dashboard'}
             onClick={() => handleButtonClick('4')}
           >
             Historial completo
@@ -253,25 +253,25 @@ export default function InfoCampo() {
         </div>
         <div className="cards-container">
           <div className="cards-wrapper">
-            <div className="circle-first-card" />
+            <div className="circle-card first" />
             <div className="cards-titles">
               Total sembrado
             </div>
           </div>
           <div className="cards-wrapper">
-            <div className="circle-second-card" />
+            <div className="circle-card second" />
             <div className="cards-titles">
               Cultivo sano
             </div>
           </div>
           <div className="cards-wrapper">
-            <div className="circle-third-card" />
+            <div className="circle-card third" />
             <div className="cards-titles">
               NDVI
             </div>
           </div>
           <div className="cards-wrapper">
-            <div className="circle-fourth-card" />
+            <div className="circle-card fourth" />
             <div className="cards-titles">
               Humedad
             </div>
@@ -279,7 +279,7 @@ export default function InfoCampo() {
         </div>
         <div className="file-upload-container">
           <DownloadButton />
-          <input className="button selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} />
+          <input className="button-dashboard selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} />
         </div>
         {lineData.length > 1 && (
         <div className="dashboards-container">
@@ -308,7 +308,7 @@ export default function InfoCampo() {
           </div>
         </div>
         )}
-        <div className="cards-container">
+        <div className="cards-container2">
           <Card className="mapa-card max-content">
             <div className="campo-mapa-cultivo" id="mapa">
               <AgroMap
@@ -329,8 +329,8 @@ export default function InfoCampo() {
             <img src={excelent} alt="Imagen 4" style={{ width: '7rem' }} />
           </div>
         </div>
-        <div className="dashboards-container">
-          {products.slice(0, 6).map((product) => (
+        <div className="cards-container">
+          {products.slice(0, 5).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

@@ -17,7 +17,7 @@ export default function HomePrincipal() {
   const listChooseUs = [{reason: 'Precisión en el diagnóstico', extra: 'Utilizamos algoritmos avanzados de inteligencia artificial y análisis de imágenes para identificar enfermedades, plagas y otros problemas de salud en los cultivos con alta precisión.'}, {reason: 'Optimización de recursos', extra: 'Ayudamos a maximizar la producción agrícola al optimizar el uso de recursos como el agua, los fertilizantes y los pesticidas.'}, {reason: 'Recomendaciones personalizadas', extra: 'Proporcionamos recomendaciones específicas y personalizadas para cada cultivo y situación, considerando factores como el tipo de cultivo, las condiciones climáticas y las características del suelo.'}];
 
   return (
-    <div className="layout">
+    <div className="no-over-scroll">
       <div className="full-page">
         <HeaderHome>.</HeaderHome>
         <div className="img-container">

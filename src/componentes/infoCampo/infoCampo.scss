@@ -3,11 +3,13 @@
 
 .buttons-container {
   display: flex;
-  margin: 0.5rem 0% 0% 0%;
+  //margin: 0.5rem 0% 0% 0%;
   justify-content: center;
+  margin-top: 1rem;
+  min-width: 100%;
 }
 
-.button {
+.button-dashboard {
   background: none;
   border: none;
   cursor: pointer;
@@ -37,18 +39,29 @@
 
 .gray-space {
   background-color: $light-gray;
-  min-width: 100%;
-  min-height: 90vh; /* Asegura que al menos ocupe toda la altura de la pantalla */
-  position: absolute; /* Cambia a "absolute" para que no bloquee las barras de desplazamiento */
+  padding-top: 1rem;
+  width: 100%; //100%
+  min-width: 80rem;
+  height: 100vh;
+  min-height: 90rem; /* Asegura que al menos ocupe toda la altura de la pantalla */
+  position: relative; /* Cambia a "absolute" para que no bloquee las barras de desplazamiento */
 }
 
 .cards-container {
   display: flex;
   justify-content: center;
-  width: 90rem; /* Ajusta el valor según tus necesidades */
+  width: 80rem; /* Ajusta el valor según tus necesidades */
   margin: 1.5rem auto; /* Utiliza "auto" para centrar horizontalmente */
+  min-width: 80rem;
 }
 
+.cards-container2 {
+  display: flex;
+  justify-content: center;
+  width: 80rem; /* Ajusta el valor según tus necesidades */
+  margin: 0rem auto; /* Utiliza "auto" para centrar horizontalmente */
+  min-width: 80rem;
+}
 .cards-wrapper {
   flex: 1;
   display: flex;
@@ -62,85 +75,51 @@
 
 .cards-titles {
   font-family: 'Inter', sans-serif;
-  margin-top: -7rem;
-  margin-left: 3rem; /* Adjust the distance between title and circle here */
+  margin-top: -6rem;
+  margin-left: 3.5rem; /* Adjust the distance between title and circle here */
   font-size: 1.5rem;
   font-weight: bold;
   color: black;
 }
 
-.circle-first-card {
+.circle-card {
   position: absolute;
   margin-top: -3.5rem;
   margin-left: 3rem;
   width: 1.8rem;
   height: 1.8rem;
   border-radius: 50%;
+  left: -2rem; /* Adjust the distance between circle and title here */
+  top: 55%;
+  transform: translateY(-50%);
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el círculo */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-position: center; /* Centra la imagen dentro del círculo */
+} 
+
+.first {
   background-color: $color-circulo-verde;
-  left: -2.5rem; /* Adjust the distance between circle and title here */
-  top: 50%;
-  transform: translateY(-50%);
-    background-image: url('../../images/plantacion.png'); /* Ruta de la imagen de la plantita */
-  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el círculo */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  background-position: center; /* Centra la imagen dentro del círculo */
+  background-image: url('../../images/plantacion.png'); /* Ruta de la imagen de la plantita */
 } 
 
-.circle-second-card {
-  position: absolute;
-  margin-top: -3.5rem;
-  margin-left: 3rem;
-  width: 1.8rem;
-  height: 1.8rem;
-  border-radius: 50%;
+.second {
   background-color: #FFB8B8;
-  left: -2.5rem; /* Adjust the distance between circle and title here */
-  top: 50%;
-  transform: translateY(-50%);
-    background-image: url('../../images/hospital.png'); /* Ruta de la imagen de la plantita */
-  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el círculo */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  background-position: center; /* Centra la imagen dentro del círculo */
+  background-image: url('../../images/hospital.png'); /* Ruta de la imagen de la plantita */
 } 
 
-.circle-third-card {
-  position: absolute;
-  margin-top: -3.5rem;
-  margin-left: 3rem;
-  width: 1.8rem;
-  height: 1.8rem;
-  border-radius: 50%;
+.third {
   background-color: #B5C5FD;
-  left: -2.5rem; /* Adjust the distance between circle and title here */
-  top: 50%;
-  transform: translateY(-50%);
-    background-image: url('../../images/velocimetro.png'); /* Ruta de la imagen de la plantita */
-  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el círculo */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  background-position: center; /* Centra la imagen dentro del círculo */
+  background-image: url('../../images/velocimetro.png'); /* Ruta de la imagen de la plantita */
 } 
 
-.circle-fourth-card {
-  position: absolute;
-  margin-top: -3.5rem;
-  margin-left: 3rem;
-  width: 1.8rem;
-  height: 1.8rem;
-  border-radius: 50%;
+.fourth {
   background-color: #FFF6A9;
-  left: -2.5rem; /* Adjust the distance between circle and title here */
-  top: 50%;
-  transform: translateY(-50%);
-    background-image: url('../../images/gota-de-agua.png'); /* Ruta de la imagen de la plantita */
-  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el círculo */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  background-position: center; /* Centra la imagen dentro del círculo */
+  background-image: url('../../images/gota-de-agua.png'); /* Ruta de la imagen de la plantita */
 } 
 
 .file-upload-container {
   position: relative;
-  left: -30em; /* Puedes ajustar el valor de 50px según el espacio que desees */
-  top: -2rem;
+  left: -26rem; /* Puedes ajustar el valor de 50px según el espacio que desees */
 }
 
 .first-dashboard-aligned{
@@ -324,4 +303,9 @@
   height: 30rem;
   //margin-left: 2%;
   padding: 1rem;
+}
+
+button {
+  margin-right: 0.5rem;
+  font-size: 0.77rem;
 }
