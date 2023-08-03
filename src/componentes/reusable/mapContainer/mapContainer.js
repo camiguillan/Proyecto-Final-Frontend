@@ -45,30 +45,35 @@ export default function MapContainer({
   const [invalid, setinValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ title: '', message: '' });
   console.log(cultivos, cultivosSeleccionados);
+  console.log(campoInfo.features);
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
     tempList[index] = cultivo;
-    let list2 = [...campoInfo.features];
+    const list2 = [...campoInfo.features];
     console.log(list2, 'CROP VACIO');
     if (features.length === 0) {
-      list2 = [{
-        polygon: {
-          id: '',
-          type: '',
-          properties: {},
-          geometry: {
-            coordinates: [],
-            type: '',
-          },
-        },
-        crop: cultivo,
-      }];
-      console.log(list2, index, 'hola?');
+      // list2 = [{
+      //   polygon: {
+      //     id: '',
+      //     type: '',
+      //     properties: {},
+      //     geometry: {
+      //       coordinates: [],
+      //       type: '',
+      //     },
+      //   },
+      //   crop: cultivo,
+      // }];
+      // console.log(list2, index, 'hola?');
     }
-    if (list2.length === index + 1) {
+    console.log('INDEX: ', index);
+    if (list2.length >= index + 1) {
       list2[index].crop = cultivo;
-      console.log('list length == index + 1', list2);
+      console.log('list length == index + 1', list2, index);
+    }
+    if (list2.length === tempList.length) {
+      console.log('deaaaaa', list2, tempList);
     }
     setCampoInfo((prevInfo) => ({
       ...prevInfo,
@@ -79,7 +84,23 @@ export default function MapContainer({
   };
 
   const addInput = () => {
-    if (selectedCrop !== CROP_TYPES_KEYS.NONE) {
+    if (selectedCrop === CROP_TYPES_KEYS.NONE) {
+      setErrorMessage({
+        title: 'No se puede agregar cultivo',
+        message: 'Por favor seleccione un cultivo',
+      });
+      setinValid(true);
+      return;
+    }
+    console.log('CULTIVOS: ', cultivos);
+    console.log('FEATURES: ', campoInfo.features);
+    if (cultivos.length !== campoInfo.features.length || campoInfo.features.some(({ polygon }) => polygon.id === '')) {
+      setErrorMessage({
+        title: 'No se puede agregar cultivo',
+        message: `Por favor dibuje el campo para ${CROP_TYPES_TRANSLATIONS[cultivos[cultivos.length - 1]]}`,
+      });
+      setinValid(true);
+    } else {
       setCultivos((cult) => [...cult, '']);
       setSelectedCrop(CROP_TYPES_KEYS.NONE);
     }
@@ -116,7 +137,7 @@ export default function MapContainer({
           tempList.push(feat);
           const feat2 = {
             polygon: feat,
-            crop: cultivos[index - 1] ? cultivos[index - 1] : CROP_TYPES_KEYS.NONE,
+            crop: CROP_TYPES_KEYS.NONE, // se crea con NONE y desp se cambia
           };
           lista2.push(feat2);
         }
