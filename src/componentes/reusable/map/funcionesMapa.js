@@ -77,11 +77,9 @@ const createPlotPolygon = (plotCoordinates) => {
   ];
 };
 
-export const createPolygonFromPlots = ({
-  plots, height, width, coordinates,
-}) => {
+export const createPolygonFromPlots = (plots, height, width, coordinates) => {
   console.log(plots);
-  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) })).filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
+  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) })).filter((obj) => obj.crop === CROP_TYPES_KEYS.SUNFLOWER);
   console.log(plotsCoordinates);
   const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
     const polygonCoordinates = createPlotPolygon(coordinate);
@@ -106,38 +104,46 @@ const cropCheck = (coordinates, cropPolygons) => {
   }
   return { crop: answer.crop };
 };
+function calculateLongitudeIncrement(latitude, boxSize) {
+  return boxSize / Math.cos(latitude * (Math.PI / 180));
+}
+const createBox = (lowestLongitude, highestLatitude, boxSize) => {
+  const longitudeIncrement = calculateLongitudeIncrement(highestLatitude, boxSize);
+  console.log(longitudeIncrement);
+  const highestLongitude = lowestLongitude + longitudeIncrement;// L -> H SE SUMA
+  const lowestLatitude = highestLatitude - boxSize; // H -> L SE RESTA
+
+  return [
+    [lowestLongitude, highestLatitude], // top left
+    [highestLongitude, highestLatitude], // top right
+    [highestLongitude, lowestLatitude], // bottom right
+    [lowestLongitude, lowestLatitude], // bottom left
+    [lowestLongitude, highestLatitude], // Closing the polygon
+  ];
+};
 
 export const createGrid = (bbox, boxSize) => {
   const grid = {
     type: 'FeatureCollection',
     features: [],
   };
-
+  console.log(bbox);
   // Adjust the bounding box to ensure divisibility by boxSize
-  const lowestLongitude = Math.floor(bbox[0] / boxSize) * boxSize;
-  const lowestLatitude = Math.floor(bbox[1] / boxSize) * boxSize;
-  const highestLongitude = Math.ceil(bbox[2] / boxSize) * boxSize;
-  const highestLatitude = Math.ceil(bbox[3] / boxSize) * boxSize;
-
-  // Calculate the number of boxes in each direction
-  const width = Math.ceil((highestLongitude - lowestLongitude) / boxSize);
+  const lowestLongitude = bbox[0];
+  const lowestLatitude = bbox[1];
+  const highestLongitude = bbox[2];
+  const highestLatitude = bbox[3];
+  const longitudeIncrement = calculateLongitudeIncrement(highestLatitude, boxSize);
+  // Calculate the number of boxes in each direction (width and height as multiples of boxSize)
+  const width = Math.ceil((highestLongitude - lowestLongitude) / longitudeIncrement);
   const height = Math.ceil((highestLatitude - lowestLatitude) / boxSize);
 
   // Loop through each mini square and create the coordinates
   for (let i = 0; i < width; i += 1) {
     for (let j = 0; j < height; j += 1) {
-      const topLeftLongitude = lowestLongitude + i * boxSize;
-      const topLeftLatitude = lowestLatitude + j * boxSize;
-      const bottomRightLongitude = Math.min(topLeftLongitude + boxSize, highestLongitude);
-      const bottomRightLatitude = Math.min(topLeftLatitude + boxSize, highestLatitude);
-
-      const boxCoordinates = [
-        [topLeftLongitude, topLeftLatitude],
-        [bottomRightLongitude, topLeftLatitude],
-        [bottomRightLongitude, bottomRightLatitude],
-        [topLeftLongitude, bottomRightLatitude],
-        [topLeftLongitude, topLeftLatitude], // Closing the polygon
-      ];
+      const boxHighestLatitude = highestLatitude - j * boxSize;
+      const boxLowestLongitude = lowestLongitude + i * longitudeIncrement;
+      const boxCoordinates = createBox(boxLowestLongitude, boxHighestLatitude, boxSize);
 
       const feature = {
         type: 'Feature',
@@ -154,6 +160,7 @@ export const createGrid = (bbox, boxSize) => {
 
   return { squareGridR: grid, height, width };
 };
+
 // eslint-disable-next-line no-unused-vars
 const cropCheckFullField = (cropPolygons) => {
   const bbox = createRectangle(cropPolygons);
