@@ -137,7 +137,7 @@ export default function MapContainer({
           tempList.push(feat);
           const feat2 = {
             polygon: feat,
-            crop: CROP_TYPES_KEYS.NONE, // se crea con NONE y desp se cambia
+            crop: cultivos[index] ? cultivos[index] : CROP_TYPES_KEYS.NONE,
           };
           lista2.push(feat2);
         }
