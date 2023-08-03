@@ -106,6 +106,7 @@ export default function Registrarse() {
             </div>
             <div className="text-home-principal">
               <form onSubmit={handleSubmit}>
+                <div className="espacio" />
                 <input
                   className={(campoNombreLleno || !submit) || isInputFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
                   type="text"

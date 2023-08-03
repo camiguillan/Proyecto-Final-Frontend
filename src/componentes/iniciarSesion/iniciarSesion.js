@@ -97,7 +97,7 @@ export default function IniciarSesion() {
               </div>
               <div className="text-home-principal">
                 <text className="gray-title">Iniciá Sesión</text>
-                <div className="espacio" />
+                <div className="espacio3" />
                 <input
                   className={(campoNombreLleno || !submit) || isInputUsernameFilled ? 'sub-rectangle' : 'sub-rectangle-red'}
                   type="text"

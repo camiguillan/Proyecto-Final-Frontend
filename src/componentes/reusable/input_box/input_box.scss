@@ -5,9 +5,9 @@
     height: 3.2rem;
     width: 26rem;
     background-color: #F1FFFA;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     border-radius: 1.5vh;
-    box-shadow: 1vh 1vh 1vh $black-shadows;
+    //box-shadow: 0.5vh 0.5vh 1vh $black-shadows;
     border: 0.2vh #8B8B8B;
     color: $gris-titulo;
     font-size: 1.5rem;
@@ -29,7 +29,7 @@
   background-color: #fff5f1;
   margin-bottom: 3.2rem;
   border-radius: 1.5vh;
-  box-shadow: 1vh 1vh 1vh $black-shadows;
+  //box-shadow: 1vh 1vh 1vh $black-shadows;
   border: 0.3vh solid red;
   color: $gris-titulo;
   font-size: 1.5rem;
@@ -86,7 +86,7 @@
 
 .mostrar-ocultar {
   position: absolute;
-  top: 26rem;
+  top: 24rem;
   right: 4.5rem;
   transform: translateY(-0.9rem);
   cursor: pointer;
@@ -94,7 +94,7 @@
 
 .mostrar-ocultar-edit-perfil {
   position: absolute;
-  bottom: 8.6rem;
+  bottom: 9.5rem;
   left: 27.6rem;
   transform: translateY(-0.9rem);
   cursor: pointer;
