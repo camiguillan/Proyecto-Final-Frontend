@@ -13,7 +13,7 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar c
 import './agroMap.scss';
 import styles from './styles';
 import { createRectangle, createGrid } from './funcionesMapa';
-import { PLOT_SIZE } from '../../../constants/plots';
+import { CROP_TYPES_KEYS, PLOT_SIZE } from '../../../constants/plots';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 function splitPolygon(draw, polygon) {
@@ -191,6 +191,15 @@ function AgroMap({
       // console.log(squareGridR);
       // draw.add(squareGridR);
       // draw.add(myGrid);
+      // if (features.features.length === 2) {
+      //   // eslint-disable-next-line max-len
+      //   const allPolys = features.features.map((poly) =>
+      //  ({ polygon: poly, crop: CROP_TYPES_KEYS.NONE }));
+      //   const bbox = createRectangle(allPolys);
+      //   const myGrid = createGrid(bbox, PLOT_SIZE).squareGridR;
+      //   console.log(myGrid);
+      //   draw.add(myGrid);
+      // }
       const color = getRandomColor(features.features.length);
 
       draw.setFeatureProperty(lastDrawn.id, 'portColor', color);

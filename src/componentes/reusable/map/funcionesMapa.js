@@ -120,12 +120,12 @@ export const createGrid = (bbox, boxSize) => {
   const highestLatitude = Math.ceil(bbox[3] / boxSize) * boxSize;
 
   // Calculate the number of boxes in each direction
-  const numBoxesLongitude = Math.ceil((highestLongitude - lowestLongitude) / boxSize);
-  const numBoxesLatitude = Math.ceil((highestLatitude - lowestLatitude) / boxSize);
+  const width = Math.ceil((highestLongitude - lowestLongitude) / boxSize);
+  const height = Math.ceil((highestLatitude - lowestLatitude) / boxSize);
 
   // Loop through each mini square and create the coordinates
-  for (let i = 0; i < numBoxesLongitude; i += 1) {
-    for (let j = 0; j < numBoxesLatitude; j += 1) {
+  for (let i = 0; i < width; i += 1) {
+    for (let j = 0; j < height; j += 1) {
       const topLeftLongitude = lowestLongitude + i * boxSize;
       const topLeftLatitude = lowestLatitude + j * boxSize;
       const bottomRightLongitude = Math.min(topLeftLongitude + boxSize, highestLongitude);
@@ -152,37 +152,26 @@ export const createGrid = (bbox, boxSize) => {
     }
   }
 
-  return grid;
+  return { squareGridR: grid, height, width };
 };
 // eslint-disable-next-line no-unused-vars
 const cropCheckFullField = (cropPolygons) => {
   const bbox = createRectangle(cropPolygons);
   const lowestLongitude = bbox[0];
-  const lowestLatitude = bbox[1];
-  const highestLongitude = bbox[2];
   const highestLatitude = bbox[3];
-  const topCoordinates = [lowestLongitude, highestLatitude];
-  console.log(createGrid(bbox, PLOT_SIZE));
 
-  // Calculate latitude and longitude ranges
-  const latitudeRange = highestLatitude - lowestLatitude;
-  const longitudeRange = highestLongitude - lowestLongitude;
-
-  // Calculate the number of rows and columns in the matrix
-  const height = Math.ceil(latitudeRange / PLOT_SIZE);
-  const width = Math.ceil(longitudeRange / PLOT_SIZE);
-  const options = { units: 'degrees' };
-  const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
+  const { squareGridR, height, width } = createGrid(bbox, PLOT_SIZE);
   console.log(squareGridR);
   const tempList = cropPolygons;
   tempList.splice(0, 1);
   // console.log('CROPPOLYGONS, SHIF, SPLICE, REMAINING LIST', cropPolygons, cropPolygons.shift(), removed, tempList);
-  const plots = squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, tempList));// le saco el primero
+  const plots = squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, tempList));
+  console.log(plots);
   return {
     plots,
     height,
     width,
-    coordinates: { lat: topCoordinates[1], lon: topCoordinates[0] },
+    coordinates: { lat: highestLatitude, lon: lowestLongitude },
   };
 };
 
