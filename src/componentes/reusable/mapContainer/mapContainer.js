@@ -49,7 +49,27 @@ export default function MapContainer({
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
     tempList[index] = cultivo;
-    const list2 = [...campoInfo.features];
+    let list2 = [...campoInfo.features];
+    console.log(list2, 'CROP VACIO');
+    if (features.length === 0) {
+      list2 = [{
+        polygon: {
+          id: '',
+          type: '',
+          properties: {},
+          geometry: {
+            coordinates: [],
+            type: '',
+          },
+        },
+        crop: cultivo,
+      }];
+      console.log(list2, index, 'hola?');
+    }
+    if (list2.length === index + 1) {
+      list2[index].crop = cultivo;
+      console.log('list length == index + 1', list2);
+    }
     setCampoInfo((prevInfo) => ({
       ...prevInfo,
       features: list2,
@@ -106,20 +126,20 @@ export default function MapContainer({
         features: lista2,
       }));
       setFeatures(tempList);
-      if (mainField.id === '' || !mainField) {
-        const {
-          geometry, id, properties, type,
-        } = tempList[0];
-        setMainField(
-          {
-            geometry,
-            id,
-            properties,
-            type,
-          },
-        );
-        setdrawField(false);
-      }
+      // if (mainField.id === '' || !mainField) {
+      //   const {
+      //     geometry, id, properties, type,
+      //   } = tempList[0];
+      //   setMainField(
+      //     {
+      //       geometry,
+      //       id,
+      //       properties,
+      //       type,
+      //     },
+      //   );
+      //   setdrawField(false);
+      // }
     }
   };
 
@@ -149,18 +169,12 @@ export default function MapContainer({
         {opciones}
         {' '}
       </select>
-
-      {/* {cultivos.length - 1 === index
-        ? <Button type="button" onClick={addInput} className="green-button">+</Button>
-        :
-        <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
-        */}
       <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>
     </label>
   ));
 
   useEffect(() => {
-    if (((mainField || mainField.id !== '') && newFeatures.length !== 0) && areNewFeatures()) { addFeature(); }
+    if (newFeatures.length !== 0 && areNewFeatures()) { addFeature(); }
   }, [newFeatures]);
 
   useEffect(() => {
@@ -169,6 +183,10 @@ export default function MapContainer({
       removeFeature();
     }
   }, [erased]);
+
+  useEffect(() => {
+    setCultivos(cultivosSeleccionados);
+  }, []);
 
   function validateForm() {
     console.log(campoInfo);
@@ -285,14 +303,13 @@ export default function MapContainer({
                   />
 
                 </label>
-                {drawField ? <p>Dibuje el campo principal</p>
-                  : (
-                    <div>
-                      <p>Dibuje la superficie de cada lote con su cultivo asociado</p>
-                      {cultivosInputs}
-                      <Button type="button" onClick={addInput} className="green-button mas-button">+</Button>
-                    </div>
-                  )}
+                {/* {drawField ? <p>Dibuje el campo principal</p> */}
+
+                <div>
+                  <p>Dibuje la superficie de cada lote con su cultivo asociado</p>
+                  {cultivosInputs}
+                  <Button type="button" onClick={addInput} className="green-button mas-button">+</Button>
+                </div>
 
               </div>
               <FileUploader
