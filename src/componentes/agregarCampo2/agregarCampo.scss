@@ -1,0 +1,148 @@
+@import "../../assets/global.scss";
+
+.agregar-campo-titulo {
+  color: $verde-musgo;
+  width: 90%;
+  margin: 1% 0% 0% 2%;
+  text-align: left;
+  font-size: xx-large;
+}
+
+.campo {
+  //background-color: $verde-clarito;
+  text-align: center;
+  //border: 1px solid rgb(202, 202, 202);
+  border-radius: 10px;
+  width: 100%;
+  height: 70vh;
+  //margin-left: 2%;
+  padding: 1rem;
+}
+
+.tarjetas {
+  display: flex; 
+  align-items: flex-start;
+}
+
+.agregar-campo-label{
+  margin: 1vh;
+  text-align: left;
+  font-size: 2vh;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-evenly;
+}
+
+.agregar-campo-inputs{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+    
+}
+
+@media screen and (max-width:60em) {
+  .tarjetas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+@media screen and (max-width:62em) {
+    .botones{
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .agregar-campo-titulo{
+    font-size: 3vh;
+  }
+
+   .derecha{
+    justify-content: flex-start !important;
+  }
+}
+
+@media screen and (max-width:75em){
+  .botones{
+    margin: 1vh !important;
+  }
+}
+
+.derecha{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 80vh;  
+}
+
+.botones {
+  display: flex;  
+  justify-content: flex-end;
+  align-items: center;
+  gap:1vw;
+  column-gap: 2vh;
+}
+
+
+.upload-image-container{
+  border: dashed;
+  border-color: gray;
+  width: 90%;
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 100%;
+  background-color: $verde-clarito;
+  border-radius: 10px;
+  position: relative;
+  margin: 1rem;
+
+ span{
+  font-size: 2vh;
+  padding: 1rem;
+  color: gray;
+ }
+
+ :hover{
+  cursor: pointer;
+ }
+
+}
+
+.drop_area{
+  width: 100%;
+  display: flex;
+}
+
+.imagen-campo img{
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+}
+
+.select{
+  height: 3.2rem;
+  width: 10rem;
+  background-color: #F1FFFA;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  border: 1px #8B8B8B;
+  color: $gris-titulo;
+  font-size: 2vh;
+  font-family: "Inter", sans-serif;
+  border-color: #c1c1c1;
+  border-style: solid ;
+  padding-left: 2%;
+}
+
+
