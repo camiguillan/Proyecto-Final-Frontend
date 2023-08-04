@@ -50,24 +50,6 @@ export default function InfoCampo() {
   const [humedadviejo, setHumedadviejo] = useState([]);
   const [fieldRest, setField] = useState(field);
   const today = new Date();
-  const twoWeeksAgo = new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000);
-  const formattedDate = twoWeeksAgo.toISOString();
-
-  // Datos a agregar a la historia
-  const newHistoryEntry = {
-    color: 'e0a9a',
-    createdAt: formattedDate,
-    diagnostics: 'frosting',
-    frost: 0.568348568318906 * 1.1, // Aumenta un 10%
-    humidity: 0.7798086071977153 * 1.1, // Aumenta un 10%
-    ndvi: 0.13315606695283555 * 1.1, // Aumenta un 10%
-    updatedAt: formattedDate,
-  };
-
-  // Agrega el nuevo valor a la historia
-  user.fields[5].plots[0].history.push(newHistoryEntry);
-
-  console.log(user);
 
   const [campoInfo, setCampoInfo] = useState({
     nombreCampo: '',
@@ -289,19 +271,20 @@ export default function InfoCampo() {
                 }
               }
             });
-            if (plot.history[indexAusar].diagnostics === 'excelent' || plot.history[indexAusar].diagnostics === 'very_good' || plot.history[indexAusar].diagnostics === 'good') {
+            if ((plot.history[indexAusar].diagnostics === 'excelent' || plot.history[indexAusar].diagnostics === 'very_good' || plot.history[indexAusar].diagnostics === 'good') && huboAlguno) {
               sano += 121;
             } if (huboAlguno) {
               metros += 121;
               cuantosPlots += 1;
+              ndviTemp += plot.history[indexAusar].ndvi;
+              humedadTemp += plot.history[indexAusar].humidity;
+              console.log('El ndvi :', ndviTemp);
+              console.log('El :', metros);
             }
-
-            ndviTemp += plot.history[indexAusar].ndvi;
-            humedadTemp += plot.history[indexAusar].humidity;
           }
         });
-
         ndviTemp = (ndviTemp / cuantosPlots).toFixed(2);
+        console.log('El ndvi ahora es de:', ndviTemp);
         humedadTemp = (humedadTemp / cuantosPlots).toFixed(2);
         const porcentajeSanou = (sano * 100) / metros;
         const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(2);
@@ -309,8 +292,8 @@ export default function InfoCampo() {
         setNdviviejo(Math.round(((ndvi - ndviTemp) / Math.abs(ndviTemp)) * 100));
         setHumedadviejo(Math.round(((humedad - humedadTemp) / Math.abs(humedadTemp)) * 100));
         setMetrosCuadradosviejo(Math.round(((humedad - metros) / Math.abs(metros)) * 100));
-        console.log('metros:', metrosCuadradosViejo);
-        console.log('quilombo:', humedadviejo);
+        console.log('metros:', ndvi);
+        console.log('quilombo:', ndviTemp);
         return;
       }
     });
@@ -386,6 +369,7 @@ export default function InfoCampo() {
   }, [crop]);
 
   useEffect(() => {
+    metricsForMenu();
   }, [selectedTimePeriod]);
 
   useEffect(() => {
@@ -399,7 +383,7 @@ export default function InfoCampo() {
 
   useEffect(() => {
     metricsForMenu();
-  }, [metrosCuadrados]);
+  }, [metrosCuadrados, porcentajeSano, humedad, ndvi]);
 
   return (
     <div>
@@ -472,14 +456,14 @@ export default function InfoCampo() {
               {Number(metrosCuadrados).toLocaleString()}
               <span>m2</span>
             </div>
-            {metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0 ? (
+            {metrosCuadradosViejo !== Infinity ? (
               <div className={metrosCuadradosViejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
                 {metrosCuadradosViejo}
                 %
               </div>
             ) : null}
 
-            {metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0 ? (
+            {(metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0) && metrosCuadradosViejo !== Infinity ? (
               <img src={metrosCuadradosViejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageMetros" />
             ) : null}
           </div>
@@ -492,13 +476,15 @@ export default function InfoCampo() {
               {porcentajeSano}
               %
             </div>
-            <div className={porcentajeSanoviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
-              {porcentajeSanoviejo}
-              %
-            </div>
-
-            <img src={porcentajeSanoviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageSano" />
-
+            {porcentajeSanoviejo !== Infinity ? (
+              <div className={porcentajeSanoviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
+                {porcentajeSanoviejo}
+                %
+              </div>
+            ) : null}
+            {(porcentajeSanoviejo < 0 || porcentajeSanoviejo >= 0) && porcentajeSanoviejo !== Infinity ? (
+              <img src={porcentajeSanoviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageSano" />
+            ) : null}
           </div>
           <div className="cards-wrapper">
             <div className="circle-card third" />
@@ -508,12 +494,13 @@ export default function InfoCampo() {
             <div className="cards-Subtitle cards-Subtitle3">
               {ndvi}
             </div>
-            <div className={ndviviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
-              {ndviviejo}
-              %
-            </div>
-
-            {ndviviejo < 0 || ndviviejo >= 0 ? (
+            {ndviviejo !== Infinity ? (
+              <div className={ndviviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
+                {ndviviejo}
+                %
+              </div>
+            ) : null}
+            {(ndviviejo < 0 || ndviviejo >= 0) && ndviviejo !== Infinity ? (
               <img src={ndviviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImagendvi" />
             ) : null}
           </div>
@@ -525,12 +512,13 @@ export default function InfoCampo() {
             <div className="cards-Subtitle cards-Subtitle4">
               {humedad}
             </div>
-            <div className={humedadviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
-              {humedadviejo}
-              %
-            </div>
-
-            {humedadviejo < 0 || humedadviejo >= 0 ? (
+            {humedadviejo !== Infinity ? (
+              <div className={humedadviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
+                {humedadviejo}
+                %
+              </div>
+            ) : null}
+            {(humedadviejo < 0 || humedadviejo >= 0) && humedadviejo !== Infinity ? (
               <img src={humedadviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage" />
             ) : null}
           </div>
