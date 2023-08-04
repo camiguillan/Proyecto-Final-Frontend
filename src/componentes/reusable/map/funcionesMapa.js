@@ -82,7 +82,7 @@ export const createPolygonFromPlots = (field) => {
     plots, height, width, coordinates,
   } = field;
   console.log(field);
-  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) }));
+  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) })).filter((obj) => obj.crop === CROP_TYPES_KEYS.SUNFLOWER);
   console.log(plotsCoordinates);
   const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
     console.log(coordinate);
