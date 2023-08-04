@@ -11,8 +11,8 @@ import './mapContainer.scss';
 import Card from '../card/card';
 import Input from '../input_box/input';
 import Icon from '../../../assets/icons/icon';
-import Button from '../boton/button';
 import AgroMap from '../map/agroMap';
+import Button from '../boton/button';
 import { CROP_TYPES_KEYS } from '../../../constants/plots';
 import cropCheckFullField from '../map/funcionesMapa';
 import { post } from '../../conexionBack/conexionBack';
@@ -107,9 +107,16 @@ export default function MapContainer({
   };
 
   const removeInput = (deletedCrop) => {
+    console.log(deletedCrop);
     const tempList = [...cultivos];
-    tempList.splice(cultivos.indexOf(deletedCrop), 1);
+    const tempListFeatures = [...campoInfo.features];
+    tempList.splice(deletedCrop, 1);
+    tempListFeatures.splice(deletedCrop, 1);
     setCultivos(tempList);
+    setCampoInfo((prevInfo) => ({
+      ...prevInfo,
+      features: tempListFeatures,
+    }));
   };
 
   const opciones = cultivosOpciones.map((opcion) => (
@@ -293,14 +300,16 @@ export default function MapContainer({
         <Card className="agregar-campo-container max-content">
           <div className="campo" id="mapa">
             <AgroMap
+              key="11233"
               coordinates={campoInfo.coordinates}
               changeCoordinates={(coord) => setCampoInfo((prevInfo) => ({
                 ...prevInfo,
                 coordinates: coord,
               }))}
-              feats={features}
+              feats={campoInfo.features}
               addFeatures={setNewFeatures}
               removeFeature={(fts, removedFeature) => removeFeatureSt(fts, removedFeature)}
+              cultivos={cultivos}
             />
           </div>
         </Card>

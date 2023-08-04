@@ -1,8 +1,9 @@
+/* eslint-disable max-len */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable import/named */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { lineToPolygon, difference } from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'; // SEARCH BAR
@@ -39,11 +40,25 @@ function splitPolygon(draw, polygon) {
 // }
 
 function AgroMap({
-  coordinates, changeCoordinates, addFeatures, removeFeature, feats,
+  coordinates, changeCoordinates, addFeatures, removeFeature, feats, cultivos,
 }) {
   const mapContainer = useRef(null);
+  const drawRef = useRef(null);
   // const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
   // console.log(coordinates);
+  function removeFeatureMap() {
+    if (drawRef.current) {
+      const { features } = drawRef.current.getAll();
+      console.log('All Features:', features);
+
+      if (features.length !== 0 && features.length > feats.length && feats.length !== 0) {
+        const idsInFeats = feats.map(({ polygon }) => polygon.id);
+        const tempFeatures = features.filter((feature) => !idsInFeats.includes(feature.id));
+        console.log('Features to Remove:', tempFeatures);
+        tempFeatures.forEach((feat) => drawRef.current.delete(feat.id));
+      }
+    }
+  }
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -67,6 +82,7 @@ function AgroMap({
     };
 
     const draw = new MapboxDraw(drawOptions);
+    drawRef.current = draw;
     map.addControl(draw);
 
     const nav = new mapboxgl.NavigationControl();
@@ -157,10 +173,11 @@ function AgroMap({
     // draw.add(defaultPolygon);
 
     if (feats.length !== 0) {
-      console.log('feats agro map', feats);
-      feats.map((feature) => draw.add(feature.polygon));
-      const long = feats[0].polygon.geometry.coordinates[0][0][0];
-      const lat = feats[0].polygon.geometry.coordinates[0][0][1];
+      const tempFeats = feats.map((feat) => feat.polygon);
+      console.log('feats agro map', tempFeats);
+      tempFeats.map((feature) => draw.add(feature.polygon));
+      const long = tempFeats[0].polygon.geometry.coordinates[0][0][0];
+      const lat = tempFeats[0].polygon.geometry.coordinates[0][0][1];
       console.log(long, lat);
       map.setCenter([long, lat]);
       map.flyTo({ center: [long, lat], zoom: 14 });
@@ -245,7 +262,12 @@ function AgroMap({
       map.remove();
     };
   }, []);
+  useEffect(() => {
+    console.log('FEATURES IN AGROMAP PROP: ', feats);
 
+    // Call the removeFeatureMap function here (inside the useEffect where drawRef is assigned).
+    removeFeatureMap();
+  });
   return (
     <div ref={mapContainer} className="mapa" style={{ height: '100%', borderRadius: '10px' }} />
   );
@@ -259,4 +281,5 @@ AgroMap.propTypes = {
   addFeatures: PropTypes.func.isRequired,
   removeFeature: PropTypes.func.isRequired,
   feats: PropTypes.arrayOf(PropTypes.object).isRequired,
+  cultivos: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
