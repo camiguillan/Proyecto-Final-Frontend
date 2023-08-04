@@ -111,9 +111,10 @@ export default function MapContainer({
     console.log(deletedCrop);
     const tempList = [...cultivos];
     const tempListFeatures = [...campoInfo.features];
-    const erasedCrop = tempListFeatures[deletedCrop];
-    tempList.splice(deletedCrop, 1);
-    tempListFeatures.splice(deletedCrop, 1);
+    const cropIndex = tempListFeatures.findIndex((f) => f.crop === deletedCrop);
+    const erasedCrop = tempListFeatures[cropIndex];
+    tempList.splice(cropIndex, 1);
+    tempListFeatures.splice(cropIndex, 1);
     setCultivos(tempList);
     setCampoInfo((prevInfo) => ({
       ...prevInfo,
@@ -176,6 +177,7 @@ export default function MapContainer({
   };
 
   const removeFeatureSt = (fts, removedFeature) => {
+    console.log('FEATURES TO REMOVE EDIT', fts, removedFeature);
     setNewFeatures(fts);
     setNewErased(removedFeature[0]);
   };
@@ -183,7 +185,7 @@ export default function MapContainer({
   const removeFeature = () => {
     const erasedId = erased.id;
     console.log(campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0], '????');
-    const erasedCrop = erased.length !== 0 && campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0].crop;
+    const erasedCrop = Object.keys(erased).length > 0 && campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0].crop;
     removeInput(erasedCrop);
     setFeatures(newFeatures);
     setCampoInfo((prevInfo) => ({
@@ -191,6 +193,7 @@ export default function MapContainer({
       features: campoInfo.features.filter(({ polygon }) => polygon.id !== erasedId),
     }));
   };
+
   console.log(cultivos);
   const cultivosInputs = cultivos.map((cultivo, index) => (
     // eslint-disable-next-line react/no-array-index-key
@@ -201,7 +204,7 @@ export default function MapContainer({
         {opciones}
         {' '}
       </select>
-      {index > 0 && <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
+      {index > 0 && <Button type="button" onClick={() => removeInput(cultivo)} className="green-button">-</Button>}
     </label>
   ));
 
@@ -211,7 +214,8 @@ export default function MapContainer({
   }, [newFeatures]);
 
   useEffect(() => {
-    if (campoInfo.features.length !== 0 && erased > 0) {
+    console.log(erased, 'QUE ES ERASED');
+    if (campoInfo.features.length !== 0 && Object.keys(erased).length > 0) {
       console.log('Camp info', campoInfo, erased);
       removeFeature();
     }
