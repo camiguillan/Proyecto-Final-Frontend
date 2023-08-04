@@ -281,6 +281,7 @@ export default function MapContainer({
     formData.append('image', campoInfo.imagen); // Assuming campoInfo.image is a File object
 
     console.log(formData, campoInfo, cultivos);
+    console.log('PLOTS: ', plots);
 
     if (edit) {
       // guardar campo editado

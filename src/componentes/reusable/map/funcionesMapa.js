@@ -139,8 +139,8 @@ export const createGrid = (bbox, boxSize) => {
   const height = Math.ceil((highestLatitude - lowestLatitude) / boxSize);
 
   // Loop through each mini square and create the coordinates
-  for (let i = 0; i < width; i += 1) {
-    for (let j = 0; j < height; j += 1) {
+  for (let j = 0; j < height; j += 1) {
+    for (let i = 0; i < width; i += 1) {
       const boxHighestLatitude = highestLatitude - j * boxSize;
       const boxLowestLongitude = lowestLongitude + i * longitudeIncrement;
       const boxCoordinates = createBox(boxLowestLongitude, boxHighestLatitude, boxSize);
@@ -169,10 +169,8 @@ const cropCheckFullField = (cropPolygons) => {
 
   const { squareGridR, height, width } = createGrid(bbox, PLOT_SIZE);
   console.log(squareGridR);
-  const tempList = cropPolygons;
-  tempList.splice(0, 1);
   // console.log('CROPPOLYGONS, SHIF, SPLICE, REMAINING LIST', cropPolygons, cropPolygons.shift(), removed, tempList);
-  const plots = squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, tempList));
+  const plots = squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, cropPolygons));
   console.log(plots);
   return {
     plots,
