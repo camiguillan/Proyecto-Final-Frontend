@@ -68,7 +68,7 @@ export default function EditarCampo() {
           features: campoMockeado.features,
         }}
         cultivosSeleccionados={['soy']}
-        feats={campoMockeado.features}
+        feats={campoMockeado.features.map((f) => f.polygon)}
         campoPrincipal={{
           geometry: [],
           id: campoMockeado.id,

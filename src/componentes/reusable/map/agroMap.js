@@ -175,12 +175,12 @@ function AgroMap({
 
     // draw.add(defaultPolygon);
 
-    if (feats.length !== 0) {
+    if (feats.length > 0) {
       const tempFeats = feats.map((feat) => feat.polygon);
       console.log('feats agro map', tempFeats);
-      tempFeats.map((feature) => draw.add(feature.polygon));
-      const long = tempFeats[0].polygon.geometry.coordinates[0][0][0];
-      const lat = tempFeats[0].polygon.geometry.coordinates[0][0][1];
+      tempFeats.map((feature) => draw.add(feature));
+      const long = tempFeats[0].geometry.coordinates[0][0][0];
+      const lat = tempFeats[0].geometry.coordinates[0][0][1];
       console.log(long, lat);
       map.setCenter([long, lat]);
       map.flyTo({ center: [long, lat], zoom: 14 });
@@ -214,6 +214,7 @@ function AgroMap({
 
     function handleDraw() {
       const features = draw.getAll();
+      console.log(features, 'ACA ROMPE?');
       const lastDrawn = features.features[features.features.length - 1];
       const color = getRandomColor(features.features.length);
       // if (features.features.length === 2) {
@@ -226,8 +227,12 @@ function AgroMap({
       draw.setFeatureProperty(lastDrawn.id, 'portColor', color);
       // console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0][0]);
+      console.log(features);
       if (features.features.length !== 0) {
         addFeatures(features.features, color);
+      } else if (feats.length > 0) {
+        const polygons = feats.map((f) => f.polygon);
+        addFeatures(polygons, color);
       }
       // addCentroid(draw, lastDrawn);
     }
