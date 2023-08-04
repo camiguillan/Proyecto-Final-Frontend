@@ -115,7 +115,11 @@ export default function MapContainer({
     const erasedCrop = tempListFeatures[cropIndex];
     tempList.splice(cropIndex, 1);
     tempListFeatures.splice(cropIndex, 1);
-    setCultivos(tempList);
+    if (tempList.length > 0) {
+      setCultivos(tempList);
+    } else {
+      setCultivos(['']);
+    }
     setCampoInfo((prevInfo) => ({
       ...prevInfo,
       features: tempListFeatures,
@@ -274,7 +278,7 @@ export default function MapContainer({
     // if (!valid) {
     //   return;
     // }
-    console.log(campInfo);
+    console.log(campoInfo);
     const {
       plots, height, width, coordinates,
     } = cropCheckFullField(campoInfo.features);
