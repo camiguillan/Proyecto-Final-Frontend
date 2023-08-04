@@ -145,9 +145,100 @@
   margin-top: 3rem; /* Ajusta el valor según tu preferencia */
 }
 
+.cards-Subtitle3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: black;
+  margin-left: -4.7rem; /* Ajusta el valor según tu preferencia */
+  margin-top: 3rem; /* Ajusta el valor según tu preferencia */
+}
+
+.cards-Subtitle4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: black;
+  margin-left: -6.7rem; /* Ajusta el valor según tu preferencia */
+  margin-top: 3rem; /* Ajusta el valor según tu preferencia */
+}
+
+.cards-Subtitle-old4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  margin-left: 8.9rem; /* Ajusta el valor según tu preferencia */
+  margin-top: 0rem; /* Ajusta el valor según tu preferencia */
+}
+
+.cards-Subtitle-old3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  margin-left: 8.6rem; /* Ajusta el valor según tu preferencia */
+  margin-top: 0rem; /* Ajusta el valor según tu preferencia */
+}
+
+.cards-Subtitle-old2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  margin-left: 6rem; /* Ajusta el valor según tu preferencia */
+  margin-top: 0rem; /* Ajusta el valor según tu preferencia */
+}
+
+.cards-Subtitle-old1 {
+  position:absolute;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+  margin-left: 14.5rem; /* Ajusta el valor según tu preferencia */
+  margin-top: 0rem; /* Ajusta el valor según tu preferencia */
+}
+
+.upLineImage {
+  position: absolute;
+  width: 3rem; /* Ajusta el ancho deseado */
+  height: 3rem; /* Ajusta la altura deseada */
+  margin-left: 12rem; /* Ajusta el valor según tu preferencia */
+}
+
+.upLineImageMetros {
+  position: absolute;
+  width: 3rem; /* Ajusta el ancho deseado */
+  height: 3rem; /* Ajusta la altura deseada */
+  margin-left: 11.5rem; /* Ajusta el valor según tu preferencia */
+}
+
+.upLineImageHumedad {
+  position: absolute;
+  width: 3rem; /* Ajusta el ancho deseado */
+  height: 3rem; /* Ajusta la altura deseada */
+  margin-left: 12rem; /* Ajusta el valor según tu preferencia */
+}
+
+.upLineImageSano {
+  position: absolute;
+  width: 3rem; /* Ajusta el ancho deseado */
+  height: 3rem; /* Ajusta la altura deseada */
+  margin-left: 12.5rem; /* Ajusta el valor según tu preferencia */
+}
+
 .cards-Subtitle span {
   font-size: 1rem; /* Ajusta el valor del tamaño de letra para "m2" */
   font-weight: normal; /* Elimina la negrita */
+}
+
+.red {
+  color: #B4374F;
+}
+
+.green {
+  color: #84B79B;
 }
 
 .circle-card {

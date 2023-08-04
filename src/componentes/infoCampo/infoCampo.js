@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-useless-return */
 /* eslint-disable no-underscore-dangle */
@@ -18,10 +19,13 @@ import Diagnostico from './diagnostico';
 import axios from 'axios';
 import ProductCard from './meliCard';
 import excelent from '../../images/excelent.png';
+import upLine from '../../images/ascending.png';
+import downLine from '../../images/descending.png';
 import cropCheckFullField from '../reusable/map/funcionesMapa';
 import AgroMap from '../reusable/map/agroMap';
 import Card from '../reusable/card/card';
 import HeaderWhite from '../reusable/header_white/header_white';
+import { differenceInDays } from 'date-fns';
 
 export default function InfoCampo() {
   const { userID } = useParams();
@@ -38,6 +42,12 @@ export default function InfoCampo() {
   const [newFeatures, setNewFeatures] = useState([]);
   const [metrosCuadrados, setMetrosCuadrados] = useState([]);
   const [porcentajeSano, setporcentajeSano] = useState([]);
+  const [ndvi, setNdvi] = useState([]);
+  const [humedad, setHumedad] = useState([]);
+  const [metrosCuadradosViejo, setMetrosCuadradosviejo] = useState([]);
+  const [porcentajeSanoviejo, setporcentajeSanoviejo] = useState([]);
+  const [ndviviejo, setNdviviejo] = useState([]);
+  const [humedadviejo, setHumedadviejo] = useState([]);
   const [fieldRest, setField] = useState(field);
 
   console.log(user);
@@ -211,12 +221,30 @@ export default function InfoCampo() {
     }
   };
 
-  const metrics = () => {
+  const metricsForMenu = () => {
     let metros = 0;
     let sano = 0;
     let cultivo = '';
+    let ndviTemp = 0;
+    let humedadTemp = 0;
+    let cuantosPlots = 0;
+    let fullHistory = false;
     const fechaActual = new Date();
-    let diferenciaMenor = 1000000000000000000000000000000000000000000000000;
+    const fechaAUsar = new Date(fechaActual);
+    let diferenciaMenor = Number.MAX_VALUE;
+    let huboAlguno = false;
+    if (selectedTimePeriod === 'LastWeek') {
+      const diasArestar = 7;
+      fechaAUsar.setDate(fechaActual.getDate() - diasArestar);
+    } else if (selectedTimePeriod === 'LastMonth') {
+      const diasArestar = 30;
+      fechaAUsar.setDate(fechaActual.getDate() - diasArestar);
+    } else if (selectedTimePeriod === 'LastYear') {
+      const diasArestar = 365;
+      fechaAUsar.setDate(fechaActual.getDate() - diasArestar);
+    } else if (selectedTimePeriod === 'FullHistory') {
+      fullHistory = true;
+    }
     if (crop === 'Girasol') {
       cultivo = 'sunflower';
     } else if (crop === 'Soja') {
@@ -229,14 +257,76 @@ export default function InfoCampo() {
     user.fields.forEach((fiel, index) => {
       if (fiel._id === field) {
         user.fields[index].plots.forEach((plot) => {
-          if (plot.crop === cultivo) {
+          if (plot.crop === cultivo || crop === 'Todos') {
+            diferenciaMenor = Number.MAX_VALUE;
+            huboAlguno = false;
+            let indexAusar = 0;
+            plot.history.forEach((instance, index2) => {
+              if (index2 !== 0) {
+                const fechaInstancia = new Date(instance.createdAt);
+                const diferenciaNueva = differenceInDays(fechaActual, fechaInstancia);
+                if (diferenciaNueva <= diferenciaMenor && fechaInstancia <= fechaAUsar) {
+                  diferenciaMenor = diferenciaNueva;
+                  indexAusar = index2;
+                  huboAlguno = true;
+                }
+              }
+            });
+            if (plot.history[indexAusar].diagnostics === 'excelent' || plot.history[indexAusar].diagnostics === 'very_good' || plot.history[indexAusar].diagnostics === 'good') {
+              sano += 121;
+            } if (huboAlguno) {
+              metros += 121;
+              cuantosPlots += 1;
+            }
+
+            ndviTemp += plot.history[indexAusar].ndvi;
+            humedadTemp += plot.history[indexAusar].humidity;
+          }
+        });
+
+        ndviTemp = (ndviTemp / cuantosPlots).toFixed(2);
+        humedadTemp = (humedadTemp / cuantosPlots).toFixed(2);
+        const porcentajeSanou = (sano * 100) / metros;
+        const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(2);
+        setporcentajeSanoviejo(Math.round(((porcentajeSano - porcentajeSanoRedondeado) / Math.abs(porcentajeSanoRedondeado)) * 100));
+        setNdviviejo(Math.round(((ndvi - ndviTemp) / Math.abs(ndviTemp)) * 100));
+        setHumedadviejo(Math.round(((humedad - humedadTemp) / Math.abs(humedadTemp)) * 100));
+        setMetrosCuadradosviejo(Math.round(((humedad - metros) / Math.abs(metros)) * 100));
+        return;
+      }
+    });
+  };
+
+  const metrics = () => {
+    let metros = 0;
+    let sano = 0;
+    let cultivo = '';
+    let ndviTemp = 0;
+    let humedadTemp = 0;
+    let cuantosPlots = 0;
+    const fechaActual = new Date();
+    let diferenciaMenor = Number.MAX_VALUE;
+    if (crop === 'Girasol') {
+      cultivo = 'sunflower';
+    } else if (crop === 'Soja') {
+      cultivo = 'soy';
+    } else if (crop === 'Trigo') {
+      cultivo = 'wheat';
+    } else if (crop === 'Maiz') {
+      cultivo = 'corn';
+    }
+    user.fields.forEach((fiel, index) => {
+      if (fiel._id === field) {
+        user.fields[index].plots.forEach((plot) => {
+          if (plot.crop === cultivo || crop === 'Todos') {
+            diferenciaMenor = Number.MAX_VALUE;
             metros += 121;
             let indexAusar = 0;
             plot.history.forEach((instance, index2) => {
               if (index2 !== 0) {
                 const fechaInstancia = new Date(instance.createdAt);
-                const diferenciaNueva = Math.abs(fechaActual - fechaInstancia);
-                if (diferenciaNueva < diferenciaMenor) {
+                const diferenciaNueva = differenceInDays(fechaActual, fechaInstancia);
+                if (diferenciaNueva <= diferenciaMenor) {
                   diferenciaMenor = diferenciaNueva;
                   indexAusar = index2;
                 }
@@ -245,8 +335,15 @@ export default function InfoCampo() {
             if (plot.history[indexAusar].diagnostics === 'excelent' || plot.history[indexAusar].diagnostics === 'very_good' || plot.history[indexAusar].diagnostics === 'good') {
               sano += 121;
             }
+            cuantosPlots += 1;
+            ndviTemp += plot.history[indexAusar].ndvi;
+            humedadTemp += plot.history[indexAusar].humidity;
           }
         });
+        ndviTemp = (ndviTemp / cuantosPlots).toFixed(2);
+        humedadTemp = (humedadTemp / cuantosPlots).toFixed(2);
+        setNdvi(ndviTemp);
+        setHumedad(humedadTemp);
         const porcentajeSanou = (sano * 100) / metros;
         const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(2);
         setporcentajeSano(porcentajeSanoRedondeado);
@@ -259,6 +356,7 @@ export default function InfoCampo() {
   const handleFieldChange = (event) => {
     setField(event.target.value);
     metrics();
+    metricsForMenu();
   };
 
   const handleCropChange = (event) => {
@@ -266,18 +364,23 @@ export default function InfoCampo() {
   };
 
   useEffect(() => {
-    // Llamar a la función metrics aquí
     metrics();
+    metricsForMenu();
   }, [crop]);
 
   useEffect(() => {
-    // Llamar a la función metrics aquí
+    metricsForMenu();
+  }, [selectedTimePeriod]);
+
+  useEffect(() => {
     metrics();
+    metricsForMenu();
   }, [field]);
 
   useEffect(() => {
     handleSearch();
     metrics();
+    metricsForMenu();
   }, []);
 
   return (
@@ -351,6 +454,11 @@ export default function InfoCampo() {
               {Number(metrosCuadrados).toLocaleString()}
               <span>m2</span>
             </div>
+            <div className={metrosCuadradosViejo < 0 ? 'cards-Subtitle-old1 red' : 'cards-Subtitle-old1 green'}>
+              {metrosCuadradosViejo}
+              %
+            </div>
+            <img src={metrosCuadradosViejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImageMetros" />
           </div>
           <div className="cards-wrapper">
             <div className="circle-card second" />
@@ -361,18 +469,39 @@ export default function InfoCampo() {
               {porcentajeSano}
               %
             </div>
+            <div className={porcentajeSanoviejo < 0 ? 'cards-Subtitle-old2 red' : 'cards-Subtitle-old2 green'}>
+              {porcentajeSanoviejo}
+              %
+            </div>
+            <img src={porcentajeSanoviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImageSano" />
           </div>
           <div className="cards-wrapper">
             <div className="circle-card third" />
             <div className="cards-titles">
               NDVI
             </div>
+            <div className="cards-Subtitle3">
+              {ndvi}
+            </div>
+            <div className={ndviviejo < 0 ? 'cards-Subtitle-old3 red' : 'cards-Subtitle-old3 green'}>
+              {ndviviejo}
+              %
+            </div>
+            <img src={ndviviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImageHumedad" />
           </div>
           <div className="cards-wrapper">
             <div className="circle-card fourth" />
             <div className="cards-titles">
               Humedad
             </div>
+            <div className="cards-Subtitle4">
+              {humedad}
+            </div>
+            <div className={humedadviejo < 0 ? 'cards-Subtitle-old4 red' : 'cards-Subtitle-old4 green'}>
+              {humedadviejo}
+              %
+            </div>
+            <img src={humedadviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage" />
           </div>
         </div>
         <div className="file-upload-container">
