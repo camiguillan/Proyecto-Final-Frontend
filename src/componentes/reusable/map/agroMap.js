@@ -14,8 +14,9 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
 import styles from './styles';
-import { createRectangle, createGrid } from './funcionesMapa';
+import { createRectangle, createGrid, createPolygonFromPlots } from './funcionesMapa';
 import { CROP_TYPES_KEYS, PLOT_SIZE } from '../../../constants/plots';
+import { campoPrueba } from './campoPrueba';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 function splitPolygon(draw, polygon) {
@@ -217,6 +218,9 @@ function AgroMap({
       const color = getRandomColor(features.features.length);
       // if (features.features.length === 2) {
       //   draw.add(createGrid(createRectangle([{ polygon: features.features[0], crop: 'NONE' }]), PLOT_SIZE).squareGridR);
+      // }
+      // if (features.features.length === 1) {
+      //   draw.add(createPolygonFromPlots(campoPrueba.field));
       // }
 
       draw.setFeatureProperty(lastDrawn.id, 'portColor', color);
