@@ -40,7 +40,7 @@ function splitPolygon(draw, polygon) {
 // }
 
 function AgroMap({
-  coordinates, changeCoordinates, addFeatures, removeFeature, feats, cultivos,
+  coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased,
 }) {
   const mapContainer = useRef(null);
   const drawRef = useRef(null);
@@ -51,11 +51,13 @@ function AgroMap({
       const { features } = drawRef.current.getAll();
       console.log('All Features:', features);
 
-      if (features.length !== 0 && features.length > feats.length && feats.length !== 0) {
-        const idsInFeats = feats.map(({ polygon }) => polygon.id);
-        const tempFeatures = features.filter((feature) => !idsInFeats.includes(feature.id));
-        console.log('Features to Remove:', tempFeatures);
-        tempFeatures.forEach((feat) => drawRef.current.delete(feat.id));
+      if (features.length !== 0 && featErased !== '') {
+        // const idsInFeats = feats.map(({ polygon }) => polygon.id);
+        // const tempFeatures = features.filter((feature) => !idsInFeats.includes(feature.id));
+        // console.log('Features to Remove:', tempFeatures);
+        // tempFeatures.forEach((feat) => drawRef.current.delete(feat.id));
+        console.log('Feat to erase: ', featErased);
+        drawRef.current.delete(featErased);
       }
     }
   }
@@ -264,6 +266,7 @@ function AgroMap({
   }, []);
   useEffect(() => {
     console.log('FEATURES IN AGROMAP PROP: ', feats);
+    console.log('ERASED IN AGROMAP PROP: ', featErased);
 
     // Call the removeFeatureMap function here (inside the useEffect where drawRef is assigned).
     removeFeatureMap();
@@ -281,5 +284,5 @@ AgroMap.propTypes = {
   addFeatures: PropTypes.func.isRequired,
   removeFeature: PropTypes.func.isRequired,
   feats: PropTypes.arrayOf(PropTypes.object).isRequired,
-  cultivos: PropTypes.arrayOf(PropTypes.string).isRequired,
+  featErased: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

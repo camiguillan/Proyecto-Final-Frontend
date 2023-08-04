@@ -32,6 +32,7 @@ export default function MapContainer({
   const [features, setFeatures] = useState(feats);
   const [newFeatures, setNewFeatures] = useState([]);
   const [erased, setNewErased] = useState([]);
+  const [featErasedId, setNewErasedId] = useState('');
   const [mainField, setMainField] = useState({
     geometry: campoPrincipal.geometry,
     id: campoPrincipal.id,
@@ -110,6 +111,7 @@ export default function MapContainer({
     console.log(deletedCrop);
     const tempList = [...cultivos];
     const tempListFeatures = [...campoInfo.features];
+    const erasedCrop = tempListFeatures[deletedCrop];
     tempList.splice(deletedCrop, 1);
     tempListFeatures.splice(deletedCrop, 1);
     setCultivos(tempList);
@@ -117,6 +119,8 @@ export default function MapContainer({
       ...prevInfo,
       features: tempListFeatures,
     }));
+    console.log(erasedCrop);
+    setNewErasedId(erasedCrop.polygon.id);
   };
 
   const opciones = cultivosOpciones.map((opcion) => (
@@ -309,7 +313,7 @@ export default function MapContainer({
               feats={campoInfo.features}
               addFeatures={setNewFeatures}
               removeFeature={(fts, removedFeature) => removeFeatureSt(fts, removedFeature)}
-              cultivos={cultivos}
+              featErased={featErasedId}
             />
           </div>
         </Card>
