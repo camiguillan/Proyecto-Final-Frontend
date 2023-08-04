@@ -7,48 +7,24 @@
 }
 
 .rounded-dropdown {
-  border-radius: 0.5rem; /* Ajusta el valor según el radio de borde deseado */
-  padding: 0.2rem 1rem; /* Ajusta el padding según tus necesidades */
-
-  /* Estilos adicionales para el dropdown menu */
-  /* Ajusta los colores y otros estilos según tus necesidades */
+  border-radius: 0.3rem; 
+  padding: 0.2rem 1rem;
   background-color: white;
   border: 1px solid #ced4da;
   color: #495057;
   font-size: 0.75rem;
-
-  /* Ajusta la posición del dropdown */
   position: absolute;
-  right: -18.5rem; /* Ajusta la posición a la derecha */
-
-  /* Estilos para eliminar los bordes y ajustar el borde inferior */
+  right: -18.5rem;
   border-color: transparent;
   border-bottom: 0.5rem;
 }
 
 .rounded-dropdown-cultivos {
-  border-radius: 0.5rem; /* Ajusta el valor según el radio de borde deseado */
-  padding: 0.2rem 1rem; /* Ajusta el padding según tus necesidades */
-
-  /* Estilos adicionales para el dropdown menu */
-  /* Ajusta los colores y otros estilos según tus necesidades */
-  background-color: white;
-  border: 1px solid #ced4da;
-  color: #495057;
-  font-size: 0.75rem;
-
-  /* Ajusta la posición del dropdown */
-  position: absolute;
-  right: -26rem; /* Ajusta la posición a la derecha */
-
-  /* Estilos para eliminar los bordes y ajustar el borde inferior */
-  border-color: transparent;
-  border-bottom: 0.5rem;
+  right: -26rem;
 }
 
 .buttons-container {
   display: flex;
-  //margin: 0.5rem 0% 0% 0%;
   justify-content: center;
   margin-top: 1rem;
   min-width: 100%;
@@ -59,13 +35,13 @@
   border: none;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
-  font-size: 0.75rem; /* 12px pasado a rem */
+  font-size: 0.75rem; 
   margin-right: 1rem;
-  color: black; /* Color de fuente normal */
+  color: black; 
 }
 
 .selected {
-  color: $blue-titles-infoCampo; /* Color de fuente azul cuando está seleccionado */
+  color: $blue-titles-infoCampo;
 }
 
 .selected-line {
@@ -85,26 +61,26 @@
 .gray-space {
   background-color: $light-gray;
   padding-top: 1rem;
-  width: 100%; //100%
+  width: 100%;
   min-width: 80rem;
   height: 100vh;
-  min-height: 90rem; /* Asegura que al menos ocupe toda la altura de la pantalla */
-  position: relative; /* Cambia a "absolute" para que no bloquee las barras de desplazamiento */
+  min-height: 115rem;
+  position: relative; 
 }
 
 .cards-container {
   display: flex;
   justify-content: center;
-  width: 80rem; /* Ajusta el valor según tus necesidades */
-  margin: 1.5rem auto; /* Utiliza "auto" para centrar horizontalmente */
+  width: 80rem;
+  margin: 1.5rem auto;
   min-width: 80rem;
 }
 
 .cards-container2 {
   display: flex;
   justify-content: center;
-  width: 80rem; /* Ajusta el valor según tus necesidades */
-  margin: 0rem auto; /* Utiliza "auto" para centrar horizontalmente */
+  width: 80rem; 
+  margin: 0rem auto; 
   min-width: 80rem;
 }
 .cards-wrapper {
@@ -121,7 +97,7 @@
 .cards-titles {
   font-family: 'Inter', sans-serif;
   margin-top: -4rem;
-  margin-left: 3.5rem; /* Adjust the distance between title and circle here */
+  margin-left: 3.5rem;
   font-size: 1rem;
   font-weight: bold;
   color: black;
@@ -132,62 +108,32 @@
   font-size: 2.5rem;
   font-weight: bold;
   color: black;
-  margin-left: -9.5rem; /* Ajusta el valor según tu preferencia */
-  margin-top: 3rem; /* Ajusta el valor según tu preferencia */
+  margin-left: -9.5rem;
+  margin-top: 3rem; 
 }
 
 .cards-Subtitle2 {
-  font-family: 'Inter', sans-serif;
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: black;
-  margin-left: -8rem; /* Ajusta el valor según tu preferencia */
-  margin-top: 3rem; /* Ajusta el valor según tu preferencia */
+  margin-left: -8rem; 
 }
 
 .cards-Subtitle3 {
-  font-family: 'Inter', sans-serif;
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: black;
-  margin-left: -4.7rem; /* Ajusta el valor según tu preferencia */
-  margin-top: 3rem; /* Ajusta el valor según tu preferencia */
+  margin-left: -4.7rem; 
 }
 
 .cards-Subtitle4 {
-  font-family: 'Inter', sans-serif;
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: black;
-  margin-left: -6.7rem; /* Ajusta el valor según tu preferencia */
-  margin-top: 3rem; /* Ajusta el valor según tu preferencia */
+  margin-left: -6.7rem; 
 }
 
 .cards-Subtitle-old4 {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: black;
-  margin-left: 8.9rem; /* Ajusta el valor según tu preferencia */
-  margin-top: 0rem; /* Ajusta el valor según tu preferencia */
+  margin-left: 8.9rem; 
 }
 
 .cards-Subtitle-old3 {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: black;
-  margin-left: 8.6rem; /* Ajusta el valor según tu preferencia */
-  margin-top: 0rem; /* Ajusta el valor según tu preferencia */
+  margin-left: 8.6rem; 
 }
 
 .cards-Subtitle-old2 {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: black;
-  margin-left: 6rem; /* Ajusta el valor según tu preferencia */
-  margin-top: 0rem; /* Ajusta el valor según tu preferencia */
+  margin-left: 6rem; 
 }
 
 .cards-Subtitle-old1 {
@@ -196,41 +142,32 @@
   font-size: 1.2rem;
   font-weight: bold;
   color: black;
-  margin-left: 14.5rem; /* Ajusta el valor según tu preferencia */
-  margin-top: 0rem; /* Ajusta el valor según tu preferencia */
+  margin-left: 14.5rem; 
+  margin-top: 0rem; 
 }
 
 .upLineImage {
   position: absolute;
-  width: 3rem; /* Ajusta el ancho deseado */
-  height: 3rem; /* Ajusta la altura deseada */
-  margin-left: 12rem; /* Ajusta el valor según tu preferencia */
+  width: 3rem; 
+  height: 3rem; 
+  margin-left: 12rem; 
 }
 
-.upLineImageMetros {
-  position: absolute;
-  width: 3rem; /* Ajusta el ancho deseado */
-  height: 3rem; /* Ajusta la altura deseada */
-  margin-left: 11.5rem; /* Ajusta el valor según tu preferencia */
+.upLineImageMetros { 
+  margin-left: 11.5rem; 
 }
 
 .upLineImageHumedad {
-  position: absolute;
-  width: 3rem; /* Ajusta el ancho deseado */
-  height: 3rem; /* Ajusta la altura deseada */
-  margin-left: 12rem; /* Ajusta el valor según tu preferencia */
+  margin-left: 12rem; 
 }
 
 .upLineImageSano {
-  position: absolute;
-  width: 3rem; /* Ajusta el ancho deseado */
-  height: 3rem; /* Ajusta la altura deseada */
-  margin-left: 12.5rem; /* Ajusta el valor según tu preferencia */
+  margin-left: 12.5rem; 
 }
 
 .cards-Subtitle span {
-  font-size: 1rem; /* Ajusta el valor del tamaño de letra para "m2" */
-  font-weight: normal; /* Elimina la negrita */
+  font-size: 1rem; 
+  font-weight: normal; 
 }
 
 .red {
@@ -248,37 +185,37 @@
   width: 1.8rem;
   height: 1.8rem;
   border-radius: 50%;
-  left: -2rem; /* Adjust the distance between circle and title here */
+  left: -2rem; 
   top: 55%;
   transform: translateY(-50%);
-  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el círculo */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  background-position: center; /* Centra la imagen dentro del círculo */
+  background-size: cover; 
+  background-repeat: no-repeat; 
+  background-position: center; 
 } 
 
 .first {
   background-color: $color-circulo-verde;
-  background-image: url('../../images/plantacion.png'); /* Ruta de la imagen de la plantita */
+  background-image: url('../../images/plantacion.png'); 
 } 
 
 .second {
   background-color: #FFB8B8;
-  background-image: url('../../images/hospital.png'); /* Ruta de la imagen de la plantita */
+  background-image: url('../../images/hospital.png'); 
 } 
 
 .third {
   background-color: #B5C5FD;
-  background-image: url('../../images/velocimetro.png'); /* Ruta de la imagen de la plantita */
+  background-image: url('../../images/velocimetro.png'); 
 } 
 
 .fourth {
   background-color: #FFF6A9;
-  background-image: url('../../images/gota-de-agua.png'); /* Ruta de la imagen de la plantita */
+  background-image: url('../../images/gota-de-agua.png'); 
 } 
 
 .file-upload-container {
   position: relative;
-  left: -26rem; /* Puedes ajustar el valor de 50px según el espacio que desees */
+  left: -26rem; 
 }
 
 .first-dashboard-aligned{
@@ -290,15 +227,16 @@
 .dashboards-container {
   display: flex;
   justify-content: center;
-  width: 90rem; /* Ajusta el valor según tus necesidades */
-  margin: -1rem auto; /* Utiliza "auto" para centrar horizontalmente */
+  width: 78rem;
+  margin: -1rem auto;
    height: 27.5rem;
-
+   min-width: 78rem;
+   //margin-top: 2rem;
 }
 
 .dashboard {
-  border-radius: 0.5rem; /* Ajusta el valor del radio de borde según tus necesidades */
-  overflow: hidden; /* Asegura que el contenido dentro del dashboard no desborde */
+  border-radius: 0.5rem;
+  overflow: hidden;
   height: 26rem;
 }
 
@@ -315,8 +253,8 @@
 .product-card {
   align-items: center;
   position: relative;
-  min-width: 5rem; /* Establece un ancho mínimo para cada product card */
-  flex: 1 1 auto; /* Permite que la product card se ensanche para ocupar el espacio disponible */
+  min-width: 5rem; 
+  flex: 1 1 auto;
   height: 15rem;
   border-radius: 0.5rem;
   background-color: white;
@@ -328,7 +266,7 @@
   }
 
   .product-card .product-price {
-  font-weight: bold; /* Aplica el estilo de letra negrita (bold) */
+  font-weight: bold; 
 }
 
 
@@ -341,105 +279,57 @@
   color: black;
 }
 
-.excellent-class {
+.diagnostic-class{
   font-family: 'Inter', sans-serif;
-  margin-top: -7rem;
-  margin-left: 3rem; /* Adjust the distance between title and circle here */
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: $main-green;
-}
-
-.overhydration-class {
-  font-family: 'Inter', sans-serif;
-  margin-top: rem;
-   margin-left: -12rem;
+  //margin-top: rem;
   font-size: 0.9rem;
   text-align: left;
   color: black;
 }
 
-.dehydration-subtitle {
+.overhydration-class {
+   margin-left: -12rem;
+}
+
+.dehydration-class {
+   margin-left: -10.5rem;
+}
+
+.frosting-class {
+   margin-left: -10.5rem;
+}
+
+.very-class {
+   margin-left: -7.9rem;
+}
+
+.good-class {
+   margin-left: -4.5rem;
+}
+
+.diagnostic-subtitle{
   font-family: 'Inter', sans-serif;
   margin-top: -7rem;
-  margin-left: 3rem; /* Adjust the distance between title and circle here */
+  margin-left: 3rem;
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.excellent-subtitle {
+  color: $main-green;
+}
+
+.dehydration-subtitle {
   color: #F3C432;
 }
 
 .overhydration-subtitle {
-  font-family: 'Inter', sans-serif;
-  margin-top: -7rem;
-  margin-left: 3rem; /* Adjust the distance between title and circle here */
-  font-size: 1.5rem;
-  font-weight: bold;
   color: #184A9D;
 }
 
-.dehydration-class {
-  font-family: 'Inter', sans-serif;
-  margin-top: rem;
-   margin-left: -10.5rem;
-  font-size: 0.9rem;
-  text-align: left;
-  color: black;
-}
-
 .frosting-subtitle {
-  font-family: 'Inter', sans-serif;
-  margin-top: -7rem;
-  margin-left: 3rem; /* Adjust the distance between title and circle here */
-  font-size: 1.5rem;
-  font-weight: bold;
   color: #7CE3FF;
 }
-
-.frosting-class {
-  font-family: 'Inter', sans-serif;
-  margin-top: rem;
-   margin-left: -10.5rem;
-  font-size: 0.9rem;
-  text-align: left;
-  color: black;
-}
-
-.good-subtitle {
-  font-family: 'Inter', sans-serif;
-  margin-top: -7rem;
-  margin-left: 3rem; /* Adjust the distance between title and circle here */
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: $main-green;
-}
-
-.good-class {
-  font-family: 'Inter', sans-serif;
-  margin-top: rem;
-   margin-left: -4.5rem;
-  font-size: 0.9rem;
-  text-align: left;
-  color: black;
-}
-
-.very-subtitle {
-  font-family: 'Inter', sans-serif;
-  margin-top: -7rem;
-  margin-left: 3rem; /* Adjust the distance between title and circle here */
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: $main-green;
-}
-
-.very-class {
-  font-family: 'Inter', sans-serif;
-  margin-top: rem;
-   margin-left: -7.9rem;
-  font-size: 0.9rem;
-  text-align: left;
-  color: black;
-}
-
 
 .mapa-card{
     align-content: center;

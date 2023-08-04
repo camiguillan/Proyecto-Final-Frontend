@@ -37,7 +37,7 @@ export default function InfoCampo() {
   const [barData, setBarData] = useState([['', crop]]); // VER ESTO
   const [searchTerm, setSearchTerm] = useState('lampara');
   const [products, setProducts] = useState([]);
-  const [diagnostico, setdiagnostico] = useState(['OVERHYDRATION']);
+  const [diagnostico, setdiagnostico] = useState(['GOOD']);
   const [erased, setNewErased] = useState([]);
   const [newFeatures, setNewFeatures] = useState([]);
   const [metrosCuadrados, setMetrosCuadrados] = useState([]);
@@ -432,7 +432,7 @@ export default function InfoCampo() {
           </div>
           <div className="dropdown-container">
             <select
-              className="rounded-dropdown-cultivos"
+              className="rounded-dropdown rounded-dropdown-cultivos"
               value={crop} // Aquí establecemos el valor seleccionado
               onChange={handleCropChange}
             >
@@ -458,46 +458,46 @@ export default function InfoCampo() {
               {metrosCuadradosViejo}
               %
             </div>
-            <img src={metrosCuadradosViejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImageMetros" />
+            <img src={metrosCuadradosViejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageMetros" />
           </div>
           <div className="cards-wrapper">
             <div className="circle-card second" />
             <div className="cards-titles">
               Cultivo sano
             </div>
-            <div className="cards-Subtitle2">
+            <div className="cards-Subtitle cards-Subtitle2">
               {porcentajeSano}
               %
             </div>
-            <div className={porcentajeSanoviejo < 0 ? 'cards-Subtitle-old2 red' : 'cards-Subtitle-old2 green'}>
+            <div className={porcentajeSanoviejo < 0 ? '.cards-Subtitle-old1 cards-Subtitle-old2 red' : '.cards-Subtitle-old1 cards-Subtitle-old2 green'}>
               {porcentajeSanoviejo}
               %
             </div>
-            <img src={porcentajeSanoviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImageSano" />
+            <img src={porcentajeSanoviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageSano" />
           </div>
           <div className="cards-wrapper">
             <div className="circle-card third" />
             <div className="cards-titles">
               NDVI
             </div>
-            <div className="cards-Subtitle3">
+            <div className="cards-Subtitle cards-Subtitle3">
               {ndvi}
             </div>
-            <div className={ndviviejo < 0 ? 'cards-Subtitle-old3 red' : 'cards-Subtitle-old3 green'}>
+            <div className={ndviviejo < 0 ? '.cards-Subtitle-old1 cards-Subtitle-old3 red' : '.cards-Subtitle-old1 cards-Subtitle-old3 green'}>
               {ndviviejo}
               %
             </div>
-            <img src={ndviviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImageHumedad" />
+            <img src={ndviviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageHumedad" />
           </div>
           <div className="cards-wrapper">
             <div className="circle-card fourth" />
             <div className="cards-titles">
               Humedad
             </div>
-            <div className="cards-Subtitle4">
+            <div className="cards-Subtitle cards-Subtitle4">
               {humedad}
             </div>
-            <div className={humedadviejo < 0 ? 'cards-Subtitle-old4 red' : 'cards-Subtitle-old4 green'}>
+            <div className={humedadviejo < 0 ? '.cards-Subtitle-old1 cards-Subtitle-old4 red' : '.cards-Subtitle-old1 cards-Subtitle-old4 green'}>
               {humedadviejo}
               %
             </div>
@@ -509,11 +509,11 @@ export default function InfoCampo() {
           <input className="button-dashboard selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} />
         </div>
         {lineData.length > 1 && (
-        <div className="dashboards-container">
+        <div className="dashboards-container" style={{ marginTop: '1.5rem' }}>
           <div className="dashboard">
             <Chart
-              width="42.75rem"
-              height="26rem"
+              width="40rem"
+              height="25rem"
               chartType="LineChart"
               loader={<div>Loading Chart</div>}
               data={lineData}
@@ -521,11 +521,11 @@ export default function InfoCampo() {
               rootProps={{ 'data-testid': '2' }}
             />
           </div>
-          <div style={{ marginRight: '2rem' }} />
+          <div style={{ marginRight: '1.5rem' }} />
           <div className="dashboard">
             <Chart
-              width="42.75rem"
-              height="26rem"
+              width="40rem"
+              height="25rem"
               chartType="ColumnChart"
               loader={<div>Loading Chart</div>}
               data={barData}
