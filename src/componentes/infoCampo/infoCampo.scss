@@ -1,6 +1,51 @@
 @import "../../assets/global.scss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
 
+.dropdown-container {
+  display: inline-block;
+  position: relative;
+}
+
+.rounded-dropdown {
+  border-radius: 0.5rem; /* Ajusta el valor según el radio de borde deseado */
+  padding: 0.2rem 1rem; /* Ajusta el padding según tus necesidades */
+
+  /* Estilos adicionales para el dropdown menu */
+  /* Ajusta los colores y otros estilos según tus necesidades */
+  background-color: white;
+  border: 1px solid #ced4da;
+  color: #495057;
+  font-size: 0.75rem;
+
+  /* Ajusta la posición del dropdown */
+  position: absolute;
+  right: -18.5rem; /* Ajusta la posición a la derecha */
+
+  /* Estilos para eliminar los bordes y ajustar el borde inferior */
+  border-color: transparent;
+  border-bottom: 0.5rem;
+}
+
+.rounded-dropdown-cultivos {
+  border-radius: 0.5rem; /* Ajusta el valor según el radio de borde deseado */
+  padding: 0.2rem 1rem; /* Ajusta el padding según tus necesidades */
+
+  /* Estilos adicionales para el dropdown menu */
+  /* Ajusta los colores y otros estilos según tus necesidades */
+  background-color: white;
+  border: 1px solid #ced4da;
+  color: #495057;
+  font-size: 0.75rem;
+
+  /* Ajusta la posición del dropdown */
+  position: absolute;
+  right: -26rem; /* Ajusta la posición a la derecha */
+
+  /* Estilos para eliminar los bordes y ajustar el borde inferior */
+  border-color: transparent;
+  border-bottom: 0.5rem;
+}
+
 .buttons-container {
   display: flex;
   //margin: 0.5rem 0% 0% 0%;
@@ -67,7 +112,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  height: 10rem;
+  height: 7rem;
   border-radius: 0.5rem;
   background-color: white;
   margin: 1%;
@@ -75,16 +120,39 @@
 
 .cards-titles {
   font-family: 'Inter', sans-serif;
-  margin-top: -6rem;
+  margin-top: -4rem;
   margin-left: 3.5rem; /* Adjust the distance between title and circle here */
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: bold;
   color: black;
 }
 
+.cards-Subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: black;
+  margin-left: -9.5rem; /* Ajusta el valor según tu preferencia */
+  margin-top: 3rem; /* Ajusta el valor según tu preferencia */
+}
+
+.cards-Subtitle2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: black;
+  margin-left: -8rem; /* Ajusta el valor según tu preferencia */
+  margin-top: 3rem; /* Ajusta el valor según tu preferencia */
+}
+
+.cards-Subtitle span {
+  font-size: 1rem; /* Ajusta el valor del tamaño de letra para "m2" */
+  font-weight: normal; /* Elimina la negrita */
+}
+
 .circle-card {
   position: absolute;
-  margin-top: -3.5rem;
+  margin-top: -2.4rem;
   margin-left: 3rem;
   width: 1.8rem;
   height: 1.8rem;

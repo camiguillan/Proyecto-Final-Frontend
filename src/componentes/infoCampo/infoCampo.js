@@ -1,3 +1,6 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-useless-return */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable import/order */
 /* eslint-disable prefer-const */
@@ -23,16 +26,21 @@ import HeaderWhite from '../reusable/header_white/header_white';
 export default function InfoCampo() {
   const { userID } = useParams();
   const { field } = useParams();
-  const { crop } = useParams();
   const user = JSON.parse(localStorage.getItem('name')) || {};
+  const [crop, setCrop] = useState('Todos');
   const [selectedTimePeriod, setSelectedTimePeriod] = useState('1');
-  const [lineData, setLineData] = useState([['', crop]]);
-  const [barData, setBarData] = useState([['', crop]]);
+  const [lineData, setLineData] = useState([['', crop]]); // VER ESTO
+  const [barData, setBarData] = useState([['', crop]]); // VER ESTO
   const [searchTerm, setSearchTerm] = useState('lampara');
   const [products, setProducts] = useState([]);
   const [diagnostico, setdiagnostico] = useState(['OVERHYDRATION']);
   const [erased, setNewErased] = useState([]);
   const [newFeatures, setNewFeatures] = useState([]);
+  const [metrosCuadrados, setMetrosCuadrados] = useState([]);
+  const [porcentajeSano, setporcentajeSano] = useState([]);
+  const [fieldRest, setField] = useState(field);
+
+  console.log(user);
 
   const [campoInfo, setCampoInfo] = useState({
     nombreCampo: '',
@@ -101,7 +109,6 @@ export default function InfoCampo() {
 
   const handleButtonClick = (buttonText) => {
     setSelectedTimePeriod(buttonText);
-
     if (selectedTimePeriod === 'LastWeek') {
       console.log('LastWeek');
     } else if (selectedTimePeriod === 'LastMonth') {
@@ -126,7 +133,6 @@ export default function InfoCampo() {
         } else {
           dataMap.set(xValue, dataMap.get(xValue) + Number(yValue));
         }
-
         if (!labels.includes(xValue)) {
           labels.push(xValue);
         }
@@ -135,10 +141,8 @@ export default function InfoCampo() {
     dataMap.forEach((value) => {
       valoresY.push(value);
     });
-
     const years = labels.map((label) => dataMap.get(label));
     const data = valoresY.map((valorY) => dataMap.get(valorY));
-
     return {
       years, data, otherName, name,
     };
@@ -157,7 +161,6 @@ export default function InfoCampo() {
         } else {
           dataMap.set(xValue, dataMap.get(xValue) + Number(yValueBar));
         }
-
         if (!labels.includes(xValue)) {
           labels.push(xValue);
         }
@@ -166,10 +169,8 @@ export default function InfoCampo() {
     dataMap.forEach((value) => {
       valoresY.push(value);
     });
-
     const years = labels.map((label) => dataMap.get(label));
     const data = valoresY.map((valorY) => dataMap.get(valorY));
-
     return {
       years, data, otherName, name,
     };
@@ -178,11 +179,9 @@ export default function InfoCampo() {
   const handleFileUpload = (event) => {
     event.preventDefault();
     const file = event.target.files[0];
-
     if (!file) {
       return;
     }
-
     Papa.parse(file, {
       complete: (result) => {
         const {
@@ -212,8 +211,73 @@ export default function InfoCampo() {
     }
   };
 
+  const metrics = () => {
+    let metros = 0;
+    let sano = 0;
+    let cultivo = '';
+    const fechaActual = new Date();
+    let diferenciaMenor = 1000000000000000000000000000000000000000000000000;
+    if (crop === 'Girasol') {
+      cultivo = 'sunflower';
+    } else if (crop === 'Soja') {
+      cultivo = 'soy';
+    } else if (crop === 'Trigo') {
+      cultivo = 'wheat';
+    } else if (crop === 'Maiz') {
+      cultivo = 'corn';
+    }
+    user.fields.forEach((fiel, index) => {
+      if (fiel._id === field) {
+        user.fields[index].plots.forEach((plot) => {
+          if (plot.crop === cultivo) {
+            metros += 121;
+            let indexAusar = 0;
+            plot.history.forEach((instance, index2) => {
+              if (index2 !== 0) {
+                const fechaInstancia = new Date(instance.createdAt);
+                const diferenciaNueva = Math.abs(fechaActual - fechaInstancia);
+                if (diferenciaNueva < diferenciaMenor) {
+                  diferenciaMenor = diferenciaNueva;
+                  indexAusar = index2;
+                }
+              }
+            });
+            if (plot.history[indexAusar].diagnostics === 'excelent' || plot.history[indexAusar].diagnostics === 'very_good' || plot.history[indexAusar].diagnostics === 'good') {
+              sano += 121;
+            }
+          }
+        });
+        const porcentajeSanou = (sano * 100) / metros;
+        const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(2);
+        setporcentajeSano(porcentajeSanoRedondeado);
+        setMetrosCuadrados(metros);
+        return;
+      }
+    });
+  };
+
+  const handleFieldChange = (event) => {
+    setField(event.target.value);
+    metrics();
+  };
+
+  const handleCropChange = (event) => {
+    setCrop(event.target.value);
+  };
+
+  useEffect(() => {
+    // Llamar a la función metrics aquí
+    metrics();
+  }, [crop]);
+
+  useEffect(() => {
+    // Llamar a la función metrics aquí
+    metrics();
+  }, [field]);
+
   useEffect(() => {
     handleSearch();
+    metrics();
   }, []);
 
   return (
@@ -250,6 +314,32 @@ export default function InfoCampo() {
             Historial completo
             <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
           </button>
+          <div className="dropdown-container">
+            <select
+              className="rounded-dropdown"
+              value={fieldRest} // Aquí establecemos el valor seleccionado
+              onChange={handleFieldChange}
+            >
+              {user.fields.map((fiel, index) => (
+                <option key={index} value={fiel._id}>
+                  {fiel.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="dropdown-container">
+            <select
+              className="rounded-dropdown-cultivos"
+              value={crop} // Aquí establecemos el valor seleccionado
+              onChange={handleCropChange}
+            >
+              <option value="Soja">Soja</option>
+              <option value="Maiz">Maiz</option>
+              <option value="Trigo">Trigo</option>
+              <option value="Girasol">Girasol</option>
+              <option value="Todos">Todos</option>
+            </select>
+          </div>
         </div>
         <div className="cards-container">
           <div className="cards-wrapper">
@@ -257,11 +347,19 @@ export default function InfoCampo() {
             <div className="cards-titles">
               Total sembrado
             </div>
+            <div className="cards-Subtitle">
+              {Number(metrosCuadrados).toLocaleString()}
+              <span>m2</span>
+            </div>
           </div>
           <div className="cards-wrapper">
             <div className="circle-card second" />
             <div className="cards-titles">
               Cultivo sano
+            </div>
+            <div className="cards-Subtitle2">
+              {porcentajeSano}
+              %
             </div>
           </div>
           <div className="cards-wrapper">
