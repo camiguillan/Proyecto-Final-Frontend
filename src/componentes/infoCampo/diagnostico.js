@@ -61,7 +61,7 @@ export default function Diagnostico() {
   const [diagnostico, setdiagnostico] = useState('GOOD');
 
   return (
-    <div className="cards-wrapper">
+    <div className="cards-wrapper-diagnostico">
       <img src={diagnosticKeys[diagnostico].image} alt="Imagen 4" style={{ width: '7rem', marginRight: '-1rem' }} />
       <div className={diagnosticKeys[diagnostico].classNameTitle}>
         {diagnosticKeys[diagnostico].translate}

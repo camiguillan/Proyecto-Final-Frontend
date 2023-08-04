@@ -32,7 +32,7 @@ export default function InfoCampo() {
   const { field } = useParams();
   const user = JSON.parse(localStorage.getItem('name')) || {};
   const [crop, setCrop] = useState('Todos');
-  const [selectedTimePeriod, setSelectedTimePeriod] = useState('1');
+  const [selectedTimePeriod, setSelectedTimePeriod] = useState('LastWeek');
   const [lineData, setLineData] = useState([['', crop]]); // VER ESTO
   const [barData, setBarData] = useState([['', crop]]); // VER ESTO
   const [searchTerm, setSearchTerm] = useState('lampara');
@@ -49,6 +49,23 @@ export default function InfoCampo() {
   const [ndviviejo, setNdviviejo] = useState([]);
   const [humedadviejo, setHumedadviejo] = useState([]);
   const [fieldRest, setField] = useState(field);
+  const today = new Date();
+  const twoWeeksAgo = new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000);
+  const formattedDate = twoWeeksAgo.toISOString();
+
+  // Datos a agregar a la historia
+  const newHistoryEntry = {
+    color: 'e0a9a',
+    createdAt: formattedDate,
+    diagnostics: 'frosting',
+    frost: 0.568348568318906 * 1.1, // Aumenta un 10%
+    humidity: 0.7798086071977153 * 1.1, // Aumenta un 10%
+    ndvi: 0.13315606695283555 * 1.1, // Aumenta un 10%
+    updatedAt: formattedDate,
+  };
+
+  // Agrega el nuevo valor a la historia
+  user.fields[5].plots[0].history.push(newHistoryEntry);
 
   console.log(user);
 
@@ -292,6 +309,8 @@ export default function InfoCampo() {
         setNdviviejo(Math.round(((ndvi - ndviTemp) / Math.abs(ndviTemp)) * 100));
         setHumedadviejo(Math.round(((humedad - humedadTemp) / Math.abs(humedadTemp)) * 100));
         setMetrosCuadradosviejo(Math.round(((humedad - metros) / Math.abs(metros)) * 100));
+        console.log('metros:', metrosCuadradosViejo);
+        console.log('quilombo:', humedadviejo);
         return;
       }
     });
@@ -345,7 +364,7 @@ export default function InfoCampo() {
         setNdvi(ndviTemp);
         setHumedad(humedadTemp);
         const porcentajeSanou = (sano * 100) / metros;
-        const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(2);
+        const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(1);
         setporcentajeSano(porcentajeSanoRedondeado);
         setMetrosCuadrados(metros);
         return;
@@ -356,7 +375,6 @@ export default function InfoCampo() {
   const handleFieldChange = (event) => {
     setField(event.target.value);
     metrics();
-    metricsForMenu();
   };
 
   const handleCropChange = (event) => {
@@ -365,23 +383,23 @@ export default function InfoCampo() {
 
   useEffect(() => {
     metrics();
-    metricsForMenu();
   }, [crop]);
 
   useEffect(() => {
-    metricsForMenu();
   }, [selectedTimePeriod]);
 
   useEffect(() => {
     metrics();
-    metricsForMenu();
   }, [field]);
 
   useEffect(() => {
     handleSearch();
     metrics();
-    metricsForMenu();
   }, []);
+
+  useEffect(() => {
+    metricsForMenu();
+  }, [metrosCuadrados]);
 
   return (
     <div>
@@ -454,11 +472,16 @@ export default function InfoCampo() {
               {Number(metrosCuadrados).toLocaleString()}
               <span>m2</span>
             </div>
-            <div className={metrosCuadradosViejo < 0 ? 'cards-Subtitle-old1 red' : 'cards-Subtitle-old1 green'}>
-              {metrosCuadradosViejo}
-              %
-            </div>
-            <img src={metrosCuadradosViejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageMetros" />
+            {metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0 ? (
+              <div className={metrosCuadradosViejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
+                {metrosCuadradosViejo}
+                %
+              </div>
+            ) : null}
+
+            {metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0 ? (
+              <img src={metrosCuadradosViejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageMetros" />
+            ) : null}
           </div>
           <div className="cards-wrapper">
             <div className="circle-card second" />
@@ -469,11 +492,13 @@ export default function InfoCampo() {
               {porcentajeSano}
               %
             </div>
-            <div className={porcentajeSanoviejo < 0 ? '.cards-Subtitle-old1 cards-Subtitle-old2 red' : '.cards-Subtitle-old1 cards-Subtitle-old2 green'}>
+            <div className={porcentajeSanoviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
               {porcentajeSanoviejo}
               %
             </div>
+
             <img src={porcentajeSanoviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageSano" />
+
           </div>
           <div className="cards-wrapper">
             <div className="circle-card third" />
@@ -483,11 +508,14 @@ export default function InfoCampo() {
             <div className="cards-Subtitle cards-Subtitle3">
               {ndvi}
             </div>
-            <div className={ndviviejo < 0 ? '.cards-Subtitle-old1 cards-Subtitle-old3 red' : '.cards-Subtitle-old1 cards-Subtitle-old3 green'}>
+            <div className={ndviviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
               {ndviviejo}
               %
             </div>
-            <img src={ndviviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageHumedad" />
+
+            {ndviviejo < 0 || ndviviejo >= 0 ? (
+              <img src={ndviviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImagendvi" />
+            ) : null}
           </div>
           <div className="cards-wrapper">
             <div className="circle-card fourth" />
@@ -497,11 +525,14 @@ export default function InfoCampo() {
             <div className="cards-Subtitle cards-Subtitle4">
               {humedad}
             </div>
-            <div className={humedadviejo < 0 ? '.cards-Subtitle-old1 cards-Subtitle-old4 red' : '.cards-Subtitle-old1 cards-Subtitle-old4 green'}>
+            <div className={humedadviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
               {humedadviejo}
               %
             </div>
-            <img src={humedadviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage" />
+
+            {humedadviejo < 0 || humedadviejo >= 0 ? (
+              <img src={humedadviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage" />
+            ) : null}
           </div>
         </div>
         <div className="file-upload-container">
@@ -552,7 +583,7 @@ export default function InfoCampo() {
         </div>
         <div className="cards-container">
           <Diagnostico diagnostico={diagnostico} />
-          <div className="cards-wrapper">
+          <div className="cards-wrapper-diagnostico">
             <img src={excelent} alt="Imagen 4" style={{ width: '7rem' }} />
           </div>
         </div>

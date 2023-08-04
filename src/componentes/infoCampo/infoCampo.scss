@@ -94,6 +94,17 @@
   margin: 1%;
 }
 
+.cards-wrapper-diagnostico {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 10rem;
+  border-radius: 0.5rem;
+  background-color: white;
+  margin: 1%;
+}
+
 .cards-titles {
   font-family: 'Inter', sans-serif;
   margin-top: -4rem;
@@ -124,45 +135,33 @@
   margin-left: -6.7rem; 
 }
 
-.cards-Subtitle-old4 {
-  margin-left: 8.9rem; 
-}
-
-.cards-Subtitle-old3 {
-  margin-left: 8.6rem; 
-}
-
-.cards-Subtitle-old2 {
-  margin-left: 6rem; 
-}
-
-.cards-Subtitle-old1 {
+.cards-Subtitle-old-origin {
   position:absolute;
   font-family: 'Inter', sans-serif;
   font-size: 1.2rem;
   font-weight: bold;
   color: black;
-  margin-left: 14.5rem; 
   margin-top: 0rem; 
+  margin-left: 14.5rem;
 }
 
 .upLineImage {
   position: absolute;
   width: 3rem; 
   height: 3rem; 
-  margin-left: 12rem; 
+  margin-left: 10.7rem; 
 }
 
 .upLineImageMetros { 
   margin-left: 11.5rem; 
 }
 
-.upLineImageHumedad {
-  margin-left: 12rem; 
+.upLineImagendvi {
+  margin-left: 10.7rem; 
 }
 
 .upLineImageSano {
-  margin-left: 12.5rem; 
+  margin-left: 10.7rem; 
 }
 
 .cards-Subtitle span {
