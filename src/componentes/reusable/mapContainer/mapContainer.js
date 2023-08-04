@@ -33,12 +33,12 @@ export default function MapContainer({
   const [newFeatures, setNewFeatures] = useState([]);
   const [erased, setNewErased] = useState([]);
   const [featErasedId, setNewErasedId] = useState('');
-  const [mainField, setMainField] = useState({
-    geometry: campoPrincipal.geometry,
-    id: campoPrincipal.id,
-    properties: campoPrincipal.properties,
-    type: campoPrincipal.type,
-  });
+  // const [mainField, setMainField] = useState({
+  //   geometry: campoPrincipal.geometry,
+  //   id: campoPrincipal.id,
+  //   properties: campoPrincipal.properties,
+  //   type: campoPrincipal.type,
+  // });
 
   const [drawField, setdrawField] = useState(!edit);
   const cultivosOpciones = Object.values(CROP_TYPES_KEYS);
@@ -131,14 +131,14 @@ export default function MapContainer({
     </option>
   ));
   function areNewFeatures() {
-    const featIds = features.map((feat) => feat.id);
-    const newFeatIds = newFeatures.map((feat) => feat.id);
     return features.length <= newFeatures.length;
   }
+
   const addFeature = () => {
     if (areNewFeatures()) {
       const tempList = [...features];
       const lista2 = [...campoInfo.features];
+      console.log('NUEVAS FEATURES ADD F', newFeatures);
       newFeatures.forEach((feat, index) => {
         const hasFeature = features.map((fea) => fea.id).includes(feat.id);
         if (hasFeature) {
@@ -182,7 +182,7 @@ export default function MapContainer({
 
   const removeFeature = () => {
     const erasedId = erased.id;
-    console.log(campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0]);
+    console.log(campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0], '????');
     const erasedCrop = erased.length !== 0 && campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0].crop;
     removeInput(erasedCrop);
     setFeatures(newFeatures);
@@ -201,7 +201,7 @@ export default function MapContainer({
         {opciones}
         {' '}
       </select>
-      <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>
+      {index > 0 && <Button type="button" onClick={() => removeInput(index)} className="green-button">-</Button>}
     </label>
   ));
 
@@ -211,7 +211,7 @@ export default function MapContainer({
   }, [newFeatures]);
 
   useEffect(() => {
-    if (campoInfo.features.length !== 0 && !edit) {
+    if (campoInfo.features.length !== 0 && erased > 0) {
       console.log('Camp info', campoInfo, erased);
       removeFeature();
     }
@@ -270,6 +270,7 @@ export default function MapContainer({
     // if (!valid) {
     //   return;
     // }
+    console.log(campInfo);
     const {
       plots, height, width, coordinates,
     } = cropCheckFullField(campoInfo.features);

@@ -227,11 +227,12 @@ function AgroMap({
       draw.setFeatureProperty(lastDrawn.id, 'portColor', color);
       // console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0][0]);
+      console.log(features);
       if (features.features.length !== 0) {
         addFeatures(features.features, color);
-      }
-      if (feats.length > 0) {
-        addFeatures(feats, color);
+      } else if (feats.length > 0) {
+        const polygons = feats.map((f) => f.polygon);
+        addFeatures(polygons, color);
       }
       // addCentroid(draw, lastDrawn);
     }
