@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { squareGrid, booleanPointInPolygon } from '@turf/turf';
 import { PLOT_SIZE, CROP_TYPES_KEYS } from '../../../constants/plots';
+import { campoPrueba } from './campoPrueba';
 
 export const createRectangle = (listOfPolygons) => {
   console.log(listOfPolygons);
@@ -20,17 +21,19 @@ const moveCoordinates = ({ lat, lon }, y, x) => ({
   lat: lat - y * PLOT_SIZE,
   lon: lon + x * PLOT_SIZE,
 });
-
+function calculateLongitudeIncrement(latitude, boxSize) {
+  return boxSize / Math.cos(latitude * (Math.PI / 180));
+}
 const plotToCoordinates2 = (height, width, topLeftCoordinates, index) => {
   const { lat: topLeftLat, lon: topLeftLon } = topLeftCoordinates;
-
+  const longitudeIncrement = calculateLongitudeIncrement(topLeftLat, PLOT_SIZE);
   // Calculate the row and column of the plot in the matrix
   const row = Math.floor(index / width);
   const col = index % width;
 
   // Calculate the latitude and longitude of the plot based on its position in the matrix
   const lat = topLeftLat - row * PLOT_SIZE;
-  const lon = topLeftLon + col * PLOT_SIZE;
+  const lon = topLeftLon + col * longitudeIncrement;
 
   return { lon, lat };
 };
@@ -58,58 +61,10 @@ const plotToCoordinates = (height, width, coordinates) => {
   console.log(coordinatesForPlots);
   return coordinatesForPlots;
 };
-const createPlotPolygon = (plotCoordinates) => {
-  const plotTopLeft = {
-    lon: plotCoordinates.lon,
-    lat: plotCoordinates.lat,
-  };
-  const plotBottomRight = {
-    lon: plotCoordinates.lon + PLOT_SIZE,
-    lat: plotCoordinates.lat + PLOT_SIZE,
-  };
 
-  return [
-    [plotTopLeft.lon, plotTopLeft.lat],
-    [plotTopLeft.lon, plotBottomRight.lat],
-    [plotBottomRight.lon, plotBottomRight.lat],
-    [plotBottomRight.lon, plotTopLeft.lat],
-    [plotTopLeft.lon, plotTopLeft.lat],
-  ];
-};
-
-export const createPolygonFromPlots = (plots, height, width, coordinates) => {
-  console.log(plots);
-  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) })).filter((obj) => obj.crop === CROP_TYPES_KEYS.SUNFLOWER);
-  console.log(plotsCoordinates);
-  const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
-    const polygonCoordinates = createPlotPolygon(coordinate);
-    return {
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'Polygon',
-        coordinates: [polygonCoordinates],
-      },
-    };
-  });
-  return { features: plotsFeatures, type: 'FeatureCollection' };
-};
-
-const cropCheck = (coordinates, cropPolygons) => {
-  // console.log(cropPolygons);
-  const answer = cropPolygons.filter((oneCrop) => coordinates[0].some((corner) => booleanPointInPolygon(corner, oneCrop.polygon)))[0];
-
-  if (!answer) {
-    return { crop: CROP_TYPES_KEYS.NONE };
-  }
-  return { crop: answer.crop };
-};
-function calculateLongitudeIncrement(latitude, boxSize) {
-  return boxSize / Math.cos(latitude * (Math.PI / 180));
-}
 const createBox = (lowestLongitude, highestLatitude, boxSize) => {
   const longitudeIncrement = calculateLongitudeIncrement(highestLatitude, boxSize);
-  console.log(longitudeIncrement);
+  // console.log(longitudeIncrement);
   const highestLongitude = lowestLongitude + longitudeIncrement;// L -> H SE SUMA
   const lowestLatitude = highestLatitude - boxSize; // H -> L SE RESTA
 
@@ -120,6 +75,38 @@ const createBox = (lowestLongitude, highestLatitude, boxSize) => {
     [lowestLongitude, lowestLatitude], // bottom left
     [lowestLongitude, highestLatitude], // Closing the polygon
   ];
+};
+
+export const createPolygonFromPlots = (field) => {
+  const {
+    plots, height, width, coordinates,
+  } = field;
+  console.log(field);
+  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) }));
+  console.log(plotsCoordinates);
+  const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
+    console.log(coordinate);
+    const polygonCoordinates = createBox(coordinate.lon, coordinate.lat, PLOT_SIZE);
+    return {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'Polygon',
+        coordinates: [polygonCoordinates],
+      },
+    };
+  });
+  return { type: 'FeatureCollection', features: plotsFeatures };
+};
+
+const cropCheck = (coordinates, cropPolygons) => {
+  // console.log(cropPolygons);
+  const answer = cropPolygons.filter((oneCrop) => coordinates[0].some((corner) => booleanPointInPolygon(corner, oneCrop.polygon)))[0];
+
+  if (!answer) {
+    return { crop: CROP_TYPES_KEYS.NONE };
+  }
+  return { crop: answer.crop };
 };
 
 export const createGrid = (bbox, boxSize) => {
@@ -164,9 +151,10 @@ export const createGrid = (bbox, boxSize) => {
 // eslint-disable-next-line no-unused-vars
 const cropCheckFullField = (cropPolygons) => {
   const bbox = createRectangle(cropPolygons);
+
   const lowestLongitude = bbox[0];
   const highestLatitude = bbox[3];
-
+  console.log({ lat: highestLatitude, lon: lowestLongitude });
   const { squareGridR, height, width } = createGrid(bbox, PLOT_SIZE);
   console.log(squareGridR);
   // console.log('CROPPOLYGONS, SHIF, SPLICE, REMAINING LIST', cropPolygons, cropPolygons.shift(), removed, tempList);

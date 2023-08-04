@@ -266,10 +266,10 @@ export default function MapContainer({
   }
 
   function guardarCampoInfo() {
-    const valid = validateForm();
-    if (!valid) {
-      return;
-    }
+    // const valid = validateForm();
+    // if (!valid) {
+    //   return;
+    // }
     const {
       plots, height, width, coordinates,
     } = cropCheckFullField(campoInfo.features);
@@ -282,15 +282,15 @@ export default function MapContainer({
     formData.append('image', campoInfo.imagen); // Assuming campoInfo.image is a File object
 
     console.log(formData, campoInfo, cultivos);
-    console.log('PLOTS: ', plots);
+    console.log('PLOTS: ', plots, height, width, coordinates);
 
-    if (edit) {
-      // guardar campo editado
-      sendData('endpoint', formData);
-    } else {
-      sendData('field', formData);
-    }
-    nav(`/home/${userID}`);
+    // if (edit) {
+    //   // guardar campo editado
+    //   sendData('endpoint', formData);
+    // } else {
+    //   sendData('field', formData);
+    // }
+    // nav(`/home/${userID}`);
   }
 
   const okay = () => {
