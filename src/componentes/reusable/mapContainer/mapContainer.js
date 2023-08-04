@@ -95,7 +95,7 @@ export default function MapContainer({
     }
     console.log('CULTIVOS: ', cultivos);
     console.log('FEATURES: ', campoInfo.features);
-    if (cultivos.length !== campoInfo.features.length || campoInfo.features.some(({ polygon }) => polygon.id === '')) {
+    if (cultivos.length > campoInfo.features.length || campoInfo.features.some(({ polygon }) => polygon.id === '')) {
       setErrorMessage({
         title: 'No se puede agregar cultivo',
         message: `Por favor dibuje el campo para ${CROP_TYPES_TRANSLATIONS[cultivos[cultivos.length - 1]]}`,
