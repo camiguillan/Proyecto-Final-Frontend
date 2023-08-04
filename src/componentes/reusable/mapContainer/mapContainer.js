@@ -206,11 +206,12 @@ export default function MapContainer({
   ));
 
   useEffect(() => {
+    console.log(newFeatures, 'HAY NUEVAS FEATURES?');
     if (newFeatures.length !== 0 && areNewFeatures()) { addFeature(); }
   }, [newFeatures]);
 
   useEffect(() => {
-    if (campoInfo.features.length !== 0) {
+    if (campoInfo.features.length !== 0 && !edit) {
       console.log('Camp info', campoInfo, erased);
       removeFeature();
     }
