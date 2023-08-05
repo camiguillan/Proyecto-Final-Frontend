@@ -1,0 +1,29 @@
+@import '../../assets/global.scss';
+
+.title-olvidocontra {
+    font-size: 2.3rem; 
+    font-family: "Inter", sans-serif; 
+    text-align: center;
+    color: $gris-titulo; 
+    top: 1rem; 
+    left: 0;
+    right: 0;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    font-weight: bold;
+  }
+
+  .agroia-olvidocontra{
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+}
+
+.agroia-olvidocontra:hover{
+    cursor: pointer;
+}
+
+.agrego-width{
+  width: 25rem;
+}

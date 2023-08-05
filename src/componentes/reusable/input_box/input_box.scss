@@ -4,23 +4,15 @@
 .sub-rectangle {
     height: 3.2rem;
     width: 26rem;
-    background-color: #F1FFFA;
-    // margin-bottom: 3rem;
-    // border-radius: 2vh;
-    // box-shadow: 1vh 1vh 1vh rgba(0, 0, 0, 0.2);
-    // border: 0.2vh #8B8B8B;
-    // color: $gris-titulo;
-    // font-size: 1.5rem;
-    margin-left: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 10px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-    border: 1px #8B8B8B;
+    background-color: $inputbox-background-gray;
+    margin-bottom: 2rem;
+    border-radius: 1.5vh;
+    //box-shadow: 0.5vh 0.5vh 1vh $black-shadows;
+    border: 0.2vh $inputbox-border-gray;
     color: $gris-titulo;
-    font-size: 2vh;
-    //old
+    font-size: 1.5rem;
     font-family: "Inter", sans-serif;
-    border-color: #c1c1c1;
+    border-color: $inputbox-border2-gray;
     border-style: solid ;
     padding-left: 2%;
   }
@@ -31,15 +23,13 @@
     width: min-content;
     align-items: end;
   }
-
-  
 .sub-rectangle-red {
   height: 3rem;
   width: 26rem;
-  background-color: #fff5f1;
+  background-color: $inputbox-background-red;
   margin-bottom: 3.2rem;
-  border-radius: 2vh;
-  box-shadow: 1vh 1vh 1vh rgba(0, 0, 0, 0.2);
+  border-radius: 1.5vh;
+  //box-shadow: 1vh 1vh 1vh $black-shadows;
   border: 0.3vh solid red;
   color: $gris-titulo;
   font-size: 1.5rem;
@@ -51,54 +41,78 @@
 
 .password-message {
     position: absolute;
-    bottom: 8rem; // Adjust this value to control the distance from the input
-    left: 7.2rem; // Adjust this value to move the message to the right
+    bottom: 8.5rem; // Adjust this value to control the distance from the input
+    left: 40rem; // Adjust this value to move the message to the right
     color: red;
-    font-size: 0.75rem;
+    font-size: 0.9rem;
+    font-family: "Inter", sans-serif; 
 }
 
 .password-message-mini {
     position: absolute;
-    bottom: 9.4rem; // Adjust this value to control the distance from the input
-    left: 7.8rem; // Adjust this value to move the message to the right
+    bottom: 10.7rem; // Adjust this value to control the distance from the input
+    left: 5.6rem; // Adjust this value to move the message to the right
     color: red;
-    font-size: 0.75rem;
+    font-size: 0.9rem;
+    font-family: "Inter", sans-serif; 
 }
 
 .password-message-init-sesion {
     position: absolute;
-    bottom: 21rem; // Adjust this value to control the distance from the input
-    left: 11.4rem; // Adjust this value to move the message to the right
+    bottom: 14rem; // Adjust this value to control the distance from the input
+    left: 40rem; // Adjust this value to move the message to the right
     color: red;
-    font-size: 0.75rem;
+    font-size: 1rem;
+    font-family: "Inter", sans-serif; 
 }
 
 .password-message-mail {
     position: absolute;
-    bottom: 27.5rem; // Adjust this value to control the distance from the input
-    left: 13.3rem; // Adjust this value to move the message to the right
+    bottom: 20.5rem; // Adjust this value to control the distance from the input
+    left: 40rem; // Adjust this value to move the message to the right
     color: red;
-    font-size: 0.75rem;
+    font-size: 1rem;
+    font-family: "Inter", sans-serif; 
+}
+
+.password-message-olvido-contra {
+    position: absolute;
+    bottom: 8rem; // Adjust this value to control the distance from the input
+    left: 12.4rem; // Adjust this value to move the message to the right
+    color: red;
+    font-size: 1rem;
+    font-family: "Inter", sans-serif; 
 }
 
 .mostrar-ocultar {
   position: absolute;
-  top: 28.3rem;
+  top: 24rem;
   right: 4.5rem;
   transform: translateY(-0.9rem);
   cursor: pointer;
 }
-.mostrar-ocultar-mini {
+
+.mostrar-ocultar-edit-perfil {
   position: absolute;
-  top: 8.9rem;
-  right: 5.5rem;
+  bottom: 9.5rem;
+  left: 27.6rem;
   transform: translateY(-0.9rem);
   cursor: pointer;
 }
 
+.mostrar-ocultar-mini {
+  position: absolute;
+  top: 15.6rem;
+  right: 6rem;
+  transform: translateY(-0.9rem);
+  cursor: pointer;
+  color: $eye-gray;
+  font-size: 1.56rem;
+}
+
 .mostrar-ocultar-init-sesion {
   position: absolute;
-  top: 15.3rem;
+  top: 17rem;
   right: 4.5rem;
   transform: translateY(-0.9rem);
   cursor: pointer;
@@ -113,6 +127,6 @@
     margin-bottom: 30px;
     margin-top: 100px; //Separación del primer sub-rectangle 
     border-radius: 10px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 5px 5px $black-shadows;
 }
 */

@@ -1,1 +1,46 @@
+@import "../../assets/global.scss";
 
+.imagen-editarperf{
+    margin-top: 3rem;
+    margin-right: 1rem;
+}
+
+.gray-title2{
+    color: $gris-texto;
+    width: 100%;
+    font-size: 2.6rem; 
+    font-weight: bold;
+    font-family: "Inter", sans-serif;
+    margin-top: 2.5rem;
+  }
+
+  .fondoverde{
+    min-height: 100vh;
+    height: 40rem;
+    min-width: 80rem;
+    background-color: $footer-light-green; 
+  }
+
+.flexbox-container4{
+	//display: -ms-flex;
+	//display: -webkit-flex;
+  display: flex;
+  max-width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  //margin-bottom: 5vh;
+}
+
+.flexbox-container4 > div {
+    width: 50%;
+    //padding: 0.7rem;
+    text-align: center; 
+    //display: flex;
+    //flex-direction: column;
+    justify-content: center;
+    //padding-top: 2.6rem;
+  }
+
+  .flexbox-container4 > div:first-child {
+	margin-left: 2rem;
+}

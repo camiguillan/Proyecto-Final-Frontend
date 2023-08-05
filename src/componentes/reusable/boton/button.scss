@@ -2,15 +2,15 @@
 
 .green-button {
     background-color: $verde-oscuro;
-    border: solid;
-    border-color: $verde-oscuro;
     color: white;
-    margin: 0.5%;
-    margin-top: 10px;
-    padding: 10px 30px;
-    border-radius: 10px;
+    margin: 0.07rem;
+    margin-top: 0.2rem;
+    padding: 0.6rem 1.6rem;
+    border-radius: 1rem;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 1.4rem;
+    border: solid;
+    border-style: 1px $main-green; 
     font-family: "Inter", sans-serif;
   }
 
@@ -20,13 +20,24 @@
 
   .cancelar{
     background-color: white !important;
-    color: $verde-oscuro !important;
+    color: $main-green !important;
   }
 
   .cancelar:hover{
-    background-color: $verde-principal !important;
+    background-color: $main-green !important;
     color: white  !important;
-    border-style: $verde-principal !important;
+  }
+
+  .cancelar-lleno{
+    background-color: white !important;
+    color: $main-green !important;
+    border-style: 1px $main-green;
+  }
+
+  .cancelar-lleno:hover{
+    background-color: $main-green !important;
+    color: white !important;
+    border-style: 5px $main-green;
   }
 
   .button-text {
@@ -46,8 +57,6 @@
     cursor: pointer;
     border-radius: 5px;
     margin-top: 0.5rem;
-    width: 100%;
-    position: relative !important;
   }
   
   .button:hover,

@@ -10,12 +10,43 @@ $verde-texto: #568259;
 $celeste-link: #0085FF;
 $gris-texto: #535353;
 $gris-titulo: #464E47;
+$gris-input-to-fill: #888;
+$black-shadows: rgba(0, 0, 0, 0.2);
+$gris-tarjetas-fondo-infoCampos: rgb(244, 236, 236);
+$blue-titles-infoCampo: #3C76F2;
+$color-circulo-verde: #C7F6D2;
 
+$main-green: #2a7d2e;
+$main-dark-green: #124a2f;
+
+$background-green-dark:#81b483;
+$footer-light-green:rgb(213, 238, 213);
+
+$light-gray: #F5F5F5;
 
 //degradado 
 $verde-claro-iniciar-sesion: #CCFCCB;
 $verde-intermedio-iniciar-sesion: #96E6B3;
 $verde-oscuro-iniciar-sesion: $verde-oscuro;
+
+//INPUT BOX
+$inputbox-background-red: #fff5f1;
+$inputbox-background-gray: #F1FFFA;
+$inputbox-border-gray:#8B8B8B;
+$inputbox-border2-gray:#c1c1c1;
+$eye-gray:#535353;
+
+//Info
+$red-dashboards: #B4374F;
+$green-dashboards:#84B79B;
+$red-image:#FFB8B8;
+$blue-image:#B5C5FD;
+$yellow-image:#FFF6A9;
+$yellow-diagnostic:#F3C432;
+$blue-diagnostic:#184A9D;
+$light-blue-diagnostic:#7CE3FF;
+$gray-dropdown:#495057;
+$light-gray-dropdown:#ced4da;
 
 
 @mixin alignHorizontally{
