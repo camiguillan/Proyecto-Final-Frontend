@@ -284,7 +284,6 @@ export default function InfoCampo() {
           }
         });
         ndviTemp = (ndviTemp / cuantosPlots).toFixed(2);
-        console.log('El ndvi ahora es de:', ndviTemp);
         humedadTemp = (humedadTemp / cuantosPlots).toFixed(2);
         const porcentajeSanou = (sano * 100) / metros;
         const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(2);
@@ -292,8 +291,6 @@ export default function InfoCampo() {
         setNdviviejo(Math.round(((ndvi - ndviTemp) / Math.abs(ndviTemp)) * 100));
         setHumedadviejo(Math.round(((humedad - humedadTemp) / Math.abs(humedadTemp)) * 100));
         setMetrosCuadradosviejo(Math.round(((humedad - metros) / Math.abs(metros)) * 100));
-        console.log('metros:', ndvi);
-        console.log('quilombo:', ndviTemp);
         return;
       }
     });
