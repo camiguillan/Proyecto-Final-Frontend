@@ -86,6 +86,79 @@ export const createPolygonFromPlots = (field) => {
   // .filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
   console.log(plotsCoordinates);
   const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
+    // console.log(coordinate);
+    const polygonCoordinates = createBox(coordinate.lon, coordinate.lat, PLOT_SIZE);
+    const color = CROP_COLORS[crop.toUpperCase()];
+    return {
+      polygon: {
+        type: 'Feature',
+        properties: { portColor: color },
+        geometry: {
+          type: 'Polygon',
+          coordinates: [polygonCoordinates],
+        },
+      },
+      crop,
+    };
+  });
+
+  // Group the plotsCoordinates by crop type
+  const plotsByCrop = {};
+  plotsFeatures.forEach(({ crop, polygon }) => {
+    if (crop !== CROP_TYPES_KEYS.NONE) {
+      if (!plotsByCrop[crop]) {
+        plotsByCrop[crop] = [];
+      }
+      plotsByCrop[crop].push({ crop, polygon });
+    }
+  });
+
+  const features = [];
+  let contador = 0;
+  Object.keys(plotsByCrop).forEach((crop) => {
+    const coordinatesForCrop = plotsByCrop[crop];
+    const combinedCoordinates = coordinatesForCrop.reduce((acc, coord) => acc.concat(coord), []);
+    const box = createRectangle(combinedCoordinates);
+    const lowestLongitude = box[0];
+    const lowestLatitude = box[1];
+    const highestLongitude = box[2];
+    const highestLatitude = box[3];
+    const polygonCoordinates = [
+      [lowestLongitude, highestLatitude], // top left
+      [highestLongitude, highestLatitude], // top right
+      [highestLongitude, lowestLatitude], // bottom right
+      [lowestLongitude, lowestLatitude], // bottom left
+      [lowestLongitude, highestLatitude], // Closing the polygon
+    ];
+    const color = CROP_COLORS[crop.toUpperCase()];
+
+    features.push({
+      polygon: {
+        id: contador.toString(),
+        type: 'Feature',
+        properties: { portColor: color },
+        geometry: {
+          type: 'Polygon',
+          coordinates: [polygonCoordinates],
+        },
+      },
+      crop,
+    });
+    contador += 1;
+  });
+  console.log(features);
+  return features;
+};
+
+export const createGridFromPlots = (field) => {
+  const {
+    plots, height, width, coordinates,
+  } = field;
+  console.log(field);
+  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) }));
+  // .filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
+  console.log(plotsCoordinates);
+  const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
     console.log(coordinate);
     const polygonCoordinates = createBox(coordinate.lon, coordinate.lat, PLOT_SIZE);
     const color = CROP_COLORS[crop.toUpperCase()];

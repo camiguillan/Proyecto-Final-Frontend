@@ -2,8 +2,8 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import React from 'react';
 import AgregarCampo from './componentes/agregarCampo2/agregarCampo';
-import AgregarLotes from './componentes/agregarLotes/agregarLotes';
 import EditarCampo from './componentes/editarCampo/editarCampo';
+import AgregarLotes from './componentes/agregarLotes/agregarLotes';
 import Home from './componentes/home/home';
 import IniciarSesion from './componentes/iniciarSesion/iniciarSesion';
 import Registrarse from './componentes/registrarse/registrarse';
@@ -22,7 +22,7 @@ function App() {
         <Route path="/" element={<HomePrincipal />} />
         <Route path="/agregarCampo/:userID" element={<AgregarCampo />} />
         <Route path="/agregarLotes/:userID" element={<AgregarLotes />} />
-        <Route path="/editarCampo/:userID" element={<EditarCampo />} />
+        <Route path="/editarCampo/:userID/:fieldID" element={<EditarCampo />} />
         <Route path="/home/:userID" element={<Home />} />
         <Route path="/iniciarSesion" element={<IniciarSesion />} />
         <Route path="/registrarse" element={<Registrarse />} />
