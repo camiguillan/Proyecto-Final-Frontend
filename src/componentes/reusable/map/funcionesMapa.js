@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import { squareGrid, booleanPointInPolygon } from '@turf/turf';
-import { PLOT_SIZE, CROP_TYPES_KEYS } from '../../../constants/plots';
+import { PLOT_SIZE, CROP_TYPES_KEYS, CROP_COLORS } from '../../../constants/plots';
 import { campoPrueba } from './campoPrueba';
 
 export const createRectangle = (listOfPolygons) => {
@@ -82,14 +82,16 @@ export const createPolygonFromPlots = (field) => {
     plots, height, width, coordinates,
   } = field;
   console.log(field);
-  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) })).filter((obj) => obj.crop === CROP_TYPES_KEYS.SUNFLOWER);
+  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) }));
+  // .filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
   console.log(plotsCoordinates);
   const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
     console.log(coordinate);
     const polygonCoordinates = createBox(coordinate.lon, coordinate.lat, PLOT_SIZE);
+    const color = CROP_COLORS[crop.toUpperCase()];
     return {
       type: 'Feature',
-      properties: {},
+      properties: { portColor: color },
       geometry: {
         type: 'Polygon',
         coordinates: [polygonCoordinates],
