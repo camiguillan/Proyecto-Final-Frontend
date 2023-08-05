@@ -10,8 +10,8 @@
   border-radius: 0.3rem; 
   padding: 0.2rem 1rem;
   background-color: white;
-  border: 1px solid #ced4da;
-  color: #495057;
+  border: 1px solid $light-gray-dropdown;
+  color: $gray-dropdown;
   font-size: 0.75rem;
   position: absolute;
   right: -18.5rem;
@@ -170,11 +170,11 @@
 }
 
 .red {
-  color: #B4374F;
+  color: $red-dashboards;
 }
 
 .green {
-  color: #84B79B;
+  color: $green-dashboards;
 }
 
 .circle-card {
@@ -198,7 +198,7 @@
 } 
 
 .second {
-  background-color: #FFB8B8;
+  background-color: $red-image;
   background-image: url('../../images/hospital.png'); 
 } 
 
@@ -319,15 +319,15 @@
 }
 
 .dehydration-subtitle {
-  color: #F3C432;
+  color: $yellow-diagnostic;
 }
 
 .overhydration-subtitle {
-  color: #184A9D;
+  color: $blue-diagnostic;
 }
 
 .frosting-subtitle {
-  color: #7CE3FF;
+  color: $light-blue-diagnostic;
 }
 
 .mapa-card{

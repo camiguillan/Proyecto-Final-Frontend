@@ -36,6 +36,18 @@ $inputbox-border-gray:#8B8B8B;
 $inputbox-border2-gray:#c1c1c1;
 $eye-gray:#535353;
 
+//Info
+$red-dashboards: #B4374F;
+$green-dashboards:#84B79B;
+$red-image:#FFB8B8;
+$blue-image:#B5C5FD;
+$yellow-image:#FFF6A9;
+$yellow-diagnostic:#F3C432;
+$blue-diagnostic:#184A9D;
+$light-blue-diagnostic:#7CE3FF;
+$gray-dropdown:#495057;
+$light-gray-dropdown:#ced4da;
+
 
 @mixin alignHorizontally{
     display: flex;
