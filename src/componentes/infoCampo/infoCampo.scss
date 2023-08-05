@@ -123,6 +123,15 @@
   margin-top: 3rem; 
 }
 
+.cards-Subtitle-no-data {
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: black;
+  margin-left: -9.5rem;
+  margin-top: 3rem; 
+}
+
 .cards-Subtitle2 {
   margin-left: -8rem; 
 }
@@ -280,7 +289,7 @@
 
 .diagnostic-class{
   font-family: 'Inter', sans-serif;
-  //margin-top: rem;
+  margin-right: 1.5rem;
   font-size: 0.9rem;
   text-align: left;
   color: black;
@@ -296,14 +305,17 @@
 
 .frosting-class {
    margin-left: -10.5rem;
+   margin-top: 1.5rem;
 }
 
 .very-class {
    margin-left: -7.9rem;
+   margin-top: 1.5rem;
 }
 
 .good-class {
    margin-left: -4.5rem;
+   margin-top: 1.5rem;
 }
 
 .diagnostic-subtitle{

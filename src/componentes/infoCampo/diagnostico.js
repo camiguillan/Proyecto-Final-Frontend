@@ -58,16 +58,17 @@ export default function Diagnostico() {
     },
   };
   const user = JSON.parse(localStorage.getItem('name')) || {};
-  const [diagnostico, setdiagnostico] = useState('GOOD');
+  const [diagnostico, setdiagnostico] = useState('VERY_GOOD');
+  const diagnosticoAUsar = diagnosticKeys[diagnostico];
 
   return (
     <div className="cards-wrapper-diagnostico">
-      <img src={diagnosticKeys[diagnostico].image} alt="Imagen 4" style={{ width: '7rem', marginRight: '-1rem' }} />
-      <div className={diagnosticKeys[diagnostico].classNameTitle}>
-        {diagnosticKeys[diagnostico].translate}
+      <img src={diagnosticoAUsar.image} alt="Imagen 4" style={{ width: '7rem', marginRight: '-1rem', marginLeft: '1rem' }} />
+      <div className={diagnosticoAUsar.classNameTitle}>
+        {diagnosticoAUsar.translate}
       </div>
-      <div className={diagnosticKeys[diagnostico].className}>
-        {diagnosticKeys[diagnostico].message}
+      <div className={diagnosticoAUsar.className}>
+        {diagnosticoAUsar.message}
       </div>
     </div>
   );

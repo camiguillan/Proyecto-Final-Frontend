@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-useless-return */
@@ -50,6 +51,23 @@ export default function InfoCampo() {
   const [humedadviejo, setHumedadviejo] = useState([]);
   const [fieldRest, setField] = useState(field);
   const today = new Date();
+  const traducciones = {
+    Girasol: {
+      cultivo: 'sunflower',
+    },
+    Soja: {
+      cultivo: 'soy',
+    },
+    Trigo: {
+      cultivo: 'wheat',
+    },
+    Maiz: {
+      cultivo: 'corn',
+    },
+    Todos: {
+      cultivo: 'todos',
+    },
+  };
 
   const [campoInfo, setCampoInfo] = useState({
     nombreCampo: '',
@@ -223,7 +241,7 @@ export default function InfoCampo() {
   const metricsForMenu = () => {
     let metros = 0;
     let sano = 0;
-    let cultivo = '';
+    const cultivo = traducciones[crop].cultivo;
     let ndviTemp = 0;
     let humedadTemp = 0;
     let cuantosPlots = 0;
@@ -244,15 +262,7 @@ export default function InfoCampo() {
     } else if (selectedTimePeriod === 'FullHistory') {
       fullHistory = true;
     }
-    if (crop === 'Girasol') {
-      cultivo = 'sunflower';
-    } else if (crop === 'Soja') {
-      cultivo = 'soy';
-    } else if (crop === 'Trigo') {
-      cultivo = 'wheat';
-    } else if (crop === 'Maiz') {
-      cultivo = 'corn';
-    }
+
     user.fields.forEach((fiel, index) => {
       if (fiel._id === field) {
         user.fields[index].plots.forEach((plot) => {
@@ -299,21 +309,13 @@ export default function InfoCampo() {
   const metrics = () => {
     let metros = 0;
     let sano = 0;
-    let cultivo = '';
+    const cultivo = traducciones[crop].cultivo;
     let ndviTemp = 0;
     let humedadTemp = 0;
     let cuantosPlots = 0;
     const fechaActual = new Date();
     let diferenciaMenor = Number.MAX_VALUE;
-    if (crop === 'Girasol') {
-      cultivo = 'sunflower';
-    } else if (crop === 'Soja') {
-      cultivo = 'soy';
-    } else if (crop === 'Trigo') {
-      cultivo = 'wheat';
-    } else if (crop === 'Maiz') {
-      cultivo = 'corn';
-    }
+
     user.fields.forEach((fiel, index) => {
       if (fiel._id === field) {
         user.fields[index].plots.forEach((plot) => {
@@ -449,11 +451,17 @@ export default function InfoCampo() {
             <div className="cards-titles">
               Total sembrado
             </div>
-            <div className="cards-Subtitle">
-              {Number(metrosCuadrados).toLocaleString()}
-              <span>m2</span>
-            </div>
-            {metrosCuadradosViejo !== Infinity ? (
+            {(metrosCuadrados < 0 || metrosCuadrados >= 0) && metrosCuadrados !== Infinity ? (
+              <div className="cards-Subtitle">
+                {Number(metrosCuadrados).toLocaleString()}
+                <span>m2</span>
+              </div>
+            ) : (
+              <div className="cards-Subtitle-no-data">
+                No hay datos
+              </div>
+            )}
+            {(metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0) && metrosCuadradosViejo !== Infinity ? (
               <div className={metrosCuadradosViejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
                 {metrosCuadradosViejo}
                 %
@@ -469,11 +477,17 @@ export default function InfoCampo() {
             <div className="cards-titles">
               Cultivo sano
             </div>
-            <div className="cards-Subtitle cards-Subtitle2">
-              {porcentajeSano}
-              %
-            </div>
-            {porcentajeSanoviejo !== Infinity ? (
+            {(porcentajeSano < 0 || porcentajeSano >= 0) && porcentajeSano !== Infinity ? (
+              <div className="cards-Subtitle cards-Subtitle2">
+                {porcentajeSano}
+                %
+              </div>
+            ) : (
+              <div className="cards-Subtitle-no-data cards-Subtitle2">
+                No hay datos
+              </div>
+            )}
+            {(porcentajeSanoviejo < 0 || porcentajeSanoviejo >= 0) && porcentajeSanoviejo !== Infinity ? (
               <div className={porcentajeSanoviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
                 {porcentajeSanoviejo}
                 %
@@ -488,10 +502,16 @@ export default function InfoCampo() {
             <div className="cards-titles">
               NDVI
             </div>
-            <div className="cards-Subtitle cards-Subtitle3">
-              {ndvi}
-            </div>
-            {ndviviejo !== Infinity ? (
+            {(ndvi < 0 || ndvi >= 0) && ndvi !== Infinity ? (
+              <div className="cards-Subtitle cards-Subtitle3">
+                {ndvi}
+              </div>
+            ) : (
+              <div className="cards-Subtitle-no-data cards-Subtitle3">
+                No hay datos
+              </div>
+            )}
+            {(ndviviejo < 0 || ndviviejo >= 0) && ndviviejo !== Infinity ? (
               <div className={ndviviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
                 {ndviviejo}
                 %
@@ -506,10 +526,16 @@ export default function InfoCampo() {
             <div className="cards-titles">
               Humedad
             </div>
-            <div className="cards-Subtitle cards-Subtitle4">
-              {humedad}
-            </div>
-            {humedadviejo !== Infinity ? (
+            {(humedad < 0 || humedad >= 0) && humedad !== Infinity ? (
+              <div className="cards-Subtitle cards-Subtitle4">
+                {humedad}
+              </div>
+            ) : (
+              <div className="cards-Subtitle-no-data cards-Subtitle4">
+                No hay datos
+              </div>
+            )}
+            {(humedadviejo < 0 || humedadviejo >= 0) && humedadviejo !== Infinity ? (
               <div className={humedadviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
                 {humedadviejo}
                 %
@@ -569,7 +595,7 @@ export default function InfoCampo() {
         <div className="cards-container">
           <Diagnostico diagnostico={diagnostico} />
           <div className="cards-wrapper-diagnostico">
-            <img src={excelent} alt="Imagen 4" style={{ width: '7rem' }} />
+            <img src={excelent} alt="Imagen 4" style={{ width: '7rem', marginRight: '-1rem', marginLeft: '1rem' }} />
           </div>
         </div>
         <div className="cards-container">
