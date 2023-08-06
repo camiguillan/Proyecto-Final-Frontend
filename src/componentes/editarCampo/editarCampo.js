@@ -2,8 +2,8 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../reusable/header/header';
-import Icon from '../../assets/icons/icon';
 import MapContainer from '../reusable/mapContainer/mapContainer';
+import Icon from '../../assets/icons/icon';
 import { get } from '../conexionBack/conexionBack';
 // import { campoPrueba } from '../reusable/map/campoPrueba';
 import { createPolygonFromPlots } from '../reusable/map/funcionesMapa';
