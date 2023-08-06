@@ -84,15 +84,19 @@
   display: flex;  
   justify-content: flex-end;
   align-items: center;
-  gap:1vw;
+  gap: 1vw;
   column-gap: 2vh;
+}
+
+.file-uploader-container{
+  margin: 1rem;
 }
 
 
 .upload-image-container{
   border: dashed;
   border-color: gray;
-  width: 90%;
+  width: 100%;
   height: 20vh;
   display: flex;
   justify-content: center;
@@ -100,11 +104,10 @@
   font-size: 100%;
   background-color: $verde-clarito;
   border-radius: 10px;
-  position: relative;
-  margin: 1rem;
+  // position: relative !important;
 
  span{
-  font-size: 2vh;
+  font-size: 100%;
   padding: 1rem;
   color: gray;
  }
@@ -118,6 +121,9 @@
 .drop_area{
   width: 100%;
   display: flex;
+  position: relative !important;
+  color: black;
+  font-size: 2vh;
 }
 
 .imagen-campo img{

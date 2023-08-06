@@ -368,43 +368,45 @@ export default function MapContainer({
                 </div>
 
               </div>
-              <FileUploader
-                handleChange={(img) => {
-                  setCampoInfo((prevInfo) => ({
-                    ...prevInfo,
-                    imagen: img,
-                  }));
-                }}
-                name="foto-campo"
-                types={fileTypes}
-                required
-                label="Suba o arrastre una imagen de su campo aqui"
-                classes="drop_area"
-                hoverTitle="hola? "
-              >
-                {campoInfo.imagen ? (
-                  <div>
-                    <div className="imagen-campo">
-                      <img src={URL.createObjectURL(campoInfo.imagen)} alt="user-campo" />
+              <div className="file-uploader-container">
+                <FileUploader
+                  handleChange={(img) => {
+                    setCampoInfo((prevInfo) => ({
+                      ...prevInfo,
+                      imagen: img,
+                    }));
+                  }}
+                  name="foto-campo"
+                  types={fileTypes}
+                  required
+                  label="Suba o arrastre una imagen de su campo aqui"
+                  classes="drop_area"
+                  hoverTitle="Suelte la foto aqui "
+                >
+                  {campoInfo.imagen ? (
+                    <div>
+                      <div className="imagen-campo">
+                        <img src={URL.createObjectURL(campoInfo.imagen)} alt="user-campo" />
 
-                      {' '}
+                        {' '}
+                      </div>
+                      <Button
+                        className="button"
+                        onClick={() => setCampoInfo((prevInfo) => ({ ...prevInfo, imagen: '' }))}
+                      >
+                        Quitar Imagen
+                      </Button>
                     </div>
-                    <Button
-                      className="button"
-                      onClick={() => setCampoInfo((prevInfo) => ({ ...prevInfo, imagen: '' }))}
-                    >
-                      Quitar Imagen
-                    </Button>
-                  </div>
-                )
-                  : (
-                    <div className="upload-image-container">
-                      <Icon className="bi bi-cloud-arrow-up" color="gray" fontSize="6vh" />
-                      <span> Suba o arrastre una imagen de su campo aqui </span>
-                      {' '}
-                    </div>
-                  )}
-              </FileUploader>
+                  )
+                    : (
+                      <div className="upload-image-container">
+                        <Icon className="bi bi-cloud-arrow-up" color="gray" fontSize="6vh" />
+                        <span> Suba o arrastre una imagen de su campo aqui </span>
+                        {' '}
+                      </div>
+                    )}
+                </FileUploader>
+              </div>
             </form>
           </Card>
 
