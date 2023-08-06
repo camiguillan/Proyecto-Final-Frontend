@@ -362,7 +362,7 @@ export default function MapContainer({
                 {/* {drawField ? <p>Dibuje el campo principal</p> */}
 
                 <div>
-                  <p>Dibuje la superficie de cada lote con su cultivo asociado</p>
+                  <p className="agregar-campo-label" style={{ textAlign: 'center !important', paddingLeft: '0.5rem' }}> Dibuje la superficie de cada lote con su cultivo asociado </p>
                   {cultivosInputs}
                   <Button type="button" onClick={addInput} className="green-button mas-button">+</Button>
                 </div>
