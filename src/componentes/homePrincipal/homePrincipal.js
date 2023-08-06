@@ -23,8 +23,8 @@ export default function HomePrincipal() {
           <h1>AGROIA</h1>
         </div>
         <div className="botonesInicio">
-          <Button onClick={() => nav('/iniciarSesion')} className="green-button cancelar">Iniciar Sesion</Button>
-          <Button onClick={() => nav('/registrarse')} className="green-button cancelar">Registrarse</Button>
+          <Button type="button" onClick={() => nav('/iniciarSesion')} className="green-button cancelar">Iniciar Sesion</Button>
+          <Button type="button" onClick={() => nav('/registrarse')} className="green-button cancelar">Registrarse</Button>
         </div>
       </header>
       <Carousel />

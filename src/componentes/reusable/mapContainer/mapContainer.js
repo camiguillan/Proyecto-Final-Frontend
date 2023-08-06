@@ -209,7 +209,7 @@ export default function MapContainer({
         {opciones}
         {' '}
       </select>
-      {index > 0 && <Button type="button" onClick={() => removeInput(cultivo)} className="green-button">-</Button>}
+      {cultivos.length > 1 && <Button type="button" onClick={() => removeInput(cultivo)} className="green-button">-</Button>}
     </label>
   ));
 
