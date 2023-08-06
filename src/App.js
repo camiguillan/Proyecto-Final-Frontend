@@ -17,7 +17,7 @@ import HomePrincipal from './componentes/homePrincipal/homePrincipal';
 function App() {
   document.title = 'AGROIA';
   return (
-    <div className="App">
+    <div className="App" id="App">
       <Routes>
         <Route path="/" element={<HomePrincipal />} />
         <Route path="/agregarCampo/:userID" element={<AgregarCampo />} />

@@ -380,7 +380,7 @@ export default function MapContainer({
                 required
                 label="Suba o arrastre una imagen de su campo aqui"
                 classes="drop_area"
-                hoverTitle=" "
+                hoverTitle="hola? "
               >
                 {campoInfo.imagen ? (
                   <div>

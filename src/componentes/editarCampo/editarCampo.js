@@ -8,6 +8,7 @@ import { get } from '../conexionBack/conexionBack';
 // import { campoPrueba } from '../reusable/map/campoPrueba';
 import { createPolygonFromPlots } from '../reusable/map/funcionesMapa';
 import { campoPrueba } from '../reusable/map/campoPrueba';
+import Layout from '../reusable/layout/layout';
 
 // const campoMockeado = {
 //   nombreCampo: 'campo1',
@@ -78,8 +79,7 @@ export default function EditarCampo() {
   // console.log(campoMockeado);
 
   return (
-    <div>
-      <Header />
+    <Layout>
       <h1 className="agregar-campo-titulo">
         {' '}
         <Icon className="bi bi-pencil-square" color="#464E47" fontSize="" />
@@ -103,6 +103,7 @@ export default function EditarCampo() {
         // }}
         edit
       />
-    </div>
+    </Layout>
+
   );
 }
