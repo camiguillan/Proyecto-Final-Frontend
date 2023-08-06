@@ -15,7 +15,7 @@ import AgroMap from '../map/agroMap';
 import Button from '../boton/button';
 import { CROP_TYPES_KEYS } from '../../../constants/plots';
 import cropCheckFullField from '../map/funcionesMapa';
-import { post } from '../../conexionBack/conexionBack';
+import { patch, post } from '../../conexionBack/conexionBack';
 import { CROP_TYPES_TRANSLATIONS } from '../../../constants/translations';
 import ErrorModal from '../errorFolder/errores';
 
@@ -23,6 +23,7 @@ export default function MapContainer({
   campInfo, cultivosSeleccionados, feats, campoPrincipal, edit,
 }) {
   const { userID } = useParams();
+  const { fieldID } = useParams();
   const nav = useNavigate();
 
   const fileTypes = ['JPG', 'PNG'];
@@ -273,6 +274,16 @@ export default function MapContainer({
     });
   }
 
+  function editData(endPoint, formData) {
+    const accessToken = `Bearer ${userID}`;
+    patch(endPoint, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: accessToken,
+      },
+    });
+  }
+
   function guardarCampoInfo() {
     const valid = validateForm();
     if (!valid) {
@@ -295,7 +306,7 @@ export default function MapContainer({
 
     if (edit) {
       // guardar campo editado
-      sendData('endpoint', formData);
+      editData(`field/${fieldID}`, formData);
     } else {
       sendData('field', formData);
     }
