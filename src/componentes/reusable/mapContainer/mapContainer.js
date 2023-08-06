@@ -274,10 +274,10 @@ export default function MapContainer({
   }
 
   function guardarCampoInfo() {
-    // const valid = validateForm();
-    // if (!valid) {
-    //   return;
-    // }
+    const valid = validateForm();
+    if (!valid) {
+      return;
+    }
     console.log(campoInfo);
     const {
       plots, height, width, coordinates,
@@ -293,13 +293,13 @@ export default function MapContainer({
     console.log(formData, campoInfo, cultivos);
     console.log('PLOTS: ', plots, height, width, coordinates);
 
-    // if (edit) {
-    //   // guardar campo editado
-    //   sendData('endpoint', formData);
-    // } else {
-    //   sendData('field', formData);
-    // }
-    // nav(`/home/${userID}`);
+    if (edit) {
+      // guardar campo editado
+      sendData('endpoint', formData);
+    } else {
+      sendData('field', formData);
+    }
+    nav(`/home/${userID}`);
   }
 
   const okay = () => {

@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
-import { squareGrid, booleanPointInPolygon } from '@turf/turf';
+import {
+  squareGrid, booleanPointInPolygon, convex, multiPoint, concave, union,
+} from '@turf/turf';
 import { PLOT_SIZE, CROP_TYPES_KEYS, CROP_COLORS } from '../../../constants/plots';
 import { campoPrueba } from './campoPrueba';
 
@@ -77,6 +79,23 @@ const createBox = (lowestLongitude, highestLatitude, boxSize) => {
   ];
 };
 
+export const createCombinedPolygon = (listOfPolygons) => {
+  // Extract all the coordinates from the list of polygons
+  // let allCoordinates = [];
+  // listOfPolygons.forEach(({ polygon: { geometry: { coordinates } } }) => {
+  //   allCoordinates = allCoordinates.concat(coordinates[0]);
+  // });
+
+  console.log(listOfPolygons);
+
+  const onlyPolygons = listOfPolygons.map((poly) => poly.polygon);
+
+  console.log(onlyPolygons);
+
+  // Calculate the convex hull using Turf's convex function
+  return onlyPolygons.reduce((accumulator, currentPolygon) => union(accumulator, currentPolygon));
+};
+
 export const createPolygonFromPlots = (field) => {
   const {
     plots, height, width, coordinates,
@@ -117,30 +136,28 @@ export const createPolygonFromPlots = (field) => {
   let contador = 0;
   Object.keys(plotsByCrop).forEach((crop) => {
     const coordinatesForCrop = plotsByCrop[crop];
-    const combinedCoordinates = coordinatesForCrop.reduce((acc, coord) => acc.concat(coord), []);
-    const box = createRectangle(combinedCoordinates);
-    const lowestLongitude = box[0];
-    const lowestLatitude = box[1];
-    const highestLongitude = box[2];
-    const highestLatitude = box[3];
-    const polygonCoordinates = [
-      [lowestLongitude, highestLatitude], // top left
-      [highestLongitude, highestLatitude], // top right
-      [highestLongitude, lowestLatitude], // bottom right
-      [lowestLongitude, lowestLatitude], // bottom left
-      [lowestLongitude, highestLatitude], // Closing the polygon
-    ];
+    // const box = createRectangle(coordinatesForCrop);
+    const poly = createCombinedPolygon(coordinatesForCrop);
+    console.log(poly);
+    // const lowestLongitude = box[0];
+    // const lowestLatitude = box[1];
+    // const highestLongitude = box[2];
+    // const highestLatitude = box[3];
+    // const polygonCoordinates = [
+    //   [lowestLongitude, highestLatitude], // top left
+    //   [highestLongitude, highestLatitude], // top right
+    //   [highestLongitude, lowestLatitude], // bottom right
+    //   [lowestLongitude, lowestLatitude], // bottom left
+    //   [lowestLongitude, highestLatitude], // Closing the polygon
+    // ];
     const color = CROP_COLORS[crop.toUpperCase()];
 
     features.push({
       polygon: {
         id: contador.toString(),
-        type: 'Feature',
         properties: { portColor: color },
-        geometry: {
-          type: 'Polygon',
-          coordinates: [polygonCoordinates],
-        },
+        geometry: poly.geometry,
+        type: poly.type,
       },
       crop,
     });
