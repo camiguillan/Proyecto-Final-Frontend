@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import {
-  squareGrid, booleanPointInPolygon, convex, multiPoint, concave, union,
+  squareGrid, booleanPointInPolygon, convex, multiPoint, concave, union, simplify,
 } from '@turf/turf';
 import { PLOT_SIZE, CROP_TYPES_KEYS, CROP_COLORS } from '../../../constants/plots';
 import { campoPrueba } from './campoPrueba';
@@ -92,10 +92,8 @@ export const createCombinedPolygon = (listOfPolygons) => {
 
   console.log(onlyPolygons);
 
-  // Calculate the convex hull using Turf's convex function
   return onlyPolygons.reduce((accumulator, currentPolygon) => union(accumulator, currentPolygon));
 };
-
 export const createPolygonFromPlots = (field) => {
   const {
     plots, height, width, coordinates,
@@ -151,19 +149,21 @@ export const createPolygonFromPlots = (field) => {
     //   [lowestLongitude, highestLatitude], // Closing the polygon
     // ];
     const color = CROP_COLORS[crop.toUpperCase()];
-
+    const options = { tolerance: 0.000001, highQuality: false };
+    const newPoly = simplify(poly, options);
     features.push({
       polygon: {
         id: contador.toString(),
         properties: { portColor: color },
-        geometry: poly.geometry,
-        type: poly.type,
+        geometry: newPoly.geometry,
+        type: newPoly.type,
       },
       crop,
     });
     contador += 1;
   });
   console.log(features);
+
   return features;
 };
 

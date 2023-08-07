@@ -185,7 +185,7 @@ function AgroMap({
       const lat = tempFeats[0].geometry.coordinates[0][0][1];
       console.log(long, lat);
       map.setCenter([long, lat]);
-      map.flyTo({ center: [long, lat], zoom: 14 });
+      map.flyTo({ center: [long, lat], zoom: 16 });
     }
 
     map.on('result', (event) => {
