@@ -35,7 +35,7 @@ const plotToCoordinates2 = (height, width, topLeftCoordinates, index) => {
 
   // Calculate the latitude and longitude of the plot based on its position in the matrix
   const lat = topLeftLat - row * PLOT_SIZE;
-  const lon = topLeftLon + col * longitudeIncrement;
+  const lon = topLeftLon + col * PLOT_SIZE;
 
   return { lon, lat };
 };
@@ -63,12 +63,13 @@ const plotToCoordinates = (height, width, coordinates) => {
   console.log(coordinatesForPlots);
   return coordinatesForPlots;
 };
+const fixedDecimals4 = (number) => Number(number.toFixed(4));
 
 const createBox = (lowestLongitude, highestLatitude, boxSize) => {
   const longitudeIncrement = calculateLongitudeIncrement(highestLatitude, boxSize);
   // console.log(longitudeIncrement);
-  const highestLongitude = lowestLongitude + longitudeIncrement;// L -> H SE SUMA
-  const lowestLatitude = highestLatitude - boxSize; // H -> L SE RESTA
+  const highestLongitude = fixedDecimals4(lowestLongitude + boxSize);// L -> H SE SUMA
+  const lowestLatitude = fixedDecimals4(highestLatitude - boxSize); // H -> L SE RESTA
 
   return [
     [lowestLongitude, highestLatitude], // top left
@@ -149,7 +150,7 @@ export const createPolygonFromPlots = (field) => {
     //   [lowestLongitude, highestLatitude], // Closing the polygon
     // ];
     const color = CROP_COLORS[crop.toUpperCase()];
-    const options = { tolerance: 0.000001, highQuality: false };
+    const options = { tolerance: 0.001, highQuality: false };
     const newPoly = simplify(poly, options);
     features.push({
       polygon: {
@@ -207,21 +208,33 @@ export const createGrid = (bbox, boxSize) => {
     features: [],
   };
   console.log(bbox);
+  const factor = 10 ** 4; // 10 raised to the power of 4 (4 decimal places)
+
+  const originalLongRange = bbox[2] - bbox[0];
+  const originalLatRange = bbox[3] - bbox[1];
   // Adjust the bounding box to ensure divisibility by boxSize
-  const lowestLongitude = bbox[0];
-  const lowestLatitude = bbox[1];
-  const highestLongitude = bbox[2];
-  const highestLatitude = bbox[3];
+  const lowestLongitude = Math.floor(bbox[0] * factor) / factor;
+  const lowestLatitude = Math.floor(bbox[1] * factor) / factor;
+  const highestLongitude = Math.ceil(bbox[2] * factor) / factor;
+  const highestLatitude = Math.ceil(bbox[3] * factor) / factor;
   const longitudeIncrement = calculateLongitudeIncrement(highestLatitude, boxSize);
+
+  console.log(lowestLongitude, lowestLatitude, highestLongitude, highestLatitude);
   // Calculate the number of boxes in each direction (width and height as multiples of boxSize)
-  const width = Math.ceil((highestLongitude - lowestLongitude) / longitudeIncrement);
-  const height = Math.ceil((highestLatitude - lowestLatitude) / boxSize);
+  console.log('WIDTH : ', fixedDecimals4(highestLongitude - lowestLongitude), fixedDecimals4(highestLatitude - lowestLatitude), boxSize);
+  const width = Math.ceil(fixedDecimals4(highestLongitude - lowestLongitude) / boxSize);
+  const height = Math.ceil(fixedDecimals4(highestLatitude - lowestLatitude) / boxSize);
+
+  console.log(height, width);
 
   // Loop through each mini square and create the coordinates
   for (let j = 0; j < height; j += 1) {
     for (let i = 0; i < width; i += 1) {
-      const boxHighestLatitude = highestLatitude - j * boxSize;
-      const boxLowestLongitude = lowestLongitude + i * longitudeIncrement;
+      const boxHighestLatitude = fixedDecimals4(highestLatitude - fixedDecimals4(j * boxSize));
+      const boxLowestLongitude = fixedDecimals4(lowestLongitude + fixedDecimals4(i * boxSize));
+      console.log('Adding to ', highestLatitude, ' ', fixedDecimals4(j * boxSize));
+      console.log('Adding to ', lowestLongitude, ' ', fixedDecimals4(i * boxSize));
+      console.log('New lat: ', boxHighestLatitude, ' New long ', boxLowestLongitude);
       const boxCoordinates = createBox(boxLowestLongitude, boxHighestLatitude, boxSize);
 
       const feature = {

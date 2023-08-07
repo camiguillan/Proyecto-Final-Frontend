@@ -219,9 +219,9 @@ function AgroMap({
       console.log(features, 'ACA ROMPE?');
       const lastDrawn = features.features[features.features.length - 1];
       const color = getRandomColor(features.features.length);
-      // if (features.features.length === 2) {
-      //   draw.add(createGrid(createRectangle([{ polygon: features.features[0], crop: 'NONE' }]), PLOT_SIZE).squareGridR);
-      // }
+      if (features.features.length === 2) {
+        draw.add(createGrid(createRectangle([{ polygon: features.features[0], crop: 'NONE' }]), PLOT_SIZE).squareGridR);
+      }
       // if (features.features.length === 2) {
       //   // draw.add(createGridFromPlots(campoPrueba.field));
       //   createPolygonFromPlots(campoPrueba.field).map(({ polygon }) => draw.add(polygon));
