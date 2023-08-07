@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../reusable/header/header';
 import MapContainer from '../reusable/mapContainer/mapContainer';
@@ -58,8 +58,41 @@ import { campoPrueba } from '../reusable/map/campoPrueba';
 export default function EditarCampo() {
   const { fieldID } = useParams();
   const { userID } = useParams();
-  const campo = campoPrueba.field;
-  const campoFeatures = createPolygonFromPlots(campoPrueba.field);
+
+  const [userData, setUserData] = useState(null);
+  const [isLoading, setLoading] = useState(true);
+  const [campo, setCampo] = useState(null);
+  const [campoFeatures, setCampoFeatures] = useState(null);
+
+  const getUser = async () => {
+    try {
+      const accessToken = `Bearer ${userID}`;
+      const response = await get(`user/${userID}`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      });
+      setUserData(response.user); // Assuming the fetched data is in response.data
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, [userID]);
+
+  useEffect(() => {
+    // Update campo variable when userData changes
+
+    if (userData && userData.fields) {
+      console.log(userData);
+      setCampo(userData.fields[1]); // Assign userData.fields to campo if it has data
+      setLoading(false);
+      setCampoFeatures(createPolygonFromPlots(userData.fields[1]));
+    }
+  }, [userData]);
+
   console.log('CAMPOFEATURES ', campoFeatures);
   const getField = () => {
     console.log(fieldID, userID);
@@ -80,30 +113,29 @@ export default function EditarCampo() {
   return (
     <div>
       <Header />
-      <h1 className="agregar-campo-titulo">
-        {' '}
-        <Icon className="bi bi-pencil-square" color="#464E47" fontSize="" />
-        {' '}
-        EDITAR CAMPO
-      </h1>
-      <MapContainer
-        campInfo={{
-          nombreCampo: campo.name,
-          imagen: '',
-          coordinates: [campo.coordinates.lon, campo.coordinates.lat],
-          features: campoFeatures,
-        }}
-        cultivosSeleccionados={campoFeatures.map((f) => f.crop)}
-        feats={campoFeatures.map((f) => f.polygon)}
-        // campoPrincipal={{
-        //   geometry: [],
-        //   id: campoMockeado.id,
-        //   properties: campoMockeado.properties,
-        //   type: campoMockeado.type,
-        // }}
-        edit
-      />
+      {isLoading ? ( // Show loader while loading data
+        <div>Loading...</div>
+      ) : (
+        <>
+          <h1 className="agregar-campo-titulo">
+            {' '}
+            <Icon className="bi bi-pencil-square" color="#464E47" fontSize="" />
+            {' '}
+            EDITAR CAMPO
+          </h1>
+          <MapContainer
+            campInfo={{
+              nombreCampo: campo.name,
+              imagen: '',
+              coordinates: [campo.coordinates.lon, campo.coordinates.lat],
+              features: campoFeatures,
+            }}
+            cultivosSeleccionados={campoFeatures.map((f) => f.crop)}
+            feats={campoFeatures.map((f) => f.polygon)}
+            edit
+          />
+        </>
+      )}
     </div>
-
   );
 }

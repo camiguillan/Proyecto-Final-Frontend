@@ -25,6 +25,7 @@ export default function MapContainer({
   const { userID } = useParams();
   const { fieldID } = useParams();
   const nav = useNavigate();
+  console.log(campInfo);
 
   const fileTypes = ['JPG', 'PNG'];
   const [campoInfo, setCampoInfo] = useState(campInfo);
