@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Spinner from 'react-bootstrap/Spinner';
 import Header from '../reusable/header/header';
 import MapContainer from '../reusable/mapContainer/mapContainer';
 import Icon from '../../assets/icons/icon';
@@ -66,19 +65,6 @@ export default function EditarCampo() {
   const [campo, setCampo] = useState(null);
   const [campoFeatures, setCampoFeatures] = useState(null);
 
-  const getUser = async () => {
-    try {
-      const accessToken = `Bearer ${userID}`;
-      const response = await get(`user/${userID}`, {
-        headers: {
-          Authorization: accessToken,
-        },
-      });
-      setUserData(response.user); // Assuming the fetched data is in response.data
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
-  };
   const getField = async () => {
     const accessToken = `Bearer ${userID}`;
     const response = await get(`field/${fieldID}`, {

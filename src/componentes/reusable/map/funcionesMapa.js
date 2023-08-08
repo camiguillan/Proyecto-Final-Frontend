@@ -262,7 +262,6 @@ export const createGrid = (bbox, boxSize) => {
   const lowestLatitude = Math.floor(bbox[1] * factor) / factor;
   const highestLongitude = Math.ceil(bbox[2] * factor) / factor;
   const highestLatitude = Math.ceil(bbox[3] * factor) / factor;
-  const longitudeIncrement = calculateLongitudeIncrement(highestLatitude, boxSize);
 
   console.log(lowestLongitude, lowestLatitude, highestLongitude, highestLatitude);
   // Calculate the number of boxes in each direction (width and height as multiples of boxSize)

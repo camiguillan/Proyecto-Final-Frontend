@@ -181,10 +181,8 @@ function AgroMap({
       const tempFeats = feats.map((feat) => feat.polygon);
       console.log('feats agro map', tempFeats);
       tempFeats.map((feature) => draw.add(feature));
-      // const long = tempFeats[0].geometry.coordinates[0][0][0];
-      // const lat = tempFeats[0].geometry.coordinates[0][0][1];
-      const long = coordinates[0];
-      const lat = coordinates[1];
+      const long = tempFeats[0].geometry.coordinates[0][0][0];
+      const lat = tempFeats[0].geometry.coordinates[0][0][1];
       console.log(long, lat);
       map.setCenter([long, lat]);
       map.flyTo({ center: [long, lat], zoom: 16 });
