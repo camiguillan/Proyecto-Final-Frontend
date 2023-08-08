@@ -96,8 +96,8 @@ function AgroMap({
       },
       modes: {
         ...MapboxDraw.modes,
-        simple_select: NewSimpleSelect,
-        direct_select: NewDirectSelect,
+        simple_select: edit ? NewSimpleSelect : MapboxDraw.modes.simple_select,
+        direct_select: edit ? NewDirectSelect : MapboxDraw.modes.direct_select,
       },
     };
 
