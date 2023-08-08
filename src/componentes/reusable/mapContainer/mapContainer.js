@@ -13,6 +13,7 @@ import Icon from '../../../assets/icons/icon';
 import AgroMap from '../map/agroMap';
 import Button from '../boton/button';
 import { CROP_TYPES_KEYS } from '../../../constants/plots';
+// eslint-disable-next-line import/no-named-as-default
 import cropCheckFullField from '../map/funcionesMapa';
 import { patch, post } from '../../conexionBack/conexionBack';
 import { CROP_TYPES_TRANSLATIONS } from '../../../constants/translations';

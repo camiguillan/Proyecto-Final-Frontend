@@ -91,10 +91,15 @@ export default function EditarCampo() {
   // console.log(campoMockeado);
 
   return (
-    <div>
+    <div style={{ width: '100%', height: '100%' }}>
       <Header />
       {isLoading ? ( // Show loader while loading data
-        <Loader />
+        <div style={{
+          width: '100%', height: '100%', top: '50%', position: 'relative', marginTop: '14%',
+        }}
+        >
+          <Loader />
+        </div>
       ) : (
         <>
           <h1 className="agregar-campo-titulo">
