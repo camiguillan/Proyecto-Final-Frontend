@@ -77,34 +77,31 @@ export default function EditarCampo() {
       console.error('Error fetching user data:', error);
     }
   };
-
-  useEffect(() => {
-    getUser();
-  }, [userID]);
-
-  useEffect(() => {
-    // Update campo variable when userData changes
-
-    if (userData && userData.fields) {
-      console.log(userData);
-      setCampo(userData.fields[1]); // Assign userData.fields to campo if it has data
-      setLoading(false);
-      setCampoFeatures(createPolygonFromPlots(userData.fields[1]));
-    }
-  }, [userData]);
-
-  console.log('CAMPOFEATURES ', campoFeatures);
-  const getField = () => {
-    console.log(fieldID, userID);
+  const getField = async () => {
     const accessToken = `Bearer ${userID}`;
-    get(`field/${fieldID}`, {
+    const response = await get(`field/${fieldID}`, {
       headers: {
         Authorization: accessToken,
       },
-    }).then((res) => {
-      console.log(res);
     });
+    setCampo(response);
   };
+
+  useEffect(() => {
+    getField();
+  }, [fieldID]);
+
+  useEffect(() => {
+    // Update campo variable when userData changes
+    console.log(campo);
+    if (campo) {
+      setCampoFeatures(createPolygonFromPlots(campo));
+      setLoading(false);
+    }
+  }, [campo]);
+
+  console.log('CAMPOFEATURES ', campoFeatures);
+
   // useEffect(() => {
   //   getField();
   // });

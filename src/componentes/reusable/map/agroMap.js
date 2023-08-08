@@ -181,8 +181,10 @@ function AgroMap({
       const tempFeats = feats.map((feat) => feat.polygon);
       console.log('feats agro map', tempFeats);
       tempFeats.map((feature) => draw.add(feature));
-      const long = tempFeats[0].geometry.coordinates[0][0][0];
-      const lat = tempFeats[0].geometry.coordinates[0][0][1];
+      // const long = tempFeats[0].geometry.coordinates[0][0][0];
+      // const lat = tempFeats[0].geometry.coordinates[0][0][1];
+      const long = coordinates[0];
+      const lat = coordinates[1];
       console.log(long, lat);
       map.setCenter([long, lat]);
       map.flyTo({ center: [long, lat], zoom: 16 });
@@ -219,9 +221,9 @@ function AgroMap({
       console.log(features, 'ACA ROMPE?');
       const lastDrawn = features.features[features.features.length - 1];
       const color = getRandomColor(features.features.length);
-      if (features.features.length === 2) {
-        draw.add(createGrid(createRectangle([{ polygon: features.features[0], crop: 'NONE' }]), PLOT_SIZE).squareGridR);
-      }
+      // if (features.features.length === 2) {
+      //   draw.add(createGrid(createRectangle([{ polygon: features.features[0], crop: 'NONE' }]), PLOT_SIZE).squareGridR);
+      // }
       // if (features.features.length === 2) {
       //   // draw.add(createGridFromPlots(campoPrueba.field));
       //   createPolygonFromPlots(campoPrueba.field).map(({ polygon }) => draw.add(polygon));
