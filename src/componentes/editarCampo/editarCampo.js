@@ -8,6 +8,7 @@ import { get } from '../conexionBack/conexionBack';
 // import { campoPrueba } from '../reusable/map/campoPrueba';
 import { createPolygonFromPlots } from '../reusable/map/funcionesMapa';
 import { campoPrueba } from '../reusable/map/campoPrueba';
+import Loader from '../reusable/loader/loader';
 
 // const campoMockeado = {
 //   nombreCampo: 'campo1',
@@ -114,7 +115,7 @@ export default function EditarCampo() {
     <div>
       <Header />
       {isLoading ? ( // Show loader while loading data
-        <div>Loading...</div>
+        <Loader />
       ) : (
         <>
           <h1 className="agregar-campo-titulo">
