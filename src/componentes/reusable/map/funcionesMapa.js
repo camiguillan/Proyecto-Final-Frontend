@@ -20,34 +20,32 @@ export const createRectangle = (listOfPolygons) => {
 };
 
 const getNDVIColor = (ndvi) => {
-  switch (ndvi) {
-    case ndvi < -0.2:
-      return '#000000';
-    case ndvi <= 0:
-      return '#a50026';
-    case ndvi <= 0.1:
-      return '#d73027';
-    case ndvi <= 0.2:
-      return '#f46d43';
-    case ndvi <= 0.3:
-      return '#fdae61';
-    case ndvi <= 0.4:
-      return '#fee08b';
-    case ndvi <= 0.5:
-      return '#ffffbf';
-    case ndvi <= 0.6:
-      return '#d9ef8b';
-    case ndvi <= 0.7:
-      return '#a6d96a';
-    case ndvi <= 0.8:
-      return '#66bd63';
-    case ndvi <= 0.9:
-      return '#1a9850';
-    case ndvi <= 1:
-      return '#006837';
-    default:
-      return '#000000';
+  if (ndvi < -0.2) {
+    return '#000000';
+  } if (ndvi <= 0) {
+    return '#a50026';
+  } if (ndvi <= 0.1) {
+    return '#d73027';
+  } if (ndvi <= 0.2) {
+    return '#f46d43';
+  } if (ndvi <= 0.3) {
+    return '#fdae61';
+  } if (ndvi <= 0.4) {
+    return '#fee08b';
+  } if (ndvi <= 0.5) {
+    return '#ffffbf';
+  } if (ndvi <= 0.6) {
+    return '#d9ef8b';
+  } if (ndvi <= 0.7) {
+    return '#a6d96a';
+  } if (ndvi <= 0.8) {
+    return '#66bd63';
+  } if (ndvi <= 0.9) {
+    return '#1a9850';
+  } if (ndvi <= 1) {
+    return '#006837';
   }
+  return '#000000';
 };
 
 const moveCoordinates = ({ lat, lon }, y, x) => ({
@@ -157,10 +155,11 @@ export const createGridFromPlots = (field) => {
 };
 
 const addColor = (feat) => {
-  const randomValue = ((Math.random() * 2) - 1).toFixed(1);
+  const randomValue = (Math.floor(Math.random() * 21) - 10) / 10;
+
   return {
     ...feat,
-    properties: { portColor: getNDVIColor(randomValue) },
+    properties: { fillColor: getNDVIColor(randomValue) },
   };
 };
 

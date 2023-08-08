@@ -251,8 +251,35 @@ const styles = [
     ],
     paint: {
       'fill-color': ['get', 'user_portColor'],
-      'fill-outline-color': '#0d0d0d',
+      'fill-outline-color': ['get', 'user_portColor'],
       'fill-opacity': 0.5,
+    },
+  },
+  { // ver campo
+    id: 'ver-campo-ndvi',
+    type: 'fill',
+    filter: ['all', ['==', '$type', 'Polygon'],
+      ['has', 'user_fillColor'],
+    ],
+    paint: {
+      'fill-color': ['get', 'user_fillColor'],
+      'fill-outline-color': 'transparent',
+      'fill-opacity': 0.2,
+    },
+  },
+  { // ver campo
+    id: 'ver-campo-ndvi-lines',
+    type: 'line',
+    filter: ['all', ['==', '$type', 'Polygon'],
+      ['has', 'user_fillColor'],
+    ],
+    layout: {
+      'line-cap': 'round',
+      'line-join': 'round',
+    },
+    paint: {
+      'line-width': 0,
+      'line-opacity': 0,
     },
   },
   {
