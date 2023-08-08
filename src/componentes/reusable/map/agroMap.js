@@ -8,12 +8,13 @@ import { lineToPolygon, difference } from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'; // SEARCH BAR
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import StaticMode from '@mapbox/mapbox-gl-draw-static-mode';
+import { StaticMode } from '@mapbox/mapbox-gl-draw-static-mode';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
+import _ from 'lodash';
 import styles from './styles';
 import {
   createRectangle, createGrid, createPolygonFromPlots, createGridFromPlots,
@@ -75,8 +76,13 @@ function AgroMap({
       zoom: 11, // Default zoom level
     });
 
-    const { modes } = MapboxDraw;
-    modes.static = StaticMode;
+    const NewSimpleSelect = _.extend(MapboxDraw.modes.simple_select, {
+      dragMove() {},
+    });
+
+    const NewDirectSelect = _.extend(MapboxDraw.modes.direct_select, {
+      dragFeature() {},
+    });
 
     const drawOptions = {
       displayControlsDefault: false,
@@ -88,7 +94,11 @@ function AgroMap({
         line_string: !edit,
         // Add or customize modes as per your requirements
       },
-      modes,
+      modes: {
+        ...MapboxDraw.modes,
+        simple_select: edit ? NewSimpleSelect : MapboxDraw.modes.simple_select,
+        direct_select: edit ? NewDirectSelect : MapboxDraw.modes.direct_select,
+      },
     };
 
     const draw = new MapboxDraw(drawOptions);
