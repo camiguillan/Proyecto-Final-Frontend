@@ -1,7 +1,7 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import React from 'react';
-import AgregarCampo from './componentes/agregarCampo2/agregarCampo';
+import AgregarCampo from './componentes/agregarCampo/agregarCampo';
 import EditarCampo from './componentes/editarCampo/editarCampo';
 import VerCampo from './componentes/verCampo/verCampo';
 import AgregarLotes from './componentes/agregarLotes/agregarLotes';
