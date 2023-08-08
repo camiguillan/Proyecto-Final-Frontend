@@ -203,14 +203,14 @@ export default function MapContainer({
   console.log(cultivos);
   const cultivosInputs = cultivos.map((cultivo, index) => (
     // eslint-disable-next-line react/no-array-index-key
-    <label key={index} className="agregar-campo-label">
+    <label key={index} className={!edit ? 'agregar-campo-label' : 'agregar-campo-label-edit'}>
       Tipo de cultivo:
       <select className="select" value={cultivo} onChange={(e) => handleChange(e.target.value, index)}>
         {' '}
         {opciones}
         {' '}
       </select>
-      {cultivos.length > 1 && <Button type="button" onClick={() => removeInput(cultivo)} className="green-button">-</Button>}
+      {!edit && cultivos.length > 1 && <Button type="button" onClick={() => removeInput(cultivo)} className="green-button">-</Button>}
     </label>
   ));
 
@@ -363,9 +363,9 @@ export default function MapContainer({
                 {/* {drawField ? <p>Dibuje el campo principal</p> */}
 
                 <div>
-                  <p className="agregar-campo-label" style={{ textAlign: 'center !important', paddingLeft: '0.5rem' }}> Dibuje la superficie de cada lote con su cultivo asociado </p>
+                  <p className="agregar-campo-label" style={{ textAlign: 'center !important' }}> Dibuje la superficie de cada lote con su cultivo asociado </p>
                   {cultivosInputs}
-                  <Button type="button" onClick={addInput} className="green-button mas-button">+</Button>
+                  {!edit && <Button type="button" onClick={addInput} className="green-button mas-button">+</Button>}
                 </div>
 
               </div>

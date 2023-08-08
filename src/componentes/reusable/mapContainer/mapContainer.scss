@@ -33,6 +33,15 @@
   justify-content: space-around;
 }
 
+.agregar-campo-label-edit{
+    margin: 1vh;
+  text-align: left;
+  font-size: 2vh;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
 .agregar-campo-inputs{
   display: flex;
   flex-direction: column;
