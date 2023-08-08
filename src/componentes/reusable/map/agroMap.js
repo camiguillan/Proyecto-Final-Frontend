@@ -8,6 +8,7 @@ import { lineToPolygon, difference } from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'; // SEARCH BAR
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
+import StaticMode from '@mapbox/mapbox-gl-draw-static-mode';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
@@ -45,6 +46,7 @@ function splitPolygon(draw, polygon) {
 function AgroMap({
   coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased,
 }) {
+  const edit = feats.length > 0;
   const mapContainer = useRef(null);
   const drawRef = useRef(null);
   // const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
@@ -73,17 +75,20 @@ function AgroMap({
       zoom: 11, // Default zoom level
     });
 
+    const { modes } = MapboxDraw;
+    modes.static = StaticMode;
+
     const drawOptions = {
       displayControlsDefault: false,
       userProperties: true,
       styles,
       controls: {
-        trash: true,
-        polygon: true,
-        line_string: true,
+        trash: !edit,
+        polygon: !edit,
+        line_string: !edit,
         // Add or customize modes as per your requirements
-
       },
+      modes,
     };
 
     const draw = new MapboxDraw(drawOptions);
@@ -177,7 +182,7 @@ function AgroMap({
 
     // draw.add(defaultPolygon);
 
-    if (feats.length > 0) {
+    if (edit) {
       const tempFeats = feats.map((feat) => feat.polygon);
       console.log('feats agro map', tempFeats);
       tempFeats.map((feature) => draw.add(feature));
@@ -185,7 +190,7 @@ function AgroMap({
       const lat = tempFeats[0].geometry.coordinates[0][0][1];
       console.log(long, lat);
       map.setCenter([long, lat]);
-      map.flyTo({ center: [long, lat], zoom: 16 });
+      map.flyTo({ center: [long, lat], zoom: 14 });
     }
 
     map.on('result', (event) => {
