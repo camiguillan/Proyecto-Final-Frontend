@@ -156,10 +156,57 @@ export const createGridFromPlots = (field) => {
   return { type: 'FeatureCollection', features: plotsFeatures };
 };
 
+const addColor = (feat) => {
+  const randomValue = ((Math.random() * 2) - 1).toFixed(1);
+  return {
+    ...feat,
+    properties: { portColor: getNDVIColor(randomValue) },
+  };
+};
+
+export const createHeatmap = (field) => {
+  const {
+    plots, height, width, coordinates,
+  } = field;
+  const plotsByCrop = {};
+  plots.forEach(({ crop }) => {
+    if (crop !== CROP_TYPES_KEYS.NONE) {
+      if (!plotsByCrop[crop]) {
+        plotsByCrop[crop] = [];
+      }
+      plotsByCrop[crop].push({ crop });
+    }
+  });
+
+  const features = [];
+  let contador = 0;
+  Object.keys(plotsByCrop).forEach((crop) => {
+    const coordinatesForCrop = plotsByCrop[crop];
+    const poly = createGridFromPlots({
+      plots: coordinatesForCrop, height, width, coordinates,
+    });
+    const coloredFeatures = { ...poly, features: poly.features.map((feat) => addColor(feat)) };
+    console.log(coloredFeatures);
+    features.push({
+      polygon: {
+        id: contador.toString(),
+        features: coloredFeatures.features,
+        type: coloredFeatures.type,
+      },
+      crop,
+    });
+    contador += 1;
+  });
+  console.log(features);
+  return features;
+};
+
 export const createPolygonFromPlots = (field) => {
   const {
     plots, height, width, coordinates,
   } = field;
+  console.log(field);
+  console.log(createGridFromPlots(field));
   const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) }));
   // .filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
   const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {

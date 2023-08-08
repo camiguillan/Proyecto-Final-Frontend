@@ -163,8 +163,19 @@ function AgroMap({
     if (edit) {
       const tempFeats = feats.map((feat) => feat.polygon);
       tempFeats.map((feature) => draw.add(feature));
-      const long = tempFeats[0].geometry.coordinates[0][0][0];
-      const lat = tempFeats[0].geometry.coordinates[0][0][1];
+      let long = 0;
+      let lat = 0;
+
+      if (tempFeats[0].type !== 'FeatureCollection') {
+        const [longitude, latitude] = tempFeats[0].geometry.coordinates[0][0];
+        long = longitude;
+        lat = latitude;
+      } else {
+        const [longitude, latitude] = tempFeats[0].features[0].geometry.coordinates[0][0];
+        long = longitude;
+        lat = latitude;
+      }
+      console.log(long, lat);
       map.setCenter([long, lat]);
       map.flyTo({ center: [long, lat], zoom: 14 });
     }
