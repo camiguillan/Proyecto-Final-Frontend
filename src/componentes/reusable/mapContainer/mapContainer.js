@@ -1,6 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -20,12 +19,11 @@ import { CROP_TYPES_TRANSLATIONS } from '../../../constants/translations';
 import ErrorModal from '../errorFolder/errores';
 
 export default function MapContainer({
-  campInfo, cultivosSeleccionados, feats, campoPrincipal, edit,
+  campInfo, cultivosSeleccionados, feats, edit,
 }) {
   const { userID } = useParams();
   const { fieldID } = useParams();
   const nav = useNavigate();
-  console.log(campInfo);
 
   const fileTypes = ['JPG', 'PNG'];
   const [campoInfo, setCampoInfo] = useState(campInfo);
@@ -35,48 +33,17 @@ export default function MapContainer({
   const [newFeatures, setNewFeatures] = useState([]);
   const [erased, setNewErased] = useState([]);
   const [featErasedId, setNewErasedId] = useState('');
-  // const [mainField, setMainField] = useState({
-  //   geometry: campoPrincipal.geometry,
-  //   id: campoPrincipal.id,
-  //   properties: campoPrincipal.properties,
-  //   type: campoPrincipal.type,
-  // });
-
-  const [drawField, setdrawField] = useState(!edit);
   const cultivosOpciones = Object.values(CROP_TYPES_KEYS);
   const [selectedCrop, setSelectedCrop] = useState(CROP_TYPES_KEYS.NONE);
   const [invalid, setinValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ title: '', message: '' });
-  console.log(cultivos, cultivosSeleccionados);
-  console.log(campoInfo.features);
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
     tempList[index] = cultivo;
     const list2 = [...campoInfo.features];
-    console.log(list2, 'CROP VACIO');
-    if (features.length === 0) {
-      // list2 = [{
-      //   polygon: {
-      //     id: '',
-      //     type: '',
-      //     properties: {},
-      //     geometry: {
-      //       coordinates: [],
-      //       type: '',
-      //     },
-      //   },
-      //   crop: cultivo,
-      // }];
-      // console.log(list2, index, 'hola?');
-    }
-    console.log('INDEX: ', index);
     if (list2.length >= index + 1) {
       list2[index].crop = cultivo;
-      console.log('list length == index + 1', list2, index);
-    }
-    if (list2.length === tempList.length) {
-      console.log('deaaaaa', list2, tempList);
     }
     setCampoInfo((prevInfo) => ({
       ...prevInfo,
@@ -95,8 +62,6 @@ export default function MapContainer({
       setinValid(true);
       return;
     }
-    console.log('CULTIVOS: ', cultivos);
-    console.log('FEATURES: ', campoInfo.features);
     if (cultivos.length > campoInfo.features.length || campoInfo.features.some(({ polygon }) => polygon.id === '')) {
       setErrorMessage({
         title: 'No se puede agregar cultivo',
@@ -110,7 +75,6 @@ export default function MapContainer({
   };
 
   const removeInput = (deletedCrop) => {
-    console.log(deletedCrop);
     const tempList = [...cultivos];
     const tempListFeatures = [...campoInfo.features];
     const cropIndex = tempListFeatures.findIndex((f) => f.crop === deletedCrop);
@@ -126,7 +90,6 @@ export default function MapContainer({
       ...prevInfo,
       features: tempListFeatures,
     }));
-    console.log(erasedCrop);
     setNewErasedId(erasedCrop.polygon.id);
   };
 
@@ -145,7 +108,6 @@ export default function MapContainer({
     if (areNewFeatures()) {
       const tempList = [...features];
       const lista2 = [...campoInfo.features];
-      console.log('NUEVAS FEATURES ADD F', newFeatures);
       newFeatures.forEach((feat, index) => {
         const hasFeature = features.map((fea) => fea.id).includes(feat.id);
         if (hasFeature) {
@@ -165,32 +127,16 @@ export default function MapContainer({
         features: lista2,
       }));
       setFeatures(tempList);
-      // if (mainField.id === '' || !mainField) {
-      //   const {
-      //     geometry, id, properties, type,
-      //   } = tempList[0];
-      //   setMainField(
-      //     {
-      //       geometry,
-      //       id,
-      //       properties,
-      //       type,
-      //     },
-      //   );
-      //   setdrawField(false);
-      // }
     }
   };
 
   const removeFeatureSt = (fts, removedFeature) => {
-    console.log('FEATURES TO REMOVE EDIT', fts, removedFeature);
     setNewFeatures(fts);
     setNewErased(removedFeature[0]);
   };
 
   const removeFeature = () => {
     const erasedId = erased.id;
-    console.log(campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0], '????');
     const erasedCrop = Object.keys(erased).length > 0 && campoInfo.features.filter(({ polygon }) => polygon.id === erasedId)[0].crop;
     removeInput(erasedCrop);
     setFeatures(newFeatures);
@@ -200,7 +146,6 @@ export default function MapContainer({
     }));
   };
 
-  console.log(cultivos);
   const cultivosInputs = cultivos.map((cultivo, index) => (
     // eslint-disable-next-line react/no-array-index-key
     <label key={index} className={!edit ? 'agregar-campo-label' : 'agregar-campo-label-edit'}>
@@ -215,14 +160,11 @@ export default function MapContainer({
   ));
 
   useEffect(() => {
-    console.log(newFeatures, 'HAY NUEVAS FEATURES?');
     if (newFeatures.length !== 0 && areNewFeatures()) { addFeature(); }
   }, [newFeatures]);
 
   useEffect(() => {
-    console.log(erased, 'QUE ES ERASED');
     if (campoInfo.features.length !== 0 && Object.keys(erased).length > 0) {
-      console.log('Camp info', campoInfo, erased);
       removeFeature();
     }
   }, [erased]);
@@ -232,7 +174,6 @@ export default function MapContainer({
   }, []);
 
   function validateForm() {
-    console.log(campoInfo);
     if (campoInfo.nombreCampo === '') {
       setErrorMessage({
         title: 'No se puede enviar su solicitud',
@@ -248,7 +189,6 @@ export default function MapContainer({
         message: 'Por favor complete el dibujo de su campo o el tipo de cultivo que posee su lote',
       });
       setinValid(true);
-      console.log('Falta subir imagen');
       return false;
     }
     if (campoInfo.imagen === '') {
@@ -257,11 +197,8 @@ export default function MapContainer({
         message: 'Por favor suba una foto de su campo',
       });
       setinValid(true);
-      console.log('Falta subir imagen');
       return false;
     }
-    // Si sacamos main field, cambiar a cultivos.includes(CROP_TYPES_KEYS.NONE) TODO
-
     return true;
   }
 
@@ -290,7 +227,6 @@ export default function MapContainer({
     if (!valid) {
       return;
     }
-    console.log(campoInfo);
     const {
       plots, height, width, coordinates,
     } = cropCheckFullField(campoInfo.features);
@@ -301,9 +237,6 @@ export default function MapContainer({
     formData.append('height', height);
     formData.append('width', width);
     formData.append('image', campoInfo.imagen); // Assuming campoInfo.image is a File object
-
-    console.log(formData, campoInfo, cultivos);
-    console.log('PLOTS: ', plots, height, width, coordinates);
 
     if (edit) {
       // guardar campo editado
@@ -425,6 +358,5 @@ MapContainer.propTypes = {
   campInfo: PropTypes.object.isRequired,
   cultivosSeleccionados: PropTypes.arrayOf(PropTypes.string).isRequired,
   feats: PropTypes.arrayOf(PropTypes.object).isRequired,
-  campoPrincipal: PropTypes.object.isRequired,
   edit: PropTypes.bool.isRequired,
 };

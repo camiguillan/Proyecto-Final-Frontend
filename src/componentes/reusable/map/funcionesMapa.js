@@ -8,7 +8,6 @@ import { campoPrueba } from './campoPrueba';
 
 const fixedDecimals4 = (number) => Number(number.toFixed(4));
 export const createRectangle = (listOfPolygons) => {
-  console.log(listOfPolygons);
   const aux = listOfPolygons;
   const latitudes = aux.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[1]));
   const longitudes = aux.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[0]));
@@ -91,7 +90,6 @@ const plotToCoordinates = (height, width, coordinates) => {
       coordinatesForPlots.push(topLeftCoordinate);
     }
   }
-  console.log(coordinatesForPlots);
   return coordinatesForPlots;
 };
 
@@ -130,12 +128,7 @@ export const createCombinedPolygon = (listOfPolygons) => {
   // listOfPolygons.forEach(({ polygon: { geometry: { coordinates } } }) => {
   //   allCoordinates = allCoordinates.concat(coordinates[0]);
   // });
-
-  console.log(listOfPolygons);
-
   const onlyPolygons = listOfPolygons.map((poly) => poly.polygon);
-
-  console.log(onlyPolygons);
 
   return onlyPolygons.reduce((accumulator, currentPolygon) => union(accumulator, currentPolygon));
 };
@@ -144,12 +137,11 @@ export const createGridFromPlots = (field) => {
   const {
     plots, height, width, coordinates,
   } = field;
-  console.log(field);
+
   const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) }));
   // .filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
-  console.log(plotsCoordinates);
+
   const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
-    console.log(coordinate);
     const polygonCoordinates = createBox(coordinate.lon, coordinate.lat, PLOT_SIZE);
     const color = CROP_COLORS[crop.toUpperCase()];
     return {
@@ -168,11 +160,8 @@ export const createPolygonFromPlots = (field) => {
   const {
     plots, height, width, coordinates,
   } = field;
-  console.log(field);
-  console.log(createGridFromPlots(field));
   const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) }));
   // .filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
-  console.log(plotsCoordinates);
   const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
     // console.log(coordinate);
     const polygonCoordinates = createBox(coordinate.lon, coordinate.lat, PLOT_SIZE);
@@ -206,9 +195,9 @@ export const createPolygonFromPlots = (field) => {
   Object.keys(plotsByCrop).forEach((crop) => {
     const coordinatesForCrop = plotsByCrop[crop];
     // const box = createRectangle(coordinatesForCrop);
-    console.log(coordinatesForCrop);
+
     const poly = createCombinedPolygon(coordinatesForCrop);
-    console.log(poly);
+
     // const lowestLongitude = box[0];
     // const lowestLatitude = box[1];
     // const highestLongitude = box[2];
@@ -234,7 +223,6 @@ export const createPolygonFromPlots = (field) => {
     });
     contador += 1;
   });
-  console.log(features);
 
   return features;
 };
@@ -254,7 +242,7 @@ export const createGrid = (bbox, boxSize) => {
     type: 'FeatureCollection',
     features: [],
   };
-  console.log(bbox);
+
   const factor = 10 ** 4; // 10 raised to the power of 4 (4 decimal places)
 
   // Adjust the bounding box to ensure divisibility by boxSize
@@ -263,13 +251,9 @@ export const createGrid = (bbox, boxSize) => {
   const highestLongitude = Math.ceil(bbox[2] * factor) / factor;
   const highestLatitude = Math.ceil(bbox[3] * factor) / factor;
 
-  console.log(lowestLongitude, lowestLatitude, highestLongitude, highestLatitude);
   // Calculate the number of boxes in each direction (width and height as multiples of boxSize)
-  console.log('WIDTH : ', fixedDecimals4(highestLongitude - lowestLongitude), fixedDecimals4(highestLatitude - lowestLatitude), boxSize);
   const width = Math.ceil(fixedDecimals4(highestLongitude - lowestLongitude) / boxSize);
   const height = Math.ceil(fixedDecimals4(highestLatitude - lowestLatitude) / boxSize);
-
-  console.log(height, width);
 
   // Loop through each mini square and create the coordinates
   for (let j = 0; j < height; j += 1) {
@@ -305,11 +289,8 @@ const cropCheckFullField = (cropPolygons) => {
   const {
     squareGridR, height, width, lowestLongitude, highestLatitude,
   } = createGrid(bbox, PLOT_SIZE);
-  console.log({ lat: highestLatitude, lon: lowestLongitude });
-  console.log(squareGridR);
   // console.log('CROPPOLYGONS, SHIF, SPLICE, REMAINING LIST', cropPolygons, cropPolygons.shift(), removed, tempList);
   const plots = squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, cropPolygons));
-  console.log(plots);
   return {
     plots,
     height,

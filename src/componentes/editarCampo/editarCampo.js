@@ -7,7 +7,6 @@ import Icon from '../../assets/icons/icon';
 import { get } from '../conexionBack/conexionBack';
 // import { campoPrueba } from '../reusable/map/campoPrueba';
 import { createPolygonFromPlots } from '../reusable/map/funcionesMapa';
-import { campoPrueba } from '../reusable/map/campoPrueba';
 import Loader from '../reusable/loader/loader';
 
 // const campoMockeado = {
@@ -60,7 +59,6 @@ export default function EditarCampo() {
   const { fieldID } = useParams();
   const { userID } = useParams();
 
-  const [userData, setUserData] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [campo, setCampo] = useState(null);
   const [campoFeatures, setCampoFeatures] = useState(null);
@@ -81,14 +79,11 @@ export default function EditarCampo() {
 
   useEffect(() => {
     // Update campo variable when userData changes
-    console.log(campo);
     if (campo) {
       setCampoFeatures(createPolygonFromPlots(campo));
       setLoading(false);
     }
   }, [campo]);
-
-  console.log('CAMPOFEATURES ', campoFeatures);
 
   // useEffect(() => {
   //   getField();

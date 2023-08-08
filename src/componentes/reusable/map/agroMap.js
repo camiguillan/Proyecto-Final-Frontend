@@ -1,20 +1,17 @@
 /* eslint-disable max-len */
 /* eslint-disable react/forbid-prop-types */
-/* eslint-disable import/named */
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 import { lineToPolygon, difference } from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'; // SEARCH BAR
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import { StaticMode } from '@mapbox/mapbox-gl-draw-static-mode';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+import _ from 'lodash';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
-import _ from 'lodash';
 import styles from './styles';
 import {
   createRectangle, createGrid, createPolygonFromPlots, createGridFromPlots,
@@ -28,7 +25,6 @@ function splitPolygon(draw, polygon) {
 
   const drawnGeometry = features.features[features.features.length - 1].geometry;
 
-  console.log(drawnGeometry);
   if (drawnGeometry.type === 'LineString') {
     // Create a temporary polygon from the LineString to use with difference
     const tempPolygon = lineToPolygon(drawnGeometry);
@@ -55,14 +51,8 @@ function AgroMap({
   function removeFeatureMap() {
     if (drawRef.current) {
       const { features } = drawRef.current.getAll();
-      console.log('All Features:', features);
 
       if (features.length !== 0 && featErased !== '') {
-        // const idsInFeats = feats.map(({ polygon }) => polygon.id);
-        // const tempFeatures = features.filter((feature) => !idsInFeats.includes(feature.id));
-        // console.log('Features to Remove:', tempFeatures);
-        // tempFeatures.forEach((feat) => drawRef.current.delete(feat.id));
-        console.log('Feat to erase: ', featErased);
         drawRef.current.delete(featErased);
       }
     }
@@ -92,7 +82,6 @@ function AgroMap({
         trash: !edit,
         polygon: !edit,
         line_string: !edit,
-        // Add or customize modes as per your requirements
       },
       modes: {
         ...MapboxDraw.modes,
@@ -109,7 +98,7 @@ function AgroMap({
     map.addControl(nav, 'bottom-right');
 
     const geocoderContainer = () => <div id="geocoder-container" className="geocoder-container" style={{ width: '100%', borderRadius: '10px' }} />;
-    const coordinatesGeocoder = function (query) {
+    const coordinatesGeocoder = (query) => {
       // Match anything which looks like
       // decimal degrees coordinate pair.
       const matches = query.match(
@@ -135,8 +124,6 @@ function AgroMap({
 
       const coord1 = Number(matches[1]);
       const coord2 = Number(matches[2]);
-
-      console.log(`Coord1: ${coord1} Coord2: ${coord2}`);
       const geocodes = [];
 
       if (coord2 < -90 || coord2 > 90) {
@@ -173,39 +160,17 @@ function AgroMap({
 
     map.addControl(geocoder, 'top-left');
 
-    // const defaultPolygon = {
-    //   type: 'Feature',
-    //   geometry: {
-    //     type: 'Polygon',
-    //     coordinates: [
-    //       [
-    //         [-58.78905150033654, -34.68022022276631],
-    //         [-58.78518370701069, -34.6825252635452],
-    //         [-58.788616916816935, -34.68570575709246],
-    //         [-58.79224568920641, -34.68341867294826],
-    //         [-58.78905150033654, -34.68022022276631],
-    //       ],
-    //     ],
-    //   },
-    //   properties: {},
-    // };
-
-    // draw.add(defaultPolygon);
-
     if (edit) {
       const tempFeats = feats.map((feat) => feat.polygon);
-      console.log('feats agro map', tempFeats);
       tempFeats.map((feature) => draw.add(feature));
       const long = tempFeats[0].geometry.coordinates[0][0][0];
       const lat = tempFeats[0].geometry.coordinates[0][0][1];
-      console.log(long, lat);
       map.setCenter([long, lat]);
       map.flyTo({ center: [long, lat], zoom: 14 });
     }
 
     map.on('result', (event) => {
       const { result } = event;
-      console.log(result);
 
       // Retrieve the coordinates from the geocoding result
       const { center } = result.geometry;
@@ -217,7 +182,6 @@ function AgroMap({
     const marker = new mapboxgl.Marker({ draggable: false, color: 'red' });
     geocoder.on('result', (e) => {
       marker.remove(map);
-      console.log(e.result.center);
       // eslint-disable-next-line no-underscore-dangle
       marker
         .setLngLat(e.result.center)
@@ -231,21 +195,12 @@ function AgroMap({
 
     function handleDraw() {
       const features = draw.getAll();
-      console.log(features, 'ACA ROMPE?');
       const lastDrawn = features.features[features.features.length - 1];
       const color = getRandomColor(features.features.length);
-      // if (features.features.length === 2) {
-      //   draw.add(createGrid(createRectangle([{ polygon: features.features[0], crop: 'NONE' }]), PLOT_SIZE).squareGridR);
-      // }
-      // if (features.features.length === 2) {
-      //   // draw.add(createGridFromPlots(campoPrueba.field));
-      //   createPolygonFromPlots(campoPrueba.field).map(({ polygon }) => draw.add(polygon));
-      // }
 
       draw.setFeatureProperty(lastDrawn.id, 'portColor', color);
       // console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0][0]);
-      console.log(features);
       if (features.features.length !== 0) {
         addFeatures(features.features, color);
       } else if (feats.length > 0) {
@@ -264,28 +219,6 @@ function AgroMap({
     map.on('draw.create', handleDraw);
     map.on('draw.update', handleDraw);
     map.on('draw.delete', handleDrawDelete);
-    // Assuming draw is initialized correctly before this code block
-
-    // document.getElementById('grid').addEventListener('click', () => {
-    //   if (draw.getAll) {
-    //     const allFeatures = draw.getAll();
-
-    //     if (allFeatures !== null && allFeatures.length !== 0) {
-    //       console.log(allFeatures);
-    //       const cropPolygons = allFeatures.features[0];
-    //       const bbox = createRectangle([{ polygon: cropPolygons, crop: 'NONE' }]);
-    //       console.log(bbox);
-    //       const options = { units: 'degrees' };
-    //       const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
-    //       console.log(squareGridR);
-    //       draw.add(squareGridR);
-    //     } else {
-    //       console.error("No features found in 'draw' object.");
-    //     }
-    //   } else {
-    //     console.error("'draw' object or its 'getAll' method is not available.");
-    //   }
-    // });
 
     return () => {
       map.off('draw.create', handleDraw);
@@ -295,9 +228,6 @@ function AgroMap({
     };
   }, []);
   useEffect(() => {
-    console.log('FEATURES IN AGROMAP PROP: ', feats);
-    console.log('ERASED IN AGROMAP PROP: ', featErased);
-
     // Call the removeFeatureMap function here (inside the useEffect where drawRef is assigned).
     removeFeatureMap();
   });
