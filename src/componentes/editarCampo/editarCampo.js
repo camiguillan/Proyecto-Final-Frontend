@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
 import Header from '../reusable/header/header';
 import MapContainer from '../reusable/mapContainer/mapContainer';
 import Icon from '../../assets/icons/icon';
@@ -8,6 +9,7 @@ import { get } from '../conexionBack/conexionBack';
 // import { campoPrueba } from '../reusable/map/campoPrueba';
 import { createPolygonFromPlots } from '../reusable/map/funcionesMapa';
 import { campoPrueba } from '../reusable/map/campoPrueba';
+import Loader from '../reusable/loader/loader';
 
 // const campoMockeado = {
 //   nombreCampo: 'campo1',
@@ -111,7 +113,7 @@ export default function EditarCampo() {
     <div>
       <Header />
       {isLoading ? ( // Show loader while loading data
-        <div>Loading...</div>
+        <Loader />
       ) : (
         <>
           <h1 className="agregar-campo-titulo">
