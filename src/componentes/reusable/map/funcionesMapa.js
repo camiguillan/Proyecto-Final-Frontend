@@ -1,13 +1,10 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
-import {
-  squareGrid, booleanPointInPolygon, convex, multiPoint, concave, union, simplify,
-} from '@turf/turf';
-import { PLOT_SIZE, CROP_TYPES_KEYS, CROP_COLORS } from '../../../constants/plots';
-import { campoPrueba } from './campoPrueba';
+import { squareGrid, booleanPointInPolygon } from '@turf/turf';
+import { PLOT_SIZE, CROP_TYPES_KEYS } from '../../../constants/plots';
 
-const fixedDecimals4 = (number) => Number(number.toFixed(4));
 export const createRectangle = (listOfPolygons) => {
+  console.log(listOfPolygons);
   const aux = listOfPolygons;
   const latitudes = aux.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[1]));
   const longitudes = aux.flatMap(({ polygon: { geometry: { coordinates } } }) => coordinates[0].map((coor) => coor[0]));
@@ -19,258 +16,21 @@ export const createRectangle = (listOfPolygons) => {
   return [lowestLongitude, lowestLatitude, highestLongitude, highestLatitude];
 };
 
-const getNDVIColor = (ndvi) => {
-  if (ndvi < -0.2) {
-    return '#000000';
-  } if (ndvi <= 0) {
-    return '#a50026';
-  } if (ndvi <= 0.1) {
-    return '#d73027';
-  } if (ndvi <= 0.2) {
-    return '#f46d43';
-  } if (ndvi <= 0.3) {
-    return '#fdae61';
-  } if (ndvi <= 0.4) {
-    return '#fee08b';
-  } if (ndvi <= 0.5) {
-    return '#ffffbf';
-  } if (ndvi <= 0.6) {
-    return '#d9ef8b';
-  } if (ndvi <= 0.7) {
-    return '#a6d96a';
-  } if (ndvi <= 0.8) {
-    return '#66bd63';
-  } if (ndvi <= 0.9) {
-    return '#1a9850';
-  } if (ndvi <= 1) {
-    return '#006837';
-  }
-  return '#000000';
-};
-
 const moveCoordinates = ({ lat, lon }, y, x) => ({
   lat: lat - y * PLOT_SIZE,
   lon: lon + x * PLOT_SIZE,
 });
-function calculateLongitudeIncrement(latitude, boxSize) {
-  return boxSize / Math.cos(latitude * (Math.PI / 180));
-}
-const plotToCoordinates2 = (height, width, topLeftCoordinates, index) => {
-  const { lat: topLeftLat, lon: topLeftLon } = topLeftCoordinates;
-  // Calculate the row and column of the plot in the matrix
-  const row = Math.floor(index / width);
-  const col = index % width;
-
-  // Calculate the latitude and longitude of the plot based on its position in the matrix
-  const lat = fixedDecimals4(topLeftLat - row * PLOT_SIZE);
-  const lon = fixedDecimals4(topLeftLon + col * PLOT_SIZE);
-
-  return { lon, lat };
-};
-
-function getCoordinatesFromPosition(topLeftRow, topLeftCol, matrixWidth, position) {
-  // Calculate the row and column offset from the top-left corner
-  const rowOffset = Math.floor(position / matrixWidth);
-  const colOffset = position % matrixWidth;
-
-  // Calculate the actual row and column in the matrix
-  const row = topLeftRow + rowOffset;
-  const col = topLeftCol + colOffset;
-
-  return { row, col };
-}
 
 const plotToCoordinates = (height, width, coordinates) => {
   const coordinatesForPlots = [];
   for (let y = 0; y < height; y += 1) {
+    const line = [];
     for (let x = 0; x < width; x += 1) {
-      const topLeftCoordinate = moveCoordinates(coordinates, y, x);
-      coordinatesForPlots.push(topLeftCoordinate);
+      line.push(moveCoordinates(coordinates, y, x));
     }
+    coordinatesForPlots.push(line);
   }
   return coordinatesForPlots;
-};
-
-const createBox = (lowestLongitude, highestLatitude, boxSize) => {
-  const longitudeIncrement = calculateLongitudeIncrement(highestLatitude, boxSize);
-  // console.log(longitudeIncrement);
-  const highestLongitude = fixedDecimals4(lowestLongitude + boxSize);// L -> H SE SUMA
-  const lowestLatitude = fixedDecimals4(highestLatitude - boxSize); // H -> L SE RESTA
-
-  return [
-    [lowestLongitude, highestLatitude], // top left
-    [highestLongitude, highestLatitude], // top right
-    [highestLongitude, lowestLatitude], // bottom right
-    [lowestLongitude, lowestLatitude], // bottom left
-    [lowestLongitude, highestLatitude], // Closing the polygon
-  ];
-};
-const createBox2 = (lowestLongitude, highestLatitude, boxSize) => {
-  const longitudeIncrement = calculateLongitudeIncrement(highestLatitude, boxSize);
-  // console.log(longitudeIncrement);
-  const highestLongitude = lowestLongitude + boxSize;// L -> H SE SUMA
-  const lowestLatitude = highestLatitude - boxSize; // H -> L SE RESTA
-
-  return [
-    [lowestLongitude, highestLatitude], // top left
-    [highestLongitude, highestLatitude], // top right
-    [highestLongitude, lowestLatitude], // bottom right
-    [lowestLongitude, lowestLatitude], // bottom left
-    [lowestLongitude, highestLatitude], // Closing the polygon
-  ];
-};
-
-export const createCombinedPolygon = (listOfPolygons) => {
-  // Extract all the coordinates from the list of polygons
-  // let allCoordinates = [];
-  // listOfPolygons.forEach(({ polygon: { geometry: { coordinates } } }) => {
-  //   allCoordinates = allCoordinates.concat(coordinates[0]);
-  // });
-  const onlyPolygons = listOfPolygons.map((poly) => poly.polygon);
-
-  return onlyPolygons.reduce((accumulator, currentPolygon) => union(accumulator, currentPolygon));
-};
-
-export const createGridFromPlots = (field) => {
-  const {
-    plots, height, width, coordinates,
-  } = field;
-
-  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) }));
-  // .filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
-
-  const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
-    const polygonCoordinates = createBox(coordinate.lon, coordinate.lat, PLOT_SIZE);
-    const color = CROP_COLORS[crop.toUpperCase()];
-    return {
-      type: 'Feature',
-      properties: { portColor: color },
-      geometry: {
-        type: 'Polygon',
-        coordinates: [polygonCoordinates],
-      },
-    };
-  });
-  return { type: 'FeatureCollection', features: plotsFeatures };
-};
-
-const addColor = (feat) => {
-  const randomValue = (Math.floor(Math.random() * 21) - 10) / 10;
-
-  return {
-    ...feat,
-    properties: { fillColor: getNDVIColor(randomValue) },
-  };
-};
-
-export const createHeatmap = (field) => {
-  const {
-    plots, height, width, coordinates,
-  } = field;
-  const plotsByCrop = {};
-  plots.forEach(({ crop }) => {
-    if (crop !== CROP_TYPES_KEYS.NONE) {
-      if (!plotsByCrop[crop]) {
-        plotsByCrop[crop] = [];
-      }
-      plotsByCrop[crop].push({ crop });
-    }
-  });
-
-  const features = [];
-  let contador = 0;
-  Object.keys(plotsByCrop).forEach((crop) => {
-    const coordinatesForCrop = plotsByCrop[crop];
-    const poly = createGridFromPlots({
-      plots: coordinatesForCrop, height, width, coordinates,
-    });
-    const coloredFeatures = { ...poly, features: poly.features.map((feat) => addColor(feat)) };
-    console.log(coloredFeatures);
-    features.push({
-      polygon: {
-        id: contador.toString(),
-        features: coloredFeatures.features,
-        type: coloredFeatures.type,
-      },
-      crop,
-    });
-    contador += 1;
-  });
-  console.log(features);
-  return features;
-};
-
-export const createPolygonFromPlots = (field) => {
-  const {
-    plots, height, width, coordinates,
-  } = field;
-  console.log(field);
-  console.log(createGridFromPlots(field));
-  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) }));
-  // .filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
-  const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
-    // console.log(coordinate);
-    const polygonCoordinates = createBox(coordinate.lon, coordinate.lat, PLOT_SIZE);
-    const color = CROP_COLORS[crop.toUpperCase()];
-    return {
-      polygon: {
-        type: 'Feature',
-        properties: { portColor: color },
-        geometry: {
-          type: 'Polygon',
-          coordinates: [polygonCoordinates],
-        },
-      },
-      crop,
-    };
-  });
-
-  // Group the plotsCoordinates by crop type
-  const plotsByCrop = {};
-  plotsFeatures.forEach(({ crop, polygon }) => {
-    if (crop !== CROP_TYPES_KEYS.NONE) {
-      if (!plotsByCrop[crop]) {
-        plotsByCrop[crop] = [];
-      }
-      plotsByCrop[crop].push({ crop, polygon });
-    }
-  });
-
-  const features = [];
-  let contador = 0;
-  Object.keys(plotsByCrop).forEach((crop) => {
-    const coordinatesForCrop = plotsByCrop[crop];
-    // const box = createRectangle(coordinatesForCrop);
-
-    const poly = createCombinedPolygon(coordinatesForCrop);
-
-    // const lowestLongitude = box[0];
-    // const lowestLatitude = box[1];
-    // const highestLongitude = box[2];
-    // const highestLatitude = box[3];
-    // const polygonCoordinates = [
-    //   [lowestLongitude, highestLatitude], // top left
-    //   [highestLongitude, highestLatitude], // top right
-    //   [highestLongitude, lowestLatitude], // bottom right
-    //   [lowestLongitude, lowestLatitude], // bottom left
-    //   [lowestLongitude, highestLatitude], // Closing the polygon
-    // ];
-    const color = CROP_COLORS[crop.toUpperCase()];
-    const options = { tolerance: 0.00001, highQuality: false };
-    const newPoly = simplify(poly, options);
-    features.push({
-      polygon: {
-        id: contador.toString(),
-        properties: { portColor: color },
-        geometry: newPoly.geometry,
-        type: newPoly.type,
-      },
-      crop,
-    });
-    contador += 1;
-  });
-
-  return features;
 };
 
 const cropCheck = (coordinates, cropPolygons) => {
@@ -283,65 +43,33 @@ const cropCheck = (coordinates, cropPolygons) => {
   return { crop: answer.crop };
 };
 
-export const createGrid = (bbox, boxSize) => {
-  const grid = {
-    type: 'FeatureCollection',
-    features: [],
-  };
-
-  const factor = 10 ** 4; // 10 raised to the power of 4 (4 decimal places)
-
-  // Adjust the bounding box to ensure divisibility by boxSize
-  const lowestLongitude = Math.floor(bbox[0] * factor) / factor;
-  const lowestLatitude = Math.floor(bbox[1] * factor) / factor;
-  const highestLongitude = Math.ceil(bbox[2] * factor) / factor;
-  const highestLatitude = Math.ceil(bbox[3] * factor) / factor;
-
-  // Calculate the number of boxes in each direction (width and height as multiples of boxSize)
-  const width = Math.ceil(fixedDecimals4(highestLongitude - lowestLongitude) / boxSize);
-  const height = Math.ceil(fixedDecimals4(highestLatitude - lowestLatitude) / boxSize);
-
-  // Loop through each mini square and create the coordinates
-  for (let j = 0; j < height; j += 1) {
-    for (let i = 0; i < width; i += 1) {
-      const boxHighestLatitude = fixedDecimals4(highestLatitude - fixedDecimals4(j * boxSize));
-      const boxLowestLongitude = fixedDecimals4(lowestLongitude + fixedDecimals4(i * boxSize));
-      // console.log('Adding to ', highestLatitude, ' ', fixedDecimals4(j * boxSize));
-      // console.log('Adding to ', lowestLongitude, ' ', fixedDecimals4(i * boxSize));
-      // console.log('New lat: ', boxHighestLatitude, ' New long ', boxLowestLongitude);
-      const boxCoordinates = createBox(boxLowestLongitude, boxHighestLatitude, boxSize);
-
-      const feature = {
-        type: 'Feature',
-        properties: {},
-        geometry: {
-          type: 'Polygon',
-          coordinates: [boxCoordinates],
-        },
-      };
-
-      grid.features.push(feature);
-    }
-  }
-
-  return {
-    squareGridR: grid, height, width, lowestLongitude, highestLatitude,
-  };
-};
-
 // eslint-disable-next-line no-unused-vars
 const cropCheckFullField = (cropPolygons) => {
   const bbox = createRectangle(cropPolygons);
-  const {
-    squareGridR, height, width, lowestLongitude, highestLatitude,
-  } = createGrid(bbox, PLOT_SIZE);
+  const lowestLongitude = bbox[0];
+  const lowestLatitude = bbox[1];
+  const highestLongitude = bbox[2];
+  const highestLatitude = bbox[3];
+  const topCoordinates = [lowestLongitude, highestLatitude];
+
+  // Calculate latitude and longitude ranges
+  const latitudeRange = highestLatitude - lowestLatitude;
+  const longitudeRange = highestLongitude - lowestLongitude;
+
+  // Calculate the number of rows and columns in the matrix
+  const height = Math.ceil(latitudeRange / PLOT_SIZE);
+  const width = Math.ceil(longitudeRange / PLOT_SIZE);
+  const options = { units: 'degrees' };
+  const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
+  const tempList = cropPolygons;
+  tempList.splice(0, 1);
   // console.log('CROPPOLYGONS, SHIF, SPLICE, REMAINING LIST', cropPolygons, cropPolygons.shift(), removed, tempList);
-  const plots = squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, cropPolygons));
+  const plots = squareGridR.features.map(({ geometry: { coordinates } }) => cropCheck(coordinates, tempList));// le saco el primero
   return {
     plots,
     height,
     width,
-    coordinates: { lat: highestLatitude, lon: lowestLongitude },
+    coordinates: { lat: topCoordinates[1], lon: topCoordinates[0] },
   };
 };
 

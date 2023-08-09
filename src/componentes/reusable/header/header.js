@@ -8,8 +8,8 @@ export default function Header() {
   const nav = useNavigate();
 
   return (
-    <div className="header-container">
-      <HambMenu pageWrapId="wrapper" outerContainerId="root" />
+    <div>
+      <HambMenu pageWrapId="page-wrap" outerContainerId="user" />
       <header id="header">
         <div className="agroIa" onClick={() => nav('/user/home')}>
           <Icon className="bi bi-flower1" color="white" fontSize="6vh" />
