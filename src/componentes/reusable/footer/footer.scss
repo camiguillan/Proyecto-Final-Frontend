@@ -1,7 +1,7 @@
 @import "../../../assets/global.scss";
 
 .footer {
-    background-color: #9dd1bf;
+    background-color: #85aa87;
     padding: 10px;
     text-align: center;
     position: fixed;
@@ -9,3 +9,8 @@
     left: 0;
     right: 0;
   }
+
+.footer-text{
+  font-size: 15px; 
+  font-family: "Inter", sans-serif; 
+}

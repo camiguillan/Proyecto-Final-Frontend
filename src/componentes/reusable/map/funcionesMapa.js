@@ -20,9 +20,7 @@ export const createRectangle = (listOfPolygons) => {
 };
 
 const getNDVIColor = (ndvi) => {
-  if (ndvi < -0.2) {
-    return '#000000';
-  } if (ndvi <= 0) {
+  if (ndvi <= 0) {
     return '#a50026';
   } if (ndvi <= 0.1) {
     return '#d73027';
@@ -163,49 +161,11 @@ const addColor = (feat) => {
   };
 };
 
-export const createHeatmap = (field) => {
-  const {
-    plots, height, width, coordinates,
-  } = field;
-  const plotsByCrop = {};
-  plots.forEach(({ crop }) => {
-    if (crop !== CROP_TYPES_KEYS.NONE) {
-      if (!plotsByCrop[crop]) {
-        plotsByCrop[crop] = [];
-      }
-      plotsByCrop[crop].push({ crop });
-    }
-  });
-
-  const features = [];
-  let contador = 0;
-  Object.keys(plotsByCrop).forEach((crop) => {
-    const coordinatesForCrop = plotsByCrop[crop];
-    const poly = createGridFromPlots({
-      plots: coordinatesForCrop, height, width, coordinates,
-    });
-    const coloredFeatures = { ...poly, features: poly.features.map((feat) => addColor(feat)) };
-    console.log(coloredFeatures);
-    features.push({
-      polygon: {
-        id: contador.toString(),
-        features: coloredFeatures.features,
-        type: coloredFeatures.type,
-      },
-      crop,
-    });
-    contador += 1;
-  });
-  console.log(features);
-  return features;
-};
-
-export const createPolygonFromPlots = (field) => {
+export const createPolygonFromPlots = (field, heatmap) => {
   const {
     plots, height, width, coordinates,
   } = field;
   console.log(field);
-  console.log(createGridFromPlots(field));
   const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) }));
   // .filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
   const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
@@ -241,37 +201,40 @@ export const createPolygonFromPlots = (field) => {
   Object.keys(plotsByCrop).forEach((crop) => {
     const coordinatesForCrop = plotsByCrop[crop];
     // const box = createRectangle(coordinatesForCrop);
+    if (!heatmap) {
+      const poly = createCombinedPolygon(coordinatesForCrop);
 
-    const poly = createCombinedPolygon(coordinatesForCrop);
-
-    // const lowestLongitude = box[0];
-    // const lowestLatitude = box[1];
-    // const highestLongitude = box[2];
-    // const highestLatitude = box[3];
-    // const polygonCoordinates = [
-    //   [lowestLongitude, highestLatitude], // top left
-    //   [highestLongitude, highestLatitude], // top right
-    //   [highestLongitude, lowestLatitude], // bottom right
-    //   [lowestLongitude, lowestLatitude], // bottom left
-    //   [lowestLongitude, highestLatitude], // Closing the polygon
-    // ];
-    const color = CROP_COLORS[crop.toUpperCase()];
-    const options = { tolerance: 0.00001, highQuality: false };
-    const newPoly = simplify(poly, options);
-    features.push({
-      polygon: {
-        id: contador.toString(),
-        properties: { portColor: color },
-        geometry: newPoly.geometry,
-        type: newPoly.type,
-      },
-      crop,
-    });
+      const color = CROP_COLORS[crop.toUpperCase()];
+      const options = { tolerance: 0.00001, highQuality: false };
+      const newPoly = simplify(poly, options);
+      features.push({
+        polygon: {
+          id: contador.toString(),
+          properties: { portColor: color },
+          geometry: newPoly.geometry,
+          type: newPoly.type,
+        },
+        crop,
+      });
+    } else {
+      const poly = {};
+      const coloredFeatures = coordinatesForCrop.map((feat) => addColor(feat.polygon));
+      features.push({
+        polygon: {
+          id: contador.toString(),
+          features: coloredFeatures,
+          type: 'FeatureCollection',
+        },
+        crop,
+      });
+    }
     contador += 1;
   });
 
   return features;
 };
+
+export const createHeatmap = (field) => createPolygonFromPlots(field, true);
 
 const cropCheck = (coordinates, cropPolygons) => {
   // console.log(cropPolygons);

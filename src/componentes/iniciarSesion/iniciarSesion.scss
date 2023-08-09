@@ -1,14 +1,15 @@
 @import '../../assets/global.scss';
 
 .green-text {
-    font-size: 20px; 
+    font-size: 1.3rem; 
     font-family: "Inter", sans-serif; 
     text-align: center;
-    color: $verde-texto;
+    color: $main-dark-green;
+    font-weight: bold;
 }
 
 .green-text:hover {
-    font-size: 20px; 
+    font-size: 1.3rem; 
     font-family: "Inter", sans-serif; 
     text-align: center;
     color: $verde-texto;
@@ -17,28 +18,96 @@
 }
 
 .texto-normal{
-    font-size: 20px; 
+    font-size: 1.3rem; 
     font-family: "Inter", sans-serif; 
     text-align: center;
     color: $gris-texto;
 }
 
 .registrate{
-    font-size: 20px; 
+    font-size: 1.3rem; 
     font-family: "Inter", sans-serif; 
     text-align: center;
-    color: $celeste-link;
+    color: $gris-texto;
+    font-weight: bold;
 }
 
 .registrate:hover{
-    font-size: 20px; 
+    font-size: 1.3rem; 
     font-family: "Inter", sans-serif; 
     text-align: center;
-    color: $celeste-link;
+    color: $gris-texto;
     text-decoration: underline;
     cursor: pointer;
 }
 
 .espacio{
-    margin-top: 30px;
+    margin-top: 1rem;
+}
+
+.espacio2{
+    margin-top: 0.5rem;
+}
+
+.espacio3{
+    margin-top: 2rem;
+}
+
+// COLUMNS
+
+.flexbox-container2 {
+  display: flex;
+  max-width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  margin-top: 2.2rem;
+}
+
+.flexbox-container2 > div {
+  width: 50%;
+  padding: 0.7rem;
+  text-align: center; 
+  justify-content: center;
+  padding-top: 2.6rem;
+}
+
+.flexbox-container2 > div:first-child {
+	margin-right: 0.7rem;
+}
+
+.flexbox-container2 > div + div {
+  border-left: 0.2rem solid #ccc;
+  padding-left: 1.5rem;
+}
+
+.agroia2{
+    display: flex;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    margin-left: 8.5rem;
+}
+
+.agroia2:hover{
+    cursor: pointer;
+}
+
+.center{
+    align-items: center;
+    justify-content: center;
+}
+
+.title-inicio{
+    font-size: 1.5rem; 
+    font-family: "Inter", sans-serif; 
+    text-align: center;
+    color: $gris-texto;
+}
+
+.title-inicio2{
+    font-size: 2.5rem; 
+    font-family: "Inter", sans-serif; 
+    text-align: center;
+    color: $gris-texto;
+    font-weight: bold;
+    margin-top: 2rem;
 }

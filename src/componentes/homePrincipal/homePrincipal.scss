@@ -15,10 +15,258 @@
     display: flex;
     align-items: flex;
     justify-content: flex;
-    gap:10px;
-    column-gap: 2vh;
+    gap:0.19rem;
+    column-gap: 1.4rem;
     bottom: 0;
     right: 0;
-    margin: 5vh;
+    margin: 2rem;
     white-space: nowrap;
   }
+
+  .full-page{
+    min-height: 92vh; 
+    //min-width: 90%;
+  }
+
+.no-over-scroll{
+  overscroll-behavior: none;
+}
+
+  // IMAGES
+
+  .full-width-image{
+    width: 80rem;
+    height: 17rem;
+    object-fit: cover;
+    opacity: 0.6;
+  }
+
+  .img-container{
+    position: relative; 
+    width: 100%; //100%
+    min-width: 80rem;
+    overflow: hidden;
+    height: 17rem;
+    margin-bottom: 2.6rem;
+    background-image: url('../../images/grass3.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-width: 80rem;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+  }
+
+  .header-principal{
+    width: 100%;
+    min-width: 80rem;
+    background-color: white;
+    height: 5.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.image-text {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80rem;
+  height: 15rem;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  flex-direction: column; 
+  color: white;
+  font-family: "Inter", sans-serif;
+}
+
+.image-title{
+  font-size: 3rem; 
+  color: white;
+  font-weight: bold;
+  font-family: "Inter", sans-serif;
+}
+
+.image-text2{
+  font-size: 2rem; 
+  color: white;
+  width: 40rem;
+  font-family: "Inter", sans-serif;
+}
+
+
+// COLUMNS
+
+.flexbox-container {
+	display: -ms-flex;
+	display: -webkit-flex;
+	display: flex;
+  min-width: 80rem;
+  margin: 0 auto;
+  justify-content: center;
+  margin-bottom: 2.6rem;
+}
+
+.flexbox-container > div {
+	width: 30rem;
+	padding: 0.78rem;
+  background: #fff;
+  text-align: center; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.flexbox-container > div:first-child {
+	margin-right: 0.78rem;
+}
+
+.flexbox-container > div + div {
+  border-left: 0.078rem solid #ccc;
+  padding-left: 1.56rem;
+}
+
+// TEXTS
+.green-title{
+  color: $main-green;
+  font-size: 2.2rem; 
+  font-weight: bold;
+  font-family: "Inter", sans-serif;
+}
+
+.gray-title{
+  color: $gris-texto;
+  width: 40rem;
+  font-size: 2.2rem; 
+  font-weight: bold;
+  font-family: "Inter", sans-serif;
+}
+
+.text-home-principal{
+  color: $gris-texto;
+  width: 35rem;
+  font-size: 1.5rem; 
+  font-family: "Inter", sans-serif;
+  margin: 0.19rem 0;
+}
+
+.text-home-principal2{
+  color: $gris-texto;
+  width: 35rem;
+  font-size: 1.2rem; 
+  font-family: "Inter", sans-serif;
+  margin: 0.19rem 0;
+}
+
+// GRAY BOX
+.gray-square{
+  width: 70rem;
+  height: 20rem;
+  margin: 0 auto;
+  background-color: #eaf3ea;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  border-radius: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.small-img{
+  width: 30rem; 
+  height: 15rem;
+  margin-left: 4rem;
+}
+
+.text-container{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+// LEFT ALIGNED
+.section-left-aligned{
+  width: 100rem; 
+  display: flex;
+  max-width: 65rem;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.small-img2{
+  width: 22rem; 
+  margin-left: 2rem;
+}
+
+.left{
+  text-align: left;
+  align-items: center;
+}
+
+.icon-reason {
+  display: flex;
+  align-items: center;
+}
+
+.extra-reason {
+  margin-left: 3.3rem;
+}
+
+.checks{
+  margin-left: 1rem;
+  font-weight: bold;
+}
+
+.photo-container {
+  flex: 1;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+}
+
+// CONTACT US
+.center{
+  align-items: center;
+  justify-content: center;
+}
+
+.text-home-2{
+  color: $gris-texto;
+  font-size: 1.2rem; 
+  font-family: "Inter", sans-serif;
+  margin: 0.19rem 0;
+}
+
+.contact-info{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.margin{
+  margin-right: 4.5rem;
+}
+
+.footer{
+  background-color: $footer-light-green;
+  margin-top: 4rem;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  min-width: 80rem;
+}

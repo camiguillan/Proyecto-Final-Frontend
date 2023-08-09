@@ -28,7 +28,6 @@ export default function Home() {
 
   const [data, setData] = useState([]);
   const user = JSON.parse(localStorage.getItem('name')) || {};
-
   console.log(user);
 
   // Recorre el array user.fields y genera los nombres de las imágenes
@@ -38,23 +37,26 @@ export default function Home() {
 
     if (image) {
       images.push(image);
-      imageNames.push(field.name); // Usa el nombre del campo como nombre de la imagen
+      const capitalizedImageName = field.name.charAt(0).toUpperCase() + field.name.slice(1);
+      imageNames.push(capitalizedImageName); // Usa el nombre del campo como nombre de la imagen
     }
   });
+
+  const truncateString = (str, maxLength) => (str.length > maxLength ? `${str.substring(0, maxLength)}...` : str);
 
   return (
     <div>
       <Header />
       <div className="image-container">
         {images.map((image, index) => (
-          <Link to={`/VerCultivos/${userID}`} key={index}>
+          <Link to={`/${userID}/VerCultivos/${user.fields[index]._id}`} key={index}>
             <div className="image-wrapper">
               <img
                 src={image}
                 alt={`image ${index + 1}`}
                 className="rounded-image"
               />
-              <div className="image-name">{imageNames[index]}</div>
+              <div className="image-name">{truncateString(imageNames[index], 10)}</div>
             </div>
           </Link>
         ))}
