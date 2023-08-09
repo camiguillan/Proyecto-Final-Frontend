@@ -38,11 +38,6 @@ export default function EditarCampo() {
     }
   }, [campo]);
 
-  // useEffect(() => {
-  //   getField();
-  // });
-  // console.log(campoMockeado);
-
   return (
     <div style={{ width: '100%', height: '100%' }}>
       <Header />

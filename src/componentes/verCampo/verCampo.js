@@ -43,7 +43,6 @@ export default function VerCampo() {
     }
   });
 
-  console.log(campo, campoFeatures);
   return (
     <div className="campo-mapa-cultivo" id="mapa">
       {isLoading
