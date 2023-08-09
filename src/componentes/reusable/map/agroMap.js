@@ -73,7 +73,7 @@ function AgroMap({
     const NewDirectSelect = _.extend(MapboxDraw.modes.direct_select, {
       dragFeature() {},
     });
-
+    console.log(styles.sort((a, b) => a.type.localeCompare(b.type)));
     const drawOptions = {
       displayControlsDefault: false,
       userProperties: true,
