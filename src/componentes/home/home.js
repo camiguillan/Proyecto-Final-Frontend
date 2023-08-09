@@ -10,16 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import Header from '../reusable/header/header';
 import './home.scss';
-import { PLOT_SIZE } from '../../constants/plots';
-
-const loadImage = (imageName) => {
-  try {
-    return require(`../../images/${imageName}.jpg`);
-  } catch (error) {
-    // Si la imagen no existe, puedes manejar el error aquí
-    return null;
-  }
-};
+import ImageDisplay from './imageDisplay';
 
 export default function Home() {
   const { userID } = useParams();
@@ -32,14 +23,10 @@ export default function Home() {
 
   // Recorre el array user.fields y genera los nombres de las imágenes
   user.fields.forEach((field, index) => {
-    const imageName = `image${index + 1}`;
-    const image = loadImage(imageName);
-
-    if (image) {
-      images.push(image);
-      const capitalizedImageName = field.name.charAt(0).toUpperCase() + field.name.slice(1);
-      imageNames.push(capitalizedImageName); // Usa el nombre del campo como nombre de la imagen
-    }
+    const imageName = `${field.image}`;
+    images.push(imageName);
+    const capitalizedImageName = field.name.charAt(0).toUpperCase() + field.name.slice(1);
+    imageNames.push(capitalizedImageName); // Usa el nombre del campo como nombre de la imagen
   });
 
   const truncateString = (str, maxLength) => (str.length > maxLength ? `${str.substring(0, maxLength)}...` : str);
@@ -51,11 +38,7 @@ export default function Home() {
         {images.map((image, index) => (
           <Link to={`/${userID}/VerCultivos/${user.fields[index]._id}`} key={index}>
             <div className="image-wrapper">
-              <img
-                src={image}
-                alt={`image ${index + 1}`}
-                className="rounded-image"
-              />
+              <ImageDisplay imageId={user.fields[index]._id} />
               <div className="image-name">{truncateString(imageNames[index], 10)}</div>
             </div>
           </Link>
