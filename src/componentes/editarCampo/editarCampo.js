@@ -5,58 +5,11 @@ import Header from '../reusable/header/header';
 import MapContainer from '../reusable/mapContainer/mapContainer';
 import Icon from '../../assets/icons/icon';
 import { get } from '../conexionBack/conexionBack';
-// import { campoPrueba } from '../reusable/map/campoPrueba';
 import { createPolygonFromPlots } from '../reusable/map/funcionesMapa';
 import Loader from '../reusable/loader/loader';
 
-// const campoMockeado = {
-//   nombreCampo: 'campo1',
-//   imagen: {},
-//   coordinates: [
-//     -59.08147243140732,
-//     -34.655428938108024,
-//   ],
-//   features: [
-//     {
-//       polygon: {
-//         id: '25f9c160774c397b91a3ada60dc82776',
-//         type: 'Feature',
-//         properties: {},
-//         geometry: {
-//           coordinates: [
-//             [
-//               [
-//                 -59.08143788345612,
-//                 -34.65540051941959,
-//               ],
-//               [
-//                 -59.07435555351029,
-//                 -34.66474974193862,
-//               ],
-//               [
-//                 -59.07086621046389,
-//                 -34.662817466312916,
-//               ],
-//               [
-//                 -59.077741252704186,
-//                 -34.65363854174527,
-//               ],
-//               [
-//                 -59.08143788345612,
-//                 -34.65540051941959,
-//               ],
-//             ],
-//           ],
-//           type: 'Polygon',
-//         },
-//       },
-//       crop: 'soy',
-//     },
-//   ],
-// };
-
 export default function EditarCampo() {
-  const { fieldID } = useParams();
+  const { field } = useParams();
   const { userID } = useParams();
 
   const [isLoading, setLoading] = useState(true);
@@ -65,7 +18,7 @@ export default function EditarCampo() {
 
   const getField = async () => {
     const accessToken = `Bearer ${userID}`;
-    const response = await get(`field/${fieldID}`, {
+    const response = await get(`field/${field}`, {
       headers: {
         Authorization: accessToken,
       },
@@ -75,7 +28,7 @@ export default function EditarCampo() {
 
   useEffect(() => {
     getField();
-  }, [fieldID]);
+  }, [field]);
 
   useEffect(() => {
     // Update campo variable when userData changes

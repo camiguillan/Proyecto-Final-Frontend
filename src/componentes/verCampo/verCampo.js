@@ -1,26 +1,23 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../reusable/header/header';
+import PropTypes from 'prop-types';
 import MapContainer from '../reusable/mapContainer/mapContainer';
-import Icon from '../../assets/icons/icon';
 import { get } from '../conexionBack/conexionBack';
-// import { campoPrueba } from '../reusable/map/campoPrueba';
 import { createHeatmap } from '../reusable/map/funcionesMapa';
-import { campoPrueba } from '../reusable/map/campoPrueba';
 import Loader from '../reusable/loader/loader';
+import AgroMap from '../reusable/map/agroMap';
 
 export default function VerCampo() {
-  const { fieldID } = useParams();
+  const { field } = useParams();
   const { userID } = useParams();
-
-  const [isLoading, setLoading] = useState(true);
   const [campo, setCampo] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [campoFeatures, setCampoFeatures] = useState(null);
 
   const getField = async () => {
     const accessToken = `Bearer ${userID}`;
-    const response = await get(`field/${fieldID}`, {
+    const response = await get(`field/${field}`, {
       headers: {
         Authorization: accessToken,
       },
@@ -30,51 +27,43 @@ export default function VerCampo() {
 
   useEffect(() => {
     getField();
-  }, [fieldID]);
+  }, [field]);
 
   useEffect(() => {
     // Update campo variable when userData changes
-    console.log(campo);
     if (campo) {
-      console.log(createHeatmap(campo));
       setCampoFeatures(createHeatmap(campo));
-      setLoading(false);
     }
   }, [campo]);
 
-  console.log('CAMPOFEATURES ', campoFeatures);
+  useEffect(() => {
+    if (campo && campoFeatures) {
+      setIsLoading(false);
+    }
+  });
 
-  // useEffect(() => {
-  //   getField();
-  // });
-  // console.log(campoMockeado);
-
+  console.log(campo, campoFeatures);
   return (
-    <div>
-      <Header />
-      {isLoading ? ( // Show loader while loading data
-        <Loader />
-      ) : (
-        <>
-          <h1 className="agregar-campo-titulo">
-            {' '}
-            <Icon className="bi bi-pencil-square" color="#464E47" fontSize="" />
-            {' '}
-            EDITAR CAMPO
-          </h1>
-          <MapContainer
-            campInfo={{
-              nombreCampo: campo.name,
-              imagen: '',
-              coordinates: [campo.coordinates.lon, campo.coordinates.lat],
-              features: campoFeatures,
-            }}
-            cultivosSeleccionados={campoFeatures.map((f) => f.crop)}
-            feats={campoFeatures.map((f) => f.polygon)}
-            edit
+    <div className="campo" id="mapa">
+      {isLoading
+        ? <Loader />
+        : (
+          <AgroMap
+            coordinates={[campo.coordinates.lon, campo.coordinates.lat]}
+            changeCoordinates={(cam) => { console.log(cam); }}
+            addFeatures={(cam) => { console.log(cam); }}
+            removeFeature={(cam, removedFeature) => { console.log(cam); }}
+            feats={campoFeatures}
+            featErased={null}
           />
-        </>
-      )}
+        )}
     </div>
   );
 }
+
+// coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased,
+
+// VerCampo.propTypes = {
+//   // eslint-disable-next-line react/forbid-prop-types
+//   campoInfo: PropTypes.object.isRequired,
+// };

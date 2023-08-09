@@ -17,7 +17,6 @@ import {
   createRectangle, createGrid, createPolygonFromPlots, createGridFromPlots,
 } from './funcionesMapa';
 import { CROP_TYPES_KEYS, PLOT_SIZE } from '../../../constants/plots';
-import { campoPrueba } from './campoPrueba';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 function splitPolygon(draw, polygon) {
@@ -43,6 +42,7 @@ function splitPolygon(draw, polygon) {
 function AgroMap({
   coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased,
 }) {
+  console.log(feats);
   const edit = feats.length > 0;
   const mapContainer = useRef(null);
   const drawRef = useRef(null);

@@ -35,7 +35,6 @@ export default function MapContainer({
   const [erased, setNewErased] = useState([]);
   const [featErasedId, setNewErasedId] = useState('');
   const cultivosOpciones = Object.values(CROP_TYPES_KEYS);
-  const [selectedCrop, setSelectedCrop] = useState(CROP_TYPES_KEYS.NONE);
   const [invalid, setinValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ title: '', message: '' });
 
@@ -51,18 +50,9 @@ export default function MapContainer({
       features: list2,
     }));
     setCultivos(tempList);
-    setSelectedCrop(cultivo);
   };
 
   const addInput = () => {
-    if (selectedCrop === CROP_TYPES_KEYS.NONE) {
-      setErrorMessage({
-        title: 'No se puede agregar cultivo',
-        message: 'Por favor seleccione un cultivo',
-      });
-      setinValid(true);
-      return;
-    }
     if (cultivos.length > campoInfo.features.length || campoInfo.features.some(({ polygon }) => polygon.id === '')) {
       setErrorMessage({
         title: 'No se puede agregar cultivo',
@@ -71,7 +61,6 @@ export default function MapContainer({
       setinValid(true);
     } else {
       setCultivos((cult) => [...cult, '']);
-      setSelectedCrop(CROP_TYPES_KEYS.NONE);
     }
   };
 

@@ -4,7 +4,6 @@ import {
   squareGrid, booleanPointInPolygon, convex, multiPoint, concave, union, simplify,
 } from '@turf/turf';
 import { PLOT_SIZE, CROP_TYPES_KEYS, CROP_COLORS } from '../../../constants/plots';
-import { campoPrueba } from './campoPrueba';
 
 const fixedDecimals4 = (number) => Number(number.toFixed(4));
 export const createRectangle = (listOfPolygons) => {

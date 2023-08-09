@@ -25,8 +25,8 @@ function App() {
         <Route path="/" element={<HomePrincipal />} />
         <Route path="/agregarCampo/:userID" element={<AgregarCampo />} />
         <Route path="/agregarLotes/:userID" element={<AgregarLotes />} />
-        <Route path="/editarCampo/:userID/:fieldID" element={<EditarCampo />} />
-        <Route path="/verCampo/:userID/:fieldID" element={<VerCampo />} />
+        <Route path="/editarCampo/:userID/:field" element={<EditarCampo />} />
+        <Route path="/verCampo/:userID/:field" element={<VerCampo />} />
         <Route path="/home/:userID" element={<Home />} />
         <Route path="/iniciarSesion" element={<IniciarSesion />} />
         <Route path="/registrarse" element={<Registrarse />} />
