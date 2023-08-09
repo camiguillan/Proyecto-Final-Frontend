@@ -1,19 +1,23 @@
-/* eslint-disable import/named */
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable max-len */
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef } from 'react';
-import { lineToPolygon, difference, squareGrid } from '@turf/turf';
+import React, { useEffect, useRef, useState } from 'react';
+import { lineToPolygon, difference } from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'; // SEARCH BAR
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import PropTypes from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+import _ from 'lodash';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
 import styles from './styles';
-import { createRectangle } from './funcionesMapa';
-import { PLOT_SIZE } from '../../../constants/plots';
+import {
+  createRectangle, createGrid, createPolygonFromPlots, createGridFromPlots,
+} from './funcionesMapa';
+import { CROP_TYPES_KEYS, PLOT_SIZE } from '../../../constants/plots';
+import { campoPrueba } from './campoPrueba';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 function splitPolygon(draw, polygon) {
@@ -21,7 +25,6 @@ function splitPolygon(draw, polygon) {
 
   const drawnGeometry = features.features[features.features.length - 1].geometry;
 
-  console.log(drawnGeometry);
   if (drawnGeometry.type === 'LineString') {
     // Create a temporary polygon from the LineString to use with difference
     const tempPolygon = lineToPolygon(drawnGeometry);
@@ -38,18 +41,37 @@ function splitPolygon(draw, polygon) {
 // }
 
 function AgroMap({
-  coordinates, changeCoordinates, addFeatures, removeFeature,
+  coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased,
 }) {
+  const edit = feats.length > 0;
   const mapContainer = useRef(null);
+  const drawRef = useRef(null);
   // const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
   // console.log(coordinates);
+  function removeFeatureMap() {
+    if (drawRef.current) {
+      const { features } = drawRef.current.getAll();
+
+      if (features.length !== 0 && featErased !== '') {
+        drawRef.current.delete(featErased);
+      }
+    }
+  }
 
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/satellite-streets-v12',
       center: coordinates,
-      zoom: 15, // Default zoom level
+      zoom: 11, // Default zoom level
+    });
+
+    const NewSimpleSelect = _.extend(MapboxDraw.modes.simple_select, {
+      dragMove() {},
+    });
+
+    const NewDirectSelect = _.extend(MapboxDraw.modes.direct_select, {
+      dragFeature() {},
     });
 
     const drawOptions = {
@@ -57,22 +79,26 @@ function AgroMap({
       userProperties: true,
       styles,
       controls: {
-        trash: true,
-        polygon: true,
-        line_string: true,
-        // Add or customize modes as per your requirements
-
+        trash: !edit,
+        polygon: !edit,
+        line_string: !edit,
+      },
+      modes: {
+        ...MapboxDraw.modes,
+        simple_select: edit ? NewSimpleSelect : MapboxDraw.modes.simple_select,
+        direct_select: edit ? NewDirectSelect : MapboxDraw.modes.direct_select,
       },
     };
 
     const draw = new MapboxDraw(drawOptions);
+    drawRef.current = draw;
     map.addControl(draw);
 
     const nav = new mapboxgl.NavigationControl();
     map.addControl(nav, 'bottom-right');
 
     const geocoderContainer = () => <div id="geocoder-container" className="geocoder-container" style={{ width: '100%', borderRadius: '10px' }} />;
-    const coordinatesGeocoder = function (query) {
+    const coordinatesGeocoder = (query) => {
       // Match anything which looks like
       // decimal degrees coordinate pair.
       const matches = query.match(
@@ -98,8 +124,6 @@ function AgroMap({
 
       const coord1 = Number(matches[1]);
       const coord2 = Number(matches[2]);
-
-      console.log(`Coord1: ${coord1} Coord2: ${coord2}`);
       const geocodes = [];
 
       if (coord2 < -90 || coord2 > 90) {
@@ -136,28 +160,28 @@ function AgroMap({
 
     map.addControl(geocoder, 'top-left');
 
-    // const defaultPolygon = {
-    //   type: 'Feature',
-    //   geometry: {
-    //     type: 'Polygon',
-    //     coordinates: [
-    //       [
-    //         [-58.78905150033654, -34.68022022276631],
-    //         [-58.78518370701069, -34.6825252635452],
-    //         [-58.788616916816935, -34.68570575709246],
-    //         [-58.79224568920641, -34.68341867294826],
-    //         [-58.78905150033654, -34.68022022276631],
-    //       ],
-    //     ],
-    //   },
-    //   properties: {},
-    // };
+    if (edit) {
+      const tempFeats = feats.map((feat) => feat.polygon);
+      tempFeats.map((feature) => draw.add(feature));
+      let long = 0;
+      let lat = 0;
 
-    // draw.add(defaultPolygon);
+      if (tempFeats[0].type !== 'FeatureCollection') {
+        const [longitude, latitude] = tempFeats[0].geometry.coordinates[0][0];
+        long = longitude;
+        lat = latitude;
+      } else {
+        const [longitude, latitude] = tempFeats[0].features[0].geometry.coordinates[0][0];
+        long = longitude;
+        lat = latitude;
+      }
+      console.log(long, lat);
+      map.setCenter([long, lat]);
+      map.flyTo({ center: [long, lat], zoom: 14 });
+    }
 
     map.on('result', (event) => {
       const { result } = event;
-      console.log(result);
 
       // Retrieve the coordinates from the geocoding result
       const { center } = result.geometry;
@@ -169,82 +193,43 @@ function AgroMap({
     const marker = new mapboxgl.Marker({ draggable: false, color: 'red' });
     geocoder.on('result', (e) => {
       marker.remove(map);
-      console.log(e.result.center);
       // eslint-disable-next-line no-underscore-dangle
       marker
         .setLngLat(e.result.center)
         .addTo(map);
       map.flyTo({ center: e.result.center, zoom: 17 });
     });
-    const usedColors = [];
-    function getRandomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-
-      do {
-        color = '#'; // Reset color on each iteration
-
-        for (let i = 0; i < 6; i += 1) {
-          color += letters[Math.floor(Math.random() * 16)];
-        }
-      } while (usedColors.includes(color)); // Continue generating until a distinct color is found
-
-      usedColors.push(color);
-
-      return color;
+    const Colors = ['#21f216', '#16f2ee', '#f23400', '#be03fc', '#f29e0c', '#73b564', '#f08473', '#696261'];
+    function getRandomColor(index) {
+      return Colors[index - 1];
     }
 
     function handleDraw() {
       const features = draw.getAll();
       const lastDrawn = features.features[features.features.length - 1];
-      // const bbox = createRectangle([{ polygon: lastDrawn, crop: 'NONE' }]);
-      // const options = { units: 'degrees' };
-      // const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
-      // console.log(squareGridR);
-      // draw.add(squareGridR);
+      const color = getRandomColor(features.features.length);
 
-      draw.setFeatureProperty(lastDrawn.id, 'portColor', getRandomColor());
+      draw.setFeatureProperty(lastDrawn.id, 'portColor', color);
       // console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0][0]);
-      // splitPolygon(draw, defaultPolygon);
-      // eslint-disable-next-line guard-for-in
       if (features.features.length !== 0) {
-        addFeatures(features.features);
+        addFeatures(features.features, color);
+      } else if (feats.length > 0) {
+        const polygons = feats.map((f) => f.polygon);
+        addFeatures(polygons, color);
       }
       // addCentroid(draw, lastDrawn);
     }
 
     function handleDrawDelete(event) {
-      const feats = draw.getAll();
+      const fts = draw.getAll();
       const removedFeature = event.features;
       // console.log('FEATURES REMOVES', feats.features);
-      removeFeature(feats.features, removedFeature);
+      removeFeature(fts.features, removedFeature);
     }
     map.on('draw.create', handleDraw);
     map.on('draw.update', handleDraw);
     map.on('draw.delete', handleDrawDelete);
-    // Assuming draw is initialized correctly before this code block
-
-    // document.getElementById('grid').addEventListener('click', () => {
-    //   if (draw.getAll) {
-    //     const allFeatures = draw.getAll();
-
-    //     if (allFeatures !== null && allFeatures.length !== 0) {
-    //       console.log(allFeatures);
-    //       const cropPolygons = allFeatures.features[0];
-    //       const bbox = createRectangle([{ polygon: cropPolygons, crop: 'NONE' }]);
-    //       console.log(bbox);
-    //       const options = { units: 'degrees' };
-    //       const squareGridR = squareGrid(bbox, PLOT_SIZE, options);
-    //       console.log(squareGridR);
-    //       draw.add(squareGridR);
-    //     } else {
-    //       console.error("No features found in 'draw' object.");
-    //     }
-    //   } else {
-    //     console.error("'draw' object or its 'getAll' method is not available.");
-    //   }
-    // });
 
     return () => {
       map.off('draw.create', handleDraw);
@@ -253,7 +238,10 @@ function AgroMap({
       map.remove();
     };
   }, []);
-
+  useEffect(() => {
+    // Call the removeFeatureMap function here (inside the useEffect where drawRef is assigned).
+    removeFeatureMap();
+  });
   return (
     <div ref={mapContainer} className="mapa" style={{ height: '100%', borderRadius: '10px' }} />
   );
@@ -266,4 +254,6 @@ AgroMap.propTypes = {
   changeCoordinates: PropTypes.func.isRequired,
   addFeatures: PropTypes.func.isRequired,
   removeFeature: PropTypes.func.isRequired,
+  feats: PropTypes.arrayOf(PropTypes.object).isRequired,
+  featErased: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

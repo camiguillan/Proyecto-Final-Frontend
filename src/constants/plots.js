@@ -1,4 +1,4 @@
-export const PLOT_SIZE = 0.001;
+export const PLOT_SIZE = 0.0001;
 
 export const DIAGNOSTICS_KEYS = {
   OVERHYDRATION: 'overhydration',
@@ -25,6 +25,14 @@ export const CROP_TYPES_KEYS = {
   WHEAT: 'wheat',
   SUNFLOWER: 'sunflower',
   CORN: 'corn',
+};
+
+export const CROP_COLORS = {
+  NONE: '#000000',
+  SOY: '#15c40c',
+  WHEAT: '#EEE1CD',
+  SUNFLOWER: '#FBD13D',
+  CORN: '#E4A010',
 };
 
 // TODO PEDIRSELAS AL BACK SERIA LO MAS LOGICO
