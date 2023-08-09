@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import MapContainer from '../reusable/mapContainer/mapContainer';
 import { get } from '../conexionBack/conexionBack';
 import { createHeatmap } from '../reusable/map/funcionesMapa';
 import Loader from '../reusable/loader/loader';
 import AgroMap from '../reusable/map/agroMap';
 import { CROP_TYPES_TRANSLATIONS } from '../../constants/translations';
+import './verCampo.scss';
 
 export default function VerCampo() {
   const { field } = useParams();
@@ -46,7 +45,7 @@ export default function VerCampo() {
 
   console.log(campo, campoFeatures);
   return (
-    <div className="campo" id="mapa">
+    <div className="campo-mapa-cultivo" id="mapa">
       {isLoading
         ? <Loader />
         : (

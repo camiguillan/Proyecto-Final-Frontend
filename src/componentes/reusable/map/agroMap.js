@@ -171,7 +171,8 @@ function AgroMap({
         long = longitude;
         lat = latitude;
       } else {
-        const [longitude, latitude] = tempFeats[0].features[0].geometry.coordinates[0][0];
+        const middleIndex = Math.floor(tempFeats[0].features.length / 2);
+        const [longitude, latitude] = tempFeats[0].features[middleIndex].geometry.coordinates[0][0];
         long = longitude;
         lat = latitude;
       }

@@ -580,9 +580,7 @@ export default function InfoCampo() {
         )}
         <div className="cards-container2">
           <Card className="mapa-card max-content">
-            <div className="campo-mapa-cultivo" id="mapa">
-              <VerCampo campoInfo={campoInfo} />
-            </div>
+            <VerCampo campoInfo={campoInfo} />
           </Card>
         </div>
         <div className="cards-container">
