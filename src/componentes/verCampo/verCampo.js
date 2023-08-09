@@ -7,10 +7,12 @@ import { get } from '../conexionBack/conexionBack';
 import { createHeatmap } from '../reusable/map/funcionesMapa';
 import Loader from '../reusable/loader/loader';
 import AgroMap from '../reusable/map/agroMap';
+import { CROP_TYPES_TRANSLATIONS } from '../../constants/translations';
 
 export default function VerCampo() {
   const { field } = useParams();
   const { userID } = useParams();
+  const { crop } = useParams();
   const [campo, setCampo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [campoFeatures, setCampoFeatures] = useState(null);
@@ -50,10 +52,11 @@ export default function VerCampo() {
         : (
           <AgroMap
             coordinates={[campo.coordinates.lon, campo.coordinates.lat]}
-            changeCoordinates={(cam) => { console.log(cam); }}
-            addFeatures={(cam) => { console.log(cam); }}
-            removeFeature={(cam, removedFeature) => { console.log(cam); }}
-            feats={campoFeatures}
+            changeCoordinates={(cam) => {}}
+            addFeatures={(cam) => { }}
+            removeFeature={(cam, removedFeature) => { }}
+            // eslint-disable-next-line max-len
+            feats={campoFeatures.filter((feat) => crop === CROP_TYPES_TRANSLATIONS[feat.crop])}
             featErased={null}
           />
         )}
