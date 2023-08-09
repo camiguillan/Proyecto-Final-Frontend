@@ -13,10 +13,6 @@ import _ from 'lodash';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
 import './agroMap.scss';
 import styles from './styles';
-import {
-  createRectangle, createGrid, createPolygonFromPlots, createGridFromPlots,
-} from './funcionesMapa';
-import { CROP_TYPES_KEYS, PLOT_SIZE } from '../../../constants/plots';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
 function splitPolygon(draw, polygon) {
@@ -42,7 +38,6 @@ function splitPolygon(draw, polygon) {
 function AgroMap({
   coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased,
 }) {
-  console.log(feats);
   const edit = feats.length > 0;
   const mapContainer = useRef(null);
   const drawRef = useRef(null);
@@ -73,7 +68,6 @@ function AgroMap({
     const NewDirectSelect = _.extend(MapboxDraw.modes.direct_select, {
       dragFeature() {},
     });
-    console.log(styles.sort((a, b) => a.type.localeCompare(b.type)));
     const drawOptions = {
       displayControlsDefault: false,
       userProperties: true,
@@ -176,7 +170,6 @@ function AgroMap({
         long = longitude;
         lat = latitude;
       }
-      console.log(long, lat);
       map.setCenter([long, lat]);
       map.flyTo({ center: [long, lat], zoom: 14 });
     }
