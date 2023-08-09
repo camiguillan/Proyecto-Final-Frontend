@@ -22,8 +22,7 @@ export default function HambMenu({ pageWrapId, outerContainerId }) {
       right
       burgerButtonClassName="bm-burger-button"
       pageWrapId={pageWrapId}
-      outerContainerId={outerContainerId}
-      morphShapeClassName={outerContainerId}
+      overlayClassName={outerContainerId}
     >
       <div className="menuNav">
         <UserInfo />
