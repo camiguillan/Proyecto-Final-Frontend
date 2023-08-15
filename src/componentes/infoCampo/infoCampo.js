@@ -265,7 +265,7 @@ export default function InfoCampo() {
     }
 
     user.fields.forEach((fiel, index) => {
-      if (fiel._id === field) {
+      if (fiel._id === fieldRest) {
         user.fields[index].plots.forEach((plot) => {
           if (plot.crop === cultivo || crop === 'Todos') {
             diferenciaMenor = Number.MAX_VALUE;
@@ -318,7 +318,7 @@ export default function InfoCampo() {
     let diferenciaMenor = Number.MAX_VALUE;
 
     user.fields.forEach((fiel, index) => {
-      if (fiel._id === field) {
+      if (fiel._id === fieldRest) {
         user.fields[index].plots.forEach((plot) => {
           if (plot.crop === cultivo || crop === 'Todos') {
             diferenciaMenor = Number.MAX_VALUE;
