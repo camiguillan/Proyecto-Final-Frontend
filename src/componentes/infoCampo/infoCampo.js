@@ -27,6 +27,7 @@ import AgroMap from '../reusable/map/agroMap';
 import Card from '../reusable/card/card';
 import HeaderWhite from '../reusable/header_white/header_white';
 import { differenceInDays } from 'date-fns';
+import VerCampo from '../verCampo/verCampo';
 
 export default function InfoCampo() {
   const { userID } = useParams();
@@ -579,17 +580,7 @@ export default function InfoCampo() {
         )}
         <div className="cards-container2">
           <Card className="mapa-card max-content">
-            <div className="campo-mapa-cultivo" id="mapa">
-              <AgroMap
-                coordinates={campoInfo.coordinates}
-                changeCoordinates={(coord) => setCampoInfo((prevInfo) => ({
-                  ...prevInfo,
-                  coordinates: coord,
-                }))}
-                addFeatures={setNewFeatures}
-                removeFeature={(feats, removedFeature) => removeFeatureSt(feats, removedFeature)}
-              />
-            </div>
+            <VerCampo campoInfo={campoInfo} />
           </Card>
         </div>
         <div className="cards-container">
