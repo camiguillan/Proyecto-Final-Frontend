@@ -18,9 +18,3 @@ export const get = (url, data) => axios.get(BACKEND_URL + url, data)
   .catch((error) => {
     throw error;
   });
-
-export const patch = (url, data, options) => axios.patch(BACKEND_URL + url, data, options)
-  .then((response) => response.data)
-  .catch((error) => {
-    throw error;
-  });
