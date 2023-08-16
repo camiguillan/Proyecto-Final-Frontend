@@ -6,28 +6,50 @@
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 import React, { useEffect, useState } from 'react';
-// import { squareGrid } from '@turf/turf';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Header from '../reusable/header/header';
 import './home.scss';
 import ImageDisplay from './imageDisplay';
+import { get } from '../conexionBack/conexionBack';
 
 export default function Home() {
   const { userID } = useParams();
-  const images = [];
-  const imageNames = [];
-
-  const [data, setData] = useState([]);
+  const [images, setImages] = useState([]);
+  const [imageNames, setImageNames] = useState([]);
   const user = JSON.parse(localStorage.getItem('name')) || {};
-  console.log(user);
+  const [user2, setUser2] = useState(null);
 
-  // Recorre el array user.fields y genera los nombres de las imágenes
-  user.fields.forEach((field, index) => {
-    const imageName = `${field.image}`;
-    images.push(imageName);
-    const capitalizedImageName = field.name.charAt(0).toUpperCase() + field.name.slice(1);
-    imageNames.push(capitalizedImageName); // Usa el nombre del campo como nombre de la imagen
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const accessToken = `Bearer ${userID}`;
+        const user22 = await get('user/fields/', {
+          headers: {
+            Authorization: accessToken,
+          },
+        });
+        setUser2(user22);
+        const fetchedImages = [];
+        const fetchedImageNames = [];
+
+        user22.fields.forEach((field, index) => {
+          const imageName = `${field.image}`;
+          fetchedImages.push(imageName);
+          const capitalizedImageName = field.name.charAt(0).toUpperCase() + field.name.slice(1);
+          fetchedImageNames.push(capitalizedImageName);
+        });
+
+        setImages(fetchedImages);
+        setImageNames(fetchedImageNames);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, [userID]);
+
+  console.log(user2);
 
   const truncateString = (str, maxLength) => (str.length > maxLength ? `${str.substring(0, maxLength)}...` : str);
 
@@ -35,14 +57,15 @@ export default function Home() {
     <div>
       <Header />
       <div className="image-container">
-        {images.map((image, index) => (
-          <Link to={`/${userID}/VerCultivos/${user.fields[index]._id}`} key={index}>
-            <div className="image-wrapper">
-              <ImageDisplay imageId={user.fields[index]._id} />
-              <div className="image-name">{truncateString(imageNames[index], 10)}</div>
-            </div>
-          </Link>
-        ))}
+        {user2
+          && images.map((image, index) => (
+            <Link to={`/${userID}/VerCultivos/${user2.fields[index]._id}`} key={index}>
+              <div className="image-wrapper">
+                <ImageDisplay imageId={user2.fields[index]._id} />
+                <div className="image-name">{truncateString(imageNames[index], 10)}</div>
+              </div>
+            </Link>
+          ))}
       </div>
     </div>
   );
