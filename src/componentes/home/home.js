@@ -59,7 +59,7 @@ export default function Home() {
       <div className="image-container">
         {user2
           && images.map((image, index) => (
-            <Link to={`/${userID}/VerCultivos/${user2.fields[index]._id}`} key={index}>
+            <Link to={`/${userID}/infoCampo/${user2.fields[index]._id}`} key={index}>
               <div className="image-wrapper">
                 <ImageDisplay imageId={user2.fields[index]._id} />
                 <div className="image-name">{truncateString(imageNames[index], 10)}</div>

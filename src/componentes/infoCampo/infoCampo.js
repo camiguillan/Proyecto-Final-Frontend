@@ -27,6 +27,7 @@ import AgroMap from '../reusable/map/agroMap';
 import Card from '../reusable/card/card';
 import HeaderWhite from '../reusable/header_white/header_white';
 import { differenceInDays } from 'date-fns';
+import { get } from '../conexionBack/conexionBack';
 import VerCampo from '../verCampo/verCampo';
 
 export default function InfoCampo() {
@@ -69,6 +70,26 @@ export default function InfoCampo() {
       cultivo: 'todos',
     },
   };
+
+  const [user2, setUser2] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const accessToken = `Bearer ${userID}`;
+        const user22 = await get('user/fields/', {
+          headers: {
+            Authorization: accessToken,
+          },
+        });
+        setUser2(user22);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, [userID]);
 
   const [campoInfo, setCampoInfo] = useState({
     nombreCampo: '',
@@ -263,48 +284,49 @@ export default function InfoCampo() {
     } else if (selectedTimePeriod === 'FullHistory') {
       fullHistory = true;
     }
-
-    user.fields.forEach((fiel, index) => {
-      if (fiel._id === fieldRest) {
-        user.fields[index].plots.forEach((plot) => {
-          if (plot.crop === cultivo || crop === 'Todos') {
-            diferenciaMenor = Number.MAX_VALUE;
-            huboAlguno = false;
-            let indexAusar = 0;
-            plot.history.forEach((instance, index2) => {
-              if (index2 !== 0) {
-                const fechaInstancia = new Date(instance.createdAt);
-                const diferenciaNueva = differenceInDays(fechaActual, fechaInstancia);
-                if (diferenciaNueva <= diferenciaMenor && fechaInstancia <= fechaAUsar) {
-                  diferenciaMenor = diferenciaNueva;
-                  indexAusar = index2;
-                  huboAlguno = true;
+    if (user2 && user2.fields) {
+      user2.fields.forEach((fiel, index) => {
+        if (fiel._id === fieldRest) {
+          user2.fields[index].plots.forEach((plot) => {
+            if (plot.crop === cultivo || crop === 'Todos') {
+              diferenciaMenor = Number.MAX_VALUE;
+              huboAlguno = false;
+              let indexAusar = 0;
+              plot.history.forEach((instance, index2) => {
+                if (index2 !== 0) {
+                  const fechaInstancia = new Date(instance.createdAt);
+                  const diferenciaNueva = differenceInDays(fechaActual, fechaInstancia);
+                  if (diferenciaNueva <= diferenciaMenor && fechaInstancia <= fechaAUsar) {
+                    diferenciaMenor = diferenciaNueva;
+                    indexAusar = index2;
+                    huboAlguno = true;
+                  }
                 }
+              });
+              if ((plot.history[indexAusar].diagnostics === 'excelent' || plot.history[indexAusar].diagnostics === 'very_good' || plot.history[indexAusar].diagnostics === 'good') && huboAlguno) {
+                sano += 121;
+              } if (huboAlguno) {
+                metros += 121;
+                cuantosPlots += 1;
+                ndviTemp += plot.history[indexAusar].ndvi;
+                humedadTemp += plot.history[indexAusar].humidity;
+                console.log('El ndvi :', ndviTemp);
+                console.log('El :', metros);
               }
-            });
-            if ((plot.history[indexAusar].diagnostics === 'excelent' || plot.history[indexAusar].diagnostics === 'very_good' || plot.history[indexAusar].diagnostics === 'good') && huboAlguno) {
-              sano += 121;
-            } if (huboAlguno) {
-              metros += 121;
-              cuantosPlots += 1;
-              ndviTemp += plot.history[indexAusar].ndvi;
-              humedadTemp += plot.history[indexAusar].humidity;
-              console.log('El ndvi :', ndviTemp);
-              console.log('El :', metros);
             }
-          }
-        });
-        ndviTemp = (ndviTemp / cuantosPlots).toFixed(2);
-        humedadTemp = (humedadTemp / cuantosPlots).toFixed(2);
-        const porcentajeSanou = (sano * 100) / metros;
-        const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(2);
-        setporcentajeSanoviejo(Math.round(((porcentajeSano - porcentajeSanoRedondeado) / Math.abs(porcentajeSanoRedondeado)) * 100));
-        setNdviviejo(Math.round(((ndvi - ndviTemp) / Math.abs(ndviTemp)) * 100));
-        setHumedadviejo(Math.round(((humedad - humedadTemp) / Math.abs(humedadTemp)) * 100));
-        setMetrosCuadradosviejo(Math.round(((humedad - metros) / Math.abs(metros)) * 100));
-        return;
-      }
-    });
+          });
+          ndviTemp = (ndviTemp / cuantosPlots).toFixed(2);
+          humedadTemp = (humedadTemp / cuantosPlots).toFixed(2);
+          const porcentajeSanou = (sano * 100) / metros;
+          const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(2);
+          setporcentajeSanoviejo(Math.round(((porcentajeSano - porcentajeSanoRedondeado) / Math.abs(porcentajeSanoRedondeado)) * 100));
+          setNdviviejo(Math.round(((ndvi - ndviTemp) / Math.abs(ndviTemp)) * 100));
+          setHumedadviejo(Math.round(((humedad - humedadTemp) / Math.abs(humedadTemp)) * 100));
+          setMetrosCuadradosviejo(Math.round(((humedad - metros) / Math.abs(metros)) * 100));
+          return;
+        }
+      });
+    }
   };
 
   const metrics = () => {
@@ -316,43 +338,44 @@ export default function InfoCampo() {
     let cuantosPlots = 0;
     const fechaActual = new Date();
     let diferenciaMenor = Number.MAX_VALUE;
-
-    user.fields.forEach((fiel, index) => {
-      if (fiel._id === fieldRest) {
-        user.fields[index].plots.forEach((plot) => {
-          if (plot.crop === cultivo || crop === 'Todos') {
-            diferenciaMenor = Number.MAX_VALUE;
-            metros += 121;
-            let indexAusar = 0;
-            plot.history.forEach((instance, index2) => {
-              if (index2 !== 0) {
-                const fechaInstancia = new Date(instance.createdAt);
-                const diferenciaNueva = differenceInDays(fechaActual, fechaInstancia);
-                if (diferenciaNueva <= diferenciaMenor) {
-                  diferenciaMenor = diferenciaNueva;
-                  indexAusar = index2;
+    if (user2 && user2.fields) {
+      user2.fields.forEach((fiel, index) => {
+        if (fiel._id === fieldRest) {
+          user2.fields[index].plots.forEach((plot) => {
+            if (plot.crop === cultivo || crop === 'Todos') {
+              diferenciaMenor = Number.MAX_VALUE;
+              metros += 121;
+              let indexAusar = 0;
+              plot.history.forEach((instance, index2) => {
+                if (index2 !== 0) {
+                  const fechaInstancia = new Date(instance.createdAt);
+                  const diferenciaNueva = differenceInDays(fechaActual, fechaInstancia);
+                  if (diferenciaNueva <= diferenciaMenor) {
+                    diferenciaMenor = diferenciaNueva;
+                    indexAusar = index2;
+                  }
                 }
+              });
+              if (plot.history[indexAusar].diagnostics === 'excelent' || plot.history[indexAusar].diagnostics === 'very_good' || plot.history[indexAusar].diagnostics === 'good') {
+                sano += 121;
               }
-            });
-            if (plot.history[indexAusar].diagnostics === 'excelent' || plot.history[indexAusar].diagnostics === 'very_good' || plot.history[indexAusar].diagnostics === 'good') {
-              sano += 121;
+              cuantosPlots += 1;
+              ndviTemp += plot.history[indexAusar].ndvi;
+              humedadTemp += plot.history[indexAusar].humidity;
             }
-            cuantosPlots += 1;
-            ndviTemp += plot.history[indexAusar].ndvi;
-            humedadTemp += plot.history[indexAusar].humidity;
-          }
-        });
-        ndviTemp = (ndviTemp / cuantosPlots).toFixed(2);
-        humedadTemp = (humedadTemp / cuantosPlots).toFixed(2);
-        setNdvi(ndviTemp);
-        setHumedad(humedadTemp);
-        const porcentajeSanou = (sano * 100) / metros;
-        const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(1);
-        setporcentajeSano(porcentajeSanoRedondeado);
-        setMetrosCuadrados(metros);
-        return;
-      }
-    });
+          });
+          ndviTemp = (ndviTemp / cuantosPlots).toFixed(2);
+          humedadTemp = (humedadTemp / cuantosPlots).toFixed(2);
+          setNdvi(ndviTemp);
+          setHumedad(humedadTemp);
+          const porcentajeSanou = (sano * 100) / metros;
+          const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(1);
+          setporcentajeSano(porcentajeSanoRedondeado);
+          setMetrosCuadrados(metros);
+          return;
+        }
+      });
+    }
   };
 
   const handleFieldChange = (event) => {
@@ -367,6 +390,10 @@ export default function InfoCampo() {
   useEffect(() => {
     metrics();
   }, [crop]);
+
+  useEffect(() => {
+    metrics();
+  }, [user2]);
 
   useEffect(() => {
     metricsForMenu();
@@ -425,7 +452,7 @@ export default function InfoCampo() {
               value={fieldRest} // Aquí establecemos el valor seleccionado
               onChange={handleFieldChange}
             >
-              {user.fields.map((fiel, index) => (
+              {user2 && user2.fields.map((fiel, index) => (
                 <option key={index} value={fiel._id}>
                   {fiel.name}
                 </option>
