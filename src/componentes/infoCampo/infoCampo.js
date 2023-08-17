@@ -27,7 +27,7 @@ import AgroMap from '../reusable/map/agroMap';
 import Card from '../reusable/card/card';
 import HeaderWhite from '../reusable/header_white/header_white';
 import { differenceInDays } from 'date-fns';
-import { get } from '../conexionBack/conexionBack';
+import { get, patch } from '../conexionBack/conexionBack';
 import VerCampo from '../verCampo/verCampo';
 
 export default function InfoCampo() {
@@ -52,6 +52,7 @@ export default function InfoCampo() {
   const [ndviviejo, setNdviviejo] = useState([]);
   const [humedadviejo, setHumedadviejo] = useState([]);
   const [fieldRest, setField] = useState(field);
+  const [actualizarGraf, setActualizarGraf] = useState(1);
   const today = new Date();
   const traducciones = {
     Girasol: {
@@ -130,30 +131,64 @@ export default function InfoCampo() {
   });
 
   const handleDataChange = (years, dataArray, xName, yName, magicNumber) => {
-    const newData = ([['', crop]]);
-    if (magicNumber === 1) {
-      setLineData([['', crop]]);
-    } else {
-      setBarData([['', crop]]);
-    }
-    for (let i = 0; i < dataArray.length; i += 1) {
-      newData.push([dataArray[i], years[i]]);
-    }
-    if (magicNumber === 1) {
-      setLineData(newData);
-      setlineChartOptions((prevOptions) => ({
-        ...prevOptions,
-        hAxis: { ...prevOptions.hAxis, title: xName },
-        vAxis: { ...prevOptions.vAxis, title: yName },
-      }));
-    } else {
-      setBarData(newData);
-      setBarChartOptions((prevOptions) => ({
-        ...prevOptions,
-        hAxis: { ...prevOptions.hAxis, title: xName },
-        vAxis: { ...prevOptions.vAxis, title: yName },
-      }));
-    }
+    user2.fields.forEach((fiel, index) => {
+      if (fiel._id === fieldRest) {
+        const campo = user2.fields[index].name;
+        const newData = ([['', campo]]);
+        if (magicNumber === 1) {
+          setLineData([['', campo]]);
+        } else {
+          setBarData([['', campo]]);
+        }
+        for (let i = 0; i < dataArray.length; i += 1) {
+          newData.push([years[i], dataArray[i]]);
+        }
+        if (magicNumber === 1) {
+          setLineData(newData);
+          setlineChartOptions((prevOptions) => ({
+            ...prevOptions,
+            hAxis: { ...prevOptions.hAxis, title: xName },
+            vAxis: { ...prevOptions.vAxis, title: yName },
+          }));
+        } else {
+          setBarData(newData);
+          setBarChartOptions((prevOptions) => ({
+            ...prevOptions,
+            hAxis: { ...prevOptions.hAxis, title: xName },
+            vAxis: { ...prevOptions.vAxis, title: yName },
+          }));
+        }
+      }
+    });
+  };
+
+  const handleDataChangeEmpty = (xName, yName, magicNumber) => {
+    user2.fields.forEach((fiel, index) => {
+      if (fiel._id === fieldRest) {
+        const campo = user2.fields[index].name;
+        const newData = ([['', campo]]);
+        if (magicNumber === 1) {
+          setLineData([['', campo]]);
+        } else {
+          setBarData([['', campo]]);
+        }
+        if (magicNumber === 1) {
+          setLineData(newData);
+          setlineChartOptions((prevOptions) => ({
+            ...prevOptions,
+            hAxis: { ...prevOptions.hAxis, title: xName },
+            vAxis: { ...prevOptions.vAxis, title: yName },
+          }));
+        } else {
+          setBarData(newData);
+          setBarChartOptions((prevOptions) => ({
+            ...prevOptions,
+            hAxis: { ...prevOptions.hAxis, title: xName },
+            vAxis: { ...prevOptions.vAxis, title: yName },
+          }));
+        }
+      }
+    });
   };
 
   const handleButtonClick = (buttonText) => {
@@ -172,57 +207,52 @@ export default function InfoCampo() {
   const processData = (csvData) => {
     const labels = [];
     const valoresY = [];
+    const valoresY2 = [];
     const dataMap = new Map();
+    const dataMap2 = new Map();
     const [a, otherName, name] = csvData[0];
     for (let i = 1; i < csvData.length - 1; i += 1) {
-      const [cropCSV, xValue, yValue] = csvData[i];
-      if (cropCSV === crop) {
-        if (!dataMap.has(xValue)) {
-          dataMap.set(xValue, Number(yValue));
-        } else {
-          dataMap.set(xValue, dataMap.get(xValue) + Number(yValue));
-        }
-        if (!labels.includes(xValue)) {
-          labels.push(xValue);
-        }
+      const [cropCSV, xValue, yValue, yValueBar] = csvData[i];
+
+      if (!dataMap.has(xValue)) {
+        dataMap.set(xValue, Number(yValue));
+        dataMap2.set(xValue, Number(yValueBar));
+      } else {
+        dataMap.set(xValue, dataMap.get(xValue) + Number(yValue));
+        dataMap2.set(xValue, dataMap2.get(xValue) + Number(yValueBar));
+      }
+      if (!labels.includes(xValue)) {
+        labels.push(xValue);
       }
     }
     dataMap.forEach((value) => {
       valoresY.push(value);
     });
-    const years = labels.map((label) => dataMap.get(label));
-    const data = valoresY.map((valorY) => dataMap.get(valorY));
+    dataMap2.forEach((value) => {
+      valoresY2.push(value);
+    });
+    const years = labels;
+    const data = valoresY;
+    const data2 = valoresY2;
     return {
-      years, data, otherName, name,
+      years, data, data2, otherName, name,
     };
   };
 
-  const processDataBar = (csvData) => {
-    const labels = [];
-    const valoresY = [];
-    const dataMap = new Map();
-    const [a, otherName, x, name] = csvData[0];
-    for (let i = 1; i < csvData.length - 1; i += 1) {
-      const [cropCSV, xValue, yValue, yValueBar] = csvData[i];
-      if (cropCSV === crop) {
-        if (!dataMap.has(xValue)) {
-          dataMap.set(xValue, Number(yValueBar));
-        } else {
-          dataMap.set(xValue, dataMap.get(xValue) + Number(yValueBar));
-        }
-        if (!labels.includes(xValue)) {
-          labels.push(xValue);
-        }
+  const actualizarHistBack = () => {
+    const accessToken = `Bearer ${userID}`;
+    user2.fields.forEach((fiel, index) => {
+      if (fiel._id === fieldRest) {
+        /* user2.fields[index].history.years = [];
+        user2.fields[index].history.sown = [];
+        user2.fields[index].history.harvested = []; */
+        patch(`field/history/${fiel._id}`, user2.fields[index].history, {
+          headers: {
+            Authorization: accessToken,
+          },
+        });
       }
-    }
-    dataMap.forEach((value) => {
-      valoresY.push(value);
     });
-    const years = labels.map((label) => dataMap.get(label));
-    const data = valoresY.map((valorY) => dataMap.get(valorY));
-    return {
-      years, data, otherName, name,
-    };
   };
 
   const handleFileUpload = (event) => {
@@ -234,17 +264,41 @@ export default function InfoCampo() {
     Papa.parse(file, {
       complete: (result) => {
         const {
-          years, data, otherName, name,
+          years, data, data2, otherName, name,
         } = processData(result.data);
-        handleDataChange(years, data, otherName, name, 1);
-      },
-    });
-    Papa.parse(file, {
-      complete: (result) => {
-        const {
-          years, data, otherName, name,
-        } = processDataBar(result.data);
-        handleDataChange(years, data, otherName, name, 2);
+        user2.fields.forEach((fiel, index) => {
+          if (fiel._id === fieldRest) {
+            user2.fields[index].history.years.push(...years);
+            user2.fields[index].history.sown.push(...data);
+            user2.fields[index].history.harvested.push(...data2);
+            const uniqueYears = [];
+            const uniqueSown = [];
+            const uniqueHarvested = [];
+
+            for (let i = 0; i < user2.fields[index].history.years.length; i += 1) {
+              const year = parseFloat(user2.fields[index].history.years[i]);
+              const sownValue = parseFloat(user2.fields[index].history.sown[i]);
+              const harvestedValue = parseFloat(user2.fields[index].history.harvested[i]);
+
+              if (!uniqueYears.includes(year)) {
+                uniqueYears.push(year);
+                uniqueSown.push(sownValue);
+                uniqueHarvested.push(harvestedValue);
+              } else {
+                const existingYearIndex = uniqueYears.indexOf(year);
+                uniqueSown[existingYearIndex] += sownValue;
+                uniqueHarvested[existingYearIndex] += harvestedValue;
+              }
+            }
+
+            // Actualizar los arrays en el objeto user2
+            user2.fields[index].history.years = uniqueYears;
+            user2.fields[index].history.sown = uniqueSown;
+            user2.fields[index].history.harvested = uniqueHarvested;
+            setUser2(user2);
+            setActualizarGraf(actualizarGraf + 1);
+          }
+        });
       },
     });
   };
@@ -310,8 +364,6 @@ export default function InfoCampo() {
                 cuantosPlots += 1;
                 ndviTemp += plot.history[indexAusar].ndvi;
                 humedadTemp += plot.history[indexAusar].humidity;
-                console.log('El ndvi :', ndviTemp);
-                console.log('El :', metros);
               }
             }
           });
@@ -393,7 +445,27 @@ export default function InfoCampo() {
 
   useEffect(() => {
     metrics();
+    if (user2 && user2.fields) {
+      user2.fields.forEach((fiel, index) => {
+        if (fiel._id === fieldRest && user2.fields[index].history.years.length > 0) {
+          handleDataChange(user2.fields[index].history.years, user2.fields[index].history.sown, 'Superficie sembrada', 'Años', 1);
+          handleDataChange(user2.fields[index].history.years, user2.fields[index].history.harvested, 'Superficie cosechada', 'Años', 2);
+        }
+      });
+    }
   }, [user2]);
+
+  useEffect(() => {
+    if (user2 && user2.fields) {
+      user2.fields.forEach((fiel, index) => {
+        if (fiel._id === fieldRest && user2.fields[index].history.years.length > 0) {
+          handleDataChange(user2.fields[index].history.years, user2.fields[index].history.sown, 'Superficie sembrada', 'Años', 1);
+          handleDataChange(user2.fields[index].history.years, user2.fields[index].history.harvested, 'Superficie cosechada', 'Años', 2);
+          actualizarHistBack();
+        }
+      });
+    }
+  }, [actualizarGraf]);
 
   useEffect(() => {
     metricsForMenu();
@@ -401,7 +473,22 @@ export default function InfoCampo() {
 
   useEffect(() => {
     metrics();
-  }, [field]);
+    let dataProcessed = false;
+    if (user2 && user2.fields) {
+      user2.fields.forEach((fiel, index) => {
+        if (fiel._id === fieldRest && user2.fields[index].history.years.length > 0) {
+          handleDataChange(user2.fields[index].history.years, user2.fields[index].history.sown, 'Superficie sembrada', 'Años', 1);
+          handleDataChange(user2.fields[index].history.years, user2.fields[index].history.harvested, 'Superficie cosechada', 'Años', 2);
+          console.log('plus ultra');
+          dataProcessed = true;
+        } else if (!dataProcessed) {
+          console.log('qcyo');
+          handleDataChangeEmpty('Superficie sembrada', 'Años', 1);
+          handleDataChangeEmpty('Superficie sembrada', 'Años', 2);
+        }
+      });
+    }
+  }, [fieldRest]);
 
   useEffect(() => {
     handleSearch();
