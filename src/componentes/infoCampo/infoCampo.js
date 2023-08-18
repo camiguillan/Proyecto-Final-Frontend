@@ -580,7 +580,7 @@ export default function InfoCampo() {
         )}
         <div className="cards-container2">
           <Card className="mapa-card max-content">
-            <VerCampo campoInfo={campoInfo} />
+            <VerCampo campoInfo={campoInfo} crop={crop} />
           </Card>
         </div>
         <div className="cards-container">

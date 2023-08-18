@@ -6,7 +6,7 @@ import { lineToPolygon, difference } from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'; // SEARCH BAR
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import PropTypes from 'prop-types';
+import PropTypes, { func } from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import _ from 'lodash';
@@ -38,6 +38,7 @@ function splitPolygon(draw, polygon) {
 function AgroMap({
   coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased,
 }) {
+  console.log(feats);
   const edit = feats.length > 0;
   const mapContainer = useRef(null);
   const drawRef = useRef(null);
@@ -52,6 +53,11 @@ function AgroMap({
       }
     }
   }
+  const reDrawCrops = () => {
+    if (edit && drawRef.current) {
+      drawRef.current.deleteAll;
+    }
+  };
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -236,6 +242,12 @@ function AgroMap({
     // Call the removeFeatureMap function here (inside the useEffect where drawRef is assigned).
     removeFeatureMap();
   });
+
+  useEffect(() => {
+    // Call the removeFeatureMap function here (inside the useEffect where drawRef is assigned).
+    reDrawCrops();
+  }, feats);
+
   return (
     <div ref={mapContainer} className="mapa" style={{ height: '100%', borderRadius: '10px' }} />
   );
