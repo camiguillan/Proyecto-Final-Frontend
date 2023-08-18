@@ -34,7 +34,7 @@ function App() {
         <Route path="/recover_password/:userID" element={<RecuperarContra />} />
         <Route path="/editarPerfil/:userID" element={<EditarPerfil />} />
         <Route path="/:userID/vercultivos/:field" element={<VerCultivos />} />
-        <Route path="/:userID/infoCampo/:field/:crop" element={<InfoCampo />} />
+        <Route path="/:userID/infoCampo/:field" element={<InfoCampo />} />
         <Route path="/olvidoContraConf" element={<PswRecoveryEmailSent />} />
         <Route path="/pswUpdated" element={<PswUpdated />} />
       </Routes>
