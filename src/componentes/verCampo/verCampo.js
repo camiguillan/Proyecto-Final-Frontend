@@ -68,7 +68,6 @@ export default function VerCampo({ crop }) {
             // eslint-disable-next-line max-len
             feats={filterCrops()}
             featErased={null}
-            crop={crop}
           />
         )}
     </div>

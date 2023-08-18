@@ -38,10 +38,10 @@ function splitPolygon(draw, polygon) {
 function AgroMap({
   coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased,
 }) {
-  console.log(feats);
   const edit = feats.length > 0;
   const mapContainer = useRef(null);
   const drawRef = useRef(null);
+  const mapRef = useRef(null);
   // const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
   // console.log(coordinates);
   function removeFeatureMap() {
@@ -53,9 +53,34 @@ function AgroMap({
       }
     }
   }
+
+  const addFeats = () => {
+    console.log(feats);
+    if (edit && drawRef.current && mapRef.current) {
+      const tempFeats = feats.map((feat) => feat.polygon);
+      tempFeats.map((feature) => drawRef.current.add(feature));
+      let long = 0;
+      let lat = 0;
+
+      if (tempFeats[0].type !== 'FeatureCollection') {
+        const [longitude, latitude] = tempFeats[0].geometry.coordinates[0][0];
+        long = longitude;
+        lat = latitude;
+      } else {
+        const middleIndex = Math.floor(tempFeats[0].features.length / 2);
+        const [longitude, latitude] = tempFeats[0].features[middleIndex].geometry.coordinates[0][0];
+        long = longitude;
+        lat = latitude;
+      }
+      mapRef.current.setCenter([long, lat]);
+      mapRef.current.flyTo({ center: [long, lat], zoom: 14 });
+    }
+  };
+
   const reDrawCrops = () => {
+    drawRef.current.deleteAll();// ojo si falla es x esto
     if (edit && drawRef.current) {
-      drawRef.current.deleteAll;
+      addFeats();
     }
   };
 
@@ -66,7 +91,7 @@ function AgroMap({
       center: coordinates,
       zoom: 11, // Default zoom level
     });
-
+    mapRef.current = map;
     const NewSimpleSelect = _.extend(MapboxDraw.modes.simple_select, {
       dragMove() {},
     });
@@ -160,25 +185,7 @@ function AgroMap({
 
     map.addControl(geocoder, 'top-left');
 
-    if (edit) {
-      const tempFeats = feats.map((feat) => feat.polygon);
-      tempFeats.map((feature) => draw.add(feature));
-      let long = 0;
-      let lat = 0;
-
-      if (tempFeats[0].type !== 'FeatureCollection') {
-        const [longitude, latitude] = tempFeats[0].geometry.coordinates[0][0];
-        long = longitude;
-        lat = latitude;
-      } else {
-        const middleIndex = Math.floor(tempFeats[0].features.length / 2);
-        const [longitude, latitude] = tempFeats[0].features[middleIndex].geometry.coordinates[0][0];
-        long = longitude;
-        lat = latitude;
-      }
-      map.setCenter([long, lat]);
-      map.flyTo({ center: [long, lat], zoom: 14 });
-    }
+    addFeats();
 
     map.on('result', (event) => {
       const { result } = event;
@@ -246,7 +253,7 @@ function AgroMap({
   useEffect(() => {
     // Call the removeFeatureMap function here (inside the useEffect where drawRef is assigned).
     reDrawCrops();
-  }, feats);
+  }, [feats]);
 
   return (
     <div ref={mapContainer} className="mapa" style={{ height: '100%', borderRadius: '10px' }} />
