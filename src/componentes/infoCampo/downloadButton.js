@@ -10,7 +10,7 @@ function DownloadButton() {
   };
 
   return (
-    <button onClick={handleDownload}>Descargar Template</button>
+    <button className="button-desc" onClick={handleDownload}>Descargar Template</button>
   );
 }
 
