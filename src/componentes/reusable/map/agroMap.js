@@ -36,7 +36,7 @@ function splitPolygon(draw, polygon) {
 // }
 
 function AgroMap({
-  coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased, edit,
+  coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased, edit, setColors,
 }) {
   // const edit = feats.length > 0;
   const mapContainer = useRef(null);
@@ -44,6 +44,7 @@ function AgroMap({
   const mapRef = useRef(null);
   // const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
   // console.log(coordinates);
+  const [usedColors, setusedColors] = useState([]);
   function removeFeatureMap() {
     if (drawRef.current) {
       const { features } = drawRef.current.getAll();
@@ -212,20 +213,44 @@ function AgroMap({
     function getRandomColor(index) {
       return Colors[index - 1];
     }
+    const popup = new mapboxgl.Popup({
+      closeButton: false,
+    });
+
+    map.on('mousemove', 'counties', (e) => {
+      // Change the cursor style as a UI indicator.
+      map.getCanvas().style.cursor = 'pointer';
+
+      // Single out the first found feature.
+      const feature = e.features[0];
+      console.log(e);
+      // Display a popup with the name of the county
+      popup.setLngLat(e.lngLat)
+        .setText(feature.crop)
+        .addTo(map);
+    });
+
+    map.on('mouseleave', 'counties', () => {
+      map.getCanvas().style.cursor = '';
+      popup.remove();
+    });
 
     function handleDraw() {
       const features = draw.getAll();
       const lastDrawn = features.features[features.features.length - 1];
       const color = getRandomColor(features.features.length);
+      setColors((prevColors) => [...prevColors, color]);
+      setusedColors([...usedColors, color]);
 
       draw.setFeatureProperty(lastDrawn.id, 'portColor', color);
       // console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0][0]);
+      console.log('usedcolors', usedColors, color);
       if (features.features.length !== 0) {
-        addFeatures(features.features, color);
+        addFeatures(features.features);
       } else if (feats.length > 0) {
         const polygons = feats.map((f) => f.polygon);
-        addFeatures(polygons, color);
+        addFeatures(polygons);
       }
       // addCentroid(draw, lastDrawn);
     }
@@ -272,4 +297,5 @@ AgroMap.propTypes = {
   feats: PropTypes.arrayOf(PropTypes.object).isRequired,
   featErased: PropTypes.arrayOf(PropTypes.string).isRequired,
   edit: PropTypes.bool.isRequired,
+  setColors: PropTypes.func.isRequired,
 };
