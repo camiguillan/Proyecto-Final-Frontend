@@ -271,6 +271,7 @@ export default function MapContainer({
               addFeatures={setNewFeatures}
               removeFeature={(fts, removedFeature) => removeFeatureSt(fts, removedFeature)}
               featErased={featErasedId}
+              edit={edit}
             />
           </div>
         </Card>

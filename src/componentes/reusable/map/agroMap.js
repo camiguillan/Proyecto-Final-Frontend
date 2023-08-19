@@ -36,9 +36,9 @@ function splitPolygon(draw, polygon) {
 // }
 
 function AgroMap({
-  coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased,
+  coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased, edit,
 }) {
-  const edit = feats.length > 0;
+  // const edit = feats.length > 0;
   const mapContainer = useRef(null);
   const drawRef = useRef(null);
   const mapRef = useRef(null);
@@ -78,8 +78,8 @@ function AgroMap({
   };
 
   const reDrawCrops = () => {
-    drawRef.current.deleteAll();// ojo si falla es x esto
     if (edit && drawRef.current) {
+      drawRef.current.deleteAll();// ojo si falla es x esto
       addFeats();
     }
   };
@@ -269,4 +269,5 @@ AgroMap.propTypes = {
   removeFeature: PropTypes.func.isRequired,
   feats: PropTypes.arrayOf(PropTypes.object).isRequired,
   featErased: PropTypes.arrayOf(PropTypes.string).isRequired,
+  edit: PropTypes.bool.isRequired,
 };
