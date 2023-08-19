@@ -53,8 +53,6 @@ export default function EditarCampo() {
     }
   }, [campo]);
 
-  console.log('IMAGEN', imageUrl);
-
   return (
     <div style={{ width: '100%', height: '100%' }}>
       <Header />

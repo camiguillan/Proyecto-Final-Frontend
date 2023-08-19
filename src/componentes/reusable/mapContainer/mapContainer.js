@@ -38,6 +38,7 @@ export default function MapContainer({
   const [invalid, setinValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ title: '', message: '' });
   const [selectedCrop, setSelectedCrop] = useState(CROP_TYPES_KEYS.NONE);
+  console.log(campoInfo, 'campo info');
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
@@ -237,7 +238,7 @@ export default function MapContainer({
     formData.append('plots', JSON.stringify(plots));
     formData.append('height', height);
     formData.append('width', width);
-    formData.append('image', campoInfo.imagen); // Assuming campoInfo.image is a File object
+    formData.append('image', campoInfo.imagen);
 
     if (edit) {
       // guardar campo editado
@@ -277,7 +278,7 @@ export default function MapContainer({
         </Card>
         <div className="derecha">
           <Card className="agregar-campo-container min-content">
-            <form>
+            <form className="form">
               <div className="agregar-campo-inputs">
                 <label className="agregar-campo-label">
                   Nombre del Campo:
@@ -298,7 +299,9 @@ export default function MapContainer({
                 {/* {drawField ? <p>Dibuje el campo principal</p> */}
 
                 <div>
-                  <p className="agregar-campo-label" style={{ textAlign: 'center !important' }}> Dibuje la superficie de cada lote con su cultivo asociado </p>
+                  <p className="agregar-campo-label" style={{ textAlign: 'center !important' }}>
+                    {!edit ? 'Dibuje la superficie de cada lote con su cultivo asociado' : '' }
+                  </p>
                   {cultivosInputs}
                   {!edit && <Button type="button" onClick={addInput} className="green-button mas-button">+</Button>}
                 </div>
