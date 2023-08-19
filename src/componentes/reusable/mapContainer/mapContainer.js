@@ -38,7 +38,6 @@ export default function MapContainer({
   const [invalid, setinValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ title: '', message: '' });
   const [selectedCrop, setSelectedCrop] = useState(CROP_TYPES_KEYS.NONE);
-  const [colors, setColors] = useState([]);
   console.log(campoInfo, 'campo info');
 
   const handleChange = (cultivo, index) => {
@@ -157,7 +156,6 @@ export default function MapContainer({
         className="select"
         value={cultivo}
         onChange={(e) => handleChange(e.target.value, index)}
-        style={{ backgroundColor: colors[index] ? `${colors[index]} !important` : '' }}
       >
         {' '}
         {opciones}
@@ -170,10 +168,6 @@ export default function MapContainer({
   useEffect(() => {
     if (newFeatures.length !== 0 && areNewFeatures()) { addFeature(); }
   }, [newFeatures]);
-
-  useEffect(() => {
-    console.log(colors);
-  }, [colors]);
 
   useEffect(() => {
     if (campoInfo.features.length !== 0 && Object.keys(erased).length > 0) {
@@ -283,7 +277,6 @@ export default function MapContainer({
               removeFeature={(fts, removedFeature) => removeFeatureSt(fts, removedFeature)}
               featErased={featErasedId}
               edit={edit}
-              setColors={setColors}
             />
           </div>
         </Card>
