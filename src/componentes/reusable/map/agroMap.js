@@ -78,9 +78,11 @@ function AgroMap({
   };
 
   const reDrawCrops = () => {
-    if (edit && drawRef.current) {
+    if (edit && drawRef.current && feats.length > 0) {
       drawRef.current.deleteAll();// ojo si falla es x esto
       addFeats();
+    } else if (edit) {
+      drawRef.current.deleteAll();
     }
   };
 

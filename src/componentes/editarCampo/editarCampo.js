@@ -1,6 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import Header from '../reusable/header/header';
 import MapContainer from '../reusable/mapContainer/mapContainer';
 import Icon from '../../assets/icons/icon';
@@ -11,11 +13,23 @@ import Loader from '../reusable/loader/loader';
 export default function EditarCampo() {
   const { field } = useParams();
   const { userID } = useParams();
+  const BACKEND_URL = 'http://localhost:8081/';
+  const [imageUrl, setImageUrl] = useState('');
 
   const [isLoading, setLoading] = useState(true);
   const [campo, setCampo] = useState(null);
   const [campoFeatures, setCampoFeatures] = useState(null);
 
+  const fetchData = async () => {
+    try {
+      // eslint-disable-next-line no-underscore-dangle
+      const response = await axios.get(`${BACKEND_URL}image/${field}`, { responseType: 'blob' });
+      const imageUrl1 = response.data;
+      setImageUrl(imageUrl1);
+    } catch (error) {
+      console.error('Error al obtener la imagen:', error);
+    }
+  };
   const getField = async () => {
     const accessToken = `Bearer ${userID}`;
     const response = await get(`field/${field}`, {
@@ -28,6 +42,7 @@ export default function EditarCampo() {
 
   useEffect(() => {
     getField();
+    fetchData();
   }, [field]);
 
   useEffect(() => {
@@ -37,6 +52,8 @@ export default function EditarCampo() {
       setLoading(false);
     }
   }, [campo]);
+
+  console.log('IMAGEN', imageUrl);
 
   return (
     <div style={{ width: '100%', height: '100%' }}>
@@ -59,7 +76,7 @@ export default function EditarCampo() {
           <MapContainer
             campInfo={{
               nombreCampo: campo.name,
-              imagen: '',
+              imagen: imageUrl,
               coordinates: [campo.coordinates.lon, campo.coordinates.lat],
               features: campoFeatures,
             }}
