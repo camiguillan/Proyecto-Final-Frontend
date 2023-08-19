@@ -11,6 +11,7 @@ import Header from '../reusable/header/header';
 import './home.scss';
 import ImageDisplay from './imageDisplay';
 import { get } from '../conexionBack/conexionBack';
+import Loader from '../reusable/loader/loader';
 
 export default function Home() {
   const { userID } = useParams();
@@ -56,17 +57,27 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <div className="image-container">
-        {user2
-          && images.map((image, index) => (
-            <Link to={`/${userID}/infoCampo/${user2.fields[index]._id}`} key={index}>
-              <div className="image-wrapper">
-                <ImageDisplay imageId={user2.fields[index]._id} />
-                <div className="image-name">{truncateString(imageNames[index], 10)}</div>
-              </div>
-            </Link>
-          ))}
-      </div>
+      {user2
+        ? (
+          <div className="image-container">
+            {images.map((image, index) => (
+              <Link to={`/${userID}/infoCampo/${user2.fields[index]._id}`} key={index}>
+                <div className="image-wrapper">
+                  <ImageDisplay imageId={user2.fields[index]._id} />
+                  <div className="image-name">{truncateString(imageNames[index], 10)}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )
+        : (
+          <div style={{
+            width: '100%', height: '100%', top: '50%', position: 'relative', marginTop: '14%',
+          }}
+          >
+            <Loader />
+          </div>
+        )}
     </div>
   );
 }
