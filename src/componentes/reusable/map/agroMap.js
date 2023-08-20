@@ -4,13 +4,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { lineToPolygon, difference, booleanPointInPolygon } from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'; // SEARCH BAR
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import PropTypes, { func } from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import _ from 'lodash';
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './agroMap.scss';
 import styles from './styles';
 import { CROP_TYPES_TRANSLATIONS } from '../../../constants/translations';
@@ -22,29 +22,19 @@ function splitPolygon(draw, polygon) {
   const drawnGeometry = features.features[features.features.length - 1].geometry;
 
   if (drawnGeometry.type === 'LineString') {
-    // Create a temporary polygon from the LineString to use with difference
     const tempPolygon = lineToPolygon(drawnGeometry);
 
-    // Split the defaultPolygon with the temporary polygon (LineString)
     const splitPolygons = difference(polygon, tempPolygon);
-    // Add the resulting polygons to the map
     draw.add(splitPolygons);
   }
 }
 
-// function addCentroid(draw, polygon) {
-//   draw.add(centroid(polygon));
-// }
-
 function AgroMap({
   coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased, edit,
 }) {
-  // const edit = feats.length > 0;
   const mapContainer = useRef(null);
   const drawRef = useRef(null);
   const mapRef = useRef(null);
-  // const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
-  // console.log(coordinates);
   function removeFeatureMap() {
     if (drawRef.current) {
       const { features } = drawRef.current.getAll();
@@ -80,7 +70,7 @@ function AgroMap({
 
   const reDrawCrops = () => {
     if (edit && drawRef.current && feats.length > 0) {
-      drawRef.current.deleteAll();// ojo si falla es x esto
+      drawRef.current.deleteAll();
       addFeats();
     } else if (edit) {
       drawRef.current.deleteAll();
@@ -92,7 +82,7 @@ function AgroMap({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/satellite-streets-v12',
       center: coordinates,
-      zoom: 11, // Default zoom level
+      zoom: 11,
     });
     mapRef.current = map;
     const NewSimpleSelect = _.extend(MapboxDraw.modes.simple_select, {
@@ -127,8 +117,6 @@ function AgroMap({
 
     const geocoderContainer = () => <div id="geocoder-container" className="geocoder-container" style={{ width: '100%', borderRadius: '10px' }} />;
     const coordinatesGeocoder = (query) => {
-      // Match anything which looks like
-      // decimal degrees coordinate pair.
       const matches = query.match(
         /^[ ]*(?:Lat: )?(-?\d+\.?\d*)[, ]+(?:Lng: )?(-?\d+\.?\d*)[ ]*$/i,
       );
@@ -155,24 +143,20 @@ function AgroMap({
       const geocodes = [];
 
       if (coord2 < -90 || coord2 > 90) {
-        // must be lat, lng
         geocodes.push(coordinateFeature(coord2, coord1));
       }
 
       if (coord1 < -90 || coord1 > 90) {
-        // must be lng, lat
         geocodes.push(coordinateFeature(coord1, coord2));
       }
 
       if (geocodes.length === 0) {
-        // else could be either lng, lat or lat, lng
         geocodes.push(coordinateFeature(coord2, coord1));
         geocodes.push(coordinateFeature(coord1, coord2));
       }
 
       return geocodes;
     };
-    // SEARCH BAR
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl,
@@ -193,10 +177,8 @@ function AgroMap({
     map.on('result', (event) => {
       const { result } = event;
 
-      // Retrieve the coordinates from the geocoding result
       const { center } = result.geometry;
 
-      // Center the map to the selected location
       map.setCenter(center);
     });
 
@@ -219,12 +201,9 @@ function AgroMap({
     });
 
     map.on('mousemove', (e) => {
-      // Change the cursor style as a UI indicator.
       map.getCanvas().style.cursor = 'pointer';
       const { lngLat } = e;
       const coords = [lngLat.lng, lngLat.lat];
-      // Single out the first found feature.
-      // const { features } = draw.getAll();
       let hoveredFeature = '';
       if (edit) {
         if (feats[0].polygon.type === 'FeatureCollection') {
@@ -235,7 +214,6 @@ function AgroMap({
         }
       }
       if (hoveredFeature !== '' && hoveredFeature) {
-        // Display a popup with the name of the county
         popup.setLngLat(e.lngLat)
           .setText(CROP_TYPES_TRANSLATIONS[hoveredFeature.crop])
           .addTo(map);
@@ -256,7 +234,6 @@ function AgroMap({
       const color = getRandomColor(features.features.length);
 
       draw.setFeatureProperty(lastDrawn.id, 'portColor', color);
-      // console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0][0]);
       if (features.features.length !== 0) {
         addFeatures(features.features);
@@ -264,13 +241,11 @@ function AgroMap({
         const polygons = feats.map((f) => f.polygon);
         addFeatures(polygons);
       }
-      // addCentroid(draw, lastDrawn);
     }
 
     function handleDrawDelete(event) {
       const fts = draw.getAll();
       const removedFeature = event.features;
-      // console.log('FEATURES REMOVES', feats.features);
       removeFeature(fts.features, removedFeature);
     }
     map.on('draw.create', handleDraw);
@@ -285,12 +260,10 @@ function AgroMap({
     };
   }, []);
   useEffect(() => {
-    // Call the removeFeatureMap function here (inside the useEffect where drawRef is assigned).
     removeFeatureMap();
   });
 
   useEffect(() => {
-    // Call the removeFeatureMap function here (inside the useEffect where drawRef is assigned).
     reDrawCrops();
   }, [feats]);
 

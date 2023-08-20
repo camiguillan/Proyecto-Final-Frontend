@@ -2,22 +2,17 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './home.scss';
+import { fetchImage } from '../conexionBack/conexionBack';
 
 function ImageDisplay({ imageId }) {
   const [imageUrl, setImageUrl] = useState('');
-  const BACKEND_URL = 'http://localhost:8081/';
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get(`${BACKEND_URL}image/${imageId}`, { responseType: 'blob' });
-        const imageUrl1 = URL.createObjectURL(response.data);
-        setImageUrl(imageUrl1);
-      } catch (error) {
-        console.error('Error al obtener la imagen:', error);
-      }
+      const image = await fetchImage(imageId);
+      const imageUrl1 = URL.createObjectURL(image);
+      setImageUrl(imageUrl1);
     };
 
     fetchData(); // Llama a la función asincrónica

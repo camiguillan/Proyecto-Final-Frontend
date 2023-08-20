@@ -1,19 +1,16 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import Header from '../reusable/header/header';
 import MapContainer from '../reusable/mapContainer/mapContainer';
 import Icon from '../../assets/icons/icon';
-import { get } from '../conexionBack/conexionBack';
+import { fetchImage, get } from '../conexionBack/conexionBack';
 import { createPolygonFromPlots } from '../reusable/map/funcionesMapa';
 import Loader from '../reusable/loader/loader';
 
 export default function EditarCampo() {
   const { field } = useParams();
   const { userID } = useParams();
-  const BACKEND_URL = 'http://localhost:8081/';
   const [imageUrl, setImageUrl] = useState('');
 
   const [isLoading, setLoading] = useState(true);
@@ -21,15 +18,10 @@ export default function EditarCampo() {
   const [campoFeatures, setCampoFeatures] = useState(null);
 
   const fetchData = async () => {
-    try {
-      // eslint-disable-next-line no-underscore-dangle
-      const response = await axios.get(`${BACKEND_URL}image/${field}`, { responseType: 'blob' });
-      const imageUrl1 = response.data;
-      setImageUrl(imageUrl1);
-    } catch (error) {
-      console.error('Error al obtener la imagen:', error);
-    }
+    const image = await fetchImage(field);
+    setImageUrl(image);
   };
+
   const getField = async () => {
     const accessToken = `Bearer ${userID}`;
     const response = await get(`field/${field}`, {
@@ -57,10 +49,7 @@ export default function EditarCampo() {
     <div style={{ width: '100%', height: '100%' }}>
       <Header />
       {isLoading ? ( // Show loader while loading data
-        <div style={{
-          width: '100%', height: '100%', top: '50%', position: 'relative', marginTop: '14%',
-        }}
-        >
+        <div className="loader-container">
           <Loader />
         </div>
       ) : (

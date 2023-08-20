@@ -38,7 +38,6 @@ export default function MapContainer({
   const [invalid, setinValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ title: '', message: '' });
   const [selectedCrop, setSelectedCrop] = useState(CROP_TYPES_KEYS.NONE);
-  console.log(campoInfo, 'campo info');
 
   const handleChange = (cultivo, index) => {
     const tempList = [...cultivos];
@@ -304,7 +303,7 @@ export default function MapContainer({
 
                 <div>
                   <p className="agregar-campo-label" style={{ textAlign: 'center !important' }}>
-                    {!edit ? 'Dibuje la superficie de cada lote con su cultivo asociado' : '' }
+                    {edit ? '' : 'Dibuje la superficie de cada lote con su cultivo asociado' }
                   </p>
                   {cultivosInputs}
                   {!edit && <Button type="button" onClick={addInput} className="green-button mas-button">+</Button>}

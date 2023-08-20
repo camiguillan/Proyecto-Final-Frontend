@@ -71,12 +71,10 @@ export default function Home() {
           </div>
         )
         : (
-          <div style={{
-            width: '100%', height: '100%', top: '50%', position: 'relative', marginTop: '14%',
-          }}
-          >
+          <div className="loader-container">
             <Loader />
           </div>
+
         )}
     </div>
   );
