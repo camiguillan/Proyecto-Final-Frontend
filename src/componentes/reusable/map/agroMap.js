@@ -15,7 +15,8 @@ import './agroMap.scss';
 import styles from './styles';
 import { CROP_TYPES_TRANSLATIONS } from '../../../constants/translations';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API_KEY;
+
 function splitPolygon(draw, polygon) {
   const features = draw.getAll();
 
@@ -207,7 +208,7 @@ function AgroMap({
       let hoveredFeature = '';
       if (edit) {
         if (feats[0].polygon.type === 'FeatureCollection') {
-          console.log('ACA LOGICA DE PLOTS');
+          // console.log('ACA LOGICA DE PLOTS');
         } else {
           const feats2 = feats.filter((poly) => booleanPointInPolygon(coords, poly.polygon))[0];
           hoveredFeature = feats2;
