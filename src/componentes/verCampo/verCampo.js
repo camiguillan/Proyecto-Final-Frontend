@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { get } from '../conexionBack/conexionBack';
 import { createHeatmap } from '../reusable/map/funcionesMapa';
 import Loader from '../reusable/loader/loader';
@@ -8,10 +9,10 @@ import AgroMap from '../reusable/map/agroMap';
 import { CROP_TYPES_TRANSLATIONS } from '../../constants/translations';
 import './verCampo.scss';
 
-export default function VerCampo() {
+export default function VerCampo({ crop }) {
   const { field } = useParams();
   const { userID } = useParams();
-  const { crop } = useParams();
+  // const { crop } = useParams();
   const [campo, setCampo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [campoFeatures, setCampoFeatures] = useState(null);
@@ -43,6 +44,17 @@ export default function VerCampo() {
     }
   });
 
+  const filterCrops = () => {
+    if (crop) {
+      if (crop === 'Todos') {
+        return campoFeatures;
+      }
+
+      return campoFeatures.filter((feat) => crop === CROP_TYPES_TRANSLATIONS[feat.crop]);
+    }
+    return [];
+  };
+
   return (
     <div className="campo-mapa-cultivo" id="mapa">
       {isLoading
@@ -54,8 +66,9 @@ export default function VerCampo() {
             addFeatures={(cam) => { }}
             removeFeature={(cam, removedFeature) => { }}
             // eslint-disable-next-line max-len
-            feats={campoFeatures.filter((feat) => crop === CROP_TYPES_TRANSLATIONS[feat.crop])}
+            feats={filterCrops()}
             featErased={null}
+            edit
           />
         )}
     </div>
@@ -64,7 +77,6 @@ export default function VerCampo() {
 
 // coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased,
 
-// VerCampo.propTypes = {
-//   // eslint-disable-next-line react/forbid-prop-types
-//   campoInfo: PropTypes.object.isRequired,
-// };
+VerCampo.propTypes = {
+  crop: PropTypes.string.isRequired,
+};

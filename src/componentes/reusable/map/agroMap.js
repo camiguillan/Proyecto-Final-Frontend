@@ -2,47 +2,40 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
-import { lineToPolygon, difference } from '@turf/turf';
+import { lineToPolygon, difference, booleanPointInPolygon } from '@turf/turf';
 import mapboxgl from 'mapbox-gl';
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'; // SEARCH BAR
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import PropTypes from 'prop-types';
+import PropTypes, { func } from 'prop-types';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import _ from 'lodash';
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'; // search bar css
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './agroMap.scss';
 import styles from './styles';
+import { CROP_TYPES_TRANSLATIONS } from '../../../constants/translations';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiY2FtaWd1aWxsYW4iLCJhIjoiY2xrNXNvcHdpMHg4czNzbXI2NzFoMHZnbyJ9.vQDn8tglYPjpua0CYCsyhw';
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API_KEY;
+
 function splitPolygon(draw, polygon) {
   const features = draw.getAll();
 
   const drawnGeometry = features.features[features.features.length - 1].geometry;
 
   if (drawnGeometry.type === 'LineString') {
-    // Create a temporary polygon from the LineString to use with difference
     const tempPolygon = lineToPolygon(drawnGeometry);
 
-    // Split the defaultPolygon with the temporary polygon (LineString)
     const splitPolygons = difference(polygon, tempPolygon);
-    // Add the resulting polygons to the map
     draw.add(splitPolygons);
   }
 }
 
-// function addCentroid(draw, polygon) {
-//   draw.add(centroid(polygon));
-// }
-
 function AgroMap({
-  coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased,
+  coordinates, changeCoordinates, addFeatures, removeFeature, feats, featErased, edit,
 }) {
-  const edit = feats.length > 0;
   const mapContainer = useRef(null);
   const drawRef = useRef(null);
-  // const [searchedCoordinates, setSearchedCoordinates] = useState([-58.702963, -34.671792]);
-  // console.log(coordinates);
+  const mapRef = useRef(null);
   function removeFeatureMap() {
     if (drawRef.current) {
       const { features } = drawRef.current.getAll();
@@ -53,14 +46,46 @@ function AgroMap({
     }
   }
 
+  const addFeats = () => {
+    console.log(feats);
+    if (edit && drawRef.current && mapRef.current) {
+      const tempFeats = feats.map((feat) => feat.polygon);
+      tempFeats.map((feature) => drawRef.current.add(feature));
+      let long = 0;
+      let lat = 0;
+
+      if (tempFeats[0].type !== 'FeatureCollection') {
+        const [longitude, latitude] = tempFeats[0].geometry.coordinates[0][0];
+        long = longitude;
+        lat = latitude;
+      } else {
+        const middleIndex = Math.floor(tempFeats[0].features.length / 2);
+        const [longitude, latitude] = tempFeats[0].features[middleIndex].geometry.coordinates[0][0];
+        long = longitude;
+        lat = latitude;
+      }
+      mapRef.current.setCenter([long, lat]);
+      mapRef.current.flyTo({ center: [long, lat], zoom: 14 });
+    }
+  };
+
+  const reDrawCrops = () => {
+    if (edit && drawRef.current && feats.length > 0) {
+      drawRef.current.deleteAll();
+      addFeats();
+    } else if (edit) {
+      drawRef.current.deleteAll();
+    }
+  };
+
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/satellite-streets-v12',
       center: coordinates,
-      zoom: 11, // Default zoom level
+      zoom: 11,
     });
-
+    mapRef.current = map;
     const NewSimpleSelect = _.extend(MapboxDraw.modes.simple_select, {
       dragMove() {},
     });
@@ -93,8 +118,6 @@ function AgroMap({
 
     const geocoderContainer = () => <div id="geocoder-container" className="geocoder-container" style={{ width: '100%', borderRadius: '10px' }} />;
     const coordinatesGeocoder = (query) => {
-      // Match anything which looks like
-      // decimal degrees coordinate pair.
       const matches = query.match(
         /^[ ]*(?:Lat: )?(-?\d+\.?\d*)[, ]+(?:Lng: )?(-?\d+\.?\d*)[ ]*$/i,
       );
@@ -121,24 +144,20 @@ function AgroMap({
       const geocodes = [];
 
       if (coord2 < -90 || coord2 > 90) {
-        // must be lat, lng
         geocodes.push(coordinateFeature(coord2, coord1));
       }
 
       if (coord1 < -90 || coord1 > 90) {
-        // must be lng, lat
         geocodes.push(coordinateFeature(coord1, coord2));
       }
 
       if (geocodes.length === 0) {
-        // else could be either lng, lat or lat, lng
         geocodes.push(coordinateFeature(coord2, coord1));
         geocodes.push(coordinateFeature(coord1, coord2));
       }
 
       return geocodes;
     };
-    // SEARCH BAR
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl,
@@ -154,33 +173,13 @@ function AgroMap({
 
     map.addControl(geocoder, 'top-left');
 
-    if (edit) {
-      const tempFeats = feats.map((feat) => feat.polygon);
-      tempFeats.map((feature) => draw.add(feature));
-      let long = 0;
-      let lat = 0;
-
-      if (tempFeats[0].type !== 'FeatureCollection') {
-        const [longitude, latitude] = tempFeats[0].geometry.coordinates[0][0];
-        long = longitude;
-        lat = latitude;
-      } else {
-        const middleIndex = Math.floor(tempFeats[0].features.length / 2);
-        const [longitude, latitude] = tempFeats[0].features[middleIndex].geometry.coordinates[0][0];
-        long = longitude;
-        lat = latitude;
-      }
-      map.setCenter([long, lat]);
-      map.flyTo({ center: [long, lat], zoom: 14 });
-    }
+    addFeats();
 
     map.on('result', (event) => {
       const { result } = event;
 
-      // Retrieve the coordinates from the geocoding result
       const { center } = result.geometry;
 
-      // Center the map to the selected location
       map.setCenter(center);
     });
 
@@ -197,6 +196,38 @@ function AgroMap({
     function getRandomColor(index) {
       return Colors[index - 1];
     }
+    const popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+    });
+
+    map.on('mousemove', (e) => {
+      map.getCanvas().style.cursor = 'pointer';
+      const { lngLat } = e;
+      const coords = [lngLat.lng, lngLat.lat];
+      let hoveredFeature = '';
+      if (edit) {
+        if (feats[0].polygon.type === 'FeatureCollection') {
+          // console.log('ACA LOGICA DE PLOTS');
+        } else {
+          const feats2 = feats.filter((poly) => booleanPointInPolygon(coords, poly.polygon))[0];
+          hoveredFeature = feats2;
+        }
+      }
+      if (hoveredFeature !== '' && hoveredFeature) {
+        popup.setLngLat(e.lngLat)
+          .setText(CROP_TYPES_TRANSLATIONS[hoveredFeature.crop])
+          .addTo(map);
+      } else {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+      }
+    });
+
+    map.on('mouseleave', () => {
+      map.getCanvas().style.cursor = '';
+      popup.remove();
+    });
 
     function handleDraw() {
       const features = draw.getAll();
@@ -204,21 +235,18 @@ function AgroMap({
       const color = getRandomColor(features.features.length);
 
       draw.setFeatureProperty(lastDrawn.id, 'portColor', color);
-      // console.log(features);
       changeCoordinates(features.features[0].geometry.coordinates[0][0]);
       if (features.features.length !== 0) {
-        addFeatures(features.features, color);
+        addFeatures(features.features);
       } else if (feats.length > 0) {
         const polygons = feats.map((f) => f.polygon);
-        addFeatures(polygons, color);
+        addFeatures(polygons);
       }
-      // addCentroid(draw, lastDrawn);
     }
 
     function handleDrawDelete(event) {
       const fts = draw.getAll();
       const removedFeature = event.features;
-      // console.log('FEATURES REMOVES', feats.features);
       removeFeature(fts.features, removedFeature);
     }
     map.on('draw.create', handleDraw);
@@ -233,9 +261,13 @@ function AgroMap({
     };
   }, []);
   useEffect(() => {
-    // Call the removeFeatureMap function here (inside the useEffect where drawRef is assigned).
     removeFeatureMap();
   });
+
+  useEffect(() => {
+    reDrawCrops();
+  }, [feats]);
+
   return (
     <div ref={mapContainer} className="mapa" style={{ height: '100%', borderRadius: '10px' }} />
   );
@@ -250,4 +282,5 @@ AgroMap.propTypes = {
   removeFeature: PropTypes.func.isRequired,
   feats: PropTypes.arrayOf(PropTypes.object).isRequired,
   featErased: PropTypes.arrayOf(PropTypes.string).isRequired,
+  edit: PropTypes.bool.isRequired,
 };

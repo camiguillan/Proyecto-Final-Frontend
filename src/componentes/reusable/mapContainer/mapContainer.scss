@@ -1,5 +1,9 @@
 @import "../../../assets/global.scss";
 
+.form{
+  width: 100%;
+}
+
 .agregar-campo-titulo {
   color: $verde-musgo;
   width: 90%;
@@ -15,8 +19,6 @@
   border-radius: 10px;
   width: 100%;
   height: 70vh;
-  //margin-left: 2%;
-  padding: 1rem;
 }
 
 .tarjetas {
@@ -29,16 +31,16 @@
   text-align: left;
   font-size: 2vh;
   display: flex;
-  align-items: baseline;
+      align-items: stretch;
   justify-content: space-around;
 }
 
 .agregar-campo-label-edit{
-    margin: 1vh;
+  margin: 1vh;
   text-align: left;
   font-size: 2vh;
   display: flex;
-  align-items: baseline;
+      align-items: baseline;
   justify-content: space-between;
 }
 
@@ -133,10 +135,13 @@
   position: relative !important;
   color: black;
   font-size: 2vh;
+  justify-content: center;
 }
 
 .imagen-campo img{
-  width: 100%;
+  width: 15rem;
+  display: flex;
+  justify-content: center;
   height: 100%;
   border-radius: 10px;
   margin-top: 0.5rem;

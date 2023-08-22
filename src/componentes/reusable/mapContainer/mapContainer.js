@@ -151,7 +151,11 @@ export default function MapContainer({
     // eslint-disable-next-line react/no-array-index-key
     <label key={index} className={!edit ? 'agregar-campo-label' : 'agregar-campo-label-edit'}>
       Tipo de cultivo:
-      <select className="select" value={cultivo} onChange={(e) => handleChange(e.target.value, index)}>
+      <select
+        className="select"
+        value={cultivo}
+        onChange={(e) => handleChange(e.target.value, index)}
+      >
         {' '}
         {opciones}
         {' '}
@@ -237,7 +241,7 @@ export default function MapContainer({
     formData.append('plots', JSON.stringify(plots));
     formData.append('height', height);
     formData.append('width', width);
-    formData.append('image', campoInfo.imagen); // Assuming campoInfo.image is a File object
+    formData.append('image', campoInfo.imagen);
 
     if (edit) {
       // guardar campo editado
@@ -271,12 +275,13 @@ export default function MapContainer({
               addFeatures={setNewFeatures}
               removeFeature={(fts, removedFeature) => removeFeatureSt(fts, removedFeature)}
               featErased={featErasedId}
+              edit={edit}
             />
           </div>
         </Card>
         <div className="derecha">
           <Card className="agregar-campo-container min-content">
-            <form>
+            <form className="form">
               <div className="agregar-campo-inputs">
                 <label className="agregar-campo-label">
                   Nombre del Campo:
@@ -297,7 +302,9 @@ export default function MapContainer({
                 {/* {drawField ? <p>Dibuje el campo principal</p> */}
 
                 <div>
-                  <p className="agregar-campo-label" style={{ textAlign: 'center !important' }}> Dibuje la superficie de cada lote con su cultivo asociado </p>
+                  <p className="agregar-campo-label" style={{ textAlign: 'center !important' }}>
+                    {edit ? '' : 'Dibuje la superficie de cada lote con su cultivo asociado' }
+                  </p>
                   {cultivosInputs}
                   {!edit && <Button type="button" onClick={addInput} className="green-button mas-button">+</Button>}
                 </div>

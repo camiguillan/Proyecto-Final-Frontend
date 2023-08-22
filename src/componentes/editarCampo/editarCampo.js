@@ -1,20 +1,26 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../reusable/header/header';
 import MapContainer from '../reusable/mapContainer/mapContainer';
 import Icon from '../../assets/icons/icon';
-import { get } from '../conexionBack/conexionBack';
+import { fetchImage, get } from '../conexionBack/conexionBack';
 import { createPolygonFromPlots } from '../reusable/map/funcionesMapa';
 import Loader from '../reusable/loader/loader';
 
 export default function EditarCampo() {
   const { field } = useParams();
   const { userID } = useParams();
+  const [imageUrl, setImageUrl] = useState('');
 
   const [isLoading, setLoading] = useState(true);
   const [campo, setCampo] = useState(null);
   const [campoFeatures, setCampoFeatures] = useState(null);
+
+  const fetchData = async () => {
+    const image = await fetchImage(field);
+    setImageUrl(image);
+  };
 
   const getField = async () => {
     const accessToken = `Bearer ${userID}`;
@@ -28,6 +34,7 @@ export default function EditarCampo() {
 
   useEffect(() => {
     getField();
+    fetchData();
   }, [field]);
 
   useEffect(() => {
@@ -42,10 +49,7 @@ export default function EditarCampo() {
     <div style={{ width: '100%', height: '100%' }}>
       <Header />
       {isLoading ? ( // Show loader while loading data
-        <div style={{
-          width: '100%', height: '100%', top: '50%', position: 'relative', marginTop: '14%',
-        }}
-        >
+        <div className="loader-container">
           <Loader />
         </div>
       ) : (
@@ -59,7 +63,7 @@ export default function EditarCampo() {
           <MapContainer
             campInfo={{
               nombreCampo: campo.name,
-              imagen: '',
+              imagen: imageUrl,
               coordinates: [campo.coordinates.lon, campo.coordinates.lat],
               features: campoFeatures,
             }}
