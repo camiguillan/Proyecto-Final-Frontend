@@ -12,13 +12,13 @@ export default function FieldsButtons({ fields }) {
     <div className="fields-container">
       {fields.map((field) => (
         <div
-          className="menuNavItem"
+          className="menu-drop-down"
           onClick={() => {
             nav(`/editarCampo/${userID}/${field._id}`);
             window.location.reload();
           }}
         >
-          <h5>{field.name}</h5>
+          <h5 className="menu-drop-down-header">{field.name}</h5>
         </div>
       ))}
     </div>

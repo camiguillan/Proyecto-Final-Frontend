@@ -77,22 +77,12 @@ export default function HambMenu({ pageWrapId, outerContainerId }) {
             {'    '}
             <Icon className="bi bi-pencil-square" color="white" fontSize="2vh" />
             {'    '}
-
             Editar Campo
           </h5>
         </div>
         {showAdditionalButtons && (
           <FieldsButtons fields={fields} />
         )}
-        {/* <div className="menuNavItem" onClick={() => nav(`/editarCampo/${userID}`)}>
-          <h5>
-            {'    '}
-            <Icon className="bi bi-pencil-square" color="white" fontSize="2vh" />
-            {'    '}
-
-            Editar Campo
-          </h5>
-        </div> */}
 
       </div>
       <div className="cerrar-sesion-container">
