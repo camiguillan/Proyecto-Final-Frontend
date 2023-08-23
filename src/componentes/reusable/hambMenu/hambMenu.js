@@ -51,16 +51,6 @@ export default function HambMenu({ pageWrapId, outerContainerId }) {
     >
       <div className="menuNav">
         <UserInfo />
-        <div className="menuNavItem" onClick={() => nav(`/home/${userID}`)}>
-          <h5>
-            {' '}
-            <Icon className="bi bi-house-door-fill" color="white" fontSize="2vh" />
-            {' '}
-
-            Home
-          </h5>
-        </div>
-
         <div className="menuNavItem" onClick={() => nav(`/editarPerfil/${userID}`)}>
           <h5>
             {' '}
