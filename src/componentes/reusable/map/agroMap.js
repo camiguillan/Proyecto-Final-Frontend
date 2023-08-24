@@ -281,6 +281,6 @@ AgroMap.propTypes = {
   addFeatures: PropTypes.func.isRequired,
   removeFeature: PropTypes.func.isRequired,
   feats: PropTypes.arrayOf(PropTypes.object).isRequired,
-  featErased: PropTypes.arrayOf(PropTypes.string).isRequired,
+  featErased: PropTypes.string.isRequired,
   edit: PropTypes.bool.isRequired,
 };
