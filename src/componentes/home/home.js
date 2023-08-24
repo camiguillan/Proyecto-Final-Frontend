@@ -56,7 +56,7 @@ export default function Home() {
   const truncateString = (str, maxLength) => (str.length > maxLength ? `${str.substring(0, maxLength)}...` : str);
 
   return (
-    <div className="fondoverde">
+    <div className="fondoGris">
       <HeaderWhite />
       {user2
         ? (
