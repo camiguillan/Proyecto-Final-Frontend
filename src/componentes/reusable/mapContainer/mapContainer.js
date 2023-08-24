@@ -337,7 +337,7 @@ export default function MapContainer({
                         className="button"
                         onClick={() => setCampoInfo((prevInfo) => ({ ...prevInfo, imagen: '' }))}
                       >
-                        Quitar Imagen
+                        Cambiar Imagen
                       </Button>
                     </div>
                   )
