@@ -72,8 +72,8 @@ export default function Home() {
                   <Link to={`/${userID}/infoCampo/${user2.fields[index]._id}`} key={index}>
                     <div className="image-wrapper">
                       <ImageDisplay imageId={user2.fields[index]._id} />
-                      {/* <div className="image-name">{truncateString(imageNames[index], 10)}</div> */}
                       <div className="image-name">{imageNames[index]}</div>
+                      {/* <div className="image-name">{truncateString(imageNames[index], 10)}</div> */}
                     </div>
                   </Link>
                 ))}
