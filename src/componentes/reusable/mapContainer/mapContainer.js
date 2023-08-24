@@ -155,6 +155,7 @@ export default function MapContainer({
         className="select"
         value={cultivo}
         onChange={(e) => handleChange(e.target.value, index)}
+        disabled={edit}
       >
         {' '}
         {opciones}
