@@ -41,4 +41,22 @@
   color: black;
   //text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white;
   pointer-events: none;
+
+}
+
+.sin-campo-titulo{
+  width: 90%;
+  margin-bottom: 2rem;
+}
+
+.no-campos-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4rem
+}
+
+h3{
+  color: $main-green;
 }
