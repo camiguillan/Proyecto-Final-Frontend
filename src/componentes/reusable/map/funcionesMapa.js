@@ -154,11 +154,19 @@ export const createGridFromPlots = (field) => {
 };
 
 const addColor = (feat) => {
-  const randomValue = (Math.floor(Math.random() * 21) - 10) / 10;
+  // const randomValue = (Math.floor(Math.random() * 21) - 10) / 10;
+  let ndvi = 1;
+
+  if (feat.ndvi) {
+    ndvi = feat.ndvi;
+  }
 
   return {
     ...feat,
-    properties: { fillColor: getNDVIColor(randomValue) },
+    properties: {
+      ...feat.properties.plotInfo,
+      fillColor: getNDVIColor(ndvi),
+    },
   };
 };
 
@@ -166,16 +174,16 @@ export const createPolygonFromPlots = (field, heatmap) => {
   const {
     plots, height, width, coordinates,
   } = field;
-  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) }));
+  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index), plot }));
   // .filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
-  const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
+  const plotsFeatures = plotsCoordinates.map(({ crop, coordinate, plot }) => {
     // console.log(coordinate);
     const polygonCoordinates = createBox(coordinate.lon, coordinate.lat, PLOT_SIZE);
     const color = CROP_COLORS[crop.toUpperCase()];
     return {
       polygon: {
         type: 'Feature',
-        properties: { portColor: color },
+        properties: { portColor: color, plotInfo: JSON.stringify(plot) },
         geometry: {
           type: 'Polygon',
           coordinates: [polygonCoordinates],
