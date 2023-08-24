@@ -39,11 +39,11 @@ export default function EditarCampo() {
 
   useEffect(() => {
     // Update campo variable when userData changes
-    if (campo) {
+    if (campo && imageUrl) {
       setCampoFeatures(createPolygonFromPlots(campo));
       setLoading(false);
     }
-  }, [campo]);
+  }, [campo, imageUrl]);
 
   return (
     <div style={{ width: '100%', height: '100%' }}>
