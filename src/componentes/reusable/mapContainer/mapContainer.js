@@ -152,7 +152,7 @@ export default function MapContainer({
     <label key={index} className={!edit ? 'agregar-campo-label' : 'agregar-campo-label-edit'}>
       Tipo de cultivo:
       <select
-        className="select"
+        className={`select ${edit ? 'disabled' : ''}`}
         value={cultivo}
         onChange={(e) => handleChange(e.target.value, index)}
         disabled={edit}
@@ -337,7 +337,7 @@ export default function MapContainer({
                         className="button"
                         onClick={() => setCampoInfo((prevInfo) => ({ ...prevInfo, imagen: '' }))}
                       >
-                        Quitar Imagen
+                        Cambiar Imagen
                       </Button>
                     </div>
                   )
