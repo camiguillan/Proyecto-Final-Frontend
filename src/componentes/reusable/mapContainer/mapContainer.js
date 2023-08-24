@@ -334,6 +334,7 @@ export default function MapContainer({
                         {' '}
                       </div>
                       <Button
+                        type="button"
                         className="button"
                         onClick={() => setCampoInfo((prevInfo) => ({ ...prevInfo, imagen: '' }))}
                       >
