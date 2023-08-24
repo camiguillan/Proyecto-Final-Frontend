@@ -387,9 +387,11 @@ export default function InfoCampo() {
   };
 
   const metrics = () => {
+    setporcentajeSano();
     let metros = 0;
     let sano = 0;
     const cultivo = traducciones[crop].cultivo;
+    let hayDatos = false;
     let ndviTemp = 0;
     let humedadTemp = 0;
     let cuantosPlots = 0;
@@ -415,6 +417,8 @@ export default function InfoCampo() {
               });
               if (plot.history[indexAusar].diagnostics === 'excelent' || plot.history[indexAusar].diagnostics === 'very_good' || plot.history[indexAusar].diagnostics === 'good') {
                 sano += 121;
+              } if (plot.history[indexAusar].diagnostics != null) {
+                hayDatos = true;
               }
               cuantosPlots += 1;
               ndviTemp += plot.history[indexAusar].ndvi;
@@ -427,7 +431,7 @@ export default function InfoCampo() {
           setHumedad(humedadTemp);
           const porcentajeSanou = (sano * 100) / metros;
           const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(1);
-          setporcentajeSano(porcentajeSanoRedondeado);
+          if (hayDatos) { setporcentajeSano(porcentajeSanoRedondeado); }
           setMetrosCuadrados(metros);
           return;
         }
@@ -474,6 +478,7 @@ export default function InfoCampo() {
         }
       });
     }
+    console.log(user2);
   }, [user2]);
 
   useEffect(() => {
@@ -490,6 +495,7 @@ export default function InfoCampo() {
 
   useEffect(() => {
     metricsForMenu();
+    console.log(user2);
   }, [selectedTimePeriod]);
 
   useEffect(() => {
