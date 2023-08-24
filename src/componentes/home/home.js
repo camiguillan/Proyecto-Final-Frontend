@@ -8,6 +8,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Header from '../reusable/header/header';
+import HeaderWhite from '../reusable/header_white/header_white';
 import './home.scss';
 import ImageDisplay from './imageDisplay';
 import { get } from '../conexionBack/conexionBack';
@@ -55,8 +56,8 @@ export default function Home() {
   const truncateString = (str, maxLength) => (str.length > maxLength ? `${str.substring(0, maxLength)}...` : str);
 
   return (
-    <div>
-      <Header />
+    <div className="fondoverde">
+      <HeaderWhite />
       {user2
         ? (
           <div className="image-container">
