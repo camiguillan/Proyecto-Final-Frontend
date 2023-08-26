@@ -18,7 +18,7 @@ export default function Diagnostico() {
     },
     VERY_GOOD: {
       name: 'VERY_GOOD',
-      translate: 'Muy_bueno',
+      translate: 'Muy bueno',
       message: '¡Excelente trabajo! Tu cultivo está en un estado muy bueno, demostrando un excelente manejo agrícola. Esto se refleja en un rendimiento destacado, alta resistencia a plagas y enfermedades, y una producción de calidad superior. Continúa con este esfuerzo para mantener y mejorar aún más los resultados.',
       image: excelent,
       className: 'diagnostic-class very-class',
@@ -58,7 +58,7 @@ export default function Diagnostico() {
     },
   };
   const user = JSON.parse(localStorage.getItem('name')) || {};
-  const [diagnostico, setdiagnostico] = useState('VERY_GOOD');
+  const [diagnostico, setdiagnostico] = useState('OVERHYDRATION');
   const {
     name, translate, message, image, className, classNameTitle,
   } = diagnosticKeys[diagnostico];

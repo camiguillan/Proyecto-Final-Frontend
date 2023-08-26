@@ -6,6 +6,8 @@
   grid-template-columns: repeat(auto-fill, minmax(13.2rem, 1fr));
   grid-gap: 1.2rem;
   margin-top: 1rem;
+  margin-left: 1rem; /* Margen a la izquierda */
+  margin-right: 1rem;
 }
 
 .rounded-image {
@@ -22,8 +24,7 @@
   //height: max-content;
   width: 13.2rem;
   border-radius: 0.5rem;
-  flex-wrap: wrap;
-  background-color: $gris-tarjetas-fondo-infoCampos; /* Add this line to set the background color to red */
+  background-color: WHITE; /* Add this line to set the background color to red */
 }
 .image{
   // height: 15rem;

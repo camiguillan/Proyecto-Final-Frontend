@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react/no-array-index-key */
@@ -53,6 +54,10 @@ export default function InfoCampo() {
   const [humedadviejo, setHumedadviejo] = useState([]);
   const [fieldRest, setField] = useState(field);
   const [actualizarGraf, setActualizarGraf] = useState(1);
+  const [sunMenu, setsunMenu] = useState(false);
+  const [corn, setcorn] = useState(false);
+  const [wheat, setwheat] = useState(false);
+  const [soy, setsoy] = useState(false);
   const today = new Date();
   const traducciones = {
     Girasol: {
@@ -382,9 +387,11 @@ export default function InfoCampo() {
   };
 
   const metrics = () => {
+    setporcentajeSano();
     let metros = 0;
     let sano = 0;
     const cultivo = traducciones[crop].cultivo;
+    let hayDatos = false;
     let ndviTemp = 0;
     let humedadTemp = 0;
     let cuantosPlots = 0;
@@ -410,6 +417,8 @@ export default function InfoCampo() {
               });
               if (plot.history[indexAusar].diagnostics === 'excelent' || plot.history[indexAusar].diagnostics === 'very_good' || plot.history[indexAusar].diagnostics === 'good') {
                 sano += 121;
+              } if (plot.history[indexAusar].diagnostics != null) {
+                hayDatos = true;
               }
               cuantosPlots += 1;
               ndviTemp += plot.history[indexAusar].ndvi;
@@ -422,12 +431,24 @@ export default function InfoCampo() {
           setHumedad(humedadTemp);
           const porcentajeSanou = (sano * 100) / metros;
           const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(1);
-          setporcentajeSano(porcentajeSanoRedondeado);
+          if (hayDatos) { setporcentajeSano(porcentajeSanoRedondeado); }
           setMetrosCuadrados(metros);
           return;
         }
       });
     }
+  };
+
+  const existeCrop = (cropp) => {
+    let tru = false;
+    if (user2 && user2.fields) {
+      user2.fields.forEach((fiel, index) => {
+        if (fiel._id === fieldRest) {
+          tru = (user2.fields[index].plots.some((plot) => plot.crop === cropp));
+        }
+      });
+    }
+    return tru;
   };
 
   const handleFieldChange = (event) => {
@@ -445,6 +466,10 @@ export default function InfoCampo() {
 
   useEffect(() => {
     metrics();
+    setsoy(existeCrop('soy'));
+    setwheat(existeCrop('whaet'));
+    setcorn(existeCrop('corn'));
+    setsunMenu(existeCrop('sunflower'));
     if (user2 && user2.fields) {
       user2.fields.forEach((fiel, index) => {
         if (fiel._id === fieldRest && user2.fields[index].history.years.length > 0) {
@@ -453,6 +478,7 @@ export default function InfoCampo() {
         }
       });
     }
+    console.log(user2);
   }, [user2]);
 
   useEffect(() => {
@@ -469,20 +495,23 @@ export default function InfoCampo() {
 
   useEffect(() => {
     metricsForMenu();
+    console.log(user2);
   }, [selectedTimePeriod]);
 
   useEffect(() => {
     metrics();
+    setsoy(existeCrop('soy'));
+    setwheat(existeCrop('whaet'));
+    setcorn(existeCrop('corn'));
+    setsunMenu(existeCrop('sunflower'));
     let dataProcessed = false;
     if (user2 && user2.fields) {
       user2.fields.forEach((fiel, index) => {
         if (fiel._id === fieldRest && user2.fields[index].history.years.length > 0) {
           handleDataChange(user2.fields[index].history.years, user2.fields[index].history.sown, 'Superficie sembrada', 'Años', 1);
           handleDataChange(user2.fields[index].history.years, user2.fields[index].history.harvested, 'Superficie cosechada', 'Años', 2);
-          console.log('plus ultra');
           dataProcessed = true;
         } else if (!dataProcessed) {
-          console.log('qcyo');
           handleDataChangeEmpty('Superficie sembrada', 'Años', 1);
           handleDataChangeEmpty('Superficie sembrada', 'Años', 2);
         }
@@ -552,10 +581,10 @@ export default function InfoCampo() {
               value={crop} // Aquí establecemos el valor seleccionado
               onChange={handleCropChange}
             >
-              <option value="Soja">Soja</option>
-              <option value="Maiz">Maiz</option>
-              <option value="Trigo">Trigo</option>
-              <option value="Girasol">Girasol</option>
+              {soy && <option value="Soja">Soja</option>}
+              {corn && <option value="Maiz">Maiz</option>}
+              {wheat && <option value="Trigo">Trigo</option>}
+              {sunMenu && <option value="Girasol">Girasol</option>}
               <option value="Todos">Todos</option>
             </select>
           </div>
