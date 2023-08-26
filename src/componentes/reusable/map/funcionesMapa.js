@@ -42,6 +42,8 @@ const getNDVIColor = (ndvi) => {
       return '#1a9850';
     case ndvi <= 1:
       return '#006837';
+    case ndvi === 3:
+      return '#85807f';
     default:
       return '#000000';
   }
@@ -155,7 +157,7 @@ export const createGridFromPlots = (field) => {
 
 const addColor = (feat) => {
   // const randomValue = (Math.floor(Math.random() * 21) - 10) / 10;
-  let ndvi = 1;
+  let ndvi = 3;
 
   if (feat.ndvi) {
     ndvi = feat.ndvi;
