@@ -20,6 +20,14 @@
   //width: min-content;
 }
 
+.home{
+  position: absolute;
+  top: 20% !important;
+  left: 15%;
+  flex-direction: row;
+  justify-content: space-between
+}
+
 @media screen and (max-width: 60em) {
   
     .min-content{
