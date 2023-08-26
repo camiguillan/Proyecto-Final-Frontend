@@ -73,7 +73,6 @@ export default function EditarPerfil() {
 
       // Guardar el objeto actualizado de vuelta en el localStorage
       localStorage.setItem('name', JSON.stringify(user));
-      // navigate(`/home/${userID}`);
     }
   };
 
