@@ -4,6 +4,7 @@ import {
   squareGrid, booleanPointInPolygon, convex, multiPoint, concave, union, simplify,
 } from '@turf/turf';
 import { PLOT_SIZE, CROP_TYPES_KEYS, CROP_COLORS } from '../../../constants/plots';
+import { NDVI_COLOR_RANGES } from '../../../constants/ndviColors';
 
 const fixedDecimals4 = (number) => Number(number.toFixed(4));
 export const createRectangle = (listOfPolygons) => {
@@ -19,32 +20,8 @@ export const createRectangle = (listOfPolygons) => {
 };
 
 const getNDVIColor = (ndvi) => {
-  switch (true) {
-    case ndvi <= 0:
-      return '#a50026';
-    case ndvi <= 0.1:
-      return '#d73027';
-    case ndvi <= 0.2:
-      return '#f46d43';
-    case ndvi <= 0.3:
-      return '#fdae61';
-    case ndvi <= 0.4:
-      return '#fee08b';
-    case ndvi <= 0.5:
-      return '#ffffbf';
-    case ndvi <= 0.6:
-      return '#d9ef8b';
-    case ndvi <= 0.7:
-      return '#a6d96a';
-    case ndvi <= 0.8:
-      return '#66bd63';
-    case ndvi <= 0.9:
-      return '#1a9850';
-    case ndvi <= 1:
-      return '#006837';
-    default:
-      return '#000000';
-  }
+  const matchingRange = NDVI_COLOR_RANGES.find((range) => ndvi >= range.min && ndvi <= range.max);
+  return matchingRange ? matchingRange.color : '#5e5d5c';
 };
 
 const moveCoordinates = ({ lat, lon }, y, x) => ({
@@ -153,29 +130,27 @@ export const createGridFromPlots = (field) => {
   return { type: 'FeatureCollection', features: plotsFeatures };
 };
 
-const addColor = (feat) => {
-  const randomValue = (Math.floor(Math.random() * 21) - 10) / 10;
-
-  return {
-    ...feat,
-    properties: { fillColor: getNDVIColor(randomValue) },
-  };
-};
-
+const addColor = (feat) => ({
+  ...feat,
+  properties: {
+    ...feat.properties.plotInfo,
+    fillColor: getNDVIColor(feat.ndvi),
+  },
+});
 export const createPolygonFromPlots = (field, heatmap) => {
   const {
     plots, height, width, coordinates,
   } = field;
-  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index) }));
+  const plotsCoordinates = plots.map((plot, index) => ({ crop: plot.crop, coordinate: plotToCoordinates2(height, width, coordinates, index), plot }));
   // .filter((obj) => obj.crop === CROP_TYPES_KEYS.SOY);
-  const plotsFeatures = plotsCoordinates.map(({ crop, coordinate }) => {
+  const plotsFeatures = plotsCoordinates.map(({ crop, coordinate, plot }) => {
     // console.log(coordinate);
     const polygonCoordinates = createBox(coordinate.lon, coordinate.lat, PLOT_SIZE);
     const color = CROP_COLORS[crop.toUpperCase()];
     return {
       polygon: {
         type: 'Feature',
-        properties: { portColor: color },
+        properties: { portColor: color, plotInfo: JSON.stringify(plot) },
         geometry: {
           type: 'Polygon',
           coordinates: [polygonCoordinates],

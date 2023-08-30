@@ -81,13 +81,15 @@ export default function Home() {
               </div>
             )
             : (
-              <Card className="agregar-campo-container home max-content">
+              <Card className="agregar-campo-container-2 max-content">
                 <div className="no-campos-container">
                   <h1 className="sin-campo-titulo"> TODAVÍA NO TIENES NINGÚN CAMPO REGISTRADO </h1>
                   <h3>¡Empieza ahora! Crea tu primer campo haciendo click abajo</h3>
                   <Button type="button" onClick={() => nav(`/agregarCampo/${userID}`)} className="green-button cancelar">CREAR CAMPO</Button>
                 </div>
-                <img src={campito} alt="Imagen 4" />
+                <div className="image-sin-campo-container">
+                  <img src={campito} alt="Imagen 4" className="image-sin-campo" />
+                </div>
               </Card>
             )
         )

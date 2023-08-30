@@ -63,12 +63,38 @@
   margin-bottom: 2rem;
 }
 
+.image-sin-campo-container{
+  display: flex;
+}
+.image-sin-campo{
+  height: 100%;
+  width: 100%;
+}
+
+.agregar-campo-container-2{
+  position: absolute;
+  top: 15% !important;
+  left: 15%;
+  width: 70vw;
+  margin: 1rem 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  border-color: #48BF84;
+  border-style: solid;
+  border-radius: 10px;
+
+}
+
+
 .no-campos-container{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-left: 4rem
+  margin: 0rem 3rem 0rem 3rem
 }
 
 h3{

@@ -1,5 +1,7 @@
 @import "../../../assets/global.scss";
 
+
+
 .bm-menu {
     background-color: $verde-oscuro;
     padding: 2em 3em 1em;
@@ -34,6 +36,8 @@
     right: 3vh;
 
   }
+
+
 
   
 @media screen and (max-width: 60em) {
@@ -83,6 +87,21 @@
   .bm-overlay {
     background: rgba(0, 0, 0, 0.3);
   }
+
+  .menu-drop-down{
+    transition: color 0.2s;
+    text-align: start;
+}
+
+  .menu-drop-down:hover{
+    cursor: pointer;
+    color: rgb(184, 216, 109);
+}
+
+.menu-drop-down-header{
+  margin: 0 0 1rem 2rem;
+  
+}
 
   .menuNavItem{
    padding-bottom: 1%;
