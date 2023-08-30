@@ -19,7 +19,7 @@ function ImageDisplay({ imageId }) {
   }, [imageId]);
 
   return (
-    <div className="image-wrapper">
+    <div className="image">
       {imageUrl ? (
         <img src={imageUrl} alt={`Image ${imageId}`} className="rounded-image" />
       ) : (

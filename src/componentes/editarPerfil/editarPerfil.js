@@ -18,6 +18,7 @@ import Button from '../reusable/boton/button';
 import { patch } from '../conexionBack/conexionBack';
 import Campito from '../../images/segador.png';
 import HeaderWhite from '../reusable/header_white/header_white';
+import '../reusable/popup/popup.scss';
 
 export default function EditarPerfil() {
   const { userID } = useParams();
@@ -72,8 +73,17 @@ export default function EditarPerfil() {
 
       // Guardar el objeto actualizado de vuelta en el localStorage
       localStorage.setItem('name', JSON.stringify(user));
-      navigate(`/home/${userID}`);
     }
+  };
+
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handlePopUp = () => {
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
   };
 
   return (
@@ -108,7 +118,17 @@ export default function EditarPerfil() {
                   onChange={(e) => handleInputChange(e, setIngresarFechaNacimiento)}
                   style={{ color: isInputFilled3 ? 'black' : '$gris-input-to-fill' }}
                 />
-                <Button type="submit" className="green-button cancelar-lleno">Continuar </Button>
+                <div>
+                  <Button onClick={handlePopUp} type="submit" className="green-button cancelar-lleno">Continuar </Button>
+                  {showPopup && (
+                    <div className="popup">
+                      <div className="popup-content">
+                        <p>Se ha editado su perfil con éxito.</p>
+                        <button onClick={closePopup} className="green-button cancelar-lleno popup-button">Cerrar</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
               <div>
                 <h1 className="gray-title2">
