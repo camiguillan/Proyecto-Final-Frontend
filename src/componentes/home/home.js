@@ -40,6 +40,12 @@ export default function Home() {
         const fetchedImages = [];
         const fetchedImageNames = [];
 
+        const userActualiz = await get('user', {
+          headers: {
+            Authorization: accessToken,
+          },
+        });
+        localStorage.setItem('name', JSON.stringify(userActualiz));
         user22.fields.forEach((field, index) => {
           const imageName = `${field.image}`;
           fetchedImages.push(imageName);
@@ -56,8 +62,6 @@ export default function Home() {
 
     fetchData();
   }, [userID]);
-
-  console.log(user2);
 
   const truncateString = (str, maxLength) => (str.length > maxLength ? `${str.substring(0, maxLength)}...` : str);
 
