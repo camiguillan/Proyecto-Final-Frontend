@@ -15,6 +15,7 @@ import HomePrincipal from './componentes/homePrincipal/homePrincipal';
 import InfoCampo from './componentes/infoCampo/infoCampo';
 import PswRecoveryEmailSent from './componentes/pswRecoveryEmailSent/pswRecoveryEmailSent';
 import PswUpdated from './componentes/pswUpdated/pswUpdated';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   document.title = 'AGROIA';

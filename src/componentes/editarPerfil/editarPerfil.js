@@ -88,7 +88,7 @@ export default function EditarPerfil() {
 
   return (
     <div>
-      <HeaderWhite />
+      <Header />
       <form onSubmit={handleSubmit}>
         <div className="fondoverde">
           <div className="white-rectangle3">

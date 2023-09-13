@@ -67,7 +67,7 @@ export default function Home() {
 
   return (
     <div className="fondoGris">
-      <HeaderWhite />
+      <Header />
       {user2
         ? (
           user2.fields.length > 0

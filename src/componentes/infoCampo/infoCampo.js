@@ -30,6 +30,7 @@ import HeaderWhite from '../reusable/header_white/header_white';
 import { differenceInDays } from 'date-fns';
 import { get, patch } from '../conexionBack/conexionBack';
 import VerCampo from '../verCampo/verCampo';
+import Header from '../reusable/header/header';
 
 export default function InfoCampo() {
   const { userID } = useParams();
@@ -530,7 +531,7 @@ export default function InfoCampo() {
 
   return (
     <div>
-      <HeaderWhite />
+      <Header />
       <div className="gray-space">
         <text className="titulo-fachero-facherito">Dashboards</text>
         <div className="buttons-container">

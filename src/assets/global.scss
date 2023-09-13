@@ -63,3 +63,10 @@ $light-gray-dropdown:#ced4da;
   position: relative !important; 
   margin-top: 14% !important;
 }
+
+.fondoGris{
+    min-height: 100vh;
+    height: 40rem;
+    min-width: 80rem;
+    background-color: $light-gray; 
+}
