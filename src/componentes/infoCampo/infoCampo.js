@@ -467,7 +467,7 @@ export default function InfoCampo() {
   useEffect(() => {
     metrics();
     setsoy(existeCrop('soy'));
-    setwheat(existeCrop('whaet'));
+    setwheat(existeCrop('wheat'));
     setcorn(existeCrop('corn'));
     setsunMenu(existeCrop('sunflower'));
     if (user2 && user2.fields) {
@@ -501,7 +501,7 @@ export default function InfoCampo() {
   useEffect(() => {
     metrics();
     setsoy(existeCrop('soy'));
-    setwheat(existeCrop('whaet'));
+    setwheat(existeCrop('wheat'));
     setcorn(existeCrop('corn'));
     setsunMenu(existeCrop('sunflower'));
     let dataProcessed = false;
