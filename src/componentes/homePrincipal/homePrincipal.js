@@ -11,7 +11,7 @@ import leaf from '../../images/leaf.jpg';
 import trigo from '../../images/trigo.jpg';
 import vistaSat from '../../images/vistasatelital.jpg';
 import '../../assets/global.scss';
-import HeaderHome from '../reusable/header_home/header_home';
+import Header from '../reusable/header/header';
 
 export default function HomePrincipal() {
   const listChooseUs = [{reason: 'Precisión en el diagnóstico', extra: 'Utilizamos algoritmos avanzados de inteligencia artificial y análisis de imágenes para identificar enfermedades, plagas y otros problemas de salud en los cultivos con alta precisión.'}, {reason: 'Optimización de recursos', extra: 'Ayudamos a maximizar la producción agrícola al optimizar el uso de recursos como el agua, los fertilizantes y los pesticidas.'}, {reason: 'Recomendaciones personalizadas', extra: 'Proporcionamos recomendaciones específicas y personalizadas para cada cultivo y situación, considerando factores como el tipo de cultivo, las condiciones climáticas y las características del suelo.'}];
@@ -19,7 +19,7 @@ export default function HomePrincipal() {
   return (
     <div className="no-over-scroll">
       <div className="full-page">
-        <HeaderHome>.</HeaderHome>
+        <Header inicioSesion={false}></Header>
         <div className="img-container">
           <div className="overlay"></div>
           <div className="image-text">

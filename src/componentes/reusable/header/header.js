@@ -15,18 +15,28 @@ export default function Header({ inicioSesion }) {
   // const [activeTab, setActiveTab] = useState('home');
   const path = window.location.pathname;
   const activeTab = path.split('/')[1];
+  console.log(activeTab);
+
+  const handleHometype = () => {
+    if (inicioSesion === false) {
+      nav('../');
+    }
+    nav(`/home/${userID}`);
+  };
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary agro-nav">
       <Container className="agro-header">
 
-        <Navbar.Brand href={`/home/${userID}`}>
+        <Navbar.Brand onClick={handleHometype}>
           {' '}
           <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="3rem" />
           {' '}
           <h1>AGROIA</h1>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        { inicioSesion !== false
+        && (
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto" variant="underline" defaultActiveKey={activeTab}>
             <Nav.Item>
@@ -48,13 +58,14 @@ export default function Header({ inicioSesion }) {
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
+        )}
 
         <Nav.Item className=" justify-content-end">
           {inicioSesion === false
             ? (
               <div className="btn-container">
-                <Button variant="outline-primary">Iniciar Sesion</Button>
-                <Button variant="outline-primary">Registrarse</Button>
+                <Button variant="outline-primary" onClick={() => nav('/iniciarSesion')}>Iniciar Sesion</Button>
+                <Button variant="outline-primary" onClick={() => nav('/registrarse')}>Registrarse</Button>
               </div>
             ) : (
               <div className="user-info-item">
@@ -75,7 +86,6 @@ export default function Header({ inicioSesion }) {
             )}
 
           {/* <Icon className="bi bi-person-circle" fontSize='3vh'></Icon> */}
-
         </Nav.Item>
       </Container>
 
