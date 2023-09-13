@@ -9,15 +9,17 @@
 /* eslint-disable global-require */
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
 import Header from '../reusable/header/header';
 import HeaderWhite from '../reusable/header_white/header_white';
 import './home.scss';
 import ImageDisplay from './imageDisplay';
 import { get } from '../conexionBack/conexionBack';
 import Loader from '../reusable/loader/loader';
-import Card from '../reusable/card/card';
+// import Card from '../reusable/card/card';
 import Button from '../reusable/boton/button';
 import campito from '../../images/campito.jpg';
+import grass from '../../images/grass3.jpg';
 
 export default function Home() {
   const { userID } = useParams();
@@ -72,16 +74,37 @@ export default function Home() {
         ? (
           user2.fields.length > 0
             ? (
-              <div className="image-container">
-                {images.map((image, index) => (
-                  <Link to={`/${userID}/infoCampo/${user2.fields[index]._id}`} key={index}>
-                    <div className="image-wrapper">
-                      <ImageDisplay imageId={user2.fields[index]._id} />
-                      <div className="image-name">{imageNames[index]}</div>
-                      {/* <div className="image-name">{truncateString(imageNames[index], 10)}</div> */}
+              <div className="container">
+                <div className="row">
+                  {images.map((image, index) => (
+                    <div className="col-lg-3 mb-4">
+                      <div className="card-container" onClick={() => nav(`/${userID}/infoCampo/${user2.fields[index]._id}`)}>
+                        <Card style={{ width: '' }} className="card-home">
+                          <Card.Img variant="top" src={grass} />
+                          <Card.Body>
+                            <Card.Title>Card Title</Card.Title>
+                            <Card.Text>
+                              Some quick example text to build on the card title and make up the
+                              bulk of the content.
+                            </Card.Text>
+                            {/* <Button variant="primary">Go somewhere</Button> */}
+                          </Card.Body>
+                          <Card.Footer>
+                            <small className="text-muted">Last updated 3 mins ago</small>
+                          </Card.Footer>
+                        </Card>
+                      </div>
                     </div>
-                  </Link>
-                ))}
+
+                    // <Link to={`/${userID}/infoCampo/${user2.fields[index]._id}`} key={index}>
+                    //   <div className="image-wrapper">
+                    //     <ImageDisplay imageId={user2.fields[index]._id} />
+                    //     <div className="image-name">{imageNames[index]}</div>
+                    //     {/* <div className="image-name">{truncateString(imageNames[index], 10)}</div> */}
+                    //   </div>
+                    // </Link>
+                  ))}
+                </div>
               </div>
             )
             : (

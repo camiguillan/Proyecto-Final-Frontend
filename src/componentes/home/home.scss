@@ -103,3 +103,45 @@ h3{
 a{
    text-decoration: none;
 }
+
+
+.card-container{
+    margin: 2rem;
+    /* width: 18rem; */
+}
+
+
+.card-home:hover{
+    background-color: #c2c0c0;
+    cursor: pointer;
+}
+
+.card-footer{
+    border-color: white;
+    background-color: white;
+    align-content: end;
+    display: inline-flex;
+    justify-content: flex-end;
+}
+
+@media (max-width: 1200px)
+{.col-lg-3 {
+    flex: 0 0 auto;
+    width: 33%;}
+}
+
+@media (min-width: 300px) and (max-width: 1000px)
+{.col-lg-3 {
+    flex: 0 0 auto;
+    width: 50%;}
+}
+
+@media (max-width: 600px) 
+{.col-lg-3 {
+    flex: 0 0 auto;
+    width: 100%;}
+}
+
+.row{
+  justify-content: center;
+}
