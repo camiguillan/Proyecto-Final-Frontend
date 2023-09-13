@@ -23,7 +23,7 @@ import '../reusable/popup/popup.scss';
 export default function EditarPerfil() {
   const { userID } = useParams();
   const [data, setData] = useState([]);
-  const user = JSON.parse(localStorage.getItem('name')) || {};
+  const user = JSON.parse(localStorage.getItem('name')).user || {};
 
   console.log(user);
 
