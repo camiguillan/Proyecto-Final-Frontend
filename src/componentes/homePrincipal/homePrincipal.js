@@ -22,12 +22,12 @@ export default function HomePrincipal() {
         <Header inicioSesion={false}></Header>
         <div className="img-container">
           <div className="overlay"></div>
-          <div className="image-text">
-            <text className="image-title">
+          <div className="image-text-agro">
+            <text className="image-title-agro">
               ¿Qué es AgroIA?
             </text>
             <br />
-            <text className="image-text2">
+            <text className="image-text2-agro">
               AgroIA es un sistema orientado a brindar soluciones y recomendaciones
               precisas en el cuidado y manejo de cultivos agrícolas.
             </text>
@@ -88,7 +88,7 @@ export default function HomePrincipal() {
       <div className="footer">
         <div className="flex-container center">
           <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="2.7rem" />
-          <h1>AGROIA</h1>
+          <h1 className="app-name">AGROIA</h1>
         </div>
         <div className="contact-info">
           <div className="text-home-2 margin">agroiaapp@gmail.com</div>
