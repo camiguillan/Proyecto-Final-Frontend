@@ -10,7 +10,7 @@ import MapContainer from '../reusable/mapContainer/mapContainer';
 
 export default function AgregarCampo() {
   return (
-    <div className="fondoGris">
+    <div>
       <Header />
       <h1 className="agregar-campo-titulo">
         {' '}

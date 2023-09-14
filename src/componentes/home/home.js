@@ -69,25 +69,19 @@ export default function Home() {
   const truncateString = (str, maxLength) => (str.length > maxLength ? `${str.substring(0, maxLength)}...` : str);
 
   return (
-    <div className="fondoGris">
+    <div>
       <Header />
-      {user2
+      <div className="loader-container">
+        <Loader />
+      </div>
+      {/* {user2
         ? (
           user2.fields.length > 0
             ? (
               <div className="container">
                 <div className="row">
                   {images.map((image, index) => (
-
                     <CampoInfoCard imageId={imageNames[index]} fieldId={user2.fields[index]._id}> </CampoInfoCard>
-                    // <Link to={`/${userID}/infoCampo/${user2.fields[index]._id}`} key={index}>
-                    //   <div className="image-wrapper">
-                    //     <ImageDisplay imageId={user2.fields[index]._id} />
-                    //     <div className="image-name">{imageNames[index]}</div>
-                    //     {/* <div className="image-name">{truncateString(imageNames[index], 10)}</div> */}
-                    //   </div>
-                    // </Link>
-
                   ))}
                 </div>
               </div>
@@ -110,7 +104,8 @@ export default function Home() {
             <Loader />
           </div>
 
-        )}
+        )} */}
+
     </div>
   );
 }

@@ -20,7 +20,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   document.title = 'AGROIA';
   return (
-    <div className="App" id="App">
+    <div className="App fondoGris" id="App">
       <Routes>
         <Route path="/" element={<HomePrincipal />} />
         <Route path="/agregarCampo/:userID" element={<AgregarCampo />} />
