@@ -12,20 +12,16 @@ export default function CampoInfoCard({
   const { userID } = useParams();
   const nav = useNavigate();
   const [imageUrl, setImageUrl] = useState('');
-  console.log(imageUrl);
 
   useEffect(() => {
     const fetchData = async () => {
       const image = await fetchImage(fieldId);
       const imageUrl1 = URL.createObjectURL(image);
-      console.log(image, image);
       setImageUrl(imageUrl1);
     };
 
     fetchData(); // Llama a la función asincrónica
   }, [imageId]);
-
-  console.log(imageUrl);
 
   return (
 
