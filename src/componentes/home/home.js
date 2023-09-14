@@ -71,10 +71,7 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <div className="loader-container">
-        <Loader />
-      </div>
-      {/* {user2
+      {user2
         ? (
           user2.fields.length > 0
             ? (
@@ -104,7 +101,7 @@ export default function Home() {
             <Loader />
           </div>
 
-        )} */}
+        )}
 
     </div>
   );
