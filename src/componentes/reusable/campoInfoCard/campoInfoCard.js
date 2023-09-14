@@ -16,14 +16,16 @@ export default function CampoInfoCard({
 
   useEffect(() => {
     const fetchData = async () => {
-      const image = await fetchImage(imageId);
-      // const imageUrl1 = URL.createObjectURL(image);
+      const image = await fetchImage(fieldId);
+      const imageUrl1 = URL.createObjectURL(image);
       console.log(image, image);
-      setImageUrl(image);
+      setImageUrl(imageUrl1);
     };
 
     fetchData(); // Llama a la función asincrónica
   }, [imageId]);
+
+  console.log(imageUrl);
 
   return (
 
@@ -31,7 +33,7 @@ export default function CampoInfoCard({
       <div className="card-container" onClick={() => nav(`/${userID}/infoCampo/${fieldId}`)}>
         <Card style={{ width: '' }} className="card-home">
           {imageUrl
-            ? <Card.Img variant="top" src={imageUrl} />
+            ? <Card.Img variant="top" src={imageUrl} alt={`Image ${imageId}`} />
             : <p>Loading image...</p>}
           <Card.Body>
             <Card.Title>{imageId}</Card.Title>
