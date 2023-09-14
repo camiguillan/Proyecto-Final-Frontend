@@ -20,6 +20,7 @@ import Loader from '../reusable/loader/loader';
 import Button from '../reusable/boton/button';
 import campito from '../../images/campito.jpg';
 import grass from '../../images/grass3.jpg';
+import CampoInfoCard from '../reusable/campoInfoCard/campoInfoCard';
 
 export default function Home() {
   const { userID } = useParams();
@@ -77,25 +78,8 @@ export default function Home() {
               <div className="container">
                 <div className="row">
                   {images.map((image, index) => (
-                    <div className="col-lg-3 mb-4">
-                      <div className="card-container" onClick={() => nav(`/${userID}/infoCampo/${user2.fields[index]._id}`)}>
-                        <Card style={{ width: '' }} className="card-home">
-                          <Card.Img variant="top" src={grass} />
-                          <Card.Body>
-                            <Card.Title>{imageNames[index]}</Card.Title>
-                            <Card.Text>
-                              Some quick example text to build on the card title and make up the
-                              bulk of the content.
-                            </Card.Text>
-                            {/* <Button variant="primary">Go somewhere</Button> */}
-                          </Card.Body>
-                          <Card.Footer>
-                            <small className="text-muted">Last updated 3 mins ago</small>
-                          </Card.Footer>
-                        </Card>
-                      </div>
-                    </div>
 
+                    <CampoInfoCard imageId={imageNames[index]} fieldId={user2.fields[index]._id}> </CampoInfoCard>
                     // <Link to={`/${userID}/infoCampo/${user2.fields[index]._id}`} key={index}>
                     //   <div className="image-wrapper">
                     //     <ImageDisplay imageId={user2.fields[index]._id} />
@@ -103,6 +87,7 @@ export default function Home() {
                     //     {/* <div className="image-name">{truncateString(imageNames[index], 10)}</div> */}
                     //   </div>
                     // </Link>
+
                   ))}
                 </div>
               </div>
