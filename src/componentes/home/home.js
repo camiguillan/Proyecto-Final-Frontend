@@ -82,7 +82,7 @@ export default function Home() {
                         <Card style={{ width: '' }} className="card-home">
                           <Card.Img variant="top" src={grass} />
                           <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
+                            <Card.Title>{imageNames[index]}</Card.Title>
                             <Card.Text>
                               Some quick example text to build on the card title and make up the
                               bulk of the content.
