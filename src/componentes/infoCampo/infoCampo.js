@@ -11,7 +11,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import './infoCampo.scss';
 import '../verCultivos/verCultivos.scss';
 import Papa from 'papaparse';
@@ -59,6 +59,7 @@ export default function InfoCampo() {
   const [corn, setcorn] = useState(false);
   const [wheat, setwheat] = useState(false);
   const [soy, setsoy] = useState(false);
+  const nav = useNavigate();
   const today = new Date();
   const traducciones = {
     Girasol: {
@@ -561,6 +562,13 @@ export default function InfoCampo() {
             onClick={() => handleButtonClick('FullHistory')}
           >
             Historial completo
+            <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
+          </button>
+          <button
+            className={selectedTimePeriod === 'FullHistory' ? 'button-dashboard selected' : 'button-dashboard'}
+            onClick={() => nav(`/editarCampo/${userID}/${field}`)}
+          >
+            EDITAR CAMPO
             <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
           </button>
           <div className="dropdown-container">
