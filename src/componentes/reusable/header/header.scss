@@ -140,21 +140,6 @@ h1{
     display: flex;
 }
 
-.btn-outline-primary{
-    color: #2A7D2E !important;
-    background-color: white !important;
-    border-color: #2A7D2E !important;
-    border-radius: 16px !important;
-    border: solid 2px !important;
-    font-size: 1.4rem;
-    margin: 0.5rem;
-}
-
-.btn-outline-primary:hover{
-    background-color: #2A7D2E !important;
-    border-color: #2A7D2E !important;
-    color: white  !important;
-}
 
 @media (min-width: 1400px){
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {

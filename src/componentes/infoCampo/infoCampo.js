@@ -11,7 +11,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './infoCampo.scss';
 import '../verCultivos/verCultivos.scss';
 import Papa from 'papaparse';
@@ -23,10 +23,7 @@ import ProductCard from './meliCard';
 import excelent from '../../images/excelent.png';
 import upLine from '../../images/ascending.png';
 import downLine from '../../images/descending.png';
-import cropCheckFullField from '../reusable/map/funcionesMapa';
-import AgroMap from '../reusable/map/agroMap';
 import Card from '../reusable/card/card';
-import HeaderWhite from '../reusable/header_white/header_white';
 import { differenceInDays } from 'date-fns';
 import { get, patch } from '../conexionBack/conexionBack';
 import VerCampo from '../verCampo/verCampo';

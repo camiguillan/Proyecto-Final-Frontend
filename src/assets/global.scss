@@ -70,3 +70,56 @@ $light-gray-dropdown:#ced4da;
     min-width: 80rem;
     background-color: $light-gray; 
 }
+
+.btn{
+    border-radius: 16px !important;
+    border:  2px  solid $main-green !important;
+    font-size: 1.4rem !important;
+    margin: 0.5rem !important;
+}
+
+//BOTON PRINCIPAL -> BACK VERDE
+.btn-primary{
+    color: white !important;
+    background-color: $main-green!important;
+    
+}
+
+.btn-primary:hover{
+    background-color:  white !important;
+    color: $main-green !important;
+}
+
+//BOTON SECUNDARIO -> BACK BLANCO
+.btn-outline-primary{
+    color: $main-green !important;
+    background-color: white !important;
+    border-color: $main-green !important;
+}
+
+.btn-outline-primary:hover{
+    background-color: $main-green !important;
+    border-color: $main-green !important;
+    color: white  !important;
+}
+
+
+//////CARD BLANCA
+.card-no-campo{
+    flex-direction: row-reverse !important ;
+    align-items: center;
+    /* width: 80%; */
+    margin: 5rem;
+    filter: drop-shadow(10px 10px 10px rgb(168, 168, 168));
+}
+
+
+/////TITULOS
+.agregar-campo-titulo {
+  color: $verde-musgo;
+  width: 90%;
+  margin: 1% 0% 0% 1% !important;
+  text-align: left;
+  font-size: xx-large;
+}
+
