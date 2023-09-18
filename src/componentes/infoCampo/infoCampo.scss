@@ -96,7 +96,7 @@
 
 .cards-wrapper-diagnostico {
   flex: 1;
-  display: flex;
+  flex-direction: row !important;
   align-items: center;
   position: relative;
   height: 10rem;
@@ -104,6 +104,13 @@
   background-color: white;
   margin: 1%;
 }
+
+.diagnostico-wrapper{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
 
 .cards-titles {
   font-family: 'Inter', sans-serif;
@@ -131,6 +138,7 @@
   margin-left: -9.5rem;
   margin-top: 3rem; 
 }
+
 
 .cards-Subtitle2 {
   margin-left: -8rem; 
@@ -296,7 +304,7 @@
 }
 
 .overhydration-class {
-   margin-left: -12rem;
+   margin-left: 1rem;
 }
 
 .dehydration-class {
@@ -320,8 +328,8 @@
 
 .diagnostic-subtitle{
   font-family: 'Inter', sans-serif;
-  margin-top: -7rem;
-  margin-left: 3rem;
+  //margin-top: -7rem;
+  margin-left: 1rem;
   font-size: 1.5rem;
   font-weight: bold;
   white-space: nowrap;
