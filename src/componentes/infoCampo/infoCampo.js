@@ -597,7 +597,7 @@ export default function InfoCampo() {
           </div>
         </div>
         <div className="cards-container">
-          <div className="cards-wrapper">
+          <Card className="cards-wrapper">
             <div className="circle-card first" />
             <div className="cards-titles">
               Total sembrado
@@ -622,8 +622,8 @@ export default function InfoCampo() {
             {(metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0) && metrosCuadradosViejo !== Infinity ? (
               <img src={metrosCuadradosViejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageMetros" />
             ) : null}
-          </div>
-          <div className="cards-wrapper">
+          </Card>
+          <Card className="cards-wrapper">
             <div className="circle-card second" />
             <div className="cards-titles">
               Cultivo sano
@@ -647,8 +647,8 @@ export default function InfoCampo() {
             {(porcentajeSanoviejo < 0 || porcentajeSanoviejo >= 0) && porcentajeSanoviejo !== Infinity ? (
               <img src={porcentajeSanoviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageSano" />
             ) : null}
-          </div>
-          <div className="cards-wrapper">
+          </Card>
+          <Card className="cards-wrapper">
             <div className="circle-card third" />
             <div className="cards-titles">
               NDVI
@@ -671,8 +671,8 @@ export default function InfoCampo() {
             {(ndviviejo < 0 || ndviviejo >= 0) && ndviviejo !== Infinity ? (
               <img src={ndviviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImagendvi" />
             ) : null}
-          </div>
-          <div className="cards-wrapper">
+          </Card>
+          <Card className="cards-wrapper">
             <div className="circle-card fourth" />
             <div className="cards-titles">
               Humedad
@@ -695,7 +695,7 @@ export default function InfoCampo() {
             {(humedadviejo < 0 || humedadviejo >= 0) && humedadviejo !== Infinity ? (
               <img src={humedadviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage" />
             ) : null}
-          </div>
+          </Card>
         </div>
         <div className="file-upload-container">
           <DownloadButton />
@@ -735,9 +735,9 @@ export default function InfoCampo() {
         </div>
         <div className="cards-container">
           <Diagnostico diagnostico={diagnostico} />
-          <div className="cards-wrapper-diagnostico">
+          <Card className="cards-wrapper-diagnostico">
             <img src={excelent} alt="Imagen 4" style={{ width: '7rem', marginRight: '-1rem', marginLeft: '1rem' }} />
-          </div>
+          </Card>
         </div>
         <div className="cards-container">
           {products.slice(0, 5).map((product) => (
