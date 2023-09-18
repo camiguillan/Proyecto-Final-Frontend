@@ -532,7 +532,7 @@ export default function InfoCampo() {
     <div>
       <Header />
       <div className="gray-space">
-        {!user2 && <text className="titulo-fachero-facherito">Cargando Campo</text> }
+        {!user2 && <text className="titulo-fachero-facherito">Cargando Campo...</text> }
         {/* <text className="titulo-fachero-facherito">Dashboards</text> */}
         {user2
         && (
@@ -543,7 +543,7 @@ export default function InfoCampo() {
           onChange={handleFieldChange}
         >
           {user2.fields.map((fiel, index) => (
-            <option key={index} value={fiel._id}>
+            <option key={index} value={fiel._id} className="option-select">
               {fiel.name}
             </option>
           ))}
