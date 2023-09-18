@@ -10,7 +10,8 @@ import '../background/background.scss';
 import '../iniciarSesion/iniciarSesion.scss';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import Button from '../reusable/boton/button';
+// import Button from '../reusable/boton/button';
+import { Button } from 'react-bootstrap';
 // import CosoVerde from '../reusable/coso_verde/coso_verde';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
@@ -92,7 +93,7 @@ export default function Registrarse() {
             <div className="title-inicio center">
               <div className="agroia2" onClick={() => navigate('../')}>
                 <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="3.5rem" />
-                <h1>AGROIA</h1>
+                <h1 className="header-title">AGROIA</h1>
               </div>
               <div>
                 <img src={tractor} alt="Imagen 4" />
@@ -144,7 +145,7 @@ export default function Registrarse() {
                   {eyeIcon}
                 </span>
                 {!isInputFilled5 && invalid && <p className="password-message">La contraseña debe tener al menos 8 caracteres y una mayúscula</p>}
-                <Button type="submit" className="green-button cancelar-lleno">Registrarse </Button>
+                <Button type="submit" variant="primary">Registrarse </Button>
               </form>
             </div>
           </div>

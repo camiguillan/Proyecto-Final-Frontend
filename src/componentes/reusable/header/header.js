@@ -32,7 +32,7 @@ export default function Header({ inicioSesion }) {
           {' '}
           <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="3rem" />
           {' '}
-          <h1>AGROIA</h1>
+          <h1 className="header-title">AGROIA</h1>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         { inicioSesion !== false

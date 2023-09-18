@@ -9,8 +9,9 @@ import './iniciarSesion.scss';
 import '../reusable/input_box/input_box.scss';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import '../reusable/white_container/white_container.scss';
+import { Button } from 'react-bootstrap';
 import ErrorModal from '../reusable/errorFolder/errores';
-import Button from '../reusable/boton/button';
+// import Button from '../reusable/boton/button';
 import { post } from '../conexionBack/conexionBack';
 import Icon from '../../assets/icons/icon';
 import tractor from '../../images/granjero.png';
@@ -88,7 +89,7 @@ export default function IniciarSesion() {
               <div className="title-inicio center">
                 <div className="agroia2" onClick={() => navigate('../')}>
                   <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="3.5rem" />
-                  <h1>AGROIA</h1>
+                  <h1 className="header-title">AGROIA</h1>
                 </div>
                 <div>
                   <img src={tractor} alt="Imagen 4" />
@@ -127,9 +128,7 @@ export default function IniciarSesion() {
                 <div className="green-text" onClick={() => navigate('../olvidoContra')}>¿Olvidó su contraseña?</div>
 
                 <div className="espacio" />
-
-                <Button type="submit" className="green-button cancelar-lleno">Iniciar Sesión </Button>
-
+                <Button variant="primary" type="submit">Iniciar Sesion</Button>
                 <div className="espacio" />
 
                 <div>
