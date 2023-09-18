@@ -24,7 +24,7 @@ import excelent from '../../images/excelent.png';
 import upLine from '../../images/ascending.png';
 import downLine from '../../images/descending.png';
 // import Card from '../reusable/card/card';
-import { Card } from 'react-bootstrap';
+import { Card, Form } from 'react-bootstrap';
 import { differenceInDays } from 'date-fns';
 import { get, patch } from '../conexionBack/conexionBack';
 import VerCampo from '../verCampo/verCampo';
@@ -532,7 +532,23 @@ export default function InfoCampo() {
     <div>
       <Header />
       <div className="gray-space">
-        <text className="titulo-fachero-facherito">Dashboards</text>
+        {!user2 && <text className="titulo-fachero-facherito">Cargando Campo</text> }
+        {/* <text className="titulo-fachero-facherito">Dashboards</text> */}
+        {user2
+        && (
+        <Form.Select
+          aria-label="Default select example"
+          className="titulo-fachero-facherito"
+          value={fieldRest} // Aquí establecemos el valor seleccionado
+          onChange={handleFieldChange}
+        >
+          {user2.fields.map((fiel, index) => (
+            <option key={index} value={fiel._id}>
+              {fiel.name}
+            </option>
+          ))}
+        </Form.Select>
+        )}
         <div className="buttons-container">
           <button
             className={selectedTimePeriod === 'LastWeek' ? 'button-dashboard selected' : 'button-dashboard'}

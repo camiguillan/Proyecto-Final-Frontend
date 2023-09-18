@@ -1,6 +1,20 @@
 @import "../../assets/global.scss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
 
+.titulo-fachero-facherito {
+  width: 100%;
+  //margin: 1rem 0% 0% 0%;
+  justify-content: center !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 2.5rem !important;
+  font-weight: normal !important;
+  color: $gris-titulo !important;
+  background-color: transparent !important;
+  border: 0px !important;
+  width: auto !important;
+  display: flex !important;
+}
+
 .dropdown-container {
   display: inline-block;
   position: relative;
