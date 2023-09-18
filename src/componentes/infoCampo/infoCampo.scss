@@ -13,6 +13,7 @@
   border: 0px !important;
   width: auto !important;
   display: inline-flex !important;
+  text-align: center;
 }
 
 .dropdown-container {
@@ -124,6 +125,8 @@
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 

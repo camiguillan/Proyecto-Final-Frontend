@@ -642,7 +642,7 @@ export default function InfoCampo() {
           <Card className="cards-wrapper">
             <div className="circle-card second" />
             <div className="cards-titles">
-              Cultivo sano
+              Cultivo Sano
             </div>
             {(porcentajeSano < 0 || porcentajeSano >= 0) && porcentajeSano !== Infinity ? (
               <div className="cards-Subtitle cards-Subtitle2">
