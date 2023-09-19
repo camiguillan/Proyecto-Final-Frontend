@@ -50,18 +50,18 @@
   border: none;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
-  font-size: 0.75rem; 
+  font-size: 1rem; 
   margin-right: 1rem;
   color: black; 
 }
 
 .selected {
-  color: $blue-titles-infoCampo;
+  color: $main-green;
 }
 
 .selected-line {
   height: 2px;
-  background-color: $blue-titles-infoCampo;
+  background-color: $main-green;
   margin-top: 0.25rem;
 }
 

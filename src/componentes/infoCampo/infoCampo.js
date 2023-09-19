@@ -701,6 +701,11 @@ export default function InfoCampo() {
                 ) : null}
               </Card>
             </div>
+            <div className="cards-container2">
+              <Card className="mapa-card max-content">
+                <VerCampo campoInfo={campoInfo} crop={crop} />
+              </Card>
+            </div>
             <div className="file-upload-container">
               <DownloadButton />
               <input className="button-dashboard selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} />
@@ -732,11 +737,6 @@ export default function InfoCampo() {
               </div>
             </div>
             )}
-            <div className="cards-container2">
-              <Card className="mapa-card max-content">
-                <VerCampo campoInfo={campoInfo} crop={crop} />
-              </Card>
-            </div>
             <div className="cards-container">
               <Diagnostico diagnostico={diagnostico} />
               <Card className="cards-wrapper-diagnostico">
