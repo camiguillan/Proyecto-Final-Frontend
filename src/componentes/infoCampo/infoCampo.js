@@ -58,6 +58,7 @@ export default function InfoCampo() {
   const [corn, setcorn] = useState(false);
   const [wheat, setwheat] = useState(false);
   const [soy, setsoy] = useState(false);
+  const [isFieldChanging, setIsFieldChanging] = useState(false);
   const nav = useNavigate();
   const today = new Date();
   const traducciones = {
@@ -79,6 +80,7 @@ export default function InfoCampo() {
   };
 
   const [user2, setUser2] = useState(null);
+  console.log(fieldRest);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -455,6 +457,7 @@ export default function InfoCampo() {
   const handleFieldChange = (event) => {
     setField(event.target.value);
     metrics();
+    nav(`/${userID}/infoCampo/${event.target.value}`);
   };
 
   const handleCropChange = (event) => {
