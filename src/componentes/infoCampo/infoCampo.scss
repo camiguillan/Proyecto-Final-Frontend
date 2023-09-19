@@ -300,10 +300,15 @@
 
   .product-image {
     margin-top: 0.7rem; 
+    height: 9rem !important;
   }
 
   .product-card .product-price {
   font-weight: bold; 
+}
+
+.product-card:hover{
+  
 }
 
 
