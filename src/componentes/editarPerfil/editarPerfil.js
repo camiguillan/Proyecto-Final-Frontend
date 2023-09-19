@@ -17,7 +17,6 @@ import Header from '../reusable/header/header';
 import Button from '../reusable/boton/button';
 import { patch } from '../conexionBack/conexionBack';
 import Campito from '../../images/segador.png';
-import HeaderWhite from '../reusable/header_white/header_white';
 import '../reusable/popup/popup.scss';
 
 export default function EditarPerfil() {

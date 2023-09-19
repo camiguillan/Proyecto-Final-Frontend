@@ -12,15 +12,11 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Header from '../reusable/header/header';
-import HeaderWhite from '../reusable/header_white/header_white';
 import './home.scss';
 import ImageDisplay from './imageDisplay';
 import { get } from '../conexionBack/conexionBack';
 import Loader from '../reusable/loader/loader';
-// import Card from '../reusable/card/card';
-// import Button from '../reusable/boton/button';
 import campito from '../../images/campito.jpg';
-import grass from '../../images/grass3.jpg';
 import CampoInfoCard from '../reusable/campoInfoCard/campoInfoCard';
 
 export default function Home() {

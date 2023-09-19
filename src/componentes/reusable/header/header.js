@@ -15,7 +15,6 @@ export default function Header({ inicioSesion }) {
   // const [activeTab, setActiveTab] = useState('home');
   const path = window.location.pathname;
   const activeTab = path.split('/')[1];
-  console.log(activeTab);
 
   const handleHometype = () => {
     if (inicioSesion === false) {
@@ -94,5 +93,6 @@ export default function Header({ inicioSesion }) {
 }
 
 Header.propTypes = {
-  inicioSesion: PropTypes.bool.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  inicioSesion: PropTypes.bool,
 };
