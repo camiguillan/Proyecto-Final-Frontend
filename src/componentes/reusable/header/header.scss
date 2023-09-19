@@ -1,51 +1,5 @@
 @import "../../../assets/global.scss";
 
-.header-container{
-    width: 100%;
-    margin-top: 0%;
-    @include alignHorizontally;
-    // position: sticky !important;
-    display: block;
-}
-
-
-header{
-    width: 100%;
-    margin-top: 0%;
-    background-color: $verde-principal;
-    height: 10vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.agroIa{
-    @include alignHorizontally;
-}
-
-.agroIa:hover{
-    cursor: pointer;
-}
-
-h1{
-    color: $verde-musgo;
-    margin-left: 1%;
-    width: 10%;
-    margin: 0%; 
-}
-
-.user{
-    margin-right: 1%;
-    @include alignHorizontally;
-}
-
-@media screen and (max-width:62em) {
-
-  h1{
-    font-size: 4vh;
-  }
-}
-
 .agro-nav{
     display: flex !important;
     justify-content: space-around !important;
@@ -79,15 +33,8 @@ h1{
     color: #2A7D2E !important;
 }
 
-.header-title{
-    color: #464E47 !important;
-    /* margin-left: 1%; */
-    margin: 0%; 
+.ht{
     width: 100%;
-    margin-left: 0.5rem  !important ;
-    margin-bottom: 0 !important;
-    font-size: 4vh !important;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important;
 }
 
 .navbar-brand{

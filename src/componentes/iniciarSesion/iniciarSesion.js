@@ -89,7 +89,7 @@ export default function IniciarSesion() {
               <div className="title-inicio center">
                 <div className="agroia2" onClick={() => navigate('../')}>
                   <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="3.5rem" />
-                  <h1 className="header-title">AGROIA</h1>
+                  <h1 className="header-title t-login">AGROIA</h1>
                 </div>
                 <div>
                   <img src={tractor} alt="Imagen 4" />
