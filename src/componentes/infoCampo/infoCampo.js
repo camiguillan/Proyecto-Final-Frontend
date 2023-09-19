@@ -24,7 +24,7 @@ import excelent from '../../images/excelent.png';
 import upLine from '../../images/ascending.png';
 import downLine from '../../images/descending.png';
 // import Card from '../reusable/card/card';
-import { Card, Form } from 'react-bootstrap';
+import { Button, Card, Form } from 'react-bootstrap';
 import { differenceInDays } from 'date-fns';
 import { get, patch } from '../conexionBack/conexionBack';
 import VerCampo from '../verCampo/verCampo';
@@ -580,13 +580,6 @@ export default function InfoCampo() {
                 Historial completo
                 <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
               </button>
-              <button
-                className={selectedTimePeriod === 'FullHistory' ? 'button-dashboard selected' : 'button-dashboard'}
-                onClick={() => nav(`/editarCampo/${userID}/${field}`)}
-              >
-                EDITAR CAMPO
-                <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
-              </button>
               <div className="dropdown-container">
                 <select
                   className="rounded-dropdown rounded-dropdown-cultivos"
@@ -705,6 +698,37 @@ export default function InfoCampo() {
             <div className="cards-container2">
               <Card className="mapa-card max-content">
                 <VerCampo campoInfo={campoInfo} crop={crop} />
+              </Card>
+              <Card className="info-mapa derecha min-content">
+                <Card.Body>
+                  <Card.Title className="card-title-no-campo">ÍNDICES</Card.Title>
+                  <Form>
+                    <div key="inline-radio" className="mb-3 d-flex indices">
+                      <Form.Check
+                        inline
+                        label="NDVI"
+                        name="group1"
+                        type="radio"
+                        id="inline-radio-1"
+                      />
+                      <Form.Check
+                        inline
+                        label="Congelamiento"
+                        name="group1"
+                        type="radio"
+                        id="inline-radio-2"
+                      />
+                      <Form.Check
+                        inline
+                        label="Hidratación"
+                        name="group1"
+                        type="radio"
+                        id="inline-radio-2"
+                      />
+                    </div>
+                  </Form>
+                  <Button variant="primary" onClick={() => nav(`/editarCampo/${userID}/${field}`)}>Editar Campo</Button>
+                </Card.Body>
               </Card>
             </div>
             <div className=" cards-container file-upload-container">

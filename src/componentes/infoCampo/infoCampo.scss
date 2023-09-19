@@ -307,11 +307,6 @@
   font-weight: bold; 
 }
 
-.product-card:hover{
-  
-}
-
-
 .cards-subtitle {
   font-family: 'Inter', sans-serif;
   margin-top: rem;
@@ -429,4 +424,15 @@
 
 .info-card{
   margin: 0 1.2rem 0 1.2rem;
+}
+
+.info-mapa{
+  justify-content: space-between !important;
+  margin: 1rem;
+  width: 30rem;
+}
+
+.indices{
+  flex-direction: column;
+  align-items: flex-start;
 }
