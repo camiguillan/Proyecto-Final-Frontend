@@ -588,19 +588,6 @@ export default function InfoCampo() {
               </button>
               <div className="dropdown-container">
                 <select
-                  className="rounded-dropdown"
-                  value={fieldRest} // Aquí establecemos el valor seleccionado
-                  onChange={handleFieldChange}
-                >
-                  {user2 && user2.fields.map((fiel, index) => (
-                    <option key={index} value={fiel._id}>
-                      {fiel.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="dropdown-container">
-                <select
                   className="rounded-dropdown rounded-dropdown-cultivos"
                   value={crop} // Aquí establecemos el valor seleccionado
                   onChange={handleCropChange}
