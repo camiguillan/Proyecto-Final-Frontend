@@ -7,7 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { fetchImage } from '../../conexionBack/conexionBack';
 
 export default function CampoInfoCard({
-  imageId, fieldId,
+  index, imageId, fieldId,
 }) {
   const { userID } = useParams();
   const nav = useNavigate();
@@ -25,7 +25,7 @@ export default function CampoInfoCard({
 
   return (
 
-    <div className="card-deck col-lg-3 mb-4">
+    <div key={index} className="card-deck col-lg-3 mb-4">
       <div className="card-container" onClick={() => nav(`/${userID}/infoCampo/${fieldId}`)}>
         <Card style={{ width: '' }} className="card-home">
           {imageUrl
@@ -49,6 +49,7 @@ export default function CampoInfoCard({
 }
 
 CampoInfoCard.propTypes = {
-  imageId: PropTypes.number.isRequired,
-  fieldId: PropTypes.number.isRequired,
+  imageId: PropTypes.string.isRequired,
+  fieldId: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
 };
