@@ -29,6 +29,7 @@ import { differenceInDays } from 'date-fns';
 import { get, patch } from '../conexionBack/conexionBack';
 import VerCampo from '../verCampo/verCampo';
 import Header from '../reusable/header/header';
+import Loader from '../reusable/loader/loader';
 
 export default function InfoCampo() {
   const { userID } = useParams();
@@ -531,236 +532,239 @@ export default function InfoCampo() {
   return (
     <div>
       <Header />
-      <div className="gray-space">
-        {!user2 && <text className="titulo-fachero-facherito">Cargando Campo...</text> }
-        {/* <text className="titulo-fachero-facherito">Dashboards</text> */}
-        {user2
-        && (
-        <Form.Select
-          aria-label="Default select example"
-          className="titulo-fachero-facherito"
-          value={fieldRest} // Aquí establecemos el valor seleccionado
-          onChange={handleFieldChange}
-        >
-          {user2.fields.map((fiel, index) => (
-            <option key={index} value={fiel._id} className="option-select">
-              {fiel.name}
-            </option>
-          ))}
-        </Form.Select>
-        )}
-        <div className="buttons-container">
-          <button
-            className={selectedTimePeriod === 'LastWeek' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => handleButtonClick('LastWeek')}
-          >
-            Última semana
-            <div className={selectedTimePeriod === 'LastWeek' ? 'selected-line' : ''} />
-          </button>
-          <button
-            className={selectedTimePeriod === 'LastMonth' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => handleButtonClick('LastMonth')}
-          >
-            Último mes
-            <div className={selectedTimePeriod === 'LastMonth' ? 'selected-line' : ''} />
-          </button>
-          <button
-            className={selectedTimePeriod === 'LastYear' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => handleButtonClick('LastYear')}
-          >
-            Último año
-            <div className={selectedTimePeriod === 'LastYear' ? 'selected-line' : ''} />
-          </button>
-          <button
-            className={selectedTimePeriod === 'FullHistory' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => handleButtonClick('FullHistory')}
-          >
-            Historial completo
-            <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
-          </button>
-          <button
-            className={selectedTimePeriod === 'FullHistory' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => nav(`/editarCampo/${userID}/${field}`)}
-          >
-            EDITAR CAMPO
-            <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
-          </button>
-          <div className="dropdown-container">
-            <select
-              className="rounded-dropdown"
+      {user2
+        ? (
+          <div className="gray-space">
+            <Form.Select
+              aria-label="Default select example"
+              className="titulo-fachero-facherito"
               value={fieldRest} // Aquí establecemos el valor seleccionado
               onChange={handleFieldChange}
             >
-              {user2 && user2.fields.map((fiel, index) => (
-                <option key={index} value={fiel._id}>
+              {user2.fields.map((fiel, index) => (
+                <option key={index} value={fiel._id} className="option-select">
                   {fiel.name}
                 </option>
               ))}
-            </select>
-          </div>
-          <div className="dropdown-container">
-            <select
-              className="rounded-dropdown rounded-dropdown-cultivos"
-              value={crop} // Aquí establecemos el valor seleccionado
-              onChange={handleCropChange}
-            >
-              {soy && <option value="Soja">Soja</option>}
-              {corn && <option value="Maiz">Maiz</option>}
-              {wheat && <option value="Trigo">Trigo</option>}
-              {sunMenu && <option value="Girasol">Girasol</option>}
-              <option value="Todos">Todos</option>
-            </select>
-          </div>
-        </div>
-        <div className="cards-container">
-          <Card className="cards-wrapper">
-            <div className="circle-card first" />
-            <div className="cards-titles">
-              Total sembrado
+            </Form.Select>
+            <div className="buttons-container">
+              <button
+                className={selectedTimePeriod === 'LastWeek' ? 'button-dashboard selected' : 'button-dashboard'}
+                onClick={() => handleButtonClick('LastWeek')}
+              >
+                Última semana
+                <div className={selectedTimePeriod === 'LastWeek' ? 'selected-line' : ''} />
+              </button>
+              <button
+                className={selectedTimePeriod === 'LastMonth' ? 'button-dashboard selected' : 'button-dashboard'}
+                onClick={() => handleButtonClick('LastMonth')}
+              >
+                Último mes
+                <div className={selectedTimePeriod === 'LastMonth' ? 'selected-line' : ''} />
+              </button>
+              <button
+                className={selectedTimePeriod === 'LastYear' ? 'button-dashboard selected' : 'button-dashboard'}
+                onClick={() => handleButtonClick('LastYear')}
+              >
+                Último año
+                <div className={selectedTimePeriod === 'LastYear' ? 'selected-line' : ''} />
+              </button>
+              <button
+                className={selectedTimePeriod === 'FullHistory' ? 'button-dashboard selected' : 'button-dashboard'}
+                onClick={() => handleButtonClick('FullHistory')}
+              >
+                Historial completo
+                <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
+              </button>
+              <button
+                className={selectedTimePeriod === 'FullHistory' ? 'button-dashboard selected' : 'button-dashboard'}
+                onClick={() => nav(`/editarCampo/${userID}/${field}`)}
+              >
+                EDITAR CAMPO
+                <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
+              </button>
+              <div className="dropdown-container">
+                <select
+                  className="rounded-dropdown"
+                  value={fieldRest} // Aquí establecemos el valor seleccionado
+                  onChange={handleFieldChange}
+                >
+                  {user2 && user2.fields.map((fiel, index) => (
+                    <option key={index} value={fiel._id}>
+                      {fiel.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="dropdown-container">
+                <select
+                  className="rounded-dropdown rounded-dropdown-cultivos"
+                  value={crop} // Aquí establecemos el valor seleccionado
+                  onChange={handleCropChange}
+                >
+                  {soy && <option value="Soja">Soja</option>}
+                  {corn && <option value="Maiz">Maiz</option>}
+                  {wheat && <option value="Trigo">Trigo</option>}
+                  {sunMenu && <option value="Girasol">Girasol</option>}
+                  <option value="Todos">Todos</option>
+                </select>
+              </div>
             </div>
-            {(metrosCuadrados < 0 || metrosCuadrados >= 0) && metrosCuadrados !== Infinity ? (
-              <div className="cards-Subtitle">
-                {Number(metrosCuadrados).toLocaleString()}
-                <span>m2</span>
-              </div>
-            ) : (
-              <div className="cards-Subtitle-no-data">
-                No hay datos
-              </div>
-            )}
-            {(metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0) && metrosCuadradosViejo !== Infinity ? (
-              <div className={metrosCuadradosViejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
-                {metrosCuadradosViejo}
-                %
-              </div>
-            ) : null}
+            <div className="cards-container">
+              <Card className="cards-wrapper">
+                <div className="circle-card first" />
+                <div className="cards-titles">
+                  Total sembrado
+                </div>
+                {(metrosCuadrados < 0 || metrosCuadrados >= 0) && metrosCuadrados !== Infinity ? (
+                  <div className="cards-Subtitle">
+                    {Number(metrosCuadrados).toLocaleString()}
+                    <span>m2</span>
+                  </div>
+                ) : (
+                  <div className="cards-Subtitle-no-data">
+                    No hay datos
+                  </div>
+                )}
+                {(metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0) && metrosCuadradosViejo !== Infinity ? (
+                  <div className={metrosCuadradosViejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
+                    {metrosCuadradosViejo}
+                    %
+                  </div>
+                ) : null}
 
-            {(metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0) && metrosCuadradosViejo !== Infinity ? (
-              <img src={metrosCuadradosViejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageMetros" />
-            ) : null}
-          </Card>
-          <Card className="cards-wrapper">
-            <div className="circle-card second" />
-            <div className="cards-titles">
-              Cultivo Sano
+                {(metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0) && metrosCuadradosViejo !== Infinity ? (
+                  <img src={metrosCuadradosViejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageMetros" />
+                ) : null}
+              </Card>
+              <Card className="cards-wrapper">
+                <div className="circle-card second" />
+                <div className="cards-titles">
+                  Cultivo Sano
+                </div>
+                {(porcentajeSano < 0 || porcentajeSano >= 0) && porcentajeSano !== Infinity ? (
+                  <div className="cards-Subtitle cards-Subtitle2">
+                    {porcentajeSano}
+                    %
+                  </div>
+                ) : (
+                  <div className="cards-Subtitle-no-data cards-Subtitle2">
+                    No hay datos
+                  </div>
+                )}
+                {(porcentajeSanoviejo < 0 || porcentajeSanoviejo >= 0) && porcentajeSanoviejo !== Infinity ? (
+                  <div className={porcentajeSanoviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
+                    {porcentajeSanoviejo}
+                    %
+                  </div>
+                ) : null}
+                {(porcentajeSanoviejo < 0 || porcentajeSanoviejo >= 0) && porcentajeSanoviejo !== Infinity ? (
+                  <img src={porcentajeSanoviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageSano" />
+                ) : null}
+              </Card>
+              <Card className="cards-wrapper">
+                <div className="circle-card third" />
+                <div className="cards-titles">
+                  NDVI
+                </div>
+                {(ndvi < 0 || ndvi >= 0) && ndvi !== Infinity ? (
+                  <div className="cards-Subtitle cards-Subtitle3">
+                    {ndvi}
+                  </div>
+                ) : (
+                  <div className="cards-Subtitle-no-data cards-Subtitle3">
+                    No hay datos
+                  </div>
+                )}
+                {(ndviviejo < 0 || ndviviejo >= 0) && ndviviejo !== Infinity ? (
+                  <div className={ndviviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
+                    {ndviviejo}
+                    %
+                  </div>
+                ) : null}
+                {(ndviviejo < 0 || ndviviejo >= 0) && ndviviejo !== Infinity ? (
+                  <img src={ndviviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImagendvi" />
+                ) : null}
+              </Card>
+              <Card className="cards-wrapper">
+                <div className="circle-card fourth" />
+                <div className="cards-titles">
+                  Humedad
+                </div>
+                {(humedad < 0 || humedad >= 0) && humedad !== Infinity ? (
+                  <div className="cards-Subtitle cards-Subtitle4">
+                    {humedad}
+                  </div>
+                ) : (
+                  <div className="cards-Subtitle-no-data cards-Subtitle4">
+                    No hay datos
+                  </div>
+                )}
+                {(humedadviejo < 0 || humedadviejo >= 0) && humedadviejo !== Infinity ? (
+                  <div className={humedadviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
+                    {humedadviejo}
+                    %
+                  </div>
+                ) : null}
+                {(humedadviejo < 0 || humedadviejo >= 0) && humedadviejo !== Infinity ? (
+                  <img src={humedadviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage" />
+                ) : null}
+              </Card>
             </div>
-            {(porcentajeSano < 0 || porcentajeSano >= 0) && porcentajeSano !== Infinity ? (
-              <div className="cards-Subtitle cards-Subtitle2">
-                {porcentajeSano}
-                %
-              </div>
-            ) : (
-              <div className="cards-Subtitle-no-data cards-Subtitle2">
-                No hay datos
-              </div>
-            )}
-            {(porcentajeSanoviejo < 0 || porcentajeSanoviejo >= 0) && porcentajeSanoviejo !== Infinity ? (
-              <div className={porcentajeSanoviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
-                {porcentajeSanoviejo}
-                %
-              </div>
-            ) : null}
-            {(porcentajeSanoviejo < 0 || porcentajeSanoviejo >= 0) && porcentajeSanoviejo !== Infinity ? (
-              <img src={porcentajeSanoviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageSano" />
-            ) : null}
-          </Card>
-          <Card className="cards-wrapper">
-            <div className="circle-card third" />
-            <div className="cards-titles">
-              NDVI
+            <div className="file-upload-container">
+              <DownloadButton />
+              <input className="button-dashboard selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} />
             </div>
-            {(ndvi < 0 || ndvi >= 0) && ndvi !== Infinity ? (
-              <div className="cards-Subtitle cards-Subtitle3">
-                {ndvi}
+            {lineData.length > 1 && (
+            <div className="dashboards-container" style={{ marginTop: '1.5rem' }}>
+              <div className="dashboard">
+                <Chart
+                  width="40rem"
+                  height="25rem"
+                  chartType="LineChart"
+                  loader={<div>Loading Chart</div>}
+                  data={lineData}
+                  options={lineChartOptions}
+                  rootProps={{ 'data-testid': '2' }}
+                />
               </div>
-            ) : (
-              <div className="cards-Subtitle-no-data cards-Subtitle3">
-                No hay datos
+              <div style={{ marginRight: '1.5rem' }} />
+              <div className="dashboard">
+                <Chart
+                  width="40rem"
+                  height="25rem"
+                  chartType="ColumnChart"
+                  loader={<div>Loading Chart</div>}
+                  data={barData}
+                  options={barChartOptions}
+                  rootProps={{ 'data-testid': '2' }}
+                />
               </div>
-            )}
-            {(ndviviejo < 0 || ndviviejo >= 0) && ndviviejo !== Infinity ? (
-              <div className={ndviviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
-                {ndviviejo}
-                %
-              </div>
-            ) : null}
-            {(ndviviejo < 0 || ndviviejo >= 0) && ndviviejo !== Infinity ? (
-              <img src={ndviviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImagendvi" />
-            ) : null}
-          </Card>
-          <Card className="cards-wrapper">
-            <div className="circle-card fourth" />
-            <div className="cards-titles">
-              Humedad
             </div>
-            {(humedad < 0 || humedad >= 0) && humedad !== Infinity ? (
-              <div className="cards-Subtitle cards-Subtitle4">
-                {humedad}
-              </div>
-            ) : (
-              <div className="cards-Subtitle-no-data cards-Subtitle4">
-                No hay datos
-              </div>
             )}
-            {(humedadviejo < 0 || humedadviejo >= 0) && humedadviejo !== Infinity ? (
-              <div className={humedadviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
-                {humedadviejo}
-                %
-              </div>
-            ) : null}
-            {(humedadviejo < 0 || humedadviejo >= 0) && humedadviejo !== Infinity ? (
-              <img src={humedadviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage" />
-            ) : null}
-          </Card>
-        </div>
-        <div className="file-upload-container">
-          <DownloadButton />
-          <input className="button-dashboard selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} />
-        </div>
-        {lineData.length > 1 && (
-        <div className="dashboards-container" style={{ marginTop: '1.5rem' }}>
-          <div className="dashboard">
-            <Chart
-              width="40rem"
-              height="25rem"
-              chartType="LineChart"
-              loader={<div>Loading Chart</div>}
-              data={lineData}
-              options={lineChartOptions}
-              rootProps={{ 'data-testid': '2' }}
-            />
+            <div className="cards-container2">
+              <Card className="mapa-card max-content">
+                <VerCampo campoInfo={campoInfo} crop={crop} />
+              </Card>
+            </div>
+            <div className="cards-container">
+              <Diagnostico diagnostico={diagnostico} />
+              <Card className="cards-wrapper-diagnostico">
+                <img src={excelent} alt="Imagen 4" style={{ width: '7rem', marginRight: '-1rem', marginLeft: '1rem' }} />
+              </Card>
+            </div>
+            <div className="cards-container">
+              {products.slice(0, 5).map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
           </div>
-          <div style={{ marginRight: '1.5rem' }} />
-          <div className="dashboard">
-            <Chart
-              width="40rem"
-              height="25rem"
-              chartType="ColumnChart"
-              loader={<div>Loading Chart</div>}
-              data={barData}
-              options={barChartOptions}
-              rootProps={{ 'data-testid': '2' }}
-            />
+        )
+        : (
+          <div className="loader-container">
+            <Loader />
           </div>
-        </div>
         )}
-        <div className="cards-container2">
-          <Card className="mapa-card max-content">
-            <VerCampo campoInfo={campoInfo} crop={crop} />
-          </Card>
-        </div>
-        <div className="cards-container">
-          <Diagnostico diagnostico={diagnostico} />
-          <Card className="cards-wrapper-diagnostico">
-            <img src={excelent} alt="Imagen 4" style={{ width: '7rem', marginRight: '-1rem', marginLeft: '1rem' }} />
-          </Card>
-        </div>
-        <div className="cards-container">
-          {products.slice(0, 5).map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </div>
     </div>
   );
 }

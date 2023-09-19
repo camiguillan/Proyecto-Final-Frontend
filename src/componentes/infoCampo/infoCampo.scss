@@ -389,3 +389,8 @@
 .option-select{
     background-color:#F1FFFA !important;
 }
+
+.option-select:hover{
+    background-color:$main-green !important;
+    color: white !important;
+}

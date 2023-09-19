@@ -10,7 +10,7 @@ import '../../assets/global.scss';
 import '../background/background.scss';
 import '../homePrincipal/homePrincipal.scss';
 import './editarPerfil.scss';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
 import Header from '../reusable/header/header';
@@ -24,8 +24,6 @@ export default function EditarPerfil() {
   const [data, setData] = useState([]);
   const user = JSON.parse(localStorage.getItem('name')) || {};
 
-  console.log(user);
-
   const [ingresarNombre, setIngresarNombre] = useState(user.name);
   const [ingresarCorreo, setIngresarCorreo] = useState(user.email);
   const [ingresarFechaNacimiento, setIngresarFechaNacimiento] = useState(user.birthDate.slice(0, 10));
@@ -33,9 +31,6 @@ export default function EditarPerfil() {
   // const [invalid2, setInvalid2] = useState(false);
   const [campoNombreLleno, setcampoNombreLleno] = useState(false);
   const [submit, setSubmit] = useState(false);
-
-  const navigate = useNavigate();
-  console.log(user.password);
 
   const handleInputChange = (e, setter) => {
     setter(e.target.value);
