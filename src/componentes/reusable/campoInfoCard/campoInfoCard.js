@@ -25,7 +25,7 @@ export default function CampoInfoCard({
 
   return (
 
-    <div className="col-lg-3 mb-4">
+    <div className="card-deck col-lg-3 mb-4">
       <div className="card-container" onClick={() => nav(`/${userID}/infoCampo/${fieldId}`)}>
         <Card style={{ width: '' }} className="card-home">
           {imageUrl
