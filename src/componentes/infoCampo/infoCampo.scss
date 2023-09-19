@@ -87,7 +87,7 @@
   display: flex;
   justify-content: center;
   width: 80rem;
-  margin: 1.5rem auto;
+  margin: 1.5rem auto !important;
   min-width: 80rem;
 }
 
@@ -249,7 +249,10 @@
 
 .file-upload-container {
   position: relative;
-  left: -26rem; 
+  //left: -26rem; 
+  //margin: 0rem 10rem;
+  display: flex;
+  justify-content: start;
 }
 
 .first-dashboard-aligned{
@@ -382,8 +385,8 @@
 }
 
 .button-desc {
-  margin-right: 0.5rem;
-  font-size: 0.77rem;
+  //margin-right: 0.5rem;
+  padding: 0.5rem;
 }
 
 .option-select{
@@ -393,4 +396,32 @@
 .option-select:hover{
     background-color:$main-green !important;
     //color: white !important;
+}
+
+.form-control{
+  border-radius: 16px !important;
+  border: 2px solid $main-green !important;
+  font-size: 1.4rem !important;
+  margin: 0.5rem !important;
+  color: $main-green !important;
+}
+
+// .agro-uploader:hover{
+//   background-color: $main-green;
+//   color: white !important;
+// }
+
+.vector{
+  width: 30rem;
+}
+
+.campo-info-card-header{
+  align-items: end;
+  display: inline-flex;
+  justify-content: flex-end;
+  margin: 0.2rem;
+}
+
+.info-card{
+  margin: 0 1.2rem 0 1.2rem;
 }

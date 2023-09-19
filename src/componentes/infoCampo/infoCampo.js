@@ -30,6 +30,7 @@ import { get, patch } from '../conexionBack/conexionBack';
 import VerCampo from '../verCampo/verCampo';
 import Header from '../reusable/header/header';
 import Loader from '../reusable/loader/loader';
+import vector1 from '../../images/vector1.jpg';
 
 export default function InfoCampo() {
   const { userID } = useParams();
@@ -706,37 +707,55 @@ export default function InfoCampo() {
                 <VerCampo campoInfo={campoInfo} crop={crop} />
               </Card>
             </div>
-            <div className="file-upload-container">
+            <div className=" cards-container file-upload-container">
               <DownloadButton />
-              <input className="button-dashboard selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} />
+              {/* <input className="button-dashboard selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} /> */}
+              <Form.Group controlId="formFile">
+                <Form.Control type="file" className="agro-uploader" />
+              </Form.Group>
             </div>
-            {lineData.length > 1 && (
-            <div className="dashboards-container" style={{ marginTop: '1.5rem' }}>
-              <div className="dashboard">
-                <Chart
-                  width="40rem"
-                  height="25rem"
-                  chartType="LineChart"
-                  loader={<div>Loading Chart</div>}
-                  data={lineData}
-                  options={lineChartOptions}
-                  rootProps={{ 'data-testid': '2' }}
-                />
+            {lineData.length > 1 ? (
+              <div className="dashboards-container" style={{ marginTop: '1.5rem' }}>
+                <div className="dashboard">
+                  <Chart
+                    width="40rem"
+                    height="25rem"
+                    chartType="LineChart"
+                    loader={<div>Loading Chart</div>}
+                    data={lineData}
+                    options={lineChartOptions}
+                    rootProps={{ 'data-testid': '2' }}
+                  />
+                </div>
+                <div style={{ marginRight: '1.5rem' }} />
+                <div className="dashboard">
+                  <Chart
+                    width="40rem"
+                    height="25rem"
+                    chartType="ColumnChart"
+                    loader={<div>Loading Chart</div>}
+                    data={barData}
+                    options={barChartOptions}
+                    rootProps={{ 'data-testid': '2' }}
+                  />
+                </div>
               </div>
-              <div style={{ marginRight: '1.5rem' }} />
-              <div className="dashboard">
-                <Chart
-                  width="40rem"
-                  height="25rem"
-                  chartType="ColumnChart"
-                  loader={<div>Loading Chart</div>}
-                  data={barData}
-                  options={barChartOptions}
-                  rootProps={{ 'data-testid': '2' }}
-                />
-              </div>
-            </div>
-            )}
+            )
+              : (
+                <div className="cards-container">
+                  <Card className="info-card  text-center card-no-campo">
+                    <Card.Header className="campo-info-card-header">
+                      <Card.Img variant="left" src={vector1} className="vector" />
+                    </Card.Header>
+                    <Card.Body>
+                      <Card.Title className="card-title-no-campo">TODAVÍA NO TIENES INFORMACIÓN HISTÓRICA DE TU CAMPO</Card.Title>
+                      <Card.Text className="card-text-no-campo">
+                        ¡Usa nuestro template y subí los datos de tu campo!
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </div>
+              )}
             <div className="cards-container">
               <Diagnostico diagnostico={diagnostico} />
               <Card className="cards-wrapper-diagnostico">
