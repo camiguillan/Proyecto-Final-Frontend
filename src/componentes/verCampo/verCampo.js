@@ -36,13 +36,11 @@ export default function VerCampo({ crop }) {
     setIsLoading(true);
     if (campo) {
       setCampoFeatures(createHeatmap(campo));
-      console.log('hola?');
-      setIsLoading(false);
     }
   }, [campo]);
 
   useEffect(() => {
-    if (campo && campoFeatures) {
+    if (campo && campoFeatures && isLoading) {
       setIsLoading(false);
     }
   });
