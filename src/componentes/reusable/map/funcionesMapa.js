@@ -133,8 +133,8 @@ export const createGridFromPlots = (field) => {
 const addColor = (feat) => ({
   ...feat,
   properties: {
-    ...feat.properties.plotInfo,
-    fillColor: getNDVIColor(feat.ndvi),
+    plotInfo: feat.properties.plotInfo,
+    fillColor: getNDVIColor(JSON.parse(feat.properties.plotInfo).ndvi),
   },
 });
 export const createPolygonFromPlots = (field, heatmap) => {
@@ -147,10 +147,14 @@ export const createPolygonFromPlots = (field, heatmap) => {
     // console.log(coordinate);
     const polygonCoordinates = createBox(coordinate.lon, coordinate.lat, PLOT_SIZE);
     const color = CROP_COLORS[crop.toUpperCase()];
+
     return {
       polygon: {
         type: 'Feature',
-        properties: { portColor: color, plotInfo: JSON.stringify(plot) },
+        properties: {
+          portColor: color,
+          plotInfo: JSON.stringify(plot.history[plot.history.length - 1]),
+        },
         geometry: {
           type: 'Polygon',
           coordinates: [polygonCoordinates],
