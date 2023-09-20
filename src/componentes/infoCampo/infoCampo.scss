@@ -16,13 +16,6 @@
   text-align: center;
 }
 
-.dropdown-container {
-  display: flex;
-  position: relative;
-  align-items: center;
-  justify-self: flex-end;
-}
-
 h6{
   margin-bottom: 0 !important;
   margin-right: 1rem;
@@ -46,12 +39,33 @@ h6{
 .rounded-dropdown-cultivos {
   right: -26rem;
 }
-
+.full-width {
+    width: 100%;
+}
+.drop-but-container{
+  position: relative;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  width: 80rem;
+  margin: 1.5rem auto !important;
+  min-width: 80rem;
+}
 .buttons-container {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
-  min-width: 100%;
+}
+
+.dropdown-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button-dashboard {
@@ -60,8 +74,12 @@ h6{
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-size: 1rem; 
-  margin-right: 1rem;
+  margin-right: 10px;
   color: black; 
+}
+
+.button-dashboard:last-child {
+  margin-right: 0;
 }
 
 .selected {
