@@ -561,8 +561,8 @@ export default function InfoCampo() {
               ))}
             </Form.Select>
             <div className="drop-but-container">
-              <div className="full-width" />
-              <div className="full-width buttons-container">
+              {/* <div className="full-width" /> */}
+              <div className="buttons-container">
                 <button
                   className={selectedTimePeriod === 'LastWeek' ? 'button-dashboard selected' : 'button-dashboard'}
                   onClick={() => handleButtonClick('LastWeek')}
@@ -592,7 +592,7 @@ export default function InfoCampo() {
                   <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
                 </button>
               </div>
-              <div className="full-width dropdown-container">
+              <div className="dropdown-container">
                 <h6>Cultivos:</h6>
                 <Form.Select
                   className="rounded-dropdown rounded-dropdown-cultivos"
