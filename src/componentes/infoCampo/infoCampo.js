@@ -700,7 +700,7 @@ export default function InfoCampo() {
                 <VerCampo campoInfo={campoInfo} crop={crop} />
               </Card>
               <Card className="info-mapa derecha min-content">
-                <Card.Body>
+                <Card.Body className="d-flex">
                   <Card.Title className="card-title-no-campo">ÍNDICES</Card.Title>
                   <Form>
                     <div key="inline-radio" className="mb-3 d-flex indices">
@@ -723,7 +723,7 @@ export default function InfoCampo() {
                         label="Hidratación"
                         name="group1"
                         type="radio"
-                        id="inline-radio-2"
+                        id="inline-radio-3"
                       />
                     </div>
                   </Form>
