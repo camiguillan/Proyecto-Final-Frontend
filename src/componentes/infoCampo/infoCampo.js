@@ -31,6 +31,8 @@ import VerCampo from '../verCampo/verCampo';
 import Header from '../reusable/header/header';
 import Loader from '../reusable/loader/loader';
 import vector1 from '../../images/vector1.jpg';
+import { CROP_TYPES_KEYS } from '../../constants/plots';
+import { CROP_TYPES_TRANSLATIONS } from '../../constants/translations';
 
 export default function InfoCampo() {
   const { userID } = useParams();
@@ -55,10 +57,7 @@ export default function InfoCampo() {
   const [humedadviejo, setHumedadviejo] = useState([]);
   const [fieldRest, setField] = useState(field);
   const [actualizarGraf, setActualizarGraf] = useState(1);
-  const [sunMenu, setsunMenu] = useState(false);
-  const [corn, setcorn] = useState(false);
-  const [wheat, setwheat] = useState(false);
-  const [soy, setsoy] = useState(false);
+  const [cropList, setCropList] = useState(['Todos']);
   const [isFieldChanging, setIsFieldChanging] = useState(false);
   const nav = useNavigate();
   const today = new Date();
@@ -81,7 +80,6 @@ export default function InfoCampo() {
   };
 
   const [user2, setUser2] = useState(null);
-  console.log(fieldRest);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -455,6 +453,23 @@ export default function InfoCampo() {
     return tru;
   };
 
+  const getCrops = () => {
+    const crops = ['Todos'];
+
+    if (user2 && user2.fields) {
+      const selectedField = user2.fields.find((aField) => aField._id === fieldRest);
+      if (selectedField) {
+        const fieldCrops = selectedField.plots.map((plot) => plot.crop);
+
+        const distinctCrops = [...new Set(fieldCrops)];
+        distinctCrops.forEach((cr) => {
+          if (cr !== CROP_TYPES_KEYS.NONE) { crops.push(CROP_TYPES_TRANSLATIONS[cr] || cr); }
+        });
+      }
+    }
+    setCropList(crops);
+  };
+
   const handleFieldChange = (event) => {
     setField(event.target.value);
     metrics();
@@ -471,10 +486,7 @@ export default function InfoCampo() {
 
   useEffect(() => {
     metrics();
-    setsoy(existeCrop('soy'));
-    setwheat(existeCrop('whaet'));
-    setcorn(existeCrop('corn'));
-    setsunMenu(existeCrop('sunflower'));
+    getCrops();
     if (user2 && user2.fields) {
       user2.fields.forEach((fiel, index) => {
         if (fiel._id === fieldRest && user2.fields[index].history.years.length > 0) {
@@ -505,10 +517,7 @@ export default function InfoCampo() {
 
   useEffect(() => {
     metrics();
-    setsoy(existeCrop('soy'));
-    setwheat(existeCrop('whaet'));
-    setcorn(existeCrop('corn'));
-    setsunMenu(existeCrop('sunflower'));
+    getCrops();
     let dataProcessed = false;
     if (user2 && user2.fields) {
       user2.fields.forEach((fiel, index) => {
@@ -586,11 +595,7 @@ export default function InfoCampo() {
                   value={crop} // Aquí establecemos el valor seleccionado
                   onChange={handleCropChange}
                 >
-                  {soy && <option value="Soja">Soja</option>}
-                  {corn && <option value="Maiz">Maiz</option>}
-                  {wheat && <option value="Trigo">Trigo</option>}
-                  {sunMenu && <option value="Girasol">Girasol</option>}
-                  <option value="Todos">Todos</option>
+                  {cropList.map((aCrop) => <option value={aCrop}>{aCrop}</option>)}
                 </select>
               </div>
             </div>
@@ -713,14 +718,21 @@ export default function InfoCampo() {
                       />
                       <Form.Check
                         inline
-                        label="Congelamiento"
+                        label="NDSI"
                         name="group1"
                         type="radio"
                         id="inline-radio-2"
                       />
                       <Form.Check
                         inline
-                        label="Hidratación"
+                        label="NDMI"
+                        name="group1"
+                        type="radio"
+                        id="inline-radio-3"
+                      />
+                      <Form.Check
+                        inline
+                        label="Color real"
                         name="group1"
                         type="radio"
                         id="inline-radio-3"
