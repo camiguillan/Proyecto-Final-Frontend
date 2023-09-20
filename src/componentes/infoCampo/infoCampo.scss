@@ -450,6 +450,11 @@ h6{
   align-items: flex-start;
 }
 
+.form-check-input{
+  border-color: $gris-titulo !important;
+  //border-width: 2px !important;
+}
+
 .form-check-input:checked{
   background-color: $main-green !important;
   border-color: $main-green !important;
