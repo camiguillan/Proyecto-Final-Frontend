@@ -16,13 +16,6 @@
   text-align: center;
 }
 
-.dropdown-container {
-  display: flex;
-  position: relative;
-  align-items: center;
-  justify-self: flex-end;
-}
-
 h6{
   margin-bottom: 0 !important;
   margin-right: 1rem;
@@ -46,12 +39,21 @@ h6{
 .rounded-dropdown-cultivos {
   right: -26rem;
 }
-
+.full-width {
+    width: 100%;
+}
+.drop-but-container{
+  display: flex;
+}
 .buttons-container {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
-  min-width: 100%;
+}
+
+.dropdown-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }
 
 .button-dashboard {
@@ -60,8 +62,12 @@ h6{
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-size: 1rem; 
-  margin-right: 1rem;
+  margin-right: 10px;
   color: black; 
+}
+
+.button-dashboard:last-child {
+  margin-right: 0;
 }
 
 .selected {

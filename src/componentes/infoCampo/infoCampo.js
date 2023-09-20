@@ -560,36 +560,39 @@ export default function InfoCampo() {
                 </option>
               ))}
             </Form.Select>
-            <div className="buttons-container">
-              <button
-                className={selectedTimePeriod === 'LastWeek' ? 'button-dashboard selected' : 'button-dashboard'}
-                onClick={() => handleButtonClick('LastWeek')}
-              >
-                Última semana
-                <div className={selectedTimePeriod === 'LastWeek' ? 'selected-line' : ''} />
-              </button>
-              <button
-                className={selectedTimePeriod === 'LastMonth' ? 'button-dashboard selected' : 'button-dashboard'}
-                onClick={() => handleButtonClick('LastMonth')}
-              >
-                Último mes
-                <div className={selectedTimePeriod === 'LastMonth' ? 'selected-line' : ''} />
-              </button>
-              <button
-                className={selectedTimePeriod === 'LastYear' ? 'button-dashboard selected' : 'button-dashboard'}
-                onClick={() => handleButtonClick('LastYear')}
-              >
-                Último año
-                <div className={selectedTimePeriod === 'LastYear' ? 'selected-line' : ''} />
-              </button>
-              <button
-                className={selectedTimePeriod === 'FullHistory' ? 'button-dashboard selected' : 'button-dashboard'}
-                onClick={() => handleButtonClick('FullHistory')}
-              >
-                Historial completo
-                <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
-              </button>
-              <div className="dropdown-container">
+            <div className="drop-but-container">
+              <div className="full-width" />
+              <div className="full-width buttons-container">
+                <button
+                  className={selectedTimePeriod === 'LastWeek' ? 'button-dashboard selected' : 'button-dashboard'}
+                  onClick={() => handleButtonClick('LastWeek')}
+                >
+                  Última semana
+                  <div className={selectedTimePeriod === 'LastWeek' ? 'selected-line' : ''} />
+                </button>
+                <button
+                  className={selectedTimePeriod === 'LastMonth' ? 'button-dashboard selected' : 'button-dashboard'}
+                  onClick={() => handleButtonClick('LastMonth')}
+                >
+                  Último mes
+                  <div className={selectedTimePeriod === 'LastMonth' ? 'selected-line' : ''} />
+                </button>
+                <button
+                  className={selectedTimePeriod === 'LastYear' ? 'button-dashboard selected' : 'button-dashboard'}
+                  onClick={() => handleButtonClick('LastYear')}
+                >
+                  Último año
+                  <div className={selectedTimePeriod === 'LastYear' ? 'selected-line' : ''} />
+                </button>
+                <button
+                  className={selectedTimePeriod === 'FullHistory' ? 'button-dashboard selected' : 'button-dashboard'}
+                  onClick={() => handleButtonClick('FullHistory')}
+                >
+                  Historial completo
+                  <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
+                </button>
+              </div>
+              <div className="full-width dropdown-container">
                 <h6>Cultivos:</h6>
                 <Form.Select
                   className="rounded-dropdown rounded-dropdown-cultivos"
