@@ -17,21 +17,30 @@
 }
 
 .dropdown-container {
-  display: inline-block;
+  display: flex;
   position: relative;
+  align-items: center;
+  justify-self: flex-end;
+}
+
+h6{
+  margin-bottom: 0 !important;
+  margin-right: 1rem;
+  color: $gris-titulo;
 }
 
 .rounded-dropdown {
   border-radius: 0.3rem; 
   padding: 0.2rem 1rem;
-  background-color: white;
+  background-color: $verde-clarito ;
   border: 1px solid $light-gray-dropdown;
   color: $gray-dropdown;
   font-size: 0.75rem;
-  position: absolute;
-  right: -18.5rem;
+  //position: absolute;
+  //right: -18.5rem;
   border-color: transparent;
   border-bottom: 0.5rem;
+  width: 10rem;
 }
 
 .rounded-dropdown-cultivos {
@@ -390,7 +399,7 @@
 }
 
 .option-select{
-    background-color:#F1FFFA !important;
+    background-color:$verde-clarito !important;
 }
 
 .option-select:hover{

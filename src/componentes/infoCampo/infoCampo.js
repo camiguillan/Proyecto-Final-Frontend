@@ -590,13 +590,14 @@ export default function InfoCampo() {
                 <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
               </button>
               <div className="dropdown-container">
-                <select
+                <h6>Cultivos:</h6>
+                <Form.Select
                   className="rounded-dropdown rounded-dropdown-cultivos"
                   value={crop} // Aquí establecemos el valor seleccionado
                   onChange={handleCropChange}
                 >
                   {cropList.map((aCrop) => <option value={aCrop}>{aCrop}</option>)}
-                </select>
+                </Form.Select>
               </div>
             </div>
             <div className="cards-container">
