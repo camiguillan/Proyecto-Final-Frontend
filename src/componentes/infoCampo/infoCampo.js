@@ -716,6 +716,8 @@ export default function InfoCampo() {
                         name="group1"
                         type="radio"
                         id="inline-radio-1"
+                        onChange={console.log('hola')}
+                        checked
                       />
                       <Form.Check
                         inline
@@ -723,6 +725,8 @@ export default function InfoCampo() {
                         name="group1"
                         type="radio"
                         id="inline-radio-2"
+                        onChange={console.log('hola')}
+                        checked={false}
                       />
                       <Form.Check
                         inline
@@ -730,6 +734,8 @@ export default function InfoCampo() {
                         name="group1"
                         type="radio"
                         id="inline-radio-3"
+                        onChange={console.log('hola')}
+                        checked={false}
                       />
                       <Form.Check
                         inline
@@ -737,6 +743,8 @@ export default function InfoCampo() {
                         name="group1"
                         type="radio"
                         id="inline-radio-3"
+                        onChange={console.log('hola')}
+                        checked={false}
                       />
                     </div>
                   </Form>
