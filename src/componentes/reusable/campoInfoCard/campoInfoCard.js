@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import PropTypes from 'prop-types';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchImage } from '../../conexionBack/conexionBack';
+import Loader from '../loader/loader';
 
 export default function CampoInfoCard({
   index, imageId, fieldId,
@@ -28,9 +29,11 @@ export default function CampoInfoCard({
     <div key={index} className="card-deck col-lg-3 mb-4">
       <div className="card-container" onClick={() => nav(`/${userID}/infoCampo/${fieldId}`)}>
         <Card style={{ width: '' }} className="card-home agrandar">
-          {imageUrl
-            ? <Card.Img variant="top" src={imageUrl} alt={`Image ${imageId}`} />
-            : <p>Loading image...</p>}
+          <Card.Header>
+            {imageUrl
+              ? <Card.Img variant="top" src={imageUrl} alt={`Image ${imageId}`} />
+              : <p>Cargando Imagen...</p>}
+          </Card.Header>
           <Card.Body>
             <Card.Title>{imageId}</Card.Title>
             <Card.Text>
