@@ -2,13 +2,13 @@
 import './campoInfoCard.scss';
 import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchImage } from '../../conexionBack/conexionBack';
 import Loader from '../loader/loader';
 
 export default function CampoInfoCard({
-  index, imageId, fieldId,
+  index, imageId, fieldId, crops,
 }) {
   const { userID } = useParams();
   const nav = useNavigate();
@@ -38,7 +38,12 @@ export default function CampoInfoCard({
             <Card.Title>{imageId}</Card.Title>
             <Card.Text>
               <ul>
-                <li>Cultivos:</li>
+                <li>
+                  Cultivos:
+                  {' '}
+                  {crops.join(', ')}
+                  {' '}
+                </li>
                 <li>Estado:</li>
               </ul>
             </Card.Text>
@@ -56,4 +61,5 @@ CampoInfoCard.propTypes = {
   imageId: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
+  crops: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

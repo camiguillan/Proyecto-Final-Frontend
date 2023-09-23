@@ -13,11 +13,12 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Header from '../reusable/header/header';
 import './home.scss';
-import ImageDisplay from './imageDisplay';
 import { get } from '../conexionBack/conexionBack';
 import Loader from '../reusable/loader/loader';
 import campito from '../../images/campito.jpg';
 import CampoInfoCard from '../reusable/campoInfoCard/campoInfoCard';
+import { CROP_TYPES_KEYS } from '../../constants/plots';
+import { CROP_TYPES_TRANSLATIONS } from '../../constants/translations';
 
 export default function Home() {
   const { userID } = useParams();
@@ -65,6 +66,23 @@ export default function Home() {
 
   const truncateString = (str, maxLength) => (str.length > maxLength ? `${str.substring(0, maxLength)}...` : str);
 
+  const getCrops = (fieldId) => {
+    const crops = [];
+
+    if (user2 && user2.fields) {
+      const selectedField = user2.fields.find((aField) => aField._id === fieldId);
+      if (selectedField) {
+        const fieldCrops = selectedField.plots.map((plot) => plot.crop);
+
+        const distinctCrops = [...new Set(fieldCrops)];
+        distinctCrops.forEach((cr) => {
+          if (cr !== CROP_TYPES_KEYS.NONE) { crops.push(CROP_TYPES_TRANSLATIONS[cr] || cr); }
+        });
+      }
+    }
+    return crops;
+  };
+
   return (
     <div>
       <Header />
@@ -74,9 +92,7 @@ export default function Home() {
             ? (
               <div className="container">
                 <div className="row">
-                  {images.map((image, index) => (
-                    <CampoInfoCard index={index} imageId={imageNames[index]} fieldId={user2.fields[index]._id}> </CampoInfoCard>
-                  ))}
+                  { images.map((image, index) => <CampoInfoCard index={index} imageId={imageNames[index]} fieldId={user2.fields[index]._id} crops={getCrops(user2.fields[index]._id)}> </CampoInfoCard>)}
                 </div>
               </div>
             )
