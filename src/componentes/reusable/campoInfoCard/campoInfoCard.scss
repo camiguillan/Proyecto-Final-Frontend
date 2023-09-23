@@ -16,6 +16,12 @@
     transform: scale(1.05);
 }
 
+.card-body{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
 .card-footer{
     border-color: white;
     background-color: white;
@@ -58,4 +64,9 @@
 .row{
   justify-content: center;
   margin-top: 1rem;
+}
+
+.underline{
+  text-decoration: underline;
+  margin-right: 0.3rem !important;
 }

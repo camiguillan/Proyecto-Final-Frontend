@@ -39,12 +39,24 @@ export default function CampoInfoCard({
             <Card.Text>
               <ul>
                 <li>
-                  Cultivos:
-                  {' '}
-                  {crops.join(', ')}
-                  {' '}
+                  <div className="d-flex">
+                    <h6 className="underline">
+                      Cultivos:
+                    </h6>
+                    {' '}
+                    {crops.join(', ')}
+
+                  </div>
                 </li>
-                <li>Estado:</li>
+                <li>
+                  <div className="d-flex">
+                    <h6 className="underline">
+                      Estado:
+                    </h6>
+                    {' '}
+                    Sano
+                  </div>
+                </li>
               </ul>
             </Card.Text>
           </Card.Body>

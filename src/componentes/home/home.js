@@ -102,7 +102,7 @@ export default function Home() {
                 <Card.Header className="card-header-no-campo">
                   <Card.Img variant="left" src={campito} className="campito" />
                 </Card.Header>
-                <Card.Body>
+                <Card.Body className="home-body">
                   <Card.Title className="card-title-no-campo">TODAVÍA NO TIENES NINGÚN CAMPO REGISTRADO</Card.Title>
                   <Card.Text className="card-text-no-campo">
                     ¡Empieza ahora! Crea tu primer campo haciendo click abajo
