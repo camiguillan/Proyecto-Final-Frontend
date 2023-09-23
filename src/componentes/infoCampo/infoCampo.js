@@ -764,7 +764,7 @@ export default function InfoCampo() {
             </div>
             {lineData.length > 1 ? (
               <div className="dashboards-container" style={{ marginTop: '1.5rem' }}>
-                <div className="dashboard">
+                <Card className="dashboard">
                   <Chart
                     width="40rem"
                     height="25rem"
@@ -774,9 +774,9 @@ export default function InfoCampo() {
                     options={lineChartOptions}
                     rootProps={{ 'data-testid': '2' }}
                   />
-                </div>
+                </Card>
                 <div style={{ marginRight: '1.5rem' }} />
-                <div className="dashboard">
+                <Card className="dashboard">
                   <Chart
                     width="40rem"
                     height="25rem"
@@ -786,7 +786,7 @@ export default function InfoCampo() {
                     options={barChartOptions}
                     rootProps={{ 'data-testid': '2' }}
                   />
-                </div>
+                </Card>
               </div>
             )
               : (
