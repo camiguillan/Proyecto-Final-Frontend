@@ -29,7 +29,7 @@ export default function CampoInfoCard({
     <div key={index} className="card-deck col-lg-3 mb-4">
       <div className="card-container" onClick={() => nav(`/${userID}/infoCampo/${fieldId}`)}>
         <Card style={{ width: '' }} className="card-home agrandar">
-          <Card.Header>
+          <Card.Header className="campo-info-header">
             {imageUrl
               ? <Card.Img variant="top" src={imageUrl} alt={`Image ${imageId}`} />
               : <p>Cargando Imagen...</p>}
