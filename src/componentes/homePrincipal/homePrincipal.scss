@@ -119,7 +119,7 @@
 .agro-flexbox-container > div {
 	width: 30rem;
 	padding: 0.78rem;
-  background: #fff;
+  background: #ffffff82;
   text-align: center; 
   display: flex;
   flex-direction: column;
@@ -146,7 +146,7 @@
 
 .gray-title{
   color: $gris-texto !important;
-  width: 40rem;
+  width: 40rem !important;
   font-size: 2rem; 
   font-weight: bold;
   font-family: "Inter", sans-serif !important;
@@ -154,11 +154,11 @@
 
 .text-home-principal{
   color: $gris-texto;
-  width: 35rem;
-  font-size: 1.3rem !important; 
+  //width: 35rem !important;
+  font-size: 1.2rem !important; 
   font-family: "Inter", sans-serif !important;
   //margin: 0.19rem 0;
-   line-height: 1.7rem;
+   line-height: 1.6rem;
 }
 
 .text-home-principal2{
