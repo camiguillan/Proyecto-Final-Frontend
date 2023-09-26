@@ -33,7 +33,7 @@ export default function HomePrincipal() {
             </text>
           </div>
         </div>
-        <div className="flexbox-container">
+        <div className="agro-flexbox-container">
           <div className="green-title">
             AgroIA facilita la toma de decisiones relacionadas con la producción
             agraria.
