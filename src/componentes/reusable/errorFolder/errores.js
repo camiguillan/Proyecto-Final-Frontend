@@ -5,6 +5,7 @@ import Card from '../card/card';
 // import { useState } from 'react';
 // import Card from 'react-bootstrap/Card';
 import Button from '../boton/button';
+import tractor from '../../../images/tractor.png';
 
 export default function ErrorModal({ onClick, title, message }) {
   return (
@@ -19,6 +20,7 @@ export default function ErrorModal({ onClick, title, message }) {
           </h2>
         </header>
         <div className="content">
+          <img src={tractor} alt="Imagen 4" className="small-img2" />
           <p>
             {message}
             {' '}
