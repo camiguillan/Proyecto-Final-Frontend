@@ -19,9 +19,9 @@ export default function ErrorModal({ onClick, title, message }) {
             {' '}
           </h2>
         </header>
-        <div className="content">
-          <img src={tractor} alt="Imagen 4" className="small-img2" />
-          <p>
+        <div className="content d-flex">
+          <img src={tractor} alt="Imagen 4" className="modal-image" />
+          <p className="modal-message">
             {message}
             {' '}
           </p>

@@ -27,10 +27,22 @@
     margin: auto;
 
   }
+  .modal-message{
+    font-size: 2rem;
+    margin-left: 1rem;
+  }
+
+
+  .modal-image{
+    width: 12%;
+  }
   
   .content {
     padding: 1rem !important;
     font-size: 2vh;
+    justify-content: center;
+    align-items: center;
+    
   }
   
   .actions {
