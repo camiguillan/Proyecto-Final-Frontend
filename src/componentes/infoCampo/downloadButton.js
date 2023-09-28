@@ -1,5 +1,6 @@
 import React from 'react';
 import './infoCampo.scss';
+import { Button } from 'react-bootstrap';
 
 function DownloadButton() {
   const handleDownload = () => {
@@ -10,7 +11,7 @@ function DownloadButton() {
   };
 
   return (
-    <button className="button-desc" onClick={handleDownload}>Descargar Template</button>
+    <Button variant="outline-primary" className="button-desc" onClick={handleDownload}>Descargar Template</Button>
   );
 }
 

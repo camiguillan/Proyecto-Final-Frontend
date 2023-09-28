@@ -11,7 +11,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './infoCampo.scss';
 import '../verCultivos/verCultivos.scss';
 import Papa from 'papaparse';
@@ -23,13 +23,16 @@ import ProductCard from './meliCard';
 import excelent from '../../images/excelent.png';
 import upLine from '../../images/ascending.png';
 import downLine from '../../images/descending.png';
-import cropCheckFullField from '../reusable/map/funcionesMapa';
-import AgroMap from '../reusable/map/agroMap';
-import Card from '../reusable/card/card';
-import HeaderWhite from '../reusable/header_white/header_white';
+// import Card from '../reusable/card/card';
+import { Button, Card, Form } from 'react-bootstrap';
 import { differenceInDays } from 'date-fns';
 import { get, patch } from '../conexionBack/conexionBack';
 import VerCampo from '../verCampo/verCampo';
+import Header from '../reusable/header/header';
+import Loader from '../reusable/loader/loader';
+import vector1 from '../../images/vector1.jpg';
+import { CROP_TYPES_KEYS } from '../../constants/plots';
+import { CROP_TYPES_TRANSLATIONS } from '../../constants/translations';
 
 export default function InfoCampo() {
   const { userID } = useParams();
@@ -54,10 +57,9 @@ export default function InfoCampo() {
   const [humedadviejo, setHumedadviejo] = useState([]);
   const [fieldRest, setField] = useState(field);
   const [actualizarGraf, setActualizarGraf] = useState(1);
-  const [sunMenu, setsunMenu] = useState(false);
-  const [corn, setcorn] = useState(false);
-  const [wheat, setwheat] = useState(false);
-  const [soy, setsoy] = useState(false);
+  const [cropList, setCropList] = useState(['Todos']);
+  const [isFieldChanging, setIsFieldChanging] = useState(false);
+  const nav = useNavigate();
   const today = new Date();
   const traducciones = {
     Girasol: {
@@ -451,9 +453,27 @@ export default function InfoCampo() {
     return tru;
   };
 
+  const getCrops = () => {
+    const crops = ['Todos'];
+
+    if (user2 && user2.fields) {
+      const selectedField = user2.fields.find((aField) => aField._id === fieldRest);
+      if (selectedField) {
+        const fieldCrops = selectedField.plots.map((plot) => plot.crop);
+
+        const distinctCrops = [...new Set(fieldCrops)];
+        distinctCrops.forEach((cr) => {
+          if (cr !== CROP_TYPES_KEYS.NONE) { crops.push(CROP_TYPES_TRANSLATIONS[cr] || cr); }
+        });
+      }
+    }
+    setCropList(crops);
+  };
+
   const handleFieldChange = (event) => {
     setField(event.target.value);
     metrics();
+    nav(`/${userID}/infoCampo/${event.target.value}`);
   };
 
   const handleCropChange = (event) => {
@@ -466,10 +486,7 @@ export default function InfoCampo() {
 
   useEffect(() => {
     metrics();
-    setsoy(existeCrop('soy'));
-    setwheat(existeCrop('wheat'));
-    setcorn(existeCrop('corn'));
-    setsunMenu(existeCrop('sunflower'));
+    getCrops();
     if (user2 && user2.fields) {
       user2.fields.forEach((fiel, index) => {
         if (fiel._id === fieldRest && user2.fields[index].history.years.length > 0) {
@@ -500,10 +517,7 @@ export default function InfoCampo() {
 
   useEffect(() => {
     metrics();
-    setsoy(existeCrop('soy'));
-    setwheat(existeCrop('wheat'));
-    setcorn(existeCrop('corn'));
-    setsunMenu(existeCrop('sunflower'));
+    getCrops();
     let dataProcessed = false;
     if (user2 && user2.fields) {
       user2.fields.forEach((fiel, index) => {
@@ -530,214 +544,284 @@ export default function InfoCampo() {
 
   return (
     <div>
-      <HeaderWhite />
-      <div className="gray-space">
-        <text className="titulo-fachero-facherito">Dashboards</text>
-        <div className="buttons-container">
-          <button
-            className={selectedTimePeriod === 'LastWeek' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => handleButtonClick('LastWeek')}
-          >
-            Última semana
-            <div className={selectedTimePeriod === 'LastWeek' ? 'selected-line' : ''} />
-          </button>
-          <button
-            className={selectedTimePeriod === 'LastMonth' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => handleButtonClick('LastMonth')}
-          >
-            Último mes
-            <div className={selectedTimePeriod === 'LastMonth' ? 'selected-line' : ''} />
-          </button>
-          <button
-            className={selectedTimePeriod === 'LastYear' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => handleButtonClick('LastYear')}
-          >
-            Último año
-            <div className={selectedTimePeriod === 'LastYear' ? 'selected-line' : ''} />
-          </button>
-          <button
-            className={selectedTimePeriod === 'FullHistory' ? 'button-dashboard selected' : 'button-dashboard'}
-            onClick={() => handleButtonClick('FullHistory')}
-          >
-            Historial completo
-            <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
-          </button>
-          <div className="dropdown-container">
-            <select
-              className="rounded-dropdown"
+      <Header />
+      {user2
+        ? (
+          <div className="gray-space">
+            <Form.Select
+              aria-label="Default select example"
+              className="titulo-fachero-facherito"
               value={fieldRest} // Aquí establecemos el valor seleccionado
               onChange={handleFieldChange}
             >
-              {user2 && user2.fields.map((fiel, index) => (
-                <option key={index} value={fiel._id}>
+              {user2.fields.map((fiel, index) => (
+                <option key={index} value={fiel._id} className="option-select">
                   {fiel.name}
                 </option>
               ))}
-            </select>
-          </div>
-          <div className="dropdown-container">
-            <select
-              className="rounded-dropdown rounded-dropdown-cultivos"
-              value={crop} // Aquí establecemos el valor seleccionado
-              onChange={handleCropChange}
-            >
-              {soy && <option value="Soja">Soja</option>}
-              {corn && <option value="Maiz">Maiz</option>}
-              {wheat && <option value="Trigo">Trigo</option>}
-              {sunMenu && <option value="Girasol">Girasol</option>}
-              <option value="Todos">Todos</option>
-            </select>
-          </div>
-        </div>
-        <div className="cards-container">
-          <div className="cards-wrapper">
-            <div className="circle-card first" />
-            <div className="cards-titles">
-              Total sembrado
+            </Form.Select>
+            <div className="drop-but-container">
+              {/* <div className="full-width" /> */}
+              <div className="buttons-container">
+                <button
+                  className={selectedTimePeriod === 'LastWeek' ? 'button-dashboard selected' : 'button-dashboard'}
+                  onClick={() => handleButtonClick('LastWeek')}
+                >
+                  Última semana
+                  <div className={selectedTimePeriod === 'LastWeek' ? 'selected-line' : ''} />
+                </button>
+                <button
+                  className={selectedTimePeriod === 'LastMonth' ? 'button-dashboard selected' : 'button-dashboard'}
+                  onClick={() => handleButtonClick('LastMonth')}
+                >
+                  Último mes
+                  <div className={selectedTimePeriod === 'LastMonth' ? 'selected-line' : ''} />
+                </button>
+                <button
+                  className={selectedTimePeriod === 'LastYear' ? 'button-dashboard selected' : 'button-dashboard'}
+                  onClick={() => handleButtonClick('LastYear')}
+                >
+                  Último año
+                  <div className={selectedTimePeriod === 'LastYear' ? 'selected-line' : ''} />
+                </button>
+                <button
+                  className={selectedTimePeriod === 'FullHistory' ? 'button-dashboard selected' : 'button-dashboard'}
+                  onClick={() => handleButtonClick('FullHistory')}
+                >
+                  Historial completo
+                  <div className={selectedTimePeriod === 'FullHistory' ? 'selected-line' : ''} />
+                </button>
+              </div>
+              <div className="dropdown-container">
+                <h6>Cultivos:</h6>
+                <Form.Select
+                  className="rounded-dropdown rounded-dropdown-cultivos"
+                  value={crop} // Aquí establecemos el valor seleccionado
+                  onChange={handleCropChange}
+                >
+                  {cropList.map((aCrop) => <option value={aCrop}>{aCrop}</option>)}
+                </Form.Select>
+              </div>
             </div>
-            {(metrosCuadrados < 0 || metrosCuadrados >= 0) && metrosCuadrados !== Infinity ? (
-              <div className="cards-Subtitle">
-                {Number(metrosCuadrados).toLocaleString()}
-                <span>m2</span>
-              </div>
-            ) : (
-              <div className="cards-Subtitle-no-data">
-                No hay datos
-              </div>
-            )}
-            {(metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0) && metrosCuadradosViejo !== Infinity ? (
-              <div className={metrosCuadradosViejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
-                {metrosCuadradosViejo}
-                %
-              </div>
-            ) : null}
+            <div className="cards-container">
+              <Card className="cards-wrapper">
+                <div className="circle-card first" />
+                <div className="cards-titles">
+                  Total sembrado
+                </div>
+                {(metrosCuadrados < 0 || metrosCuadrados >= 0) && metrosCuadrados !== Infinity ? (
+                  <div className="cards-Subtitle">
+                    {Number(metrosCuadrados).toLocaleString()}
+                    <span>m2</span>
+                  </div>
+                ) : (
+                  <div className="cards-Subtitle-no-data">
+                    No hay datos
+                  </div>
+                )}
+                {(metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0) && metrosCuadradosViejo !== Infinity ? (
+                  <div className={metrosCuadradosViejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
+                    {metrosCuadradosViejo}
+                    %
+                  </div>
+                ) : null}
 
-            {(metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0) && metrosCuadradosViejo !== Infinity ? (
-              <img src={metrosCuadradosViejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageMetros" />
-            ) : null}
-          </div>
-          <div className="cards-wrapper">
-            <div className="circle-card second" />
-            <div className="cards-titles">
-              Cultivo sano
+                {(metrosCuadradosViejo < 0 || metrosCuadradosViejo >= 0) && metrosCuadradosViejo !== Infinity ? (
+                  <img src={metrosCuadradosViejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageMetros" />
+                ) : null}
+              </Card>
+              <Card className="cards-wrapper">
+                <div className="circle-card second" />
+                <div className="cards-titles">
+                  Cultivo Sano
+                </div>
+                {(porcentajeSano < 0 || porcentajeSano >= 0) && porcentajeSano !== Infinity ? (
+                  <div className="cards-Subtitle cards-Subtitle2">
+                    {porcentajeSano}
+                    %
+                  </div>
+                ) : (
+                  <div className="cards-Subtitle-no-data cards-Subtitle2">
+                    No hay datos
+                  </div>
+                )}
+                {(porcentajeSanoviejo < 0 || porcentajeSanoviejo >= 0) && porcentajeSanoviejo !== Infinity ? (
+                  <div className={porcentajeSanoviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
+                    {porcentajeSanoviejo}
+                    %
+                  </div>
+                ) : null}
+                {(porcentajeSanoviejo < 0 || porcentajeSanoviejo >= 0) && porcentajeSanoviejo !== Infinity ? (
+                  <img src={porcentajeSanoviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageSano" />
+                ) : null}
+              </Card>
+              <Card className="cards-wrapper">
+                <div className="circle-card third" />
+                <div className="cards-titles">
+                  NDVI
+                </div>
+                {(ndvi < 0 || ndvi >= 0) && ndvi !== Infinity ? (
+                  <div className="cards-Subtitle cards-Subtitle3">
+                    {ndvi}
+                  </div>
+                ) : (
+                  <div className="cards-Subtitle-no-data cards-Subtitle3">
+                    No hay datos
+                  </div>
+                )}
+                {(ndviviejo < 0 || ndviviejo >= 0) && ndviviejo !== Infinity ? (
+                  <div className={ndviviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
+                    {ndviviejo}
+                    %
+                  </div>
+                ) : null}
+                {(ndviviejo < 0 || ndviviejo >= 0) && ndviviejo !== Infinity ? (
+                  <img src={ndviviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImagendvi" />
+                ) : null}
+              </Card>
+              <Card className="cards-wrapper">
+                <div className="circle-card fourth" />
+                <div className="cards-titles">
+                  Humedad
+                </div>
+                {(humedad < 0 || humedad >= 0) && humedad !== Infinity ? (
+                  <div className="cards-Subtitle cards-Subtitle4">
+                    {humedad}
+                  </div>
+                ) : (
+                  <div className="cards-Subtitle-no-data cards-Subtitle4">
+                    No hay datos
+                  </div>
+                )}
+                {(humedadviejo < 0 || humedadviejo >= 0) && humedadviejo !== Infinity ? (
+                  <div className={humedadviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
+                    {humedadviejo}
+                    %
+                  </div>
+                ) : null}
+                {(humedadviejo < 0 || humedadviejo >= 0) && humedadviejo !== Infinity ? (
+                  <img src={humedadviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage" />
+                ) : null}
+              </Card>
             </div>
-            {(porcentajeSano < 0 || porcentajeSano >= 0) && porcentajeSano !== Infinity ? (
-              <div className="cards-Subtitle cards-Subtitle2">
-                {porcentajeSano}
-                %
-              </div>
-            ) : (
-              <div className="cards-Subtitle-no-data cards-Subtitle2">
-                No hay datos
-              </div>
-            )}
-            {(porcentajeSanoviejo < 0 || porcentajeSanoviejo >= 0) && porcentajeSanoviejo !== Infinity ? (
-              <div className={porcentajeSanoviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
-                {porcentajeSanoviejo}
-                %
-              </div>
-            ) : null}
-            {(porcentajeSanoviejo < 0 || porcentajeSanoviejo >= 0) && porcentajeSanoviejo !== Infinity ? (
-              <img src={porcentajeSanoviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImageSano" />
-            ) : null}
-          </div>
-          <div className="cards-wrapper">
-            <div className="circle-card third" />
-            <div className="cards-titles">
-              NDVI
+            <div className="cards-container2">
+              <Card className="mapa-card max-content">
+                <VerCampo campoInfo={campoInfo} crop={crop} />
+              </Card>
+              <Card className="info-mapa derecha min-content">
+                <Card.Body className="d-flex flex-column">
+                  <Card.Title className="card-title-no-campo">ÍNDICES</Card.Title>
+                  <Form>
+                    <div key="inline-radio" className="mb-3 d-flex indices">
+                      <Form.Check
+                        inline
+                        label="NDVI"
+                        name="group1"
+                        type="radio"
+                        id="inline-radio-1"
+                        onChange={console.log('hola')}
+                        checked
+                      />
+                      <Form.Check
+                        inline
+                        label="NDSI"
+                        name="group1"
+                        type="radio"
+                        id="inline-radio-2"
+                        onChange={console.log('hola')}
+                        checked={false}
+                      />
+                      <Form.Check
+                        inline
+                        label="NDMI"
+                        name="group1"
+                        type="radio"
+                        id="inline-radio-3"
+                        onChange={console.log('hola')}
+                        checked={false}
+                      />
+                      <Form.Check
+                        inline
+                        label="Color real"
+                        name="group1"
+                        type="radio"
+                        id="inline-radio-3"
+                        onChange={console.log('hola')}
+                        checked={false}
+                      />
+                    </div>
+                  </Form>
+                  <Button variant="primary" onClick={() => nav(`/editarCampo/${userID}/${field}`)}>Editar Campo</Button>
+                </Card.Body>
+              </Card>
             </div>
-            {(ndvi < 0 || ndvi >= 0) && ndvi !== Infinity ? (
-              <div className="cards-Subtitle cards-Subtitle3">
-                {ndvi}
-              </div>
-            ) : (
-              <div className="cards-Subtitle-no-data cards-Subtitle3">
-                No hay datos
-              </div>
-            )}
-            {(ndviviejo < 0 || ndviviejo >= 0) && ndviviejo !== Infinity ? (
-              <div className={ndviviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
-                {ndviviejo}
-                %
-              </div>
-            ) : null}
-            {(ndviviejo < 0 || ndviviejo >= 0) && ndviviejo !== Infinity ? (
-              <img src={ndviviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage upLineImagendvi" />
-            ) : null}
-          </div>
-          <div className="cards-wrapper">
-            <div className="circle-card fourth" />
-            <div className="cards-titles">
-              Humedad
+            <div className=" cards-container file-upload-container">
+              <DownloadButton />
+              {/* <input className="button-dashboard selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} /> */}
+              <Form.Group controlId="formFile">
+                <Form.Control type="file" className="agro-uploader" />
+              </Form.Group>
             </div>
-            {(humedad < 0 || humedad >= 0) && humedad !== Infinity ? (
-              <div className="cards-Subtitle cards-Subtitle4">
-                {humedad}
+            {lineData.length > 1 ? (
+              <div className="dashboards-container" style={{ marginTop: '1.5rem' }}>
+                <Card className="dashboard">
+                  <Chart
+                    width="40rem"
+                    height="25rem"
+                    chartType="LineChart"
+                    loader={<div>Loading Chart</div>}
+                    data={lineData}
+                    options={lineChartOptions}
+                    rootProps={{ 'data-testid': '2' }}
+                  />
+                </Card>
+                <div style={{ marginRight: '1.5rem' }} />
+                <Card className="dashboard">
+                  <Chart
+                    width="40rem"
+                    height="25rem"
+                    chartType="ColumnChart"
+                    loader={<div>Loading Chart</div>}
+                    data={barData}
+                    options={barChartOptions}
+                    rootProps={{ 'data-testid': '2' }}
+                  />
+                </Card>
               </div>
-            ) : (
-              <div className="cards-Subtitle-no-data cards-Subtitle4">
-                No hay datos
-              </div>
-            )}
-            {(humedadviejo < 0 || humedadviejo >= 0) && humedadviejo !== Infinity ? (
-              <div className={humedadviejo < 0 ? 'cards-Subtitle-old-origin red' : 'cards-Subtitle-old-origin green'}>
-                {humedadviejo}
-                %
-              </div>
-            ) : null}
-            {(humedadviejo < 0 || humedadviejo >= 0) && humedadviejo !== Infinity ? (
-              <img src={humedadviejo < 0 ? downLine : upLine} alt="Line Image" className="upLineImage" />
-            ) : null}
+            )
+              : (
+                <div className="cards-container">
+                  <Card className="info-card  text-center card-no-campo">
+                    <Card.Header className="campo-info-card-header">
+                      <Card.Img variant="left" src={vector1} className="vector" />
+                    </Card.Header>
+                    <Card.Body>
+                      <Card.Title className="card-title-no-campo">TODAVÍA NO TIENES INFORMACIÓN HISTÓRICA DE TU CAMPO</Card.Title>
+                      <Card.Text className="card-text-no-campo">
+                        ¡Usa nuestro template y subí los datos de tu campo!
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </div>
+              )}
+            <div className="cards-container">
+              <Diagnostico diagnostico={diagnostico} />
+              <Card className="cards-wrapper-diagnostico">
+                <img src={excelent} alt="Imagen 4" style={{ width: '7rem', marginRight: '-1rem', marginLeft: '1rem' }} />
+              </Card>
+            </div>
+            <div className="cards-container">
+              {products.slice(0, 5).map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="file-upload-container">
-          <DownloadButton />
-          <input className="button-dashboard selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} />
-        </div>
-        {lineData.length > 1 && (
-        <div className="dashboards-container" style={{ marginTop: '1.5rem' }}>
-          <div className="dashboard">
-            <Chart
-              width="40rem"
-              height="25rem"
-              chartType="LineChart"
-              loader={<div>Loading Chart</div>}
-              data={lineData}
-              options={lineChartOptions}
-              rootProps={{ 'data-testid': '2' }}
-            />
+        )
+        : (
+          <div className="loader-container">
+            <Loader />
           </div>
-          <div style={{ marginRight: '1.5rem' }} />
-          <div className="dashboard">
-            <Chart
-              width="40rem"
-              height="25rem"
-              chartType="ColumnChart"
-              loader={<div>Loading Chart</div>}
-              data={barData}
-              options={barChartOptions}
-              rootProps={{ 'data-testid': '2' }}
-            />
-          </div>
-        </div>
         )}
-        <div className="cards-container2">
-          <Card className="mapa-card max-content">
-            <VerCampo campoInfo={campoInfo} crop={crop} />
-          </Card>
-        </div>
-        <div className="cards-container">
-          <Diagnostico diagnostico={diagnostico} />
-          <div className="cards-wrapper-diagnostico">
-            <img src={excelent} alt="Imagen 4" style={{ width: '7rem', marginRight: '-1rem', marginLeft: '1rem' }} />
-          </div>
-        </div>
-        <div className="cards-container">
-          {products.slice(0, 5).map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </div>
     </div>
   );
 }

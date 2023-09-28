@@ -1,6 +1,7 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
+import { Card } from 'react-bootstrap';
 import excelent from '../../images/excelent.png';
 import bluewater from '../../images/bluewater.png';
 import dry from '../../images/dry.png';
@@ -64,14 +65,16 @@ export default function Diagnostico() {
   } = diagnosticKeys[diagnostico];
 
   return (
-    <div className="cards-wrapper-diagnostico">
+    <Card className="cards-wrapper-diagnostico">
       <img src={image} alt="Imagen 4" style={{ width: '7rem', marginRight: '-1rem', marginLeft: '1rem' }} />
-      <div className={classNameTitle}>
-        {translate}
+      <div className="diagnostico-wrapper">
+        <div className={classNameTitle}>
+          {translate}
+        </div>
+        <div className={className}>
+          {message}
+        </div>
       </div>
-      <div className={className}>
-        {message}
-      </div>
-    </div>
+    </Card>
   );
 }

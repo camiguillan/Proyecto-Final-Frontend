@@ -10,22 +10,19 @@ import '../../assets/global.scss';
 import '../background/background.scss';
 import '../homePrincipal/homePrincipal.scss';
 import './editarPerfil.scss';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../reusable/white_container/white_container.scss'; // LA CAJA BLANCA Y EL TEXTO
 import '../reusable/input_box/input_box.scss'; // LAS CAJITAS DE TEXTO
 import Header from '../reusable/header/header';
 import Button from '../reusable/boton/button';
 import { patch } from '../conexionBack/conexionBack';
 import Campito from '../../images/segador.png';
-import HeaderWhite from '../reusable/header_white/header_white';
 import '../reusable/popup/popup.scss';
 
 export default function EditarPerfil() {
   const { userID } = useParams();
   const [data, setData] = useState([]);
   const user = JSON.parse(localStorage.getItem('name')).user || {};
-
-  console.log(user);
 
   const [ingresarNombre, setIngresarNombre] = useState(user.name);
   const [ingresarCorreo, setIngresarCorreo] = useState(user.email);
@@ -34,9 +31,6 @@ export default function EditarPerfil() {
   // const [invalid2, setInvalid2] = useState(false);
   const [campoNombreLleno, setcampoNombreLleno] = useState(false);
   const [submit, setSubmit] = useState(false);
-
-  const navigate = useNavigate();
-  console.log(user.password);
 
   const handleInputChange = (e, setter) => {
     setter(e.target.value);
@@ -88,7 +82,7 @@ export default function EditarPerfil() {
 
   return (
     <div>
-      <HeaderWhite />
+      <Header />
       <form onSubmit={handleSubmit}>
         <div className="fondoverde">
           <div className="white-rectangle3">

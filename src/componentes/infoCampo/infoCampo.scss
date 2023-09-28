@@ -1,33 +1,72 @@
 @import "../../assets/global.scss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
 
-.dropdown-container {
-  display: inline-block;
-  position: relative;
+.titulo-fachero-facherito {
+  width: 100%;
+  //margin: 1rem 0% 0% 0%;
+  justify-content: center !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 2.5rem !important;
+  font-weight: normal !important;
+  color: $gris-titulo !important;
+  background-color: transparent !important;
+  border: 0px !important;
+  width: auto !important;
+  display: inline-flex !important;
+  text-align: center;
+}
+
+h6{
+  margin-bottom: 0 !important;
+  margin-right: 1rem;
+  color: $gris-titulo;
 }
 
 .rounded-dropdown {
   border-radius: 0.3rem; 
   padding: 0.2rem 1rem;
-  background-color: white;
+  background-color: $verde-clarito !important ;
   border: 1px solid $light-gray-dropdown;
   color: $gray-dropdown;
   font-size: 0.75rem;
-  position: absolute;
-  right: -18.5rem;
+  //position: absolute;
+  //right: -18.5rem;
   border-color: transparent;
   border-bottom: 0.5rem;
+  width: 10rem;
 }
 
 .rounded-dropdown-cultivos {
   right: -26rem;
 }
-
+.full-width {
+    width: 100%;
+}
+.drop-but-container{
+  position: relative;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  width: 80rem;
+  margin: 1.5rem auto !important;
+  min-width: 80rem;
+}
 .buttons-container {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
-  min-width: 100%;
+}
+
+.dropdown-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
 }
 
 .button-dashboard {
@@ -35,18 +74,22 @@
   border: none;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
-  font-size: 0.75rem; 
-  margin-right: 1rem;
+  font-size: 1rem; 
+  margin-right: 10px;
   color: black; 
 }
 
+.button-dashboard:last-child {
+  margin-right: 0;
+}
+
 .selected {
-  color: $blue-titles-infoCampo;
+  color: $main-green;
 }
 
 .selected-line {
   height: 2px;
-  background-color: $blue-titles-infoCampo;
+  background-color: $main-green;
   margin-top: 0.25rem;
 }
 
@@ -72,7 +115,7 @@
   display: flex;
   justify-content: center;
   width: 80rem;
-  margin: 1.5rem auto;
+  margin: 1.5rem auto !important;
   min-width: 80rem;
 }
 
@@ -92,18 +135,30 @@
   border-radius: 0.5rem;
   background-color: white;
   margin: 1%;
+  flex-direction: row !important;
 }
 
 .cards-wrapper-diagnostico {
   flex: 1;
-  display: flex;
+  flex-direction: row !important;
   align-items: center;
   position: relative;
   height: 10rem;
   border-radius: 0.5rem;
   background-color: white;
   margin: 1%;
+  margin-left: 1rem !important;
+  margin-right: 1rem !important;
 }
+
+.diagnostico-wrapper{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
 
 .cards-titles {
   font-family: 'Inter', sans-serif;
@@ -131,6 +186,7 @@
   margin-left: -9.5rem;
   margin-top: 3rem; 
 }
+
 
 .cards-Subtitle2 {
   margin-left: -8rem; 
@@ -223,7 +279,10 @@
 
 .file-upload-container {
   position: relative;
-  left: -26rem; 
+  //left: -26rem; 
+  //margin: 0rem 10rem;
+  display: flex;
+  justify-content: start;
 }
 
 .first-dashboard-aligned{
@@ -237,9 +296,9 @@
   justify-content: center;
   width: 78rem;
   margin: -1rem auto;
-   height: 27.5rem;
-   min-width: 78rem;
-   //margin-top: 2rem;
+  height: 27.5rem;
+  min-width: 78rem;
+  //margin-top: 2rem;
 }
 
 .dashboard {
@@ -271,12 +330,12 @@
 
   .product-image {
     margin-top: 0.7rem; 
+    height: 9rem !important;
   }
 
   .product-card .product-price {
   font-weight: bold; 
 }
-
 
 .cards-subtitle {
   font-family: 'Inter', sans-serif;
@@ -296,7 +355,7 @@
 }
 
 .overhydration-class {
-   margin-left: -12rem;
+   margin-left: 1rem;
 }
 
 .dehydration-class {
@@ -320,8 +379,8 @@
 
 .diagnostic-subtitle{
   font-family: 'Inter', sans-serif;
-  margin-top: -7rem;
-  margin-left: 3rem;
+  //margin-top: -7rem;
+  margin-left: 1rem;
   font-size: 1.5rem;
   font-weight: bold;
   white-space: nowrap;
@@ -356,6 +415,66 @@
 }
 
 .button-desc {
-  margin-right: 0.5rem;
-  font-size: 0.77rem;
+  //margin-right: 0.5rem;
+  padding: 0.5rem;
+  margin-left: 1rem !important;
+}
+
+.option-select{
+    background-color:$verde-clarito !important;
+}
+
+.option-select:hover{
+    background-color:$main-green !important;
+    //color: white !important;
+}
+
+.form-control{
+  border-radius: 16px !important;
+  border: 2px solid $main-green !important;
+  font-size: 1.4rem !important;
+  margin: 0.5rem !important;
+  color: $main-green !important;
+}
+
+// .agro-uploader:hover{
+//   background-color: $main-green;
+//   color: white !important;
+// }
+
+.vector{
+  width: 30rem;
+}
+
+.campo-info-card-header{
+  align-items: end;
+  display: inline-flex;
+  justify-content: flex-end;
+  margin: 0.2rem;
+}
+
+.info-card{
+  margin: 0 1.2rem 0 1.2rem;
+}
+
+.info-mapa{
+  justify-content: space-between !important;
+  flex-direction: column !important;
+  margin: 1rem;
+  width: 30rem;
+}
+
+.indices{
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-check-input{
+  border-color: $gris-titulo !important;
+  //border-width: 2px !important;
+}
+
+.form-check-input:checked{
+  background-color: $main-green !important;
+  border-color: $main-green !important;
 }

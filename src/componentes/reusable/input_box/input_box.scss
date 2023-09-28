@@ -15,6 +15,7 @@
     border-color: $inputbox-border2-gray;
     border-style: solid ;
     padding-left: 2%;
+    padding-right: 2%;
   }
 
   .agregar-campo-input{
@@ -88,7 +89,7 @@
 
 .mostrar-ocultar {
   position: absolute;
-  top: 24rem;
+  top: 23rem;
   right: 4.5rem;
   transform: translateY(-0.9rem);
   cursor: pointer;

@@ -9,15 +9,16 @@
 /* eslint-disable global-require */
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 import Header from '../reusable/header/header';
-import HeaderWhite from '../reusable/header_white/header_white';
 import './home.scss';
-import ImageDisplay from './imageDisplay';
 import { get } from '../conexionBack/conexionBack';
 import Loader from '../reusable/loader/loader';
-import Card from '../reusable/card/card';
-import Button from '../reusable/boton/button';
 import campito from '../../images/campito.jpg';
+import CampoInfoCard from '../reusable/campoInfoCard/campoInfoCard';
+import { CROP_TYPES_KEYS } from '../../constants/plots';
+import { CROP_TYPES_TRANSLATIONS } from '../../constants/translations';
 
 export default function Home() {
   const { userID } = useParams();
@@ -65,36 +66,51 @@ export default function Home() {
 
   const truncateString = (str, maxLength) => (str.length > maxLength ? `${str.substring(0, maxLength)}...` : str);
 
+  const getCrops = (fieldId) => {
+    const crops = [];
+
+    if (user2 && user2.fields) {
+      const selectedField = user2.fields.find((aField) => aField._id === fieldId);
+      if (selectedField) {
+        const fieldCrops = selectedField.plots.map((plot) => plot.crop);
+
+        const distinctCrops = [...new Set(fieldCrops)];
+        distinctCrops.forEach((cr) => {
+          if (cr !== CROP_TYPES_KEYS.NONE) { crops.push(CROP_TYPES_TRANSLATIONS[cr] || cr); }
+        });
+      }
+    }
+    return crops;
+  };
+
   return (
-    <div className="fondoGris">
-      <HeaderWhite />
+    <div>
+      <Header />
       {user2
         ? (
           user2.fields.length > 0
             ? (
-              <div className="image-container">
-                {images.map((image, index) => (
-                  <Link to={`/${userID}/infoCampo/${user2.fields[index]._id}`} key={index}>
-                    <div className="image-wrapper">
-                      <ImageDisplay imageId={user2.fields[index]._id} />
-                      <div className="image-name">{imageNames[index]}</div>
-                      {/* <div className="image-name">{truncateString(imageNames[index], 10)}</div> */}
-                    </div>
-                  </Link>
-                ))}
+              <div className="container">
+                <div className="row">
+                  { images.map((image, index) => <CampoInfoCard index={index} imageId={imageNames[index]} fieldId={user2.fields[index]._id} crops={getCrops(user2.fields[index]._id)}> </CampoInfoCard>)}
+                </div>
               </div>
             )
             : (
-              <Card className="agregar-campo-container-2 max-content">
-                <div className="no-campos-container">
-                  <h1 className="sin-campo-titulo"> TODAVÍA NO TIENES NINGÚN CAMPO REGISTRADO </h1>
-                  <h3>¡Empieza ahora! Crea tu primer campo haciendo click abajo</h3>
-                  <Button type="button" onClick={() => nav(`/agregarCampo/${userID}`)} className="green-button cancelar">CREAR CAMPO</Button>
-                </div>
-                <div className="image-sin-campo-container">
-                  <img src={campito} alt="Imagen 4" className="image-sin-campo" />
-                </div>
+
+              <Card className="text-center card-no-campo">
+                <Card.Header className="card-header-no-campo">
+                  <Card.Img variant="left" src={campito} className="campito" />
+                </Card.Header>
+                <Card.Body className="home-body">
+                  <Card.Title className="card-title-no-campo">TODAVÍA NO TIENES NINGÚN CAMPO REGISTRADO</Card.Title>
+                  <Card.Text className="card-text-no-campo">
+                    ¡Empieza ahora! Crea tu primer campo haciendo click abajo
+                  </Card.Text>
+                  <Button variant="primary" onClick={nav(`/agregarCampo/${userID}`)}>Crear Campo</Button>
+                </Card.Body>
               </Card>
+
             )
         )
         : (
@@ -103,6 +119,7 @@ export default function Home() {
           </div>
 
         )}
+
     </div>
   );
 }

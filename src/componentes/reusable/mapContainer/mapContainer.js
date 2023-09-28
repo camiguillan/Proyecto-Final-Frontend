@@ -7,11 +7,12 @@ import { FileUploader } from 'react-drag-drop-files';
 import PropTypes from 'prop-types';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './mapContainer.scss';
-import Card from '../card/card';
+// import Card from '../card/card';
+import { Card, Button } from 'react-bootstrap';
 import Input from '../input_box/input';
 import Icon from '../../../assets/icons/icon';
 import AgroMap from '../map/agroMap';
-import Button from '../boton/button';
+// import Button from '../boton/button';
 import { CROP_TYPES_KEYS } from '../../../constants/plots';
 // eslint-disable-next-line import/no-named-as-default
 import cropCheckFullField from '../map/funcionesMapa';
@@ -161,7 +162,7 @@ export default function MapContainer({
         {opciones}
         {' '}
       </select>
-      {!edit && cultivos.length > 1 && <Button type="button" onClick={() => removeInput(cultivo)} className="green-button">-</Button>}
+      {!edit && cultivos.length > 1 && <Button type="button" style={{ width: '4rem' }} variant="primary" onClick={() => removeInput(cultivo)} className="green-button">-</Button>}
     </label>
   ));
 
@@ -307,7 +308,7 @@ export default function MapContainer({
                     {edit ? '' : 'Dibuje la superficie de cada lote con su cultivo asociado' }
                   </p>
                   {cultivosInputs}
-                  {!edit && <Button type="button" onClick={addInput} className="green-button mas-button">+</Button>}
+                  {!edit && <Button type="button" variant="primary" onClick={addInput} className="mas-button">+</Button>}
                 </div>
 
               </div>
@@ -355,8 +356,8 @@ export default function MapContainer({
           </Card>
 
           <div className="botones">
-            <Button type="button" onClick={() => nav(`/home/${userID}`)} className="green-button cancelar">Cancelar</Button>
-            <Button type="button" onClick={() => guardarCampoInfo()} className="green-button">Guardar</Button>
+            <Button type="button" variant="outline-primary" onClick={() => nav(`/home/${userID}`)}>Cancelar</Button>
+            <Button type="button" variant="primary" onClick={() => guardarCampoInfo()}>Guardar</Button>
           </div>
         </div>
       </div>

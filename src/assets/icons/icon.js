@@ -8,7 +8,8 @@ export default function Icon({ className, color, fontSize }) {
 }
 
 Icon.propTypes = {
-  color: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  color: PropTypes.string,
   className: PropTypes.string.isRequired,
   fontSize: PropTypes.string.isRequired,
 };

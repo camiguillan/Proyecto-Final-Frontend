@@ -1,0 +1,74 @@
+.card-img-top{
+    width: 100%;
+    height: 20rem;
+    //margin: 0.5rem;
+}
+
+.campo-info-header{
+    padding: 0 !important;
+}
+
+.card-home{
+    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+    height: 33rem !important;
+}
+
+.card-home:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.card-body{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+.card-footer{
+    border-color: white;
+    background-color: white;
+    align-content: end;
+    display: inline-flex;
+    justify-content: flex-end;
+}
+
+@media (min-width: 1000px) and  (max-width: 1200px){
+.col-lg-3 {
+    flex: 0 0 auto;
+    width: 33% !important;
+}
+
+
+
+}
+
+@media (min-width: 400px) and (max-width: 1000px)
+{.col-lg-3 {
+    flex: 0 0 auto;
+    width: 50% !important;
+}
+
+.card-container{
+    margin: 1rem;
+}
+}
+
+@media (max-width: 400px) {
+.col-lg-3 {
+    flex: 0 0 auto;
+    width: 100% !important;
+}
+    .card-container{
+        margin:  0 5rem  0 5rem;
+    }
+}
+
+.row{
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.underline{
+  text-decoration: underline;
+  margin-right: 0.3rem !important;
+}

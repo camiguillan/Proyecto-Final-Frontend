@@ -33,13 +33,14 @@ export default function VerCampo({ crop }) {
 
   useEffect(() => {
     // Update campo variable when userData changes
+    setIsLoading(true);
     if (campo) {
       setCampoFeatures(createHeatmap(campo));
     }
   }, [campo]);
 
   useEffect(() => {
-    if (campo && campoFeatures) {
+    if (campo && campoFeatures && isLoading) {
       setIsLoading(false);
     }
   });

@@ -11,7 +11,7 @@ import leaf from '../../images/leaf.jpg';
 import trigo from '../../images/trigo.jpg';
 import vistaSat from '../../images/vistasatelital.jpg';
 import '../../assets/global.scss';
-import HeaderHome from '../reusable/header_home/header_home';
+import Header from '../reusable/header/header';
 
 export default function HomePrincipal() {
   const listChooseUs = [{reason: 'Precisión en el diagnóstico', extra: 'Utilizamos algoritmos avanzados de inteligencia artificial y análisis de imágenes para identificar enfermedades, plagas y otros problemas de salud en los cultivos con alta precisión.'}, {reason: 'Optimización de recursos', extra: 'Ayudamos a maximizar la producción agrícola al optimizar el uso de recursos como el agua, los fertilizantes y los pesticidas.'}, {reason: 'Recomendaciones personalizadas', extra: 'Proporcionamos recomendaciones específicas y personalizadas para cada cultivo y situación, considerando factores como el tipo de cultivo, las condiciones climáticas y las características del suelo.'}];
@@ -19,21 +19,21 @@ export default function HomePrincipal() {
   return (
     <div className="no-over-scroll">
       <div className="full-page">
-        <HeaderHome>.</HeaderHome>
+        <Header inicioSesion={false}></Header>
         <div className="img-container">
           <div className="overlay"></div>
-          <div className="image-text">
-            <text className="image-title">
+          <div className="image-text-agro">
+            <text className="image-title-agro">
               ¿Qué es AgroIA?
             </text>
             <br />
-            <text className="image-text2">
+            <text className="image-text2-agro">
               AgroIA es un sistema orientado a brindar soluciones y recomendaciones
               precisas en el cuidado y manejo de cultivos agrícolas.
             </text>
           </div>
         </div>
-        <div className="flexbox-container">
+        <div className="agro-flexbox-container">
           <div className="green-title">
             AgroIA facilita la toma de decisiones relacionadas con la producción
             agraria.
@@ -88,7 +88,7 @@ export default function HomePrincipal() {
       <div className="footer">
         <div className="flex-container center">
           <Icon className="bi bi-flower1" color="#2a7d2e" fontSize="2.7rem" />
-          <h1>AGROIA</h1>
+          <h1 className="app-name">AGROIA</h1>
         </div>
         <div className="contact-info">
           <div className="text-home-2 margin">agroiaapp@gmail.com</div>
