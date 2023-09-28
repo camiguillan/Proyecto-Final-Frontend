@@ -759,7 +759,7 @@ export default function InfoCampo() {
               <DownloadButton />
               {/* <input className="button-dashboard selected" type="file" id="csvInput" accept=".csv" onChange={(e) => handleFileUpload(e)} /> */}
               <Form.Group controlId="formFile">
-                <Form.Control type="file" className="agro-uploader" />
+                <Form.Control type="file" className="agro-uploader" accept=".csv" onChange={(e) => handleFileUpload(e)} />
               </Form.Group>
             </div>
             {lineData.length > 1 ? (
