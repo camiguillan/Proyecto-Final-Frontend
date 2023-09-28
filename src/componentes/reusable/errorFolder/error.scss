@@ -1,3 +1,5 @@
+@import '../../../assets/global.scss';
+
 .backdrop {
     position: fixed !important;
     top: 0 !important;
@@ -8,17 +10,21 @@
     background: rgba(0, 0, 0, 0.75) !important;
   }
   
-  .agro-modal {
+.agro-modal {
     position: fixed !important;
     top: 30vh !important;
-    left: 10% !important;
-    width: 80% !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 50% !important;
+    margin: 0 auto !important;
     z-index: 100 !important;
     overflow: hidden !important;
-  }
-  
+}
   .header-error {
-    background: #439775 !important; 
+    background: $main-green !important; 
+     display: flex;
+    justify-content: center; /* Horizontal centering */
+    height: 4rem;
   }
   
   .header-error h2 {
@@ -38,10 +44,9 @@
   }
   
   .content {
-    padding: 1rem !important;
     font-size: 2vh;
     justify-content: center;
-    align-items: center;
+    margin-top: 1rem;
     
   }
   
