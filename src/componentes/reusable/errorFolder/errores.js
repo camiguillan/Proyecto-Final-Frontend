@@ -3,13 +3,14 @@ import './error.scss';
 import PropTypes from 'prop-types';
 import Card from '../card/card';
 // import { useState } from 'react';
+// import Card from 'react-bootstrap/Card';
 import Button from '../boton/button';
 
 export default function ErrorModal({ onClick, title, message }) {
   return (
     <div>
       <div className="backdrop" onClick={onClick} />
-      <Card className=" card modal">
+      <Card className="agro-card agro-modal">
         <header className="header-error">
           <h2>
             {' '}
