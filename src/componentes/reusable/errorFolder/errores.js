@@ -19,16 +19,20 @@ export default function ErrorModal({ onClick, title, message }) {
             {' '}
           </h2>
         </header>
-        <div className="content d-flex">
+        <div className="d-flex">
           <img src={tractor} alt="Imagen 4" className="modal-image" />
-          <p className="modal-message">
-            {message}
-            {' '}
-          </p>
+          <div className="d-flex a-card-wrapper">
+            <div className="content">
+              <p className="modal-message">
+                {message}
+                {' '}
+              </p>
+            </div>
+            <footer className="actions">
+              <Button onClick={onClick} className="button">Okay</Button>
+            </footer>
+          </div>
         </div>
-        <footer className="actions">
-          <Button onClick={onClick} className="button">Okay</Button>
-        </footer>
       </Card>
     </div>
   );

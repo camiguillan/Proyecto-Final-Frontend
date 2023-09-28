@@ -35,19 +35,21 @@
   }
   .modal-message{
     font-size: 2rem;
-    margin-left: 1rem;
   }
 
 
   .modal-image{
-    width: 12%;
+    width: 20%;
+    margin: 1rem
   }
   
   .content {
     font-size: 2vh;
-    justify-content: center;
+    display: inline-flex;
+    justify-content: start;
     align-items: center;
     margin-top: 1rem;
+    margin-left: 1rem;
     
   }
   
@@ -62,4 +64,10 @@
       left: calc(50% - 20rem) !important;
       width: 40rem !important;
     }
+  }
+
+  .a-card-wrapper{
+    flex-direction: column;
+    width: 100%;
+    margin-top: 3rem;
   }
