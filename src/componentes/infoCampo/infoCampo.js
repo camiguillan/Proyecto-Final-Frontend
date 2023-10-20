@@ -35,6 +35,7 @@ import { CROP_TYPES_KEYS } from '../../constants/plots';
 import { CROP_TYPES_TRANSLATIONS } from '../../constants/translations';
 
 export default function InfoCampo() {
+  const [problema, setProblema] = useState('');
   const { userID } = useParams();
   const { field } = useParams();
   const user = JSON.parse(localStorage.getItem('name')) || {};
@@ -42,7 +43,7 @@ export default function InfoCampo() {
   const [selectedTimePeriod, setSelectedTimePeriod] = useState('LastWeek');
   const [lineData, setLineData] = useState([['', crop]]); // VER ESTO
   const [barData, setBarData] = useState([['', crop]]); // VER ESTO
-  const [searchTerm, setSearchTerm] = useState('lampara');
+  const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState([]);
   const [diagnostico, setdiagnostico] = useState(['GOOD']);
   const [erased, setNewErased] = useState([]);
@@ -91,6 +92,7 @@ export default function InfoCampo() {
           },
         });
         setUser2(user22);
+        console.log('el usuario es: ', user22);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -311,6 +313,7 @@ export default function InfoCampo() {
   };
 
   const handleSearch = async () => {
+    console.log('voy a buscar: ', searchTerm);
     try {
       const response = await axios.get(
         `https://api.mercadolibre.com/sites/MLA/search?q=${searchTerm}`,
@@ -388,6 +391,17 @@ export default function InfoCampo() {
     }
   };
 
+  const changeProblem = () => {
+    console.log('el problema essss: ', problema);
+    if (problema === 'overhydration') {
+      setSearchTerm('higrostatos');
+    } else if (problema === 'frosting') {
+      setSearchTerm('TELA ANTI HELADA');
+    } else if (problema === 'dehydration') {
+      setSearchTerm('ACONDICIONADOR DE SUELO');
+    }
+  };
+
   const metrics = () => {
     setporcentajeSano();
     let metros = 0;
@@ -425,6 +439,10 @@ export default function InfoCampo() {
               cuantosPlots += 1;
               ndviTemp += plot.history[indexAusar].ndvi;
               humedadTemp += plot.history[indexAusar].humidity;
+              console.log('problema 1: ', plot.history[indexAusar].diagnostics);
+              if ((plot.history[indexAusar].diagnostics === 'overhydration' || plot.history[indexAusar].diagnostics === 'frosting' || plot.history[indexAusar].diagnostics === 'dehydration') && problema === '') {
+                setProblema(plot.history[indexAusar].diagnostics);
+              }
             }
           });
           ndviTemp = (ndviTemp / cuantosPlots).toFixed(2);
@@ -481,6 +499,10 @@ export default function InfoCampo() {
   };
 
   useEffect(() => {
+    changeProblem();
+  }, [problema]);
+
+  useEffect(() => {
     metrics();
   }, [crop]);
 
@@ -495,7 +517,7 @@ export default function InfoCampo() {
         }
       });
     }
-    console.log(user2);
+    console.log('el usuario es: ', user2);
   }, [user2]);
 
   useEffect(() => {
@@ -512,7 +534,7 @@ export default function InfoCampo() {
 
   useEffect(() => {
     metricsForMenu();
-    console.log(user2);
+    console.log('el usuario es: ', user2);
   }, [selectedTimePeriod]);
 
   useEffect(() => {
@@ -534,9 +556,12 @@ export default function InfoCampo() {
   }, [fieldRest]);
 
   useEffect(() => {
-    handleSearch();
     metrics();
   }, []);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchTerm]);
 
   useEffect(() => {
     metricsForMenu();
@@ -638,7 +663,7 @@ export default function InfoCampo() {
                 {(porcentajeSano < 0 || porcentajeSano >= 0) && porcentajeSano !== Infinity ? (
                   <div className="cards-Subtitle cards-Subtitle2">
                     {porcentajeSano}
-                    m2
+                    <span>m2</span>
                   </div>
                 ) : (
                   <div className="cards-Subtitle-no-data cards-Subtitle2">
@@ -805,10 +830,10 @@ export default function InfoCampo() {
                 </div>
               )}
             <div className="cards-container">
-              <Diagnostico diagnostico={diagnostico} />
-              <Card className="cards-wrapper-diagnostico">
+              <Diagnostico problema={problema} />
+              {/* <Card className="cards-wrapper-diagnostico">
                 <img src={excelent} alt="Imagen 4" style={{ width: '7rem', marginRight: '-1rem', marginLeft: '1rem' }} />
-              </Card>
+              </Card> */}
             </div>
             <div className="cards-container">
               {products.slice(0, 5).map((product) => (

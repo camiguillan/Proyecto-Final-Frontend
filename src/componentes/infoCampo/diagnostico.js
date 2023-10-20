@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable import/no-cycle */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
@@ -7,7 +9,7 @@ import bluewater from '../../images/bluewater.png';
 import dry from '../../images/dry.png';
 import congelado from '../../images/congelado.png';
 
-export default function Diagnostico() {
+export default function Diagnostico({ problema }) {
   const diagnosticKeys = {
     EXCELENT: {
       name: 'EXCELENT',
@@ -59,7 +61,18 @@ export default function Diagnostico() {
     },
   };
   const user = JSON.parse(localStorage.getItem('name')) || {};
-  const [diagnostico, setdiagnostico] = useState('OVERHYDRATION');
+  const [diagnostico, setdiagnostico] = useState('FROSTING');
+
+  useEffect(() => {
+    if (problema === 'overhydration') {
+      setdiagnostico('OVERHYDRATION');
+    } else if (problema === 'frosting') {
+      setdiagnostico('FROSTING');
+    } else if (problema === 'dehydration') {
+      setdiagnostico('DEHYDRATION');
+    }
+  }, [problema]);
+
   const {
     name, translate, message, image, className, classNameTitle,
   } = diagnosticKeys[diagnostico];
