@@ -376,8 +376,8 @@ export default function InfoCampo() {
           });
           ndviTemp = (ndviTemp / cuantosPlots).toFixed(2);
           humedadTemp = (humedadTemp / cuantosPlots).toFixed(2);
-          const porcentajeSanou = (sano * 100) / metros;
-          const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(2);
+          const porcentajeSanou = sano;
+          const porcentajeSanoRedondeado = porcentajeSanou;
           setporcentajeSanoviejo(Math.round(((porcentajeSano - porcentajeSanoRedondeado) / Math.abs(porcentajeSanoRedondeado)) * 100));
           setNdviviejo(Math.round(((ndvi - ndviTemp) / Math.abs(ndviTemp)) * 100));
           setHumedadviejo(Math.round(((humedad - humedadTemp) / Math.abs(humedadTemp)) * 100));
@@ -431,8 +431,8 @@ export default function InfoCampo() {
           humedadTemp = (humedadTemp / cuantosPlots).toFixed(2);
           setNdvi(ndviTemp);
           setHumedad(humedadTemp);
-          const porcentajeSanou = (sano * 100) / metros;
-          const porcentajeSanoRedondeado = parseFloat(porcentajeSanou).toFixed(1);
+          const porcentajeSanou = sano;
+          const porcentajeSanoRedondeado = porcentajeSanou;
           if (hayDatos) { setporcentajeSano(porcentajeSanoRedondeado); }
           setMetrosCuadrados(metros);
           return;
@@ -490,8 +490,8 @@ export default function InfoCampo() {
     if (user2 && user2.fields) {
       user2.fields.forEach((fiel, index) => {
         if (fiel._id === fieldRest && user2.fields[index].history.years.length > 0) {
-          handleDataChange(user2.fields[index].history.years, user2.fields[index].history.sown, 'Superficie sembrada', 'Años', 1);
-          handleDataChange(user2.fields[index].history.years, user2.fields[index].history.harvested, 'Superficie cosechada', 'Años', 2);
+          handleDataChange(user2.fields[index].history.years, user2.fields[index].history.sown, 'Años', 'Superficie sembrada', 1);
+          handleDataChange(user2.fields[index].history.years, user2.fields[index].history.harvested, 'Años', 'Superficie cosechada', 2);
         }
       });
     }
@@ -638,7 +638,7 @@ export default function InfoCampo() {
                 {(porcentajeSano < 0 || porcentajeSano >= 0) && porcentajeSano !== Infinity ? (
                   <div className="cards-Subtitle cards-Subtitle2">
                     {porcentajeSano}
-                    %
+                    m2
                   </div>
                 ) : (
                   <div className="cards-Subtitle-no-data cards-Subtitle2">
@@ -768,7 +768,7 @@ export default function InfoCampo() {
                   <Chart
                     width="40rem"
                     height="25rem"
-                    chartType="LineChart"
+                    chartType="ColumnChart"
                     loader={<div>Loading Chart</div>}
                     data={lineData}
                     options={lineChartOptions}
